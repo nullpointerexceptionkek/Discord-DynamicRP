@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9bb812eb-84e9-45db-983f-c2ab4f2a5060" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs/discord-rpc.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/Application.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/ApplicationLight.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/ApplicationLightGreen.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/LoadingScreen/LoadingController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/LoadingScreen/LoadingScreen.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/Settings/SettingController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/Settings/Settings.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/callbackscreen/CallBack.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/callbackscreen/CallBackController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/config/EditListController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/config/EditListScript.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/config/ready/ConfigController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/config/ready/ReadyConfig.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/config/ready/settingsImage.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Launch.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/LaunchManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/discordrpc/DiscordRP.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/discordrpc/Script.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/discordrpc/TimeStampMode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/discordrpc/UpdateManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/discordrpc/Updates.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/discordrpc/settings/SettingManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/discordrpc/settings/Settings.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/discordrpc/settings/Theme.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/jsonreader/FileManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/jsonreader/ScriptAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/jsonreader/SettingsAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/jsonreader/UpdatesAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/lee/aspect/dev/primary.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/lee/aspect/dev/secondary.fxml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2FSHCqsNJItPvaIE46cacSfnqP8" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "last_opened_file_path": "C:/Users/lee17/IdeaProjects/CDiscordRP/src/main/java/lee/aspect/dev",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\lee17\IdeaProjects\CDiscordRP\src\main\java\lee\aspect\dev" />
+      <recent name="C:\Users\lee17\IdeaProjects\CDiscordRP\libs" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="CDiscordRP [javafx:run]" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings">
+          <MavenRunnerSettings>
+            <option name="delegateBuildToMaven" value="false" />
+            <option name="environmentProperties">
+              <map />
+            </option>
+            <option name="jreName" value="#USE_PROJECT_JDK" />
+            <option name="mavenProperties">
+              <map />
+            </option>
+            <option name="passParentEnv" value="true" />
+            <option name="runMavenInBackground" value="true" />
+            <option name="skipTests" value="false" />
+            <option name="vmOptions" value="" />
+          </MavenRunnerSettings>
+        </option>
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="javafx:run" />
+              </list>
+            </option>
+            <option name="pomFileName" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9bb812eb-84e9-45db-983f-c2ab4f2a5060" name="Changes" comment="" />
+      <created>1664478445209</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1664478445209</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

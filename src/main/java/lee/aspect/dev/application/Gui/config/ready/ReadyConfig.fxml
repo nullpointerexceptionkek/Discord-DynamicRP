@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lee.aspect.dev.application.Gui.config.ready.ConfigController">
+   <children>
+      <AnchorPane fx:id="anchorRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="334.0">
+         <children>
+            <Label fx:id="titleLabel" alignment="CENTER" layoutX="50.0" layoutY="14.0" prefHeight="32.0" prefWidth="234.0" text="Custom Discord RP" textFill="WHITE">
+               <font>
+                  <Font name="Lucida Sans Unicode" size="20.0" />
+               </font>
+            </Label>
+            <Button fx:id="callbackButton" layoutX="116.0" layoutY="501.0" mnemonicParsing="false" onAction="#switchToCallBack" text="Launch Call Back" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="106.0" layoutY="46.0" prefHeight="18.0" prefWidth="123.0" text="Application ID" />
+            <TextField fx:id="appID" layoutX="68.0" layoutY="64.0" prefHeight="26.0" prefWidth="202.0" promptText="Enter Discord Application ID" />
+            <ListView fx:id="displayUpdates" editable="true" layoutX="69.0" layoutY="100.0" prefHeight="190.0" prefWidth="200.0" />
+            <Button layoutX="115.0" layoutY="296.0" mnemonicParsing="false" onAction="#addnewitem" prefHeight="25.0" prefWidth="105.0" text="Add new item" />
+            <RadioButton fx:id="applaunch" layoutX="75.0" layoutY="346.0" mnemonicParsing="false" onAction="#getTimeStampMode" prefHeight="17.0" prefWidth="82.0" text="Default" textFill="WHITE">
+               <toggleGroup>
+                  <ToggleGroup fx:id="timestampmode" />
+               </toggleGroup></RadioButton>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="108.0" layoutY="326.0" prefHeight="18.0" prefWidth="123.0" text="Time stamp method" textFill="WHITE" />
+            <RadioButton fx:id="custom" layoutX="180.0" layoutY="371.0" mnemonicParsing="false" onAction="#getTimeStampMode" prefHeight="17.0" prefWidth="82.0" text="Custom" textFill="WHITE" toggleGroup="$timestampmode" />
+            <RadioButton fx:id="local" layoutX="75.0" layoutY="371.0" mnemonicParsing="false" onAction="#getTimeStampMode" prefHeight="17.0" prefWidth="82.0" text="Local time" textFill="WHITE" toggleGroup="$timestampmode" />
+            <RadioButton fx:id="none" layoutX="180.0" layoutY="346.0" mnemonicParsing="false" onAction="#getTimeStampMode" prefHeight="17.0" prefWidth="99.0" text="None" textFill="WHITE" toggleGroup="$timestampmode" />
+            <Button fx:id="settingButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchToSetting" prefHeight="25.0" prefWidth="27.0" text="S" />
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>
