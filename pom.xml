@@ -30,7 +30,7 @@
             <artifactId>rpc</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/libs/discord-rpc.jar</systemPath>
+            <systemPath>${pom.basedir}/libs/discord-rpc.jar</systemPath>
         </dependency>
     </dependencies>
     <build>

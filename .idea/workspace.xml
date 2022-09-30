@@ -4,24 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9bb812eb-84e9-45db-983f-c2ab4f2a5060" name="Changes" comment="">
+    <list default="true" id="9bb812eb-84e9-45db-983f-c2ab4f2a5060" name="Changes" comment="fix all bugs, it now works with a maven project structure!!!">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/Application.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/lee/aspect/dev/Application.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/ApplicationLight.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/lee/aspect/dev/ApplicationLight.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/ApplicationLightGreen.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/lee/aspect/dev/ApplicationLightGreen.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/LoadingScreen/LoadingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/LoadingScreen/LoadingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/LoadingScreen/LoadingScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/lee/aspect/dev/LoadingScreen.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/Settings/SettingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/Settings/SettingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/Settings/Settings.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/lee/aspect/dev/Settings.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/callbackscreen/CallBack.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/lee/aspect/dev/CallBack.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/callbackscreen/CallBackController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/callbackscreen/CallBackController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/config/EditListController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/config/EditListController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/config/EditListScript.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/lee/aspect/dev/EditListScript.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/config/ready/ConfigController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/config/ready/ConfigController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/config/ready/ReadyConfig.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/lee/aspect/dev/ReadyConfig.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/config/ready/settingsImage.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/lee/aspect/dev/settingsImage.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Launch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Launch.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/discordrpc/settings/Theme.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/discordrpc/settings/Theme.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +17,13 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="usePluginRegistry" value="true" />
+      </MavenGeneralSettings>
+    </option>
   </component>
   <component name="ProjectId" id="2FSHCqsNJItPvaIE46cacSfnqP8" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -50,7 +41,8 @@
     &quot;last_opened_file_path&quot;: &quot;C:/Users/lee17/IdeaProjects/CDiscordRP/src/main/java/lee/aspect/dev&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -61,6 +53,11 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\lee17\IdeaProjects\CDiscordRP\src\main\resources\lee\aspect\dev" />
     </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn install" />
+    </option>
   </component>
   <component name="RunManager">
     <configuration name="CDiscordRP [javafx:run]" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
@@ -113,6 +110,14 @@
       <option name="presentableId" value="Default" />
       <updated>1664478445209</updated>
     </task>
+    <task id="LOCAL-00001" summary="fix all bugs, it now works with a maven project structure!!!">
+      <created>1664498517296</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1664498517296</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -125,5 +130,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="fix all bugs, it now works with a maven project structure!!!" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix all bugs, it now works with a maven project structure!!!" />
   </component>
 </project>
