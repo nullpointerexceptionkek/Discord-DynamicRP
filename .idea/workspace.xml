@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9bb812eb-84e9-45db-983f-c2ab4f2a5060" name="Changes" comment="fix all bugs, it now works with a maven project structure!!!">
+    <list default="true" id="9bb812eb-84e9-45db-983f-c2ab4f2a5060" name="Changes" comment="fix maven says my project is shit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CustomDiscordRPC/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/CustomDiscordRPC/Settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CustomDiscordRPC/UpdateScript.json" beforeDir="false" afterPath="$PROJECT_DIR$/CustomDiscordRPC/UpdateScript.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +119,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664498517296</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="fix maven says my project is shit">
+      <created>1664568365230</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1664568365230</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -133,6 +142,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="fix all bugs, it now works with a maven project structure!!!" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix all bugs, it now works with a maven project structure!!!" />
+    <MESSAGE value="fix maven says my project is shit" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix maven says my project is shit" />
   </component>
 </project>
