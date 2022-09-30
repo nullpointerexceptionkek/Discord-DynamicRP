@@ -75,7 +75,7 @@ public class LoadingController implements Initializable{
 						try {
 							switch(file) {
 							case "callback":
-								Parent root = FXMLLoader.load(getClass().getResource("/application/Gui/callbackscreen/CallBack.fxml"));
+								Parent root = FXMLLoader.load(getClass().getResource("/lee/aspect/dev/CallBack.fxml"));
 								Scene scene = anchorroot.getScene();
 								
 								root.translateYProperty().set(scene.getHeight());
@@ -92,7 +92,7 @@ public class LoadingController implements Initializable{
 								LaunchManager.startUpdate();
 								break;
 							case "readyconfig":
-								Parent root1 = FXMLLoader.load(getClass().getResource("/application/Gui/config/ready/ReadyConfig.fxml"));
+								Parent root1 = FXMLLoader.load(getClass().getResource("/lee/aspect/dev/ReadyConfig.fxml"));
 								Scene scene1 = anchorroot.getScene();
 								
 								root1.translateYProperty().set(scene1.getHeight());
@@ -108,7 +108,7 @@ public class LoadingController implements Initializable{
 								timeline1.play();
 								break;
 							default:
-								Parent root2 = FXMLLoader.load(getClass().getResource("/application/Gui/config/ready/ReadyConfig.fxml"));
+								Parent root2 = FXMLLoader.load(getClass().getResource("/lee/aspect/dev/ReadyConfig.fxml"));
 								Scene scene2 = anchorroot.getScene();
 								
 								root2.translateYProperty().set(scene2.getHeight());

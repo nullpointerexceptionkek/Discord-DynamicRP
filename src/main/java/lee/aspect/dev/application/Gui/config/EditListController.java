@@ -109,7 +109,7 @@ public class EditListController extends ConfigController implements Initializabl
 		double x = stage.getX();
 		double y = stage.getY();
 		stage.close();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/Gui/config/ready/ReadyConfig.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/ReadyConfig.fxml"));
 		Parent root = loader.load();
 		root.getStylesheets().add(getClass().getResource(Settings.getTheme().Themepass()).toExternalForm());
 		ConfigController cc = loader.getController();

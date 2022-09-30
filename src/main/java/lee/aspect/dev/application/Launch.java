@@ -22,7 +22,7 @@ public class Launch extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			LaunchManager.init();
-			Parent root = FXMLLoader.load(getClass().getResource("/main/src/java/lee/aspect/dev/application/Gui/config/ready/ReadyConfig.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/lee/aspect/dev/ReadyConfig.fxml"));
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource(Settings.getTheme().Themepass()).toExternalForm());
 			primaryStage.setTitle("Custom Discord RPC");

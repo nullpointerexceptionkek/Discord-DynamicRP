@@ -38,7 +38,7 @@ public class SettingController implements Initializable{
 	public void switchBack(ActionEvent event) throws IOException {
 		Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		stage.close();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/Gui/config/ready/ReadyConfig.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/ReadyConfig.fxml"));
 		Parent root = loader.load();
 		root.getStylesheets().add(getClass().getResource(Settings.getTheme().Themepass()).toExternalForm());
 		ConfigController ec = loader.getController();
