@@ -247,7 +247,6 @@ public final class IPCClient implements Closeable
             LOGGER.debug("Failed to close pipe", e);
         }
     }
-
     /**
      * Gets the IPCClient's {@link DiscordBuild}.<p>
      *

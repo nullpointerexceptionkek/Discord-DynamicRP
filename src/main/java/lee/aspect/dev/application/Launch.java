@@ -50,10 +50,11 @@ public class Launch extends Application {
 	public static void main(String[] args) {
 		
 		System.out.println(Arrays.toString(args));
+		launch(args);
 		//check if already running
+		/*
 		ServerSocket ss;
 		 ss = null;
-
 		    try {
 		        ss = new ServerSocket(1044);
 		        launch(args);
@@ -66,11 +67,13 @@ public class Launch extends Application {
 			            JOptionPane.ERROR_MESSAGE);
 			    System.exit(1);
 		    }
+
+		 */
 		
 	}
 	
 	@Override
 	public void stop() throws Exception {
-		LaunchManager.onClose();
+		//LaunchManager.onClose();
 	}
 }

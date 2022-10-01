@@ -6,7 +6,6 @@ import java.util.Calendar;
 import lee.aspect.dev.discordipc.IPCClient;
 import lee.aspect.dev.discordipc.IPCListener;
 import lee.aspect.dev.discordipc.entities.RichPresence;
-import lee.aspect.dev.discordipc.entities.User;
 import lee.aspect.dev.discordipc.exceptions.NoDiscordClientException;
 import lee.aspect.dev.discordrpc.settings.Settings;
 
@@ -58,6 +57,7 @@ public class DiscordRP {
 		client.setListener(new IPCListener() {
 			@Override
 			public void onReady(IPCClient client) {
+				System.out.println("imbeing called");
 				RichPresence.Builder builder = new RichPresence.Builder();
 				builder.setState("State")
 						.setDetails("Details")
@@ -66,7 +66,7 @@ public class DiscordRP {
 						.setButton2Text("Google")
 						.setButton2Url("https://google.com")
 						.setStartTimestamp(OffsetDateTime.now())
-						.setLargeImage("canary-large", "Discord Canary")
+						.setLargeImage("https://media.tenor.com/lYuNO_0XVMgAAAAC/angry-mad.gif", "Discord Canary")
 						.setSmallImage("ptb-small", "Discord PTB");
 				client.sendRichPresence(builder.build());
 			}
@@ -81,24 +81,23 @@ public class DiscordRP {
 	
 	
 	public void shutdown() {
-
+		client.close();
 	}
 	
 
 	public void update(String image, String imagetext, String smallimage, String smalltext, String firstLine, String secondLine){
-		RichPresence.Builder builder = new RichPresence.Builder();
-		builder.setState(secondLine)
-				.setDetails(firstLine)
-				.setButton1Text("Discord")
-				.setButton1Url("https://discord.com")
-				.setButton2Text("Google")
-				.setButton2Url("https://google.com")
-				.setStartTimestamp(OffsetDateTime.now())
-				.setLargeImage(image, imagetext)
-				.setSmallImage(smallimage, smalltext);
-		client.sendRichPresence(builder.build());
-	}
-	
+				RichPresence.Builder builder = new RichPresence.Builder();
+				builder.setState(secondLine)
+						.setDetails(firstLine)
+						.setButton1Text("Discord")
+						.setButton1Url("https://discord.com")
+						.setButton2Text("Google")
+						.setButton2Url("https://google.com")
+						.setStartTimestamp(OffsetDateTime.now())
+						.setLargeImage(image, imagetext)
+						.setSmallImage(smallimage, smalltext);
+				client.sendRichPresence(builder.build());
+			}
 	
 	
 }
