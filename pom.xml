@@ -25,12 +25,32 @@
             <artifactId>gson</artifactId>
             <version>2.9.1</version>
         </dependency>
+
+
         <dependency>
-            <groupId>discord.rpc</groupId>
-            <artifactId>rpc</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${pom.basedir}/libs/discord-rpc.jar</systemPath>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20171018</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+        <dependency>
+            <groupId>com.kohlschutter.junixsocket</groupId>
+            <artifactId>junixsocket-common</artifactId>
+            <version>2.0.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.kohlschutter.junixsocket</groupId>
+            <artifactId>junixsocket-native-common</artifactId>
+            <version>2.0.4</version>
         </dependency>
     </dependencies>
     <build>

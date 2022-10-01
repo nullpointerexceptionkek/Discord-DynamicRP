@@ -1,11 +1,11 @@
 package lee.aspect.dev.application;
 
+import lee.aspect.dev.discordipc.exceptions.NoDiscordClientException;
 import lee.aspect.dev.discordrpc.DiscordRP;
 import lee.aspect.dev.discordrpc.UpdateManager;
 import lee.aspect.dev.discordrpc.Updates;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.jsonreader.FileManager;
-import net.arikia.dev.drpc.DiscordRPC;
 
 public class LaunchManager {
 	
@@ -36,21 +36,25 @@ public class LaunchManager {
 			runloop = new Thread("RunLoop") {
 				@Override
 				public void run() {
-					if(upm.getUpdates().getSize()==1) {
-						excuteUpdate(upm.getUpdates().getUpdates(0));
-						DiscordRPC.discordRunCallbacks();
-						return;
-					}
-					
-					
-					while(isRunning) {
-						for(int i = 0; i< upm.getUpdates().getSize(); i++) {
-							if(!isRunning) 
-								return;
-							excuteUpdate(upm.getUpdates().getUpdates(i));
-							DiscordRPC.discordRunCallbacks();
+					try {
+						if (upm.getUpdates().getSize() == 1) {
+							excuteUpdate(upm.getUpdates().getUpdates(0));
+							//DiscordRPC.discordRunCallbacks();
+							return;
 						}
-						
+
+
+						while (isRunning) {
+							for (int i = 0; i < upm.getUpdates().getSize(); i++) {
+								if (!isRunning)
+									return;
+								excuteUpdate(upm.getUpdates().getUpdates(i));
+								//DiscordRPC.discordRunCallbacks();
+							}
+
+						}
+					}catch(NoDiscordClientException e) {
+						e.printStackTrace();
 					}
 				}
 			};
@@ -69,7 +73,7 @@ public class LaunchManager {
 	
 	
 	
-	private static void excuteUpdate(Updates update) {
+	private static void excuteUpdate(Updates update) throws NoDiscordClientException {
 		System.out.println("Sented Update Request, trans: " + update);
 		if(update.getWait() == -1) {
 			discordRP.update(update.getImage(),update.getImagetext(),update.getSmallimage() 

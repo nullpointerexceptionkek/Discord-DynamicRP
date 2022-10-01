@@ -19,7 +19,6 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import lee.aspect.dev.application.LaunchManager;
 import lee.aspect.dev.discordrpc.DiscordRP;
-import net.arikia.dev.drpc.DiscordRPC;
 
 public class LoadingController implements Initializable{
 
@@ -53,7 +52,7 @@ public class LoadingController implements Initializable{
 				case "callback":
 					long time = System.currentTimeMillis();
 					while(DiscordRP.discordName == null) {
-						DiscordRPC.discordRunCallbacks();
+						//DiscordRPC.discordRunCallbacks();
 						Thread.sleep(100);
 						if(time + 60000 < System.currentTimeMillis()) {
 							file = "errorNoSDK";
