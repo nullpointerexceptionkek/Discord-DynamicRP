@@ -46,7 +46,6 @@ public class CallBackController implements Initializable{
 	}
 	public void switchToConfig(ActionEvent event) throws IOException, InterruptedException {
 		switchtoconfig.setDisable(true);
-		LaunchManager.closeCallBack();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/LoadingScreen.fxml"));
 		Parent root = loader.load();
 		Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();

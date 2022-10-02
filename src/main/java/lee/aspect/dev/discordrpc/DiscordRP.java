@@ -5,6 +5,7 @@ import java.util.Calendar;
 
 import lee.aspect.dev.discordipc.IPCClient;
 import lee.aspect.dev.discordipc.IPCListener;
+import lee.aspect.dev.discordipc.entities.Callback;
 import lee.aspect.dev.discordipc.entities.RichPresence;
 import lee.aspect.dev.discordipc.exceptions.NoDiscordClientException;
 import lee.aspect.dev.discordrpc.settings.Settings;
@@ -19,6 +20,8 @@ public class DiscordRP {
 	public static String discordName;
 
 	public static IPCClient client;
+
+	public static Callback callback;
 	
 	
 	public void LaunchReadyCallBack(){
@@ -53,11 +56,11 @@ public class DiscordRP {
 		}
 
 	try {
+		callback = new Callback();
 		client = new IPCClient(Long.valueOf(Settings.getDiscordAPIKey())); // your client id
 		client.setListener(new IPCListener() {
 			@Override
 			public void onReady(IPCClient client) {
-				System.out.println("imbeing called");
 				RichPresence.Builder builder = new RichPresence.Builder();
 				builder.setState("State")
 						.setDetails("Details")
@@ -66,11 +69,12 @@ public class DiscordRP {
 						.setButton2Text("Google")
 						.setButton2Url("https://google.com")
 						.setStartTimestamp(OffsetDateTime.now())
-						.setLargeImage("https://media.tenor.com/lYuNO_0XVMgAAAAC/angry-mad.gif", "Discord Canary")
+						.setLargeImage("canary-large", "Discord Canary")
 						.setSmallImage("ptb-small", "Discord PTB");
-				client.sendRichPresence(builder.build());
+				client.sendRichPresence(builder.build(),callback);
 			}
 		});
+
 		client.connect();
 	} catch (NoDiscordClientException e) {
 		throw new RuntimeException(e);
@@ -86,18 +90,19 @@ public class DiscordRP {
 	
 
 	public void update(String image, String imagetext, String smallimage, String smalltext, String firstLine, String secondLine){
-				RichPresence.Builder builder = new RichPresence.Builder();
-				builder.setState(secondLine)
-						.setDetails(firstLine)
-						.setButton1Text("Discord")
-						.setButton1Url("https://discord.com")
-						.setButton2Text("Google")
-						.setButton2Url("https://google.com")
-						.setStartTimestamp(OffsetDateTime.now())
-						.setLargeImage(image, imagetext)
-						.setSmallImage(smallimage, smalltext);
-				client.sendRichPresence(builder.build());
-			}
+		RichPresence.Builder builder = new RichPresence.Builder();
+		builder.setState(secondLine)
+				.setDetails(firstLine)
+				.setButton1Text("Discord")
+				.setButton1Url("https://discord.com")
+				.setButton2Text("Google")
+				.setButton2Url("https://google.com")
+				.setStartTimestamp(OffsetDateTime.now())
+				.setLargeImage(image, imagetext)
+				.setSmallImage(smallimage, smalltext);
+		client.sendRichPresence(builder.build(), callback);
+		}
+
 	
 	
 }

@@ -21,7 +21,7 @@ import java.util.function.Consumer;
  * A callback for asynchronous logic when dealing processes that
  * would normally block the calling thread.<p>
  *
- * This is most visibly implemented in {@link com.jagrosh.discordipc.IPCClient IPCClient}.
+ * This is most visibly implemented in {@link lee.aspect.dev.discordipc.IPCClient IPCClient}.
  *
  * @author John Grosh (john.a.grosh@gmail.com)
  */

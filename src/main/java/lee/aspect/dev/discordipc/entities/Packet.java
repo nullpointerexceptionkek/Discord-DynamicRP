@@ -20,8 +20,8 @@ import java.nio.charset.StandardCharsets;
 import org.json.JSONObject;
 
 /**
- * A data-packet received from Discord via an {@link com.jagrosh.discordipc.IPCClient IPCClient}.<br>
- * These can be handled via an implementation of {@link com.jagrosh.discordipc.IPCListener IPCListener}.
+ * A data-packet received from Discord via an {@link lee.aspect.dev.discordipc.IPCClient IPCClient}.<br>
+ * These can be handled via an implementation of {@link lee.aspect.dev.discordipc.IPCListener IPCListener}.
  *
  * @author John Grosh (john.a.grosh@gmail.com)
  */
@@ -86,7 +86,7 @@ public class Packet
     /**
      * Discord response OpCode values that are
      * sent with response data to and from Discord
-     * and the {@link com.jagrosh.discordipc.IPCClient IPCClient}
+     * and the {@link lee.aspect.dev.discordipc.IPCClient IPCClient}
      * connected.
      */
     public enum OpCode

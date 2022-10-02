@@ -37,7 +37,7 @@ public enum DiscordBuild
     STABLE("//discordapp.com/api"),
 
     /**
-     * 'Wildcard' build constant used in {@link com.jagrosh.discordipc.IPCClient#connect(DiscordBuild...)
+     * 'Wildcard' build constant used in {@link lee.aspect.dev.discordipc.IPCClient#connect(DiscordBuild...)
      * IPCClient#connect(DiscordBuild...)} to signify that the build to target is not important, and
      * that the first valid build will be used.<p>
      *

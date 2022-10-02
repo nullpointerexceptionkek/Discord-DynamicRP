@@ -17,8 +17,8 @@ package lee.aspect.dev.discordipc.entities;
 
 /**
  * A encapsulation of a Discord User's data provided when a
- * {@link com.jagrosh.discordipc.IPCListener IPCListener} fires
- * {@link com.jagrosh.discordipc.IPCListener#onActivityJoinRequest(com.jagrosh.discordipc.IPCClient, String, User)
+ * {@link lee.aspect.dev.discordipc.IPCListener IPCListener} fires
+ * {@link lee.aspect.dev.discordipc.IPCListener#onActivityJoinRequest(lee.aspect.dev.discordipc.IPCClient, String, User)
  * onActivityJoinRequest}.
  *
  * @author John Grosh (john.a.grosh@gmail.com)
