@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9bb812eb-84e9-45db-983f-c2ab4f2a5060" name="Changes" comment="The update will work now!!!">
+    <list default="true" id="9bb812eb-84e9-45db-983f-c2ab4f2a5060" name="Changes" comment="modify the lib so that it can display no button, 1 button, or 2 button">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/discordipc/entities/RichPresence.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/discordipc/entities/RichPresence.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/LaunchManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/LaunchManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/discordrpc/DiscordRP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/discordrpc/DiscordRP.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -141,7 +141,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664668471331</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="modify the lib so that it can display no button, 1 button, or 2 button">
+      <created>1664856885976</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1664856885976</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -160,6 +167,7 @@
     <MESSAGE value="fix maven says my project is shit" />
     <MESSAGE value="switch to a better discord rp lib and its build in" />
     <MESSAGE value="trying to modify the lib so it work" />
-    <option name="LAST_COMMIT_MESSAGE" value="trying to modify the lib so it work" />
+    <MESSAGE value="modify the lib so that it can display no button, 1 button, or 2 button" />
+    <option name="LAST_COMMIT_MESSAGE" value="modify the lib so that it can display no button, 1 button, or 2 button" />
   </component>
 </project>

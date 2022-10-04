@@ -24,7 +24,7 @@ public class DiscordRP {
 	public static Callback callback;
 	
 	
-	public void LaunchReadyCallBack(){
+	public void LaunchReadyCallBack(Updates updates){
 		Calendar calendar = Calendar.getInstance();
 		switch(Script.getTimestampmode()) {
 		case "Default":
@@ -58,15 +58,16 @@ public class DiscordRP {
 	try {
 		callback = new Callback();
 		client = new IPCClient(Long.valueOf(Settings.getDiscordAPIKey())); // your client id
+
 		client.setListener(new IPCListener() {
 			@Override
 			public void onReady(IPCClient client) {
 				RichPresence.Builder builder = new RichPresence.Builder();
-				builder.setState("State")
-						.setDetails("Details")
+				builder.setState(updates.getSl())
+						.setDetails(updates.getFl())
 						.setStartTimestamp(OffsetDateTime.now())
-						.setLargeImage("canary-large", "Discord Canary")
-						.setSmallImage("ptb-small", "Discord PTB");
+						.setLargeImage(updates.getImage(), updates.getImagetext())
+						.setSmallImage(updates.getSmallimage(), updates.getSmalltext());
 				client.sendRichPresence(builder.build(),callback);
 			}
 		});
@@ -85,15 +86,13 @@ public class DiscordRP {
 	}
 	
 
-	public void update(String image, String imagetext, String smallimage, String smalltext, String firstLine, String secondLine){
+	public void update(Updates updates){
 		RichPresence.Builder builder = new RichPresence.Builder();
-		builder.setState(secondLine)
-				.setDetails(firstLine)
-				.setButton1Text("Discord")
-				.setButton1Url("https://discord.com")
+		builder.setState(updates.getSl())
+				.setDetails(updates.getFl())
 				.setStartTimestamp(OffsetDateTime.now())
-				.setLargeImage(image, imagetext)
-				.setSmallImage(smallimage, smalltext);
+				.setLargeImage(updates.getImage(), updates.getImagetext())
+				.setSmallImage(updates.getSmallimage(), updates.getSmalltext());
 		client.sendRichPresence(builder.build(), callback);
 		}
 
