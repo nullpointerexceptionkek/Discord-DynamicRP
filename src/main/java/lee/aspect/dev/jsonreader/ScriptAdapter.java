@@ -15,27 +15,69 @@ public class ScriptAdapter extends TypeAdapter<Script>{
 	@Override
 	public Script read(JsonReader reader) throws IOException {
 		if (reader.peek() == JsonToken.NULL) {
-	         reader.nextNull();
-	         return null;
-	         }
+			reader.nextNull();
+			return null;
+		}
 		try {
+			reader.beginObject();
 			Script tu = new Script();
-			Script.setTimestampmode(reader.nextString());
-			String v = reader.nextString();
-			String[] parts = v.split("-");
-			for(String u : parts) {
-				String[] uParts = u.split(", ");
-				long wait = Long.parseLong(uParts[0]);
-				String image = uParts[1];
-				String imagetext = uParts[2];
-			    String smallimage = uParts[3];
-			    String smalltext = uParts[4];
-			    String F1 = uParts[5];
-			    String Sl = uParts[6];
-			    Script.addUpdates(new Updates(wait, image, imagetext,smallimage,smalltext,F1,Sl));
+			while (reader.hasNext()) {
+				String name = null;
+				JsonToken token = reader.peek();
+				if (token == JsonToken.NAME) {
+					name = reader.nextName();
+				}
+				switch (name) {
+					case "TimeStampMode":
+						Script.setTimestampmode(reader.nextString());
+						break;
+					case "Updates":
+						reader.beginArray();
+						while(reader.peek() != JsonToken.END_ARRAY) {
+							reader.beginObject();
+							JsonToken token1 = reader.peek();
+							String updateid = null;
+							Updates updates = new Updates();
+							while(reader.hasNext()) {
+								if (token1 == JsonToken.NAME) {
+									updateid = reader.nextName();
+								}
+								switch (updateid) {
+									case "Delay":
+										updates.setWait(reader.nextLong());
+										break;
+									case "Image":
+										updates.setImage(reader.nextString());
+										break;
+									case "ImageText":
+										updates.setImagetext(reader.nextString());
+										break;
+									case "SmallImage":
+										updates.setSmallimage(reader.nextString());
+										break;
+									case "SmallText":
+										updates.setSmalltext(reader.nextString());
+										break;
+									case "Firstline":
+										updates.setFl(reader.nextString());
+										break;
+									case "SecondLine":
+										updates.setSl(reader.nextString());
+										break;
+								}
+							}
+							Script.addUpdates(updates);
+							reader.endObject();
+						}
+						reader.endArray();
+						break;
+				}
+
 			}
+			reader.endObject();
 			return tu;
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.err.println("Invalid File");
 			return null;
 		}
@@ -49,9 +91,32 @@ public class ScriptAdapter extends TypeAdapter<Script>{
 			writter.nullValue();
 			return;
 		}
+		writter.beginObject();
+		writter.name("TimeStampMode");
 		writter.value(Script.getTimestampmode());
-		writter.value(tu.toString());
-
+		writter.name("Updates");
+		writter.beginArray();
+		//time, String image, String imagetext, String smallimage, String smalltext, String f1, String sl
+		for(int i = 0; i < tu.getSize(); i ++) {
+			writter.beginObject();
+			writter.name("Delay");
+			writter.value(tu.getUpdates(i).getWait());
+			writter.name("Image");
+			writter.value(tu.getUpdates(i).getImage());
+			writter.name("ImageText");
+			writter.value(tu.getUpdates(i).getImagetext());
+			writter.name("SmallImage");
+			writter.value(tu.getUpdates(i).getSmallimage());
+			writter.name("SmallText");
+			writter.value(tu.getUpdates(i).getSmalltext());
+			writter.name("Firstline");
+			writter.value(tu.getUpdates(i).getFl());
+			writter.name("SecondLine");
+			writter.value(tu.getUpdates(i).getSl());
+			writter.endObject();
+		}
+		writter.endArray();
+		writter.endObject();
 		
 	}
 

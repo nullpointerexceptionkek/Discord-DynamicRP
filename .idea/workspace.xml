@@ -4,10 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9bb812eb-84e9-45db-983f-c2ab4f2a5060" name="Changes" comment="modify the lib so that it can display no button, 1 button, or 2 button">
+    <list default="true" id="9bb812eb-84e9-45db-983f-c2ab4f2a5060" name="Changes" comment="fix bug + insta load rp + remove useless code + L + ez + gg + this did not take 4 years">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/LaunchManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/LaunchManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/discordrpc/DiscordRP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/discordrpc/DiscordRP.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CustomDiscordRPC/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/CustomDiscordRPC/Settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CustomDiscordRPC/UpdateScript.json" beforeDir="false" afterPath="$PROJECT_DIR$/CustomDiscordRPC/UpdateScript.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/discordrpc/Updates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/discordrpc/Updates.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/jsonreader/ScriptAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/jsonreader/ScriptAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/jsonreader/SettingsAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/jsonreader/SettingsAdapter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -148,7 +152,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664856885976</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="fix bug + insta load rp + remove useless code + L + ez + gg + this did not take 4 years">
+      <created>1664857416727</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1664857416727</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -168,6 +179,7 @@
     <MESSAGE value="switch to a better discord rp lib and its build in" />
     <MESSAGE value="trying to modify the lib so it work" />
     <MESSAGE value="modify the lib so that it can display no button, 1 button, or 2 button" />
-    <option name="LAST_COMMIT_MESSAGE" value="modify the lib so that it can display no button, 1 button, or 2 button" />
+    <MESSAGE value="fix bug + insta load rp + remove useless code + L + ez + gg + this did not take 4 years" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix bug + insta load rp + remove useless code + L + ez + gg + this did not take 4 years" />
   </component>
 </project>

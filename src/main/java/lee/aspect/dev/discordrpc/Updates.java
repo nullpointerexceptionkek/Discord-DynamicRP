@@ -25,7 +25,9 @@ public class Updates {
 		this.sl = sl;
 		this.image = null;
 		
-	} 
+	}
+
+	public Updates() {}
 	
 	public long getWait() {
 		return wait;
@@ -54,7 +56,35 @@ public class Updates {
 	public String getSl() {
 		return sl;
 	}
-	
+
+	public void setWait(long wait) {
+		this.wait = wait;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public void setImagetext(String imagetext) {
+		this.imagetext = imagetext;
+	}
+
+	public void setSmallimage(String smallimage) {
+		this.smallimage = smallimage;
+	}
+
+	public void setSmalltext(String smalltext) {
+		this.smalltext = smalltext;
+	}
+
+	public void setFl(String fl) {
+		this.fl = fl;
+	}
+
+	public void setSl(String sl) {
+		this.sl = sl;
+	}
+
 	public static Updates fromUpdates(long time, String fline, String sline) {
 		return new Updates(time,fline,sline);
 	}

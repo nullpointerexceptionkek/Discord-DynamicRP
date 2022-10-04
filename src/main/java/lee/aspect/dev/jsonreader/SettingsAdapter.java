@@ -20,12 +20,24 @@ public class SettingsAdapter extends TypeAdapter<Settings>{
 	         }
 		
 		try {
+			reader.beginObject();
 			Settings settings = new Settings();
-			String readenum = reader.nextString();
-			Settings.setTheme(Theme.valueOf(readenum));
-			String discordapikey = reader.nextString();
-			Settings.setDiscordAPIKey(discordapikey);
+			while (reader.hasNext()) {
+				String name = null;
+				JsonToken token = reader.peek();
+				if (token == JsonToken.NAME) {
+					name = reader.nextName();
+				}
+				switch(name){
+					case "Theme":
+						Settings.setTheme(Theme.valueOf(reader.nextString()));
+						break;
+					case "Apikey":
+						Settings.setDiscordAPIKey(reader.nextString());
 
+				}
+			}
+			reader.endObject();
 			
 			return settings;
 		} catch (Exception e) {
@@ -43,9 +55,12 @@ public class SettingsAdapter extends TypeAdapter<Settings>{
 			writter.nullValue();
 			return;
 		}
+		writter.beginObject();
+		writter.name("Theme");
 		writter.value(Settings.getTheme().name());
+		writter.name("Apikey");
 		writter.value(Settings.getDiscordAPIKey());
-
+		writter.endObject();
 		
 	}
 
