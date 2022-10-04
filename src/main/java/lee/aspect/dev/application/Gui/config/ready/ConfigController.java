@@ -100,7 +100,6 @@ public class ConfigController implements Initializable{
 		ArrayList<Updates> u = new ArrayList<>(displayUpdates.getItems());
 		Script.setTotalupdates(u); 
 		LaunchManager.saveScripToFile();
-		LaunchManager.initCallBack();
 		//Parent root = FXMLLoader.load(getClass().getResource("/application/Gui/callbackscreen/CallBack.fxml"));
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/LoadingScreen.fxml"));
 		Parent root = loader.load();
@@ -121,7 +120,7 @@ public class ConfigController implements Initializable{
 			stackPane.getChildren().remove(anchorRoot);
 		});
 		timeline.play();
-		
+
 		
 		
 

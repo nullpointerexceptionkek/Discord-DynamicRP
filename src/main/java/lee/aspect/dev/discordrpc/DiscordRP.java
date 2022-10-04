@@ -1,13 +1,15 @@
 package lee.aspect.dev.discordrpc;
 
+import java.time.OffsetDateTime;
 import java.util.Calendar;
 
+import lee.aspect.dev.discordipc.IPCClient;
+import lee.aspect.dev.discordipc.IPCListener;
+import lee.aspect.dev.discordipc.entities.Callback;
+import lee.aspect.dev.discordipc.entities.RichPresence;
+import lee.aspect.dev.discordipc.exceptions.NoDiscordClientException;
 import lee.aspect.dev.discordrpc.settings.Settings;
-import net.arikia.dev.drpc.DiscordEventHandlers;
-import net.arikia.dev.drpc.DiscordRPC;
-import net.arikia.dev.drpc.DiscordRichPresence;
-import net.arikia.dev.drpc.DiscordUser;
-import net.arikia.dev.drpc.callbacks.ReadyCallback;
+
 
 public class DiscordRP {
 	
@@ -16,9 +18,13 @@ public class DiscordRP {
 	private boolean useStartTimeStamp = true;
 	
 	public static String discordName;
+
+	public static IPCClient client;
+
+	public static Callback callback;
 	
 	
-	public void LaunchReadyCallBack(){
+	public void LaunchReadyCallBack(Updates updates){
 		Calendar calendar = Calendar.getInstance();
 		switch(Script.getTimestampmode()) {
 		case "Default":
@@ -48,47 +54,48 @@ public class DiscordRP {
 			this.created = calendar.getTimeInMillis();
 			break;
 		}
-		
 
-		DiscordEventHandlers handlers = new DiscordEventHandlers.Builder().setReadyEventHandler(new ReadyCallback() {
-			
+	try {
+		callback = new Callback();
+		client = new IPCClient(Long.valueOf(Settings.getDiscordAPIKey())); // your client id
+
+		client.setListener(new IPCListener() {
 			@Override
-			public void apply(DiscordUser user) {
-				discordName = user.username + "#" + user.discriminator;
-				System.out.println("Welcome " + user.username + "#" + user.discriminator + ".");
+			public void onReady(IPCClient client) {
+				RichPresence.Builder builder = new RichPresence.Builder();
+				builder.setState(updates.getSl())
+						.setDetails(updates.getFl())
+						.setStartTimestamp(OffsetDateTime.now())
+						.setLargeImage(updates.getImage(), updates.getImagetext())
+						.setSmallImage(updates.getSmallimage(), updates.getSmalltext());
+				client.sendRichPresence(builder.build(),callback);
 			}
-		}).build();
-		DiscordRPC.discordInitialize(Settings.getDiscordAPIKey(), handlers, true);
+		});
+
+		client.connect();
+	} catch (NoDiscordClientException e) {
+		throw new RuntimeException(e);
+	}
+
 	}
 	
 	
 	
 	public void shutdown() {
-		DiscordRPC.discordShutdown();
+		client.close();
 	}
 	
 
-	public void update(String image, String imagetext, String smallimage, String smalltext, String firstLine, String secondLine) {
-		DiscordRichPresence.Builder presence = new DiscordRichPresence.Builder(secondLine);
-		if(image != null)
-			presence.setBigImage(image, imagetext);
-		if(smallimage!=null)
-			presence.setSmallImage(smallimage, smalltext);
-		presence.setDetails(firstLine);
-		//presence.setSecrets("hello","google");
-		if(created != -1) {
-			if(useStartTimeStamp) {
-				presence.setStartTimestamps(created);
-			} 
-			else {
-				presence.setEndTimestamp(created);
-			}
-		}	
-		//presence.setParty("party", 2, 3);
-		DiscordRPC.discordUpdatePresence(presence.build());
-		
-	}
-	
+	public void update(Updates updates){
+		RichPresence.Builder builder = new RichPresence.Builder();
+		builder.setState(updates.getSl())
+				.setDetails(updates.getFl())
+				.setStartTimestamp(OffsetDateTime.now())
+				.setLargeImage(updates.getImage(), updates.getImagetext())
+				.setSmallImage(updates.getSmallimage(), updates.getSmalltext());
+		client.sendRichPresence(builder.build(), callback);
+		}
+
 	
 	
 }

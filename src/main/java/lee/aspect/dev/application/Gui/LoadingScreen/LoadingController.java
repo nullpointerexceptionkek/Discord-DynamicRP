@@ -19,7 +19,6 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import lee.aspect.dev.application.LaunchManager;
 import lee.aspect.dev.discordrpc.DiscordRP;
-import net.arikia.dev.drpc.DiscordRPC;
 
 public class LoadingController implements Initializable{
 
@@ -51,19 +50,12 @@ public class LoadingController implements Initializable{
 			try {
 				switch(file) {
 				case "callback":
+					LaunchManager.initCallBack();
+					LaunchManager.startUpdate();
 					long time = System.currentTimeMillis();
-					while(DiscordRP.discordName == null) {
-						DiscordRPC.discordRunCallbacks();
-						Thread.sleep(100);
-						if(time + 60000 < System.currentTimeMillis()) {
-							file = "errorNoSDK";
-							System.err.println("fail to connect sdk");
-							break;
-						}
-					}
 					break;
 				case "readyconfig":
-					Thread.sleep(100);
+					LaunchManager.closeCallBack();
 					break;
 				default:
 					Thread.sleep(sleep != null? sleep: 1000);
@@ -91,7 +83,7 @@ public class LoadingController implements Initializable{
 								timeline.play();
 								LaunchManager.startUpdate();
 								break;
-							case "readyconfig":
+								case "readyconfig":
 								Parent root1 = FXMLLoader.load(getClass().getResource("/lee/aspect/dev/ReadyConfig.fxml"));
 								Scene scene1 = anchorroot.getScene();
 								

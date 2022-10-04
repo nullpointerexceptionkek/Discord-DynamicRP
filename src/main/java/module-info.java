@@ -2,8 +2,12 @@ module lee.aspect.dev {
     requires javafx.controls;
     requires javafx.fxml;
     requires com.google.gson;
-    requires discord.rpc;
     requires java.desktop;
+    requires json;
+    requires slf4j.api;
+    requires java.management;
+    requires junixsocket.common;
+
 
     opens lee.aspect.dev.application to javafx.controls,javafx.fxml,javafx.graphics;
     opens lee.aspect.dev.application.Gui.Settings to javafx.controls,javafx.fxml,javafx.graphics;
