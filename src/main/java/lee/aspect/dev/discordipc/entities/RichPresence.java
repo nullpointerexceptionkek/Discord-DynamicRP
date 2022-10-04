@@ -84,10 +84,35 @@ public class RichPresence {
      * @return A JSONObject payload for updating a user's Rich Presence.
      */
     public JSONObject toJson() {
-        return new JSONObject()
+        /*
+            return new JSONObject()
+                    .put("state", state)
+                    .put("details", details)
+                    .put("timestamps", new JSONObject()
+                            .put("start", startTimestamp == null ? null : startTimestamp.toEpochSecond())
+                            .put("end", endTimestamp == null ? null : endTimestamp.toEpochSecond()))
+                    .put("assets", new JSONObject()
+                            .put("large_image", largeImageKey)
+                            .put("large_text", largeImageText)
+                            .put("small_image", smallImageKey)
+                            .put("small_text", smallImageText))
+                    .put("party", partyId == null ? null : new JSONObject()
+                            .put("id", partyId)
+                            .put("size", new JSONArray().put(partySize).put(partyMax)))
+                    .put("instance", instance)
+
+                    .put("buttons", new JSONArray()
+                            .put(new JSONObject()
+                                    .put("label", button1Text)
+                                    .put("url", button1Url))
+                            .put(new JSONObject()
+                                    .put("label", button2Text)
+                                    .put("url", button2Url)));
+
+         */
+        JSONObject jsonObject = new JSONObject()
                 .put("state", state)
                 .put("details", details)
-                //.put("buttons", sList)
                 .put("timestamps", new JSONObject()
                         .put("start", startTimestamp == null ? null : startTimestamp.toEpochSecond())
                         .put("end", endTimestamp == null ? null : endTimestamp.toEpochSecond()))
@@ -99,15 +124,22 @@ public class RichPresence {
                 .put("party", partyId == null ? null : new JSONObject()
                         .put("id", partyId)
                         .put("size", new JSONArray().put(partySize).put(partyMax)))
-                .put("instance", instance)
+                .put("instance", instance);
+        if(button1Text !=null) {
+            JSONArray buttons = new JSONArray()
+                    .put(new JSONObject()
+                    .put("label", button1Text)
+                    .put("url", button1Url));
 
-                .put("buttons", new JSONArray()
-                        .put(new JSONObject()
-                                .put("label", button1Text)
-                                .put("url", button1Url))
-                        .put(new JSONObject()
-                                .put("label", button2Text)
-                                .put("url", button2Url)));
+            if(button2Text != null) {
+                buttons.put(new JSONObject()
+                        .put("label", button2Text)
+                        .put("url", button2Url));
+            }
+            jsonObject.put("buttons",buttons);
+        }
+
+        return jsonObject;
     }
 
     /**
@@ -133,11 +165,11 @@ public class RichPresence {
         private String spectateSecret;
         private boolean instance;
 
-        private String button1Text = "First Button";
-        private String button1Url = "https://discord.com";
+        private String button1Text;
+        private String button1Url;
 
-        private String button2Text = "Second Button";
-        private String button2Url = "https://google.com";
+        private String button2Text;
+        private String button2Url;
 
         /**
          * Builds the {@link RichPresence} from the current state of this builder.

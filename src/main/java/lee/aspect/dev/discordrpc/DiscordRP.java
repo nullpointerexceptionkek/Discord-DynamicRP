@@ -64,10 +64,6 @@ public class DiscordRP {
 				RichPresence.Builder builder = new RichPresence.Builder();
 				builder.setState("State")
 						.setDetails("Details")
-						.setButton1Text("Discord")
-						.setButton1Url("https://discord.com")
-						.setButton2Text("Google")
-						.setButton2Url("https://google.com")
 						.setStartTimestamp(OffsetDateTime.now())
 						.setLargeImage("canary-large", "Discord Canary")
 						.setSmallImage("ptb-small", "Discord PTB");
@@ -95,8 +91,6 @@ public class DiscordRP {
 				.setDetails(firstLine)
 				.setButton1Text("Discord")
 				.setButton1Url("https://discord.com")
-				.setButton2Text("Google")
-				.setButton2Url("https://google.com")
 				.setStartTimestamp(OffsetDateTime.now())
 				.setLargeImage(image, imagetext)
 				.setSmallImage(smallimage, smalltext);
