@@ -16,6 +16,8 @@ public class DiscordRP {
 	private long created = -1;
 	
 	private boolean useStartTimeStamp = true;
+
+	private long current;
 	
 	public static String discordName;
 
@@ -54,20 +56,31 @@ public class DiscordRP {
 			this.created = calendar.getTimeInMillis();
 			break;
 		}
+		created = (long) Math.floor(created/1000);
+		current = (long) Math.floor(System.currentTimeMillis()/1000);
 
+		/**
+		 * offical discord ipc doc
+		 * https://discord.com/developers/docs/topics/rpc#rpc
+		 */
 	try {
 		callback = new Callback();
 		client = new IPCClient(Long.valueOf(Settings.getDiscordAPIKey())); // your client id
-
 		client.setListener(new IPCListener() {
 			@Override
 			public void onReady(IPCClient client) {
 				RichPresence.Builder builder = new RichPresence.Builder();
 				builder.setState(updates.getSl())
 						.setDetails(updates.getFl())
-						.setStartTimestamp(OffsetDateTime.now())
 						.setLargeImage(updates.getImage(), updates.getImagetext())
 						.setSmallImage(updates.getSmallimage(), updates.getSmalltext());
+				if(!(created == -1)) {
+					if(created > current) {
+						builder.setEndTimestamp(created);
+					} else {
+						builder.setStartTimestamp(created);
+					}
+				}
 				client.sendRichPresence(builder.build(),callback);
 			}
 		});
@@ -78,21 +91,27 @@ public class DiscordRP {
 	}
 
 	}
-	
-	
-	
+
+
+
 	public void shutdown() {
 		client.close();
 	}
-	
+
 
 	public void update(Updates updates){
 		RichPresence.Builder builder = new RichPresence.Builder();
 		builder.setState(updates.getSl())
 				.setDetails(updates.getFl())
-				.setStartTimestamp(OffsetDateTime.now())
 				.setLargeImage(updates.getImage(), updates.getImagetext())
 				.setSmallImage(updates.getSmallimage(), updates.getSmalltext());
+		if(!(created == -1)) {
+			if(created > current) {
+				builder.setEndTimestamp(created);
+			} else {
+				builder.setStartTimestamp(created);
+			}
+		}
 		client.sendRichPresence(builder.build(), callback);
 		}
 

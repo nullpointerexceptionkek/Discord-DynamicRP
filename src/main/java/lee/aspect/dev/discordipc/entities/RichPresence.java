@@ -30,8 +30,8 @@ import org.json.JSONObject;
 public class RichPresence {
     private final String state;
     private final String details;
-    private final OffsetDateTime startTimestamp;
-    private final OffsetDateTime endTimestamp;
+    private final long startTimestamp;
+    private final long endTimestamp;
     private final String largeImageKey;
     private final String largeImageText;
     private final String smallImageKey;
@@ -49,7 +49,7 @@ public class RichPresence {
 
     private final String button2Text;
     private final String button2Url;
-    public RichPresence(String state, String details, OffsetDateTime startTimestamp, OffsetDateTime endTimestamp,
+    public RichPresence(String state, String details, long startTimestamp, long endTimestamp,
                         String largeImageKey, String largeImageText, String smallImageKey, String smallImageText,
                         String partyId, int partySize, int partyMax, String matchSecret, String joinSecret,
                         String spectateSecret, boolean instance, String button1Text, String button1Url, String button2Text, String button2Url) {
@@ -114,8 +114,8 @@ public class RichPresence {
                 .put("state", state)
                 .put("details", details)
                 .put("timestamps", new JSONObject()
-                        .put("start", startTimestamp == null ? null : startTimestamp.toEpochSecond())
-                        .put("end", endTimestamp == null ? null : endTimestamp.toEpochSecond()))
+                        .put("start", startTimestamp < 100 ? null : startTimestamp)
+                        .put("end", endTimestamp <100 ? null : endTimestamp))
                 .put("assets", new JSONObject()
                         .put("large_image", largeImageKey)
                         .put("large_text", largeImageText)
@@ -151,8 +151,8 @@ public class RichPresence {
     public static class Builder {
         private String state;
         private String details;
-        private OffsetDateTime startTimestamp;
-        private OffsetDateTime endTimestamp;
+        private long startTimestamp;
+        private long endTimestamp;
         private String largeImageKey;
         private String largeImageText;
         private String smallImageKey;
@@ -255,7 +255,7 @@ public class RichPresence {
          * @param startTimestamp The time the player started a match or activity.
          * @return This Builder.
          */
-        public Builder setStartTimestamp(OffsetDateTime startTimestamp) {
+        public Builder setStartTimestamp(long startTimestamp) {
             this.startTimestamp = startTimestamp;
             return this;
         }
@@ -266,7 +266,7 @@ public class RichPresence {
          * @param endTimestamp The time the player's activity will end.
          * @return This Builder.
          */
-        public Builder setEndTimestamp(OffsetDateTime endTimestamp) {
+        public Builder setEndTimestamp(long endTimestamp) {
             this.endTimestamp = endTimestamp;
             return this;
         }
