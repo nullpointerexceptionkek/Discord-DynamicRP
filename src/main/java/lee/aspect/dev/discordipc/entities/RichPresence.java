@@ -15,8 +15,6 @@
  */
 package lee.aspect.dev.discordipc.entities;
 
-import java.time.OffsetDateTime;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -115,13 +113,19 @@ public class RichPresence {
                 .put("details", details)
                 .put("timestamps", new JSONObject()
                         .put("start", startTimestamp < 100 ? null : startTimestamp)
-                        .put("end", endTimestamp <100 ? null : endTimestamp))
-                .put("assets", new JSONObject()
-                        .put("large_image", largeImageKey)
-                        .put("large_text", largeImageText)
-                        .put("small_image", smallImageKey)
-                        .put("small_text", smallImageText))
-                .put("party", partyId == null ? null : new JSONObject()
+                        .put("end", endTimestamp <100 ? null : endTimestamp));
+        JSONObject assets = new JSONObject();
+            if(largeImageKey != null && !largeImageKey.isEmpty()) {
+                assets.put("large_image", largeImageKey);
+                if(largeImageText != null && !largeImageText.isEmpty()) assets.put("large_text", largeImageText);
+                if(smallImageKey != null && !smallImageKey.isEmpty()) {
+                    assets.put("small_image", smallImageKey);
+                    if(smallImageText!= null && !smallImageText.isEmpty()) assets.put("small_text", smallImageText);
+                }
+            }
+            jsonObject.put("assets",assets);
+
+        jsonObject.put("party", partyId == null ? null : new JSONObject()
                         .put("id", partyId)
                         .put("size", new JSONArray().put(partySize).put(partyMax)))
                 .put("instance", instance);
