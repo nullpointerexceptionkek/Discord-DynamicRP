@@ -4,17 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9bb812eb-84e9-45db-983f-c2ab4f2a5060" name="Changes" comment="update to the toJson() method so that it works even if a few input is null">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CustomDiscordRPC/UpdateScript.json" beforeDir="false" afterPath="$PROJECT_DIR$/CustomDiscordRPC/UpdateScript.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/config/EditListController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/config/EditListController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/config/ready/ConfigController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/config/ready/ConfigController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/discordrpc/DiscordRP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/discordrpc/DiscordRP.java" afterDir="false" />
+    <list default="true" id="9bb812eb-84e9-45db-983f-c2ab4f2a5060" name="Changes" comment="You are now able to add custom button to ur rp!!!">
       <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/discordrpc/Updates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/discordrpc/Updates.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/jsonreader/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/jsonreader/FileManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/jsonreader/ScriptAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/jsonreader/ScriptAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/jsonreader/UpdatesAdapter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/lee/aspect/dev/EditListScript.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/lee/aspect/dev/EditListScript.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,7 +164,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664929742468</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="You are now able to add custom button to ur rp!!!">
+      <created>1664951872943</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1664951872943</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -198,6 +196,7 @@
     <MESSAGE value="modify the lib so that it can display no button, 1 button, or 2 button" />
     <MESSAGE value="fix bug + insta load rp + remove useless code + L + ez + gg + this did not take 4 years" />
     <MESSAGE value="fix timestamp not working,&#10;the docs about ipc connection is in https://discord.com/developers/docs/topics/rpc#rpc" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix timestamp not working,&#10;the docs about ipc connection is in https://discord.com/developers/docs/topics/rpc#rpc" />
+    <MESSAGE value="You are now able to add custom button to ur rp!!!" />
+    <option name="LAST_COMMIT_MESSAGE" value="You are now able to add custom button to ur rp!!!" />
   </component>
 </project>

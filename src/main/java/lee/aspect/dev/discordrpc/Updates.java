@@ -31,15 +31,6 @@ public class Updates {
 		this.smallimage = smallimage;
 		this.smalltext = smalltext;
 	}
-	
-	public Updates(long time, String f1, String sl) {
-		this.wait = time;
-		this.fl = f1;
-		this.sl = sl;
-		this.image = null;
-		
-	}
-
 	public Updates() {}
 	
 	public long getWait() {
@@ -115,7 +106,7 @@ public class Updates {
 	}
 
 	public void setButton1Text(String button1Text) {
-		this.button1Text = button2Text;
+		this.button1Text = button1Text;
 	}
 
 	public void setButton1Url(String url) {
@@ -130,14 +121,6 @@ public class Updates {
 		this.button2Url = url;
 	}
 
-	public static Updates fromUpdates(long time, String fline, String sline) {
-		return new Updates(time,fline,sline);
-	}
-	
-	public static Updates fromUpdates(long time, String image, String imagetext, String smallimage, String smalltext, String f1, String sl,String button1, String button1Text, String button2, String button2Text) {
-		return new Updates(time,image,imagetext,smallimage,smalltext,f1,sl,button1,button1Text,button2,button2Text);
-	}
-	
 	@Override
 	public String toString() {
 		return wait + ", " + image +", " + imagetext + ", " + smallimage + ", " +smalltext + ", " + fl + ", " + sl;
