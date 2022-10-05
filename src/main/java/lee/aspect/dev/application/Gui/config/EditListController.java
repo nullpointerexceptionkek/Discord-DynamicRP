@@ -45,6 +45,18 @@ public class EditListController extends ConfigController implements Initializabl
 	
 	@FXML
 	private TextField secondline;
+
+	@FXML
+	private TextField button1Text;
+
+	@FXML
+	private TextField button1Url;
+
+	@FXML
+	private TextField button2Text;
+
+	@FXML
+	private TextField button2Url;
 	
 	@FXML
 	private Button CancelButton;
@@ -69,7 +81,8 @@ public class EditListController extends ConfigController implements Initializabl
 	
 	public void saveChanges(ActionEvent event) throws IOException {
 		Script.setUpdates(new Updates(Long.parseLong(Wait.getText()),image.getText(),imagetext.getText(),smallimage.getText(),
-				smalltext.getText(),firstline.getText(),secondline.getText()), numberInList);
+				smalltext.getText(),firstline.getText(),secondline.getText(),button1Text.getText(),
+				button1Url.getText(),button2Text.getText(),button2Url.getText()), numberInList);
 		gobacktoConfig();
 	}
 	
@@ -101,7 +114,11 @@ public class EditListController extends ConfigController implements Initializabl
 		smalltext.setText(Script.getTotalupdates().get(numberInList).getSmalltext());
 		firstline.setText(Script.getTotalupdates().get(numberInList).getFl());
 		secondline.setText(Script.getTotalupdates().get(numberInList).getSl());
-			
+		button1Text.setText(Script.getTotalupdates().get(numberInList).getButton1Text());
+		button1Url.setText(Script.getTotalupdates().get(numberInList).getButton1Url());
+		button2Text.setText(Script.getTotalupdates().get(numberInList).getButton2Text());
+		button2Url.setText(Script.getTotalupdates().get(numberInList).getButton2Url());
+
 	}
 	
 	private void gobacktoConfig() throws IOException {

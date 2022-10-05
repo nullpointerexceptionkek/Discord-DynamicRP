@@ -152,7 +152,11 @@ public class ConfigController implements Initializable{
 					Script.getTotalupdates().get(currentCount-2).getImagetext(),
 					Script.getTotalupdates().get(currentCount-2).getSmallimage()
 					,Script.getTotalupdates().get(currentCount-2).getSmalltext(), 
-					"First line " + currentCount, "Second line " + currentCount));
+					"First line " + currentCount, "Second line " + currentCount,
+					Script.getTotalupdates().get(currentCount-2).getButton1Text(),
+					Script.getTotalupdates().get(currentCount-2).getButton1Url(),
+					Script.getTotalupdates().get(currentCount-2).getButton2Text(),
+					Script.getTotalupdates().get(currentCount-2).getButton2Url()));
 		
 		else Script.addUpdates(new Updates(16000, String.valueOf(currentCount), "First line " + currentCount,"","","", "Second line " + currentCount));
 		displayUpdates.getItems().clear();		

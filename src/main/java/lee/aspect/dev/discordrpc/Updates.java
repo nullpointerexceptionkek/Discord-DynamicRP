@@ -5,9 +5,23 @@ public class Updates {
 
 	private long wait = 3000;
 	
-	private String image, imagetext, smallimage, smalltext,fl,sl;
+	private String image, imagetext, smallimage, smalltext,fl,sl, button1Text, button1Url, button2Text, button2Url;
 	
 	
+	public Updates(long time, String image, String imagetext, String smallimage, String smalltext, String f1, String sl, String button1Text, String button1Url, String button2Text, String button2Url) {
+		this.wait = time;
+		this.fl = f1;
+		this.sl = sl;
+		this.image = image;
+		this.imagetext = imagetext;
+		this.smallimage = smallimage;
+		this.smalltext = smalltext;
+		this.button1Text = button1Text;
+		this.button1Url = button1Url;
+		this.button2Url = button2Url;
+		this.button2Text = button2Text;
+		
+	}
 	public Updates(long time, String image, String imagetext, String smallimage, String smalltext, String f1, String sl) {
 		this.wait = time;
 		this.fl = f1;
@@ -16,7 +30,6 @@ public class Updates {
 		this.imagetext = imagetext;
 		this.smallimage = smallimage;
 		this.smalltext = smalltext;
-		
 	}
 	
 	public Updates(long time, String f1, String sl) {
@@ -57,6 +70,22 @@ public class Updates {
 		return sl;
 	}
 
+	public String getButton1Text() {
+		return button1Text;
+	}
+
+	public String getButton1Url() {
+		return button1Url;
+	}
+
+	public String getButton2Text() {
+		return button2Text;
+	}
+
+	public String getButton2Url() {
+		return button2Url;
+	}
+
 	public void setWait(long wait) {
 		this.wait = wait;
 	}
@@ -85,12 +114,28 @@ public class Updates {
 		this.sl = sl;
 	}
 
+	public void setButton1Text(String button1Text) {
+		this.button1Text = button2Text;
+	}
+
+	public void setButton1Url(String url) {
+		this.button1Url = url;
+	}
+
+	public void setButton2Text(String button2Text) {
+		this.button2Text = button2Text;
+	}
+
+	public void setButton2Url(String url) {
+		this.button2Url = url;
+	}
+
 	public static Updates fromUpdates(long time, String fline, String sline) {
 		return new Updates(time,fline,sline);
 	}
 	
-	public static Updates fromUpdates(long time, String image, String imagetext, String smallimage, String smalltext, String f1, String sl) {
-		return new Updates(time,image,imagetext,smallimage,smalltext,f1,sl);
+	public static Updates fromUpdates(long time, String image, String imagetext, String smallimage, String smalltext, String f1, String sl,String button1, String button1Text, String button2, String button2Text) {
+		return new Updates(time,image,imagetext,smallimage,smalltext,f1,sl,button1,button1Text,button2,button2Text);
 	}
 	
 	@Override

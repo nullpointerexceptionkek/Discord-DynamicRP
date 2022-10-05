@@ -73,7 +73,11 @@ public class DiscordRP {
 				builder.setState(updates.getSl())
 						.setDetails(updates.getFl())
 						.setLargeImage(updates.getImage(), updates.getImagetext())
-						.setSmallImage(updates.getSmallimage(), updates.getSmalltext());
+						.setSmallImage(updates.getSmallimage(), updates.getSmalltext())
+						.setButton1Text(updates.getButton1Text())
+						.setButton1Url(updates.getButton1Url())
+						.setButton2Text(updates.getButton2Text())
+						.setButton2Url(updates.getButton2Url());
 				if(!(created == -1)) {
 					if(created > current) {
 						builder.setEndTimestamp(created);
@@ -104,7 +108,11 @@ public class DiscordRP {
 		builder.setState(updates.getSl())
 				.setDetails(updates.getFl())
 				.setLargeImage(updates.getImage(), updates.getImagetext())
-				.setSmallImage(updates.getSmallimage(), updates.getSmalltext());
+				.setSmallImage(updates.getSmallimage(), updates.getSmalltext())
+				.setButton1Text(updates.getButton1Text())
+				.setButton1Url(updates.getButton1Url())
+				.setButton2Text(updates.getButton2Text())
+				.setButton2Url(updates.getButton2Url());
 		if(!(created == -1)) {
 			if(created > current) {
 				builder.setEndTimestamp(created);

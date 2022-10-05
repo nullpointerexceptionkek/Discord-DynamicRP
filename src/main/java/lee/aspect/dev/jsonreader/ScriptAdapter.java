@@ -64,6 +64,18 @@ public class ScriptAdapter extends TypeAdapter<Script>{
 									case "SecondLine":
 										updates.setSl(reader.nextString());
 										break;
+									case "Button1Text":
+										updates.setButton1Text(reader.nextString());
+										break;
+									case "Button1Url":
+										updates.setButton1Url(reader.nextString());
+										break;
+									case "Button2Text":
+										updates.setButton2Text(reader.nextString());
+										break;
+									case "Button2Url":
+										updates.setButton2Url(reader.nextString());
+										break;
 								}
 							}
 							Script.addUpdates(updates);
@@ -113,6 +125,14 @@ public class ScriptAdapter extends TypeAdapter<Script>{
 			writter.value(tu.getUpdates(i).getFl());
 			writter.name("SecondLine");
 			writter.value(tu.getUpdates(i).getSl());
+			writter.name("Button1Text");
+			writter.value(tu.getUpdates(i).getButton1Text());
+			writter.name("Button1Url");
+			writter.value(tu.getUpdates(i).getButton1Url());
+			writter.name("Button2Text");
+			writter.value(tu.getUpdates(i).getButton2Text());
+			writter.name("Button2Url");
+			writter.value(tu.getUpdates(i).getButton2Url());
 			writter.endObject();
 		}
 		writter.endArray();

@@ -24,7 +24,6 @@ public class FileManager {
 		if(!ROOT_DIR.exists()) { ROOT_DIR.mkdir();}
 		
 		GsonBuilder builder = new GsonBuilder();
-		builder.registerTypeAdapter(Updates.class, new UpdatesAdapter());
 		builder.registerTypeAdapter(Script.class, new ScriptAdapter());
 		builder.registerTypeAdapter(Settings.class, new SettingsAdapter());
 		gson = builder.create();
