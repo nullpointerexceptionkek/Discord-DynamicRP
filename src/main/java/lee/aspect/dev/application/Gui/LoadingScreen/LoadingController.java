@@ -18,6 +18,8 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
+import lee.aspect.dev.animationengine.animation.BounceInUp;
+import lee.aspect.dev.animationengine.animation.RotateIn;
 import lee.aspect.dev.application.LaunchManager;
 import lee.aspect.dev.discordrpc.DiscordRP;
 
@@ -40,7 +42,7 @@ public class LoadingController implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		new SplashScreen().start();
 	}
-	
+
 	class SplashScreen extends Thread{
 		
 		@Override
@@ -51,8 +53,6 @@ public class LoadingController implements Initializable{
 			try {
 				switch(file) {
 				case "callback":
-					LaunchManager.initCallBack();
-					LaunchManager.startUpdate();
 					try {
 						LaunchManager.initCallBack();
 						LaunchManager.startUpdate();
@@ -83,11 +83,9 @@ public class LoadingController implements Initializable{
 							switch(file) {
 							case "callback":
 								Parent root = FXMLLoader.load(getClass().getResource("/lee/aspect/dev/CallBack.fxml"));
-								Scene scene = anchorroot.getScene();
-								
-								root.translateYProperty().set(scene.getHeight());
+								//Scene scene = anchorroot.getScene();
 								stackpane.getChildren().add(root);
-								
+								/*
 								Timeline timeline = new Timeline();
 								KeyValue keyValue = new KeyValue(root.translateYProperty(), 0,Interpolator.EASE_IN);
 								KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), keyValue);
@@ -96,23 +94,26 @@ public class LoadingController implements Initializable{
 									stackpane.getChildren().remove(anchorroot);
 								});
 								timeline.play();
+								 */
+								new RotateIn(stackpane).setCycleCount(1).setDelay(Duration.valueOf("100ms")).play();
+								stackpane.getChildren().remove(anchorroot);
 								LaunchManager.startUpdate();
 								break;
 								case "readyconfig":
-								Parent root1 = FXMLLoader.load(getClass().getResource("/lee/aspect/dev/ReadyConfig.fxml"));
-								Scene scene1 = anchorroot.getScene();
-								
-								root1.translateYProperty().set(scene1.getHeight());
-								stackpane.getChildren().add(root1);
-								
-								Timeline timeline1 = new Timeline();
-								KeyValue keyValue1 = new KeyValue(root1.translateYProperty(), 0,Interpolator.EASE_OUT);
-								KeyFrame keyFrame1 = new KeyFrame(Duration.seconds(1), keyValue1);
-								timeline1.getKeyFrames().add(keyFrame1);
-								timeline1.setOnFinished(event1 -> {
-									stackpane.getChildren().remove(anchorroot);
-								});
-								timeline1.play();
+									Parent root1 = FXMLLoader.load(getClass().getResource("/lee/aspect/dev/ReadyConfig.fxml"));
+									Scene scene1 = anchorroot.getScene();
+
+									root1.translateYProperty().set(scene1.getHeight());
+									stackpane.getChildren().add(root1);
+
+									Timeline timeline1 = new Timeline();
+									KeyValue keyValue1 = new KeyValue(root1.translateYProperty(), 0,Interpolator.EASE_OUT);
+									KeyFrame keyFrame1 = new KeyFrame(Duration.seconds(1), keyValue1);
+									timeline1.getKeyFrames().add(keyFrame1);
+									timeline1.setOnFinished(event1 -> {
+										stackpane.getChildren().remove(anchorroot);
+									});
+									timeline1.play();
 								break;
 							default:
 								Parent root2 = FXMLLoader.load(getClass().getResource("/lee/aspect/dev/ReadyConfig.fxml"));
@@ -129,6 +130,7 @@ public class LoadingController implements Initializable{
 									stackpane.getChildren().remove(anchorroot);
 								});
 								timeline2.play();
+								System.err.println(file);
 								
 							}
 						}catch(Exception e) {

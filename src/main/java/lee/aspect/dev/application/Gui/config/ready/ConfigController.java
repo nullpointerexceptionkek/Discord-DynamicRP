@@ -7,10 +7,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import javafx.animation.Interpolator;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -37,6 +34,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import lee.aspect.dev.animationengine.animation.AnimationFX;
+import lee.aspect.dev.animationengine.animation.FadeIn;
+import lee.aspect.dev.animationengine.animation.RotateIn;
 import lee.aspect.dev.application.Gui.LoadingScreen.LoadingController;
 import lee.aspect.dev.application.Gui.Settings.SettingController;
 import lee.aspect.dev.application.Gui.config.EditListController;
@@ -95,23 +95,28 @@ public class ConfigController implements Initializable{
 		String DiscordAppID = appID.getText();
 		Settings.setDiscordAPIKey(DiscordAppID);
 		SettingManager.saveSettingToFile();
-		
+
 		System.out.println(displayUpdates.getItems());
 		ArrayList<Updates> u = new ArrayList<>(displayUpdates.getItems());
 		Script.setTotalupdates(u); 
 		LaunchManager.saveScripToFile();
-		//Parent root = FXMLLoader.load(getClass().getResource("/application/Gui/callbackscreen/CallBack.fxml"));
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/LoadingScreen.fxml"));
 		Parent root = loader.load();
+		root.getStylesheets().add(getClass().getResource(Settings.getTheme().Themepass()).toExternalForm());
 		LoadingController lc = loader.getController();
 		lc.toNewScene(1000,"callback");
 		Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		Scene scene = callbackButton.getScene();
-		
-		
-		root.translateYProperty().set(scene.getHeight());
+		//root.translateYProperty().set(scene.getHeight());
 		stackPane.getChildren().add(root);
-		
+
+		FadeIn animation = new FadeIn(stackPane);
+		animation.setSpeed(2.00);
+		stackPane.getChildren().remove(anchorRoot);
+		//animation.setOnFinished((actionEvent -> stackPane.getChildren().remove(anchorRoot)));
+		animation.play();
+
+		/*
 		Timeline timeline = new Timeline();
 		KeyValue keyValue = new KeyValue(root.translateYProperty(), 0,Interpolator.EASE_IN);
 		KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.3), keyValue);
@@ -120,6 +125,7 @@ public class ConfigController implements Initializable{
 			stackPane.getChildren().remove(anchorRoot);
 		});
 		timeline.play();
+		*/
 
 		
 		

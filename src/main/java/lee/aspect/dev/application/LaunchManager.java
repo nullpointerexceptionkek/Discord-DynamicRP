@@ -94,7 +94,11 @@ public class LaunchManager {
 	public static void onClose() {
 		SettingManager.saveSettingToFile();
 		upm.saveScriptToFile();
-		discordRP.shutdown();
+		try {
+			discordRP.shutdown();
+		} catch (NullPointerException e) {
+
+		}
 		System.exit(0);
 	}
 	

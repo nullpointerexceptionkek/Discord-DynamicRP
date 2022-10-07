@@ -46,9 +46,7 @@ public class Launch extends Application {
 		
 		
 	}
-	
-	public static void main(String[] args) {
-		
+	public static void Launch(String[] args) {
 		System.out.println(Arrays.toString(args));
 		launch(args);
 		//check if already running
@@ -69,11 +67,9 @@ public class Launch extends Application {
 		    }
 
 		 */
-		
 	}
-	
 	@Override
 	public void stop() throws Exception {
-		//LaunchManager.onClose();
+		LaunchManager.onClose();
 	}
 }
