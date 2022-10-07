@@ -7,6 +7,8 @@ import lee.aspect.dev.discordrpc.Updates;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.jsonreader.FileManager;
 
+import java.io.IOException;
+
 public class LaunchManager {
 	
 	public static boolean isRunning = false;
@@ -96,8 +98,8 @@ public class LaunchManager {
 		upm.saveScriptToFile();
 		try {
 			discordRP.shutdown();
-		} catch (NullPointerException e) {
-
+		} catch (NullPointerException | IllegalStateException e) {
+			e.printStackTrace();
 		}
 		System.exit(0);
 	}
