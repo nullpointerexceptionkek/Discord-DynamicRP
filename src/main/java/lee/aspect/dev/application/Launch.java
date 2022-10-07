@@ -70,6 +70,6 @@ public class Launch extends Application {
 	}
 	@Override
 	public void stop() throws Exception {
-		//LaunchManager.onClose();
+		LaunchManager.onClose();
 	}
 }

@@ -95,13 +95,14 @@ public class ConfigController implements Initializable{
 		String DiscordAppID = appID.getText();
 		Settings.setDiscordAPIKey(DiscordAppID);
 		SettingManager.saveSettingToFile();
-		
+
 		System.out.println(displayUpdates.getItems());
 		ArrayList<Updates> u = new ArrayList<>(displayUpdates.getItems());
 		Script.setTotalupdates(u); 
 		LaunchManager.saveScripToFile();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/LoadingScreen.fxml"));
 		Parent root = loader.load();
+		root.getStylesheets().add(getClass().getResource(Settings.getTheme().Themepass()).toExternalForm());
 		LoadingController lc = loader.getController();
 		lc.toNewScene(1000,"callback");
 		Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -109,8 +110,10 @@ public class ConfigController implements Initializable{
 		//root.translateYProperty().set(scene.getHeight());
 		stackPane.getChildren().add(root);
 
-		RotateIn animation = new RotateIn(stackPane);
-		animation.setOnFinished((actionEvent -> stackPane.getChildren().remove(anchorRoot)));
+		FadeIn animation = new FadeIn(stackPane);
+		animation.setSpeed(2.00);
+		stackPane.getChildren().remove(anchorRoot);
+		//animation.setOnFinished((actionEvent -> stackPane.getChildren().remove(anchorRoot)));
 		animation.play();
 
 		/*

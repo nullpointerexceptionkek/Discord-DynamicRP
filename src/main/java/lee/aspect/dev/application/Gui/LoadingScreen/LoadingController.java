@@ -100,7 +100,6 @@ public class LoadingController implements Initializable{
 								LaunchManager.startUpdate();
 								break;
 								case "readyconfig":
-									System.out.println("Im being called");
 									Parent root1 = FXMLLoader.load(getClass().getResource("/lee/aspect/dev/ReadyConfig.fxml"));
 									Scene scene1 = anchorroot.getScene();
 
