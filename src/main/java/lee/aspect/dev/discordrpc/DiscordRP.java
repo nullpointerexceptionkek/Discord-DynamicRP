@@ -1,5 +1,6 @@
 package lee.aspect.dev.discordrpc;
 
+import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.Calendar;
 
@@ -24,6 +25,8 @@ public class DiscordRP {
 	public static IPCClient client;
 
 	public static Callback callback;
+
+	public static boolean autoReconnect = true;
 	
 	
 	public void LaunchReadyCallBack(Updates updates){
@@ -63,6 +66,7 @@ public class DiscordRP {
 		 * offical discord ipc doc
 		 * https://discord.com/developers/docs/topics/rpc#rpc
 		 */
+
 	try {
 		callback = new Callback();
 		client = new IPCClient(Long.valueOf(Settings.getDiscordAPIKey())); // your client id
@@ -104,24 +108,59 @@ public class DiscordRP {
 
 
 	public void update(Updates updates){
-		RichPresence.Builder builder = new RichPresence.Builder();
-		builder.setState(updates.getSl())
-				.setDetails(updates.getFl())
-				.setLargeImage(updates.getImage(), updates.getImagetext())
-				.setSmallImage(updates.getSmallimage(), updates.getSmalltext())
-				.setButton1Text(updates.getButton1Text())
-				.setButton1Url(updates.getButton1Url())
-				.setButton2Text(updates.getButton2Text())
-				.setButton2Url(updates.getButton2Url());
-		if(!(created == -1)) {
-			if(created > current) {
-				builder.setEndTimestamp(created);
-			} else {
-				builder.setStartTimestamp(created);
+		try {
+			RichPresence.Builder builder = new RichPresence.Builder();
+			builder.setState(updates.getSl())
+					.setDetails(updates.getFl())
+					.setLargeImage(updates.getImage(), updates.getImagetext())
+					.setSmallImage(updates.getSmallimage(), updates.getSmalltext())
+					.setButton1Text(updates.getButton1Text())
+					.setButton1Url(updates.getButton1Url())
+					.setButton2Text(updates.getButton2Text())
+					.setButton2Url(updates.getButton2Url());
+			if(!(created == -1)) {
+				if(created > current) {
+					builder.setEndTimestamp(created);
+				} else {
+					builder.setStartTimestamp(created);
+				}
+			}
+			client.sendRichPresence(builder.build(), callback);
+		}	catch (IllegalStateException e){
+			if(autoReconnect) {
+				client = new IPCClient(Long.valueOf(Settings.getDiscordAPIKey())); // your client id
+				client.setListener(new IPCListener() {
+					@Override
+					public void onReady(IPCClient client) {
+						RichPresence.Builder builder = new RichPresence.Builder();
+						builder.setState(updates.getSl())
+								.setDetails(updates.getFl())
+								.setLargeImage(updates.getImage(), updates.getImagetext())
+								.setSmallImage(updates.getSmallimage(), updates.getSmalltext())
+								.setButton1Text(updates.getButton1Text())
+								.setButton1Url(updates.getButton1Url())
+								.setButton2Text(updates.getButton2Text())
+								.setButton2Url(updates.getButton2Url());
+						if(!(created == -1)) {
+							if(created > current) {
+								builder.setEndTimestamp(created);
+							} else {
+								builder.setStartTimestamp(created);
+							}
+						}
+						client.sendRichPresence(builder.build(),callback);
+					}
+				});
+
+				try {
+					client.connect();
+				} catch (NoDiscordClientException ex) {
+					throw new RuntimeException(ex);
+				}
 			}
 		}
-		client.sendRichPresence(builder.build(), callback);
 		}
+
 
 	
 	

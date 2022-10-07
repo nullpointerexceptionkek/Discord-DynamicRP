@@ -1,5 +1,6 @@
 package lee.aspect.dev.application.Gui.LoadingScreen;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -55,8 +56,14 @@ public class LoadingController implements Initializable{
 					long time = System.currentTimeMillis();
 					break;
 				case "readyconfig":
-					LaunchManager.closeCallBack();
-					break;
+					try{
+						LaunchManager.closeCallBack();
+					} catch (RuntimeException e) {
+						e.printStackTrace();
+					}
+					finally {
+						break;
+					}
 				default:
 					Thread.sleep(sleep != null? sleep: 1000);
 				}
