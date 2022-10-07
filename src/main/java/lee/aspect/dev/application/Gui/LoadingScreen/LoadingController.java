@@ -53,7 +53,15 @@ public class LoadingController implements Initializable{
 				case "callback":
 					LaunchManager.initCallBack();
 					LaunchManager.startUpdate();
-					long time = System.currentTimeMillis();
+					try {
+						LaunchManager.initCallBack();
+						LaunchManager.startUpdate();
+					} catch(RuntimeException e) {
+						file = "error running callback";
+						System.err.println("Error Loading Discord RPC");
+						break;
+					}
+
 					break;
 				case "readyconfig":
 					try{
