@@ -5,7 +5,90 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9bb812eb-84e9-45db-983f-c2ab4f2a5060" name="Changes" comment="added check to see if discord client is valid">
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/AnimateFXInterpolator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/AnimationFX.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/Bounce.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/BounceIn.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/BounceInDown.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/BounceInLeft.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/BounceInRight.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/BounceInUp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/BounceOut.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/BounceOutDown.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/BounceOutLeft.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/BounceOutRight.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/BounceOutUp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/FadeIn.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/FadeInDown.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/FadeInDownBig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/FadeInLeft.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/FadeInLeftBig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/FadeInRight.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/FadeInRightBig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/FadeInUp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/FadeInUpBig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/FadeOut.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/FadeOutDown.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/FadeOutDownBig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/FadeOutLeft.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/FadeOutLeftBig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/FadeOutRight.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/FadeOutRightBig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/FadeOutUp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/FadeOutUpBig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/Flash.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/Flip.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/FlipInX.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/FlipInY.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/FlipOutX.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/FlipOutY.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/GlowBackground.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/GlowText.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/Hinge.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/JackInTheBox.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/Jello.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/LightSpeedIn.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/LightSpeedOut.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/Pulse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/RollIn.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/RollOut.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/RotateIn.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/RotateInDownLeft.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/RotateInDownRight.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/RotateInUpLeft.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/RotateInUpRight.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/RotateOut.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/RotateOutDownLeft.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/RotateOutDownRight.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/RotateOutUpLeft.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/RotateOutUpRight.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/RubberBand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/Shake.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/SlideInDown.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/SlideInLeft.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/SlideInRight.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/SlideInUp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/SlideOutDown.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/SlideOutLeft.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/SlideOutRight.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/SlideOutUp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/Swing.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/Tada.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/Wobble.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/ZoomIn.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/ZoomInDown.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/ZoomInLeft.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/ZoomInRight.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/ZoomInUp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/ZoomOut.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/ZoomOutDown.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/ZoomOutLeft.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/ZoomOutRight.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/animation/ZoomOutUp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/util/ParallelAnimationFX.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/animationengine/util/SequentialAnimationFX.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/jsonreader/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/jsonreader/FileManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,21 +121,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/lee17/.m2/repository/com/google/code/gson/gson/2.9.1/gson-2.9.1.jar&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "D:/lee17/Documents/my cringe code that will prob not work/IJ workspace/CDiscrodRP/src/main/java/lee/aspect/dev/animationengine",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "MavenSettings"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\lee17\Documents\my cringe code that will prob not work\IJ workspace\CDiscrodRP\src\main\java\lee\aspect\dev\animationengine" />
       <recent name="D:\lee17\Documents\my cringe code that will prob not work\IJ workspace\CDiscrodRP\src\main\java\lee\aspect\dev\discordipc" />
       <recent name="C:\Users\lee17\IdeaProjects\CDiscordRP\src\main\java\lee\aspect\dev" />
       <recent name="C:\Users\lee17\IdeaProjects\CDiscordRP\libs" />
@@ -191,7 +275,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665104422528</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="added check to see if discord client is valid">
+      <created>1665111624352</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1665111624352</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
