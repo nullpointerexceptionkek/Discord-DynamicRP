@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.Calendar;
 
+import lee.aspect.dev.application.LaunchManager;
 import lee.aspect.dev.discordipc.IPCClient;
 import lee.aspect.dev.discordipc.IPCListener;
 import lee.aspect.dev.discordipc.entities.Callback;
@@ -127,7 +128,7 @@ public class DiscordRP {
 			}
 			client.sendRichPresence(builder.build(), callback);
 		}	catch (IllegalStateException e){
-			if(autoReconnect) {
+			if(autoReconnect && LaunchManager.isRunning) {
 				client = new IPCClient(Long.valueOf(Settings.getDiscordAPIKey())); // your client id
 				client.setListener(new IPCListener() {
 					@Override
