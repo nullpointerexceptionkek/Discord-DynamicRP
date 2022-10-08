@@ -5,9 +5,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane fx:id="stackpane" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lee.aspect.dev.application.Gui.LoadingScreen.LoadingController">
+<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lee.aspect.dev.application.Gui.LoadingScreen.LoadingController">
    <children>
-      <AnchorPane fx:id="anchorroot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="334.0">
+      <AnchorPane fx:id="anchorRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="334.0">
          <children>
             <ProgressIndicator fx:id="progress" layoutX="141.0" layoutY="244.0" prefHeight="94.0" prefWidth="107.0">
                <effect>
