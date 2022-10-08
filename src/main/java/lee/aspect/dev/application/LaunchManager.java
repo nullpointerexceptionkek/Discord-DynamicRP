@@ -18,6 +18,8 @@ public class LaunchManager {
 	private static UpdateManager upm;
 	
 	private static Thread runloop;
+
+	private static int CURRENTDISPLAY = 0;
 	
 	public static void init() {
 		FileManager.init();
@@ -45,13 +47,14 @@ public class LaunchManager {
 						if (!isRunning)
 							return;
 						excuteUpdate(upm.getUpdates().getUpdates(i));
+						CURRENTDISPLAY=i;
 					}
-
 					while (isRunning) {
 						for (int i = 0; i < upm.getUpdates().getSize(); i++) {
 							if (!isRunning)
 								return;
 							excuteUpdate(upm.getUpdates().getUpdates(i));
+							CURRENTDISPLAY=i;
 						}
 
 					}
@@ -73,7 +76,6 @@ public class LaunchManager {
 	
 	
 	private static void excuteUpdate(Updates update) {
-		System.out.println("Sented Update Request, trans: " + update);
 		if(update.getWait() == -1) {
 			discordRP.update(update);
 			return;
@@ -83,6 +85,7 @@ public class LaunchManager {
 			//Thread.sleep((update.getWait() <= 3000 )? 3000 : update.getWait());
 			Thread.sleep(update.getWait());
 			discordRP.update(update);
+			System.out.println("Sented Update Request, trans: " + update);
 			
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -107,9 +110,8 @@ public class LaunchManager {
 	public static void saveScripToFile() {
 		upm.saveScriptToFile();
 	}
-	
-	
-	
 
-	
+	public static int getCURRENTDISPLAY() {
+		return CURRENTDISPLAY;
+	}
 }

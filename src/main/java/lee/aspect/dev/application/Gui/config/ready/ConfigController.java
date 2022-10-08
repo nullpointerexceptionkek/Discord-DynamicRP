@@ -7,7 +7,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import javafx.animation.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -33,10 +32,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-import lee.aspect.dev.animationengine.animation.AnimationFX;
 import lee.aspect.dev.animationengine.animation.FadeIn;
-import lee.aspect.dev.animationengine.animation.RotateIn;
 import lee.aspect.dev.application.Gui.LoadingScreen.LoadingController;
 import lee.aspect.dev.application.Gui.Settings.SettingController;
 import lee.aspect.dev.application.Gui.config.EditListController;

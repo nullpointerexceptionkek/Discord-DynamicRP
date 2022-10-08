@@ -127,7 +127,7 @@ public class DiscordRP {
 				}
 			}
 			client.sendRichPresence(builder.build(), callback);
-		}	catch (IllegalStateException e){
+		}	catch (IllegalStateException|NullPointerException e){
 			if(autoReconnect && LaunchManager.isRunning) {
 				client = new IPCClient(Long.valueOf(Settings.getDiscordAPIKey())); // your client id
 				client.setListener(new IPCListener() {

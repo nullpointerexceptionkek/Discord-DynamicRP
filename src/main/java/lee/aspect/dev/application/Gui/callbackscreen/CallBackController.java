@@ -19,11 +19,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import lee.aspect.dev.application.Gui.LoadingScreen.LoadingController;
 import lee.aspect.dev.application.LaunchManager;
 import lee.aspect.dev.discordrpc.DiscordRP;
+import lee.aspect.dev.discordrpc.Script;
 
 public class CallBackController implements Initializable{
 	@FXML
@@ -70,6 +73,22 @@ public class CallBackController implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		switchtoconfig.setDisable(false);
 		Welcome.setText("Welcome " + DiscordRP.discordName + "!!!");
+		updateCurrentDisplay();
 	}
+
+	public void updateCurrentDisplay(){
+		var currentFl = new Label();
+		currentFl.setText(Script.getTotalupdates().get(LaunchManager.getCURRENTDISPLAY()).getFl()
+		+ '\n' + Script.getTotalupdates().get(LaunchManager.getCURRENTDISPLAY()).getSl());
+		currentFl.setScaleX(2);
+		currentFl.setScaleY(2);
+		currentFl.setLayoutX(30);
+		currentFl.setLayoutY(30);
+		currentFl.setTextAlignment(TextAlignment.CENTER);
+		anchorRoot.getChildren().add(currentFl);
+
+
+	}
+
 	
 }
