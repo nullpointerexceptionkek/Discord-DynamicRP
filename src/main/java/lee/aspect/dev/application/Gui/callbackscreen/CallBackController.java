@@ -12,7 +12,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -21,11 +20,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.*;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import lee.aspect.dev.application.Gui.LoadingScreen.LoadingController;
-import lee.aspect.dev.application.LaunchManager;
+import lee.aspect.dev.application.RunLoopManager;
 import lee.aspect.dev.discordrpc.DiscordRP;
 import lee.aspect.dev.discordrpc.Script;
 
@@ -79,8 +77,8 @@ public class CallBackController implements Initializable{
 
 	public void updateCurrentDisplay(){
 		var current = new Label();
-		current.setText(Script.getTotalupdates().get(LaunchManager.getCURRENTDISPLAY()).getFl()
-		+ '\n' + Script.getTotalupdates().get(LaunchManager.getCURRENTDISPLAY()).getSl());
+		current.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getFl()
+		+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getSl());
 		current.setPrefWidth(100);
 		current.setPrefHeight(250);
 		current.setLayoutX(anchorRoot.getScene().getWidth()/2 - current.getPrefWidth()/2);

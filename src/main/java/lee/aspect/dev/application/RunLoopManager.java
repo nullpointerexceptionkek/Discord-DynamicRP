@@ -1,15 +1,12 @@
 package lee.aspect.dev.application;
 
-import lee.aspect.dev.discordipc.exceptions.NoDiscordClientException;
 import lee.aspect.dev.discordrpc.DiscordRP;
 import lee.aspect.dev.discordrpc.UpdateManager;
 import lee.aspect.dev.discordrpc.Updates;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.jsonreader.FileManager;
 
-import java.io.IOException;
-
-public class LaunchManager {
+public class RunLoopManager {
 	
 	public static boolean isRunning = false;
 	
@@ -36,6 +33,7 @@ public class LaunchManager {
 	}
 	
 	public static void startUpdate() {
+
 		if(runloop == null) {
 			runloop = new Thread("RunLoop") {
 				@Override
@@ -61,7 +59,6 @@ public class LaunchManager {
 				}
 			};
 			runloop.start();
-			return;
 		}
 	}
 	

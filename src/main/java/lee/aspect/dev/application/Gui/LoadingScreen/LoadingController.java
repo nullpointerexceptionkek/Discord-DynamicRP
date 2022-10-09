@@ -19,7 +19,7 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import lee.aspect.dev.animationengine.animation.RotateIn;
 import lee.aspect.dev.application.Gui.callbackscreen.CallBackController;
-import lee.aspect.dev.application.LaunchManager;
+import lee.aspect.dev.application.RunLoopManager;
 
 public class LoadingController implements Initializable{
 
@@ -35,6 +35,7 @@ public class LoadingController implements Initializable{
 	private String file;
 	
 	private Long sleep;
+
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -52,8 +53,8 @@ public class LoadingController implements Initializable{
 				switch(file) {
 				case "callback":
 					try {
-						LaunchManager.initCallBack();
-						LaunchManager.startUpdate();
+						RunLoopManager.initCallBack();
+						RunLoopManager.startUpdate();
 					} catch(RuntimeException e) {
 						file = "error running callback";
 						System.err.println("Error Loading Discord RPC");
@@ -63,7 +64,7 @@ public class LoadingController implements Initializable{
 					break;
 				case "readyconfig":
 					try{
-						LaunchManager.closeCallBack();
+						RunLoopManager.closeCallBack();
 					} catch (RuntimeException e) {
 						e.printStackTrace();
 					}
@@ -82,18 +83,7 @@ public class LoadingController implements Initializable{
 							case "callback":
 								var loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/CallBack.fxml"));
 								Parent root = loader.load();
-								//Scene scene = anchorroot.getScene();
 								stackPane.getChildren().add(root);
-								/*
-								Timeline timeline = new Timeline();
-								KeyValue keyValue = new KeyValue(root.translateYProperty(), 0,Interpolator.EASE_IN);
-								KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), keyValue);
-								timeline.getKeyFrames().add(keyFrame);
-								timeline.setOnFinished(event1 -> {
-									stackpane.getChildren().remove(anchorroot);
-								});
-								timeline.play();
-								 */
 								CallBackController callBackController = loader.getController();
 								var animation = new RotateIn(stackPane);
 								animation.setCycleCount(1).setDelay(Duration.valueOf("100ms"));
@@ -103,7 +93,7 @@ public class LoadingController implements Initializable{
 								});
 								animation.play();
 
-								LaunchManager.startUpdate();
+								RunLoopManager.startUpdate();
 								break;
 								case "readyconfig":
 									Parent root1 = FXMLLoader.load(getClass().getResource("/lee/aspect/dev/ReadyConfig.fxml"));
@@ -163,6 +153,5 @@ public class LoadingController implements Initializable{
 		this.file = file;
 		
 	}
-	
-	
+
 }

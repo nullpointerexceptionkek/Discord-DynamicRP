@@ -36,7 +36,7 @@ import lee.aspect.dev.animationengine.animation.FadeIn;
 import lee.aspect.dev.application.Gui.LoadingScreen.LoadingController;
 import lee.aspect.dev.application.Gui.Settings.SettingController;
 import lee.aspect.dev.application.Gui.config.EditListController;
-import lee.aspect.dev.application.LaunchManager;
+import lee.aspect.dev.application.RunLoopManager;
 import lee.aspect.dev.discordrpc.Script;
 import lee.aspect.dev.discordrpc.Updates;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
@@ -95,7 +95,7 @@ public class ConfigController implements Initializable{
 		System.out.println(displayUpdates.getItems());
 		ArrayList<Updates> u = new ArrayList<>(displayUpdates.getItems());
 		Script.setTotalupdates(u); 
-		LaunchManager.saveScripToFile();
+		RunLoopManager.saveScripToFile();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/LoadingScreen.fxml"));
 		Parent root = loader.load();
 		root.getStylesheets().add(getClass().getResource(Settings.getTheme().Themepass()).toExternalForm());

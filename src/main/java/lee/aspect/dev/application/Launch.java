@@ -1,9 +1,7 @@
 package lee.aspect.dev.application;
 	
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.net.ServerSocket;
 import java.util.Arrays;
 
 import javafx.application.Application;
@@ -21,7 +19,7 @@ public class Launch extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			LaunchManager.init();
+			RunLoopManager.init();
 			Parent root = FXMLLoader.load(getClass().getResource("/lee/aspect/dev/ReadyConfig.fxml"));
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource(Settings.getTheme().Themepass()).toExternalForm());
@@ -70,6 +68,6 @@ public class Launch extends Application {
 	}
 	@Override
 	public void stop() throws Exception {
-		LaunchManager.onClose();
+		RunLoopManager.onClose();
 	}
 }

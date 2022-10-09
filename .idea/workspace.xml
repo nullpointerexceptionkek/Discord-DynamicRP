@@ -4,11 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9bb812eb-84e9-45db-983f-c2ab4f2a5060" name="Changes" comment="fix a issue where the time of the update is not correctly printed to console + working on a CallBackController design">
+    <list default="true" id="9bb812eb-84e9-45db-983f-c2ab4f2a5060" name="Changes" comment="Make the current display text in the centor">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CustomDiscordRPC/UpdateScript.json" beforeDir="false" afterPath="$PROJECT_DIR$/CustomDiscordRPC/UpdateScript.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/LoadingScreen/LoadingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/LoadingScreen/LoadingController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/callbackscreen/CallBackController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/callbackscreen/CallBackController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/lee/aspect/dev/LoadingScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/lee/aspect/dev/LoadingScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/config/ready/ConfigController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/config/ready/ConfigController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Launch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Launch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/LaunchManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/RunLoopManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/discordrpc/DiscordRP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/discordrpc/DiscordRP.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -184,6 +189,7 @@
       <workItem from="1665101022632" duration="2592000" />
       <workItem from="1665129117830" duration="787000" />
       <workItem from="1665185639997" duration="4359000" />
+      <workItem from="1665277874591" duration="7358000" />
     </task>
     <task id="LOCAL-00001" summary="fix all bugs, it now works with a maven project structure!!!">
       <created>1664498517296</created>
@@ -283,7 +289,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665212299287</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Make the current display text in the centor">
+      <created>1665214754235</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1665214754235</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -315,6 +328,7 @@
     <MESSAGE value="change 1 animation using the new lib, it works aaay" />
     <MESSAGE value="change something so u can now export the file" />
     <MESSAGE value="fix a issue where the time of the update is not correctly printed to console + working on a CallBackController design" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix a issue where the time of the update is not correctly printed to console + working on a CallBackController design" />
+    <MESSAGE value="Make the current display text in the centor" />
+    <option name="LAST_COMMIT_MESSAGE" value="Make the current display text in the centor" />
   </component>
 </project>
