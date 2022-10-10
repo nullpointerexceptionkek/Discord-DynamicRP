@@ -148,7 +148,7 @@ public class ApplicationTray {
         exitItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 tray.remove(trayIcon);
-                System.exit(0);
+                RunLoopManager.onClose();
             }
         });
     }

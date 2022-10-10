@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9bb812eb-84e9-45db-983f-c2ab4f2a5060" name="Changes" comment="added systemtray, didnt add code to it yet">
+    <list default="true" id="9bb812eb-84e9-45db-983f-c2ab4f2a5060" name="Changes" comment="add show Interface option">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/ApplicationTray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/ApplicationTray.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Launch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Launch.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -307,7 +306,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665376642860</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="add show Interface option">
+      <created>1665432586940</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1665432586940</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -341,6 +347,7 @@
     <MESSAGE value="fix a issue where the time of the update is not correctly printed to console + working on a CallBackController design" />
     <MESSAGE value="Make the current display text in the centor" />
     <MESSAGE value="Fix so that the update is updating in the callback screen" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix so that the update is updating in the callback screen" />
+    <MESSAGE value="add show Interface option" />
+    <option name="LAST_COMMIT_MESSAGE" value="add show Interface option" />
   </component>
 </project>
