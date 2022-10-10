@@ -23,6 +23,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import lee.aspect.dev.animationengine.animation.BounceInDown;
+import lee.aspect.dev.animationengine.animation.BounceInUp;
+import lee.aspect.dev.animationengine.animation.BounceOutUp;
 import lee.aspect.dev.application.Gui.LoadingScreen.LoadingController;
 import lee.aspect.dev.application.RunLoopManager;
 import lee.aspect.dev.discordrpc.DiscordRP;
@@ -75,18 +78,24 @@ public class CallBackController implements Initializable{
 		switchtoconfig.setDisable(false);
 		Welcome.setText("Welcome " + DiscordRP.discordName + "!!!");
 		current = new Label();
+		Platform.runLater(()-> anchorRoot.getChildren().add(current));
 	}
 
 	public void updateCurrentDisplay(){
-		anchorRoot.getChildren().remove(current);
-		current.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getFl()
-		+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getSl());
-		current.setPrefWidth(100);
-		current.setPrefHeight(250);
-		current.setLayoutX(anchorRoot.getScene().getWidth()/2 - current.getPrefWidth()/2);
-		current.setLayoutY(anchorRoot.getScene().getHeight()/2- current.getPrefHeight()/2);
-		current.setTextAlignment(TextAlignment.CENTER);
-		anchorRoot.getChildren().add(current);
+		var moveUp = new BounceOutUp(current);
+		moveUp.setOnFinished((actionEvent) -> {
+			current.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getFl()
+					+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getSl());
+			current.setPrefWidth(100);
+			current.setPrefHeight(250);
+			current.setLayoutX(anchorRoot.getScene().getWidth()/2 - current.getPrefWidth()/2);
+			current.setLayoutY(anchorRoot.getScene().getHeight()/2- current.getPrefHeight()/2);
+			current.setTextAlignment(TextAlignment.CENTER);
+			var moveIn = new BounceInUp(current);
+			moveIn.play();
+				});
+		moveUp.play();
+
 
 
 

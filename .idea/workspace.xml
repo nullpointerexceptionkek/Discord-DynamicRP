@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9bb812eb-84e9-45db-983f-c2ab4f2a5060" name="Changes" comment="Fix update is started 2 times instead of 1">
+    <list default="true" id="9bb812eb-84e9-45db-983f-c2ab4f2a5060" name="Changes" comment="Fix so that the update is updating in the callback screen">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/LoadingScreen/LoadingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/LoadingScreen/LoadingController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/callbackscreen/CallBackController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/callbackscreen/CallBackController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/RunLoopManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/RunLoopManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -185,7 +183,7 @@
       <workItem from="1665129117830" duration="787000" />
       <workItem from="1665185639997" duration="4359000" />
       <workItem from="1665277874591" duration="7358000" />
-      <workItem from="1665371066222" duration="2686000" />
+      <workItem from="1665371066222" duration="3822000" />
     </task>
     <task id="LOCAL-00001" summary="fix all bugs, it now works with a maven project structure!!!">
       <created>1664498517296</created>
@@ -292,7 +290,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665214754235</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Fix so that the update is updating in the callback screen">
+      <created>1665376642860</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1665376642860</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -325,6 +330,7 @@
     <MESSAGE value="change something so u can now export the file" />
     <MESSAGE value="fix a issue where the time of the update is not correctly printed to console + working on a CallBackController design" />
     <MESSAGE value="Make the current display text in the centor" />
-    <option name="LAST_COMMIT_MESSAGE" value="Make the current display text in the centor" />
+    <MESSAGE value="Fix so that the update is updating in the callback screen" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix so that the update is updating in the callback screen" />
   </component>
 </project>
