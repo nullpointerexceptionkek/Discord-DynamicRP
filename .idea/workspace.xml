@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9bb812eb-84e9-45db-983f-c2ab4f2a5060" name="Changes" comment="Fix so that the update is updating in the callback screen">
+    <list default="true" id="9bb812eb-84e9-45db-983f-c2ab4f2a5060" name="Changes" comment="added animation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/callbackscreen/CallBackController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/callbackscreen/CallBackController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CustomDiscordRPC/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/CustomDiscordRPC/Settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/lee/aspect/dev/Settings.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/lee/aspect/dev/Settings.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,6 +163,11 @@
       </MavenSettings>
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="JUnit.LaunchTest" />
+      <item itemvalue="JUnit.LaunchTest.isAppProperlyLaunched" />
+      <item itemvalue="Maven.CDiscordRP [javafx:run]" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.LaunchTest.isAppProperlyLaunched" />
