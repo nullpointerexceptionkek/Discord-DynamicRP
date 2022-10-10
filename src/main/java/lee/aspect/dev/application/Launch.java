@@ -45,6 +45,7 @@ public class Launch extends Application {
 		
 	}
 	public static void Launch(String[] args) {
+		new ApplicationTray();
 		System.out.println(Arrays.toString(args));
 		launch(args);
 		//check if already running
