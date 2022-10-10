@@ -36,7 +36,7 @@ public class LoadingController implements Initializable{
 	
 	private Long sleep;
 
-
+	public static CallBackController callBackController;
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		new SplashScreen().start();
@@ -84,7 +84,7 @@ public class LoadingController implements Initializable{
 								var loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/CallBack.fxml"));
 								Parent root = loader.load();
 								stackPane.getChildren().add(root);
-								CallBackController callBackController = loader.getController();
+								callBackController = loader.getController();
 								var animation = new RotateIn(stackPane);
 								animation.setCycleCount(1).setDelay(Duration.valueOf("100ms"));
 								animation.setOnFinished(actionEvent -> {

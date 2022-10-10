@@ -8,6 +8,7 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -43,7 +44,7 @@ public class CallBackController implements Initializable{
 	@FXML
 	private Button switchtoconfig;
 
-	
+	private Label current;
 	public void displayStatus(String fl) {
 		Playing.setText(fl);
 	}
@@ -73,10 +74,11 @@ public class CallBackController implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		switchtoconfig.setDisable(false);
 		Welcome.setText("Welcome " + DiscordRP.discordName + "!!!");
+		current = new Label();
 	}
 
 	public void updateCurrentDisplay(){
-		var current = new Label();
+		anchorRoot.getChildren().remove(current);
 		current.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getFl()
 		+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getSl());
 		current.setPrefWidth(100);
@@ -85,6 +87,7 @@ public class CallBackController implements Initializable{
 		current.setLayoutY(anchorRoot.getScene().getHeight()/2- current.getPrefHeight()/2);
 		current.setTextAlignment(TextAlignment.CENTER);
 		anchorRoot.getChildren().add(current);
+
 
 
 	}

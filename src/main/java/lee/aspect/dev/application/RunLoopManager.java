@@ -1,37 +1,43 @@
 package lee.aspect.dev.application;
 
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import lee.aspect.dev.application.Gui.LoadingScreen.LoadingController;
+import lee.aspect.dev.application.Gui.callbackscreen.CallBackController;
 import lee.aspect.dev.discordrpc.DiscordRP;
 import lee.aspect.dev.discordrpc.UpdateManager;
 import lee.aspect.dev.discordrpc.Updates;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.jsonreader.FileManager;
 
+import java.io.IOException;
+
 public class RunLoopManager {
-	
+
 	public static boolean isRunning = false;
-	
+
 	private static DiscordRP discordRP = new DiscordRP();
-	
+
 	private static UpdateManager upm;
-	
+
 	private static Thread runloop;
 
 	private static int CURRENTDISPLAY = 0;
-	
+
 	public static void init() {
 		FileManager.init();
 		SettingManager.init();
 		upm = new UpdateManager();
-		
-		
+
+
 	}
-	
+
 	public static void initCallBack() {
 		discordRP.LaunchReadyCallBack(upm.getUpdates().getUpdates(0));
 		isRunning = true;
-		
+
 	}
-	
+
 	public static void startUpdate() {
 
 		if(runloop == null) {
@@ -46,6 +52,9 @@ public class RunLoopManager {
 							return;
 						excuteUpdate(upm.getUpdates().getUpdates(i));
 						CURRENTDISPLAY=i;
+
+
+						Platform.runLater(()-> LoadingController.callBackController.updateCurrentDisplay());
 					}
 					while (isRunning) {
 						for (int i = 0; i < upm.getUpdates().getSize(); i++) {
@@ -53,6 +62,8 @@ public class RunLoopManager {
 								return;
 							excuteUpdate(upm.getUpdates().getUpdates(i));
 							CURRENTDISPLAY=i;
+
+							Platform.runLater(()->LoadingController.callBackController.updateCurrentDisplay());
 						}
 
 					}
@@ -61,38 +72,38 @@ public class RunLoopManager {
 			runloop.start();
 		}
 	}
-	
+
 	public static void closeCallBack() {
 		System.out.println();
 		discordRP.shutdown();
 		isRunning = false;
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 	private static void excuteUpdate(Updates update) {
 		if(update.getWait() == -1) {
 			discordRP.update(update);
 			return;
 		}
-		
+
 		try {
 			//Thread.sleep((update.getWait() <= 3000 )? 3000 : update.getWait());
 			Thread.sleep(update.getWait());
 			discordRP.update(update);
 			System.out.println("Sented Update Request, trans: " + update);
-			
+
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
+
 
 	}
-	
+
 	public static void onClose() {
 		SettingManager.saveSettingToFile();
 		upm.saveScriptToFile();
@@ -103,7 +114,7 @@ public class RunLoopManager {
 		}
 		System.exit(0);
 	}
-	
+
 	public static void saveScripToFile() {
 		upm.saveScriptToFile();
 	}

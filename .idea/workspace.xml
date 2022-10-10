@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9bb812eb-84e9-45db-983f-c2ab4f2a5060" name="Changes" comment="Updated lib version, which is more stable with java 17">
+    <list default="true" id="9bb812eb-84e9-45db-983f-c2ab4f2a5060" name="Changes" comment="Fix update is started 2 times instead of 1">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/LoadingScreen/LoadingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/LoadingScreen/LoadingController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/callbackscreen/CallBackController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/callbackscreen/CallBackController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/RunLoopManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/RunLoopManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -182,6 +185,7 @@
       <workItem from="1665129117830" duration="787000" />
       <workItem from="1665185639997" duration="4359000" />
       <workItem from="1665277874591" duration="7358000" />
+      <workItem from="1665371066222" duration="2686000" />
     </task>
     <task id="LOCAL-00001" summary="fix all bugs, it now works with a maven project structure!!!">
       <created>1664498517296</created>
