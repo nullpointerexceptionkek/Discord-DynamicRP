@@ -92,8 +92,6 @@ public class LoadingController implements Initializable{
 									callBackController.updateCurrentDisplay();
 								});
 								animation.play();
-
-								RunLoopManager.startUpdate();
 								break;
 								case "readyconfig":
 									Parent root1 = FXMLLoader.load(getClass().getResource("/lee/aspect/dev/ReadyConfig.fxml"));
