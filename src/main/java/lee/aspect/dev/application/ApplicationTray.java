@@ -1,5 +1,7 @@
 package lee.aspect.dev.application;
 
+import javafx.application.Platform;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.net.URL;
@@ -43,7 +45,7 @@ public class ApplicationTray {
         final SystemTray tray = SystemTray.getSystemTray();
 
         // Create a popup menu components
-        MenuItem aboutItem = new MenuItem("About");
+        MenuItem showInterface = new MenuItem("Show Interface");
         CheckboxMenuItem cb1 = new CheckboxMenuItem("Set auto size");
         CheckboxMenuItem cb2 = new CheckboxMenuItem("Set tooltip");
         Menu displayMenu = new Menu("Display");
@@ -54,7 +56,7 @@ public class ApplicationTray {
         MenuItem exitItem = new MenuItem("Exit");
 
         //Add components to popup menu
-        popup.add(aboutItem);
+        popup.add(showInterface);
         popup.addSeparator();
         popup.add(cb1);
         popup.add(cb2);
@@ -82,10 +84,9 @@ public class ApplicationTray {
             }
         });
 
-        aboutItem.addActionListener(new ActionListener() {
+        showInterface.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null,
-                        "This dialog box is run from the About menu item");
+                Platform.runLater(()->Launch.primaryStage.show());
             }
         });
 

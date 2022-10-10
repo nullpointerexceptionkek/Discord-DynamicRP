@@ -5,6 +5,7 @@ import java.io.StringWriter;
 import java.util.Arrays;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,10 +16,11 @@ import javax.swing.*;
 
 
 public class Launch extends Application {
-		
+	public static Stage primaryStage;
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage pstage) {
 		try {
+			primaryStage= pstage;
 			RunLoopManager.init();
 			Parent root = FXMLLoader.load(getClass().getResource("/lee/aspect/dev/ReadyConfig.fxml"));
 			Scene scene = new Scene(root);
@@ -45,6 +47,7 @@ public class Launch extends Application {
 		
 	}
 	public static void Launch(String[] args) {
+		Platform.setImplicitExit(false);
 		new ApplicationTray();
 		System.out.println(Arrays.toString(args));
 		launch(args);
@@ -71,4 +74,6 @@ public class Launch extends Application {
 	public void stop() throws Exception {
 		RunLoopManager.onClose();
 	}
+
+
 }
