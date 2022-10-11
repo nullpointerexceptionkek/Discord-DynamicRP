@@ -12,6 +12,14 @@ target/
 *.iml
 *.ipr
 
+# User-specific stuff
+.idea/workspace.xml
+.idea/shelf
+
+# Sensitive or high-churn files
+.idea/uiDesigner.xml
+
+
 ### Eclipse ###
 .apt_generated
 .classpath
