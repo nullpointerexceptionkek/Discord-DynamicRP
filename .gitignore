@@ -13,11 +13,11 @@ target/
 *.ipr
 
 # User-specific stuff
-.idea/workspace.xml
-.idea/shelf
+.idea/**/workspace.xml
+.idea/**/shelf
 
 # Sensitive or high-churn files
-.idea/uiDesigner.xml
+.idea/**/uiDesigner.xml
 
 
 ### Eclipse ###
