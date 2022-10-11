@@ -7,6 +7,7 @@
     <list default="true" id="9bb812eb-84e9-45db-983f-c2ab4f2a5060" name="Changes" comment="add show Interface option">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/ApplicationTray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/ApplicationTray.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Launch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Launch.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,9 +29,6 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="jar://$PROJECT_DIR$/../../../../Program Files/Java/jdk-17.0.4/lib/src.zip!/java.desktop/java/awt/SystemTray.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
