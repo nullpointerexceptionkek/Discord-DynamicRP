@@ -7,10 +7,5 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class LaunchTest {
 
-    @Test
-    @DisplayName("Is app properly launched")
-    void isAppProperlyLaunched() {
-
-    }
 
 }

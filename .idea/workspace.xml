@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9bb812eb-84e9-45db-983f-c2ab4f2a5060" name="Changes" comment="added an option before close to weither use system tray or not">
+    <list default="true" id="9bb812eb-84e9-45db-983f-c2ab4f2a5060" name="Changes" comment="fixed an issue where if you open setting or editlist controller, system tray will be bugged">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/Settings/SettingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/Settings/SettingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/config/EditListController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/config/EditListController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/lee/aspect/dev/LaunchTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/lee/aspect/dev/LaunchTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,8 +86,8 @@
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="mvn install" />
-      <command value="mvn clean" />
       <command value="mvn test" />
+      <command value="mvn clean" />
     </option>
   </component>
   <component name="RunManager" selected="Maven.CDiscordRP [javafx:run]">
