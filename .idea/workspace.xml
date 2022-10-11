@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9bb812eb-84e9-45db-983f-c2ab4f2a5060" name="Changes" comment="add show Interface option">
+    <list default="true" id="9bb812eb-84e9-45db-983f-c2ab4f2a5060" name="Changes" comment="added an option before close to weither use system tray or not">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/ApplicationTray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/ApplicationTray.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Launch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Launch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/Settings/SettingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/Settings/SettingController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/config/EditListController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/application/Gui/config/EditListController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -311,7 +311,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665432586940</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="added an option before close to weither use system tray or not">
+      <created>1665455291720</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1665455291720</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -346,6 +353,7 @@
     <MESSAGE value="Make the current display text in the centor" />
     <MESSAGE value="Fix so that the update is updating in the callback screen" />
     <MESSAGE value="add show Interface option" />
-    <option name="LAST_COMMIT_MESSAGE" value="add show Interface option" />
+    <MESSAGE value="added an option before close to weither use system tray or not" />
+    <option name="LAST_COMMIT_MESSAGE" value="added an option before close to weither use system tray or not" />
   </component>
 </project>

@@ -18,6 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lee.aspect.dev.application.Gui.config.ready.ConfigController;
+import lee.aspect.dev.application.Launch;
 import lee.aspect.dev.discordrpc.Script;
 import lee.aspect.dev.discordrpc.Updates;
 import lee.aspect.dev.discordrpc.settings.Settings;
@@ -130,7 +131,7 @@ public class EditListController extends ConfigController implements Initializabl
 		Parent root = loader.load();
 		root.getStylesheets().add(getClass().getResource(Settings.getTheme().Themepass()).toExternalForm());
 		ConfigController cc = loader.getController();
-		stage = new Stage();
+		stage = Launch.primaryStage;
 		stage.setResizable(false);
 		stage.setX(x);stage.setY(y);
 		stage.setTitle("Custom Discord RP" );
