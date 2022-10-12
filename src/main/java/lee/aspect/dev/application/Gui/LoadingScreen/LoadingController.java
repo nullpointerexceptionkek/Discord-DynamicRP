@@ -53,8 +53,8 @@ public class LoadingController implements Initializable{
 				switch(file) {
 				case "callback":
 					try {
-						RunLoopManager.initCallBack();
-						RunLoopManager.startUpdate();
+						//RunLoopManager.initCallBack();
+						//RunLoopManager.startUpdate();
 					} catch(RuntimeException e) {
 						file = "error running callback";
 						System.err.println("Error Loading Discord RPC");
