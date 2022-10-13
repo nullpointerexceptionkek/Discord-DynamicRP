@@ -53,8 +53,8 @@ public class LoadingController implements Initializable{
 				switch(file) {
 				case "callback":
 					try {
-						//RunLoopManager.initCallBack();
-						//RunLoopManager.startUpdate();
+						RunLoopManager.initCallBack();
+						RunLoopManager.startUpdate();
 					} catch(RuntimeException e) {
 						file = "error running callback";
 						System.err.println("Error Loading Discord RPC");
@@ -89,7 +89,6 @@ public class LoadingController implements Initializable{
 								animation.setCycleCount(1).setDelay(Duration.valueOf("100ms"));
 								animation.setOnFinished(actionEvent -> {
 									stackPane.getChildren().remove(anchorRoot);
-									callBackController.updateCurrentDisplay();
 								});
 								animation.play();
 								break;

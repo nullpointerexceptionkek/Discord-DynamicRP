@@ -23,10 +23,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import lee.aspect.dev.animationengine.animation.BounceInDown;
-import lee.aspect.dev.animationengine.animation.BounceInUp;
-import lee.aspect.dev.animationengine.animation.BounceOutUp;
-import lee.aspect.dev.animationengine.animation.SlideAndFade;
+import lee.aspect.dev.animationengine.animation.*;
 import lee.aspect.dev.application.Gui.LoadingScreen.LoadingController;
 import lee.aspect.dev.application.RunLoopManager;
 import lee.aspect.dev.discordrpc.DiscordRP;
@@ -58,6 +55,10 @@ public class CallBackController implements Initializable{
 
 	private SlideAndFade currentUp;
 
+	private SlideAndFade afterUp;
+
+	private BounceInLeft afterIn;
+
 	public void displayStatus(String fl) {
 		Playing.setText(fl);
 	}
@@ -87,40 +88,68 @@ public class CallBackController implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		switchtoconfig.setDisable(false);
 		Welcome.setText("Welcome " + DiscordRP.discordName + "!!!");
-		prev = new Label();
-		current = new Label();
-		after = new Label();
-		Platform.runLater(()-> {
-			anchorRoot.getChildren().addAll(prev, current, after);
-			// defines the animation for the prev moving out of screen
+		Platform.runLater(() -> {
+			prev = new Label();
 			prev.setPrefWidth(100);
 			prev.setPrefHeight(250);
 			prev.setLayoutX(anchorRoot.getScene().getWidth() / 2 - prev.getPrefWidth() / 2);
-			prev.setLayoutY(anchorRoot.getScene().getHeight() / 2 - prev.getPrefHeight() / 2 + 25);
+			prev.setLayoutY(anchorRoot.getScene().getHeight() / 2 - prev.getPrefHeight() / 2 - 45);
 			prev.setTextAlignment(TextAlignment.CENTER);
-			pmoveUp = new BounceOutUp(prev);
-			pmoveUp.setOnFinished((actionEvent) -> {
-				if(RunLoopManager.getCURRENTDISPLAY()<1) return;
-				prev.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getFl()
-						+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getSl());
-				currentUp.play();
-				});
-			});
-			// defines the animation when current moves up
+
+			current = new Label();
 			current.setPrefWidth(100);
 			current.setPrefHeight(250);
 			current.setLayoutX(anchorRoot.getScene().getWidth() / 2 - prev.getPrefWidth() / 2);
 			current.setLayoutY(anchorRoot.getScene().getHeight() / 2 - prev.getPrefHeight() / 2);
-			currentUp = new SlideAndFade(current,(anchorRoot.getScene().getHeight() / 2 - prev.getPrefHeight() / 2 + 25));
-		}
+			current.setTextAlignment(TextAlignment.CENTER);
 
-	public void updateCurrentDisplay(){
+			after = new Label();
+			after.setPrefWidth(100);
+			after.setPrefHeight(250);
+			after.setLayoutX(anchorRoot.getScene().getWidth() / 2 - prev.getPrefWidth() / 2);
+			after.setLayoutY(anchorRoot.getScene().getHeight() / 2 - prev.getPrefHeight() / 2 + 45);
+			after.setTextAlignment(TextAlignment.CENTER);
+
+			prev.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getFl()
+					+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getSl());
+			current.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getFl()
+					+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getSl());
+			after.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getFl()
+					+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getSl());
 
 
+			anchorRoot.getChildren().addAll(prev, current, after);
+			pmoveUp = new BounceOutUp(prev);
+			currentUp = new SlideAndFade(current,current.getLayoutY()+45);
+			afterUp = new SlideAndFade(after,after.getLayoutY()+45);
+			afterIn = new BounceInLeft(after);
+			/*
 
+			pmoveUp.setOnFinished((actionEvent -> {
+				currentUp.setOnFinished((actionEvent1 -> {
+					afterUp.setOnFinished((actionEvent2 -> {
+						afterIn.play();
+					}));
+					afterUp.play();
+				}));
+				currentUp.play();
+			}));
+			//pmoveUp.play();
 
-
+			 */
+			pmoveUp.play();
+			currentUp.play();
+			afterUp.play();
+			afterIn.play();
+		});
 	}
 
+	public void updateCurrentDisplay() {
+		pmoveUp.play();
+		currentUp.play();
+		afterUp.play();
+		afterIn.play();
+
+	}
 	
 }

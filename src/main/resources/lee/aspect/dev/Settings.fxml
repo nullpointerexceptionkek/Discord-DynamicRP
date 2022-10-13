@@ -19,12 +19,12 @@
             <Button fx:id="goBack" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchBack" text="Back" />
             <Label alignment="CENTER" layoutX="50.0" layoutY="75.0" prefHeight="32.0" prefWidth="234.0" text="Theme" />
             <ChoiceBox fx:id="theme" layoutX="84.0" layoutY="107.0" prefHeight="25.0" prefWidth="173.0" />
-            <Label alignment="CENTER" layoutX="84.0" layoutY="11.0" prefHeight="32.0" prefWidth="173.0" text="CDiscordRP v0.1.1">
+            <Label alignment="CENTER" layoutX="84.0" layoutY="11.0" prefHeight="32.0" prefWidth="173.0" text="CDiscordRP v0.2.0">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="198.0" layoutY="27.0" prefHeight="32.0" prefWidth="99.0" text="Sodium" />
+            <Label alignment="CENTER" layoutX="198.0" layoutY="27.0" prefHeight="32.0" prefWidth="99.0" text="Calcium" />
          </children>
       </AnchorPane>
    </children>
