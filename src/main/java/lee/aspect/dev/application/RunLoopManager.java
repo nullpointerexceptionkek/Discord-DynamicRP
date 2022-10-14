@@ -24,6 +24,9 @@ public class RunLoopManager {
 
 	private static int CURRENTDISPLAY = 0;
 
+	/**
+	 * Create an instance of UpdateManager and init setting and file manager
+	 */
 	public static void init() {
 		FileManager.init();
 		SettingManager.init();
@@ -32,12 +35,18 @@ public class RunLoopManager {
 
 	}
 
+	/**
+	 * Launches DiscordRP
+	 */
 	public static void initCallBack() {
 		discordRP.LaunchReadyCallBack(upm.getUpdates().getUpdates(0));
 		isRunning = true;
 
 	}
 
+	/**
+	 * Sent each data to DiscordIPC according to the config
+	 */
 	public static void startUpdate() {
 
 		if(runloop == null) {
@@ -73,6 +82,9 @@ public class RunLoopManager {
 		}
 	}
 
+	/**
+	 * Shut down DiscordRP, this method must be called to stop displaying the RP
+	 */
 	public static void closeCallBack() {
 		System.out.println();
 		discordRP.shutdown();
