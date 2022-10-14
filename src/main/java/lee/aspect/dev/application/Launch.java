@@ -20,9 +20,18 @@ import lee.aspect.dev.discordrpc.settings.Settings;
 
 import javax.swing.*;
 
-
+/**
+ * This class manages the default interface option and System Tray
+ */
 public class Launch extends Application {
 	public static Stage primaryStage;
+
+	/**
+	 * Launches the config interface
+	 * This method should be only called by javaFX
+	 * inits {@link RunLoopManager}
+	 * @param pstage
+	 */
 	@Override
 	public void start(Stage pstage) {
 		try {
@@ -55,6 +64,12 @@ public class Launch extends Application {
 		
 		
 	}
+
+	/**
+	 * This is the "main" function of the program, this method is getting called on start up
+	 * Sets the basic property of JavaFX and calls {@link #start(Stage)} to Launch the application interface
+	 * @param args
+	 */
 	public static void Launch(String[] args) {
 		Platform.setImplicitExit(false);
 		new ApplicationTray();
@@ -84,6 +99,12 @@ public class Launch extends Application {
 		RunLoopManager.onClose();
 	}
 
+	/**
+	 * This method is the method that the program calls when the exit button is hit
+	 * it will detect whether if System Tray is supported on the system and gives you
+	 * an option to minimize to System Tray when it is supported
+	 * System Tray is defined in {@link ApplicationTray}
+	 */
 	public void onclose() {
 		if(!SystemTray.isSupported()) {
 			RunLoopManager.onClose();
