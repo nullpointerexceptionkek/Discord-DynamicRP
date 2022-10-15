@@ -97,7 +97,7 @@
                         <!-- Usage: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>lee.aspect.dev.Start</mainClass>
+                            <mainClass>lee.aspect.dev.Launch</mainClass>
                         </configuration>
                     </execution>
                 </executions>
@@ -116,7 +116,7 @@
                             <transformers>
                                 <transformer implementation=
                                                      "org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>lee.aspect.dev.Start</mainClass>
+                                    <mainClass>lee.aspect.dev.Launch</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>

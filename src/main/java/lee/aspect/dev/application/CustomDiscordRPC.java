@@ -7,7 +7,6 @@ import java.util.Arrays;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,7 +14,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import lee.aspect.dev.discordrpc.settings.Settings;
 
 import javax.swing.*;
@@ -23,8 +21,16 @@ import javax.swing.*;
 /**
  * This class manages the default interface option and System Tray
  */
-public class Launch extends Application {
-	public static Stage primaryStage;
+public class CustomDiscordRPC extends Application {
+
+	public static final CustomDiscordRPC INSTANCE = new CustomDiscordRPC();
+
+	public static final CustomDiscordRPC getInstance(){
+		return INSTANCE;
+	}
+
+
+	public Stage primaryStage;
 
 	/**
 	 * Launches the config interface
@@ -70,7 +76,7 @@ public class Launch extends Application {
 	 * Sets the basic property of JavaFX and calls {@link #start(Stage)} to Launch the application interface
 	 * @param args
 	 */
-	public static void Launch(String[] args) {
+	public void Launch(String[] args) {
 		Platform.setImplicitExit(false);
 		new ApplicationTray();
 		System.out.println(Arrays.toString(args));

@@ -70,7 +70,7 @@ public class ApplicationTray {
 
         showInterface.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Platform.runLater(()->Launch.primaryStage.show());
+                Platform.runLater(()-> CustomDiscordRPC.getInstance().primaryStage.show());
             }
         });
 

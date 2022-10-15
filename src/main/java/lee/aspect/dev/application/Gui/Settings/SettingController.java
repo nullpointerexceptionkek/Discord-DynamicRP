@@ -17,7 +17,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import lee.aspect.dev.application.Gui.config.ready.ConfigController;
-import lee.aspect.dev.application.Launch;
+import lee.aspect.dev.application.CustomDiscordRPC;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.discordrpc.settings.Settings;
 import lee.aspect.dev.discordrpc.settings.Theme;
@@ -44,7 +44,7 @@ public class SettingController implements Initializable{
 		root.getStylesheets().add(getClass().getResource(Settings.getTheme().Themepass()).toExternalForm());
 		ConfigController ec = loader.getController();
 		//loader.setController(ec);
-        stage = Launch.primaryStage;
+        stage = CustomDiscordRPC.getInstance().primaryStage;
         stage.setTitle("Custom Discord RP");
         stage.setScene(new Scene(root));
         stage.setX(goBack.getScene().getWindow().getX());stage.setY(goBack.getScene().getWindow().getY());
