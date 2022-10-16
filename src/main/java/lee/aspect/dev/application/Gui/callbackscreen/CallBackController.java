@@ -45,11 +45,11 @@ public class CallBackController implements Initializable{
 	@FXML
 	private Button switchtoconfig;
 
-	private Label prev;
+	private Label display1;
 
-	private Label current;
+	private Label display2;
 
-	private Label after;
+	private Label display3;
 
 	private BounceOutUp pmoveUp;
 
@@ -89,66 +89,109 @@ public class CallBackController implements Initializable{
 		switchtoconfig.setDisable(false);
 		Welcome.setText("Welcome " + DiscordRP.discordName + "!!!");
 		Platform.runLater(() -> {
-			prev = new Label();
-			prev.setPrefWidth(100);
-			prev.setPrefHeight(250);
-			prev.setLayoutX(anchorRoot.getScene().getWidth() / 2 - prev.getPrefWidth() / 2);
-			prev.setLayoutY(anchorRoot.getScene().getHeight() / 2 - prev.getPrefHeight() / 2 - 45);
-			prev.setTextAlignment(TextAlignment.CENTER);
+			display1 = new Label();
+			display1.setPrefWidth(100);
+			display1.setPrefHeight(250);
+			display1.setLayoutX(anchorRoot.getScene().getWidth() / 2 - display1.getPrefWidth() / 2);
+			display1.setLayoutY(anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2 - 45);
+			display1.setTextAlignment(TextAlignment.CENTER);
 
-			current = new Label();
-			current.setPrefWidth(100);
-			current.setPrefHeight(250);
-			current.setLayoutX(anchorRoot.getScene().getWidth() / 2 - prev.getPrefWidth() / 2);
-			current.setLayoutY(anchorRoot.getScene().getHeight() / 2 - prev.getPrefHeight() / 2);
-			current.setTextAlignment(TextAlignment.CENTER);
+			display2 = new Label();
+			display2.setPrefWidth(100);
+			display2.setPrefHeight(250);
+			display2.setLayoutX(anchorRoot.getScene().getWidth() / 2 - display1.getPrefWidth() / 2);
+			display2.setLayoutY(anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2);
+			display2.setTextAlignment(TextAlignment.CENTER);
 
-			after = new Label();
-			after.setPrefWidth(100);
-			after.setPrefHeight(250);
-			after.setLayoutX(anchorRoot.getScene().getWidth() / 2 - prev.getPrefWidth() / 2);
-			after.setLayoutY(anchorRoot.getScene().getHeight() / 2 - prev.getPrefHeight() / 2 + 45);
-			after.setTextAlignment(TextAlignment.CENTER);
+			display3 = new Label();
+			display3.setPrefWidth(100);
+			display3.setPrefHeight(250);
+			display3.setLayoutX(anchorRoot.getScene().getWidth() / 2 - display1.getPrefWidth() / 2);
+			display3.setLayoutY(anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2 + 45);
+			display3.setTextAlignment(TextAlignment.CENTER);
 
-			prev.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getFl()
-					+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getSl());
-			current.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getFl()
-					+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getSl());
-			after.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getFl()
-					+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getSl());
+			//prev.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getFl()
+			//		+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getSl());
+			//display2.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getFl()
+			//		+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getSl());
+			//display3.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getFl()
+			//		+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getSl());
 
+			display1.setText("1");
+			display2.setText("2");
+			display3.setText("3");
 
-			anchorRoot.getChildren().addAll(prev, current, after);
-			pmoveUp = new BounceOutUp(prev);
-			currentUp = new SlideAndFade(current,current.getLayoutY()+45);
-			afterUp = new SlideAndFade(after,after.getLayoutY()+45);
-			afterIn = new BounceInLeft(after);
-			/*
+			anchorRoot.getChildren().addAll(display1, display2, display3);
+			pmoveUp = new BounceOutUp(display1);
+			currentUp = new SlideAndFade(display2, display2.getLayoutBounds().getMaxY()-45);
+			afterUp = new SlideAndFade(display3, display3.getLayoutBounds().getMaxY()-45);
+			afterIn = new BounceInLeft(display3);
 
-			pmoveUp.setOnFinished((actionEvent -> {
-				currentUp.setOnFinished((actionEvent1 -> {
-					afterUp.setOnFinished((actionEvent2 -> {
-						afterIn.play();
-					}));
-					afterUp.play();
-				}));
-				currentUp.play();
-			}));
 			//pmoveUp.play();
-
-			 */
-			pmoveUp.play();
-			currentUp.play();
-			afterUp.play();
-			afterIn.play();
+			//currentUp.play();
+			//afterUp.play();
+			//afterIn.play();
 		});
 	}
 
 	public void updateCurrentDisplay() {
-		pmoveUp.play();
-		currentUp.play();
-		afterUp.play();
-		afterIn.play();
+		//pmoveUp.play();
+
+		System.out.println((anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2 - 45));
+		System.out.println("d1 " + display1.getLayoutY());
+		System.out.println("d2 " +display2.getLayoutY());
+		System.out.println("d3 " +display3.getLayoutY());
+		if(display1.getLayoutY() <= (anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2 - 45)) {
+			currentUp.setOnFinished((actionEvent -> {
+				display2.setLayoutY((anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2 - 45));
+				currentUp.setNode(display3);
+			}));
+			currentUp.play();
+			afterUp.setOnFinished((actionEvent -> {
+				display3.setLayoutY((anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2));
+				afterUp.setNode(display1);
+			}));
+			afterUp.play();
+			display1.setLayoutY(anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2 + 45);
+			afterIn.setNode(display1);
+			display1.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getFl()
+					+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getSl());
+			afterIn.play();
+		}
+		else if(display2.getLayoutY() <= (anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2 - 45)) {
+			currentUp.setOnFinished((actionEvent -> {
+				currentUp.setNode(display1);
+			}));
+			currentUp.play();
+			afterUp.setOnFinished((actionEvent -> {
+				afterUp.setNode(display2);
+			}));
+			afterUp.play();
+			display2.setLayoutY(anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2 + 45);
+			afterIn.setNode(display2);
+			display2.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getFl()
+					+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getSl());
+			afterIn.play();
+		}
+		else if(display3.getLayoutY() <= (anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2 - 45)) {
+			currentUp.setOnFinished((actionEvent -> {
+				currentUp.setNode(display2);
+			}));
+			currentUp.play();
+			afterUp.setOnFinished((actionEvent -> {
+				afterUp.setNode(display3);
+			}));
+			afterUp.play();
+			display3.setLayoutY(anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2 + 45);
+			afterIn.setNode(display3);
+			display3.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getFl()
+					+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getSl());
+			afterIn.play();
+		}
+		else{
+			System.err.println("Animation have encounter an error, this should not be happend");
+		}
+
 
 	}
 	

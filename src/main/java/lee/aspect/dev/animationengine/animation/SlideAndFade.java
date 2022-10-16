@@ -11,9 +11,16 @@ public class SlideAndFade extends AnimationFX{
 
     private double y;
 
+
     public SlideAndFade(final Node node, double y){
         super(node);
         this.y = y;
+        getTimeline().getKeyFrames().addAll(
+                //new KeyFrame(Duration.millis(0),
+                    //new KeyValue(getNode().translateYProperty(), node.getLayoutY(),Interpolator.LINEAR)),
+                new KeyFrame(Duration.millis(400),
+                        new KeyValue(getNode().translateYProperty(), y,Interpolator.LINEAR)
+                ));
     }
     @Override
     AnimationFX resetNode() {
@@ -23,12 +30,6 @@ public class SlideAndFade extends AnimationFX{
 
     @Override
     void initTimeline() {
-        setTimeline(new Timeline(
-               // new KeyFrame(Duration.millis(0),
-                       // new KeyValue(getNode().translateYProperty(), getNode().getLayoutY(),AnimateFXInterpolator.EASE)),
-                new KeyFrame(Duration.millis(400),
-                        new KeyValue(getNode().translateYProperty(), y,Interpolator.EASE_IN)
-                )
-        ));
+        setTimeline(new Timeline());
     }
 }

@@ -39,7 +39,8 @@ public class RunLoopManager {
 	 * Launches DiscordRP
 	 */
 	public static void initCallBack() {
-		discordRP.LaunchReadyCallBack(upm.getUpdates().getUpdates(0));
+		if(runloop == null)
+			discordRP.LaunchReadyCallBack(upm.getUpdates().getUpdates(0));
 		isRunning = true;
 
 	}
@@ -50,6 +51,7 @@ public class RunLoopManager {
 	public static void startUpdate() {
 
 		if(runloop == null) {
+			System.out.println("Thread is not created, creating a new thread");
 			runloop = new Thread("RunLoop") {
 				@Override
 				public void run() {
