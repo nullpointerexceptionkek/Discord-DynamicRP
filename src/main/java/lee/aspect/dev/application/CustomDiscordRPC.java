@@ -22,15 +22,7 @@ import javax.swing.*;
  * This class manages the default interface option and System Tray
  */
 public class CustomDiscordRPC extends Application {
-
-	public static final CustomDiscordRPC INSTANCE = new CustomDiscordRPC();
-
-	public static final CustomDiscordRPC getInstance(){
-		return INSTANCE;
-	}
-
-
-	public Stage primaryStage;
+	public static Stage primaryStage;
 
 	/**
 	 * Launches the config interface
@@ -76,7 +68,7 @@ public class CustomDiscordRPC extends Application {
 	 * Sets the basic property of JavaFX and calls {@link #start(Stage)} to Launch the application interface
 	 * @param args
 	 */
-	public void Launch(String[] args) {
+	public static void Launch(String[] args) {
 		Platform.setImplicitExit(false);
 		new ApplicationTray();
 		System.out.println(Arrays.toString(args));

@@ -11,6 +11,6 @@ public class Launch {
      * @author Qinzhi Li
      */
     public static void main(String[]args){
-        CustomDiscordRPC.getInstance().Launch(args);
+        CustomDiscordRPC.Launch(args);
     }
 }

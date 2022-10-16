@@ -44,7 +44,7 @@ public class SettingController implements Initializable{
 		root.getStylesheets().add(getClass().getResource(Settings.getTheme().Themepass()).toExternalForm());
 		ConfigController ec = loader.getController();
 		//loader.setController(ec);
-        stage = CustomDiscordRPC.getInstance().primaryStage;
+        stage = CustomDiscordRPC.primaryStage;
         stage.setTitle("Custom Discord RP");
         stage.setScene(new Scene(root));
         stage.setX(goBack.getScene().getWindow().getX());stage.setY(goBack.getScene().getWindow().getY());

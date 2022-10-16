@@ -130,7 +130,7 @@ public class EditListController extends ConfigController implements Initializabl
 		Parent root = loader.load();
 		root.getStylesheets().add(getClass().getResource(Settings.getTheme().Themepass()).toExternalForm());
 		ConfigController cc = loader.getController();
-		stage = CustomDiscordRPC.getInstance().primaryStage;
+		stage = CustomDiscordRPC.primaryStage;
 		stage.setResizable(false);
 		stage.setX(x);stage.setY(y);
 		stage.setTitle("Custom Discord RP" );
