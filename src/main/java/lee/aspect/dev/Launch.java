@@ -8,7 +8,7 @@ public class Launch {
      * This program is used to customize Discord rich perference via a interface by JavaFX
      * It connects to Discord via IPC by the libary {@link lee.aspect.dev.discordipc}
      * @param args
-     * @author Qinzhi Li
+     * @author Aspect
      */
     public static void main(String[]args){
         CustomDiscordRPC.Launch(args);

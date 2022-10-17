@@ -18,8 +18,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -32,16 +32,16 @@ import lee.aspect.dev.discordrpc.Script;
 public class CallBackController implements Initializable{
 	@FXML
 	Label Playing;
-	
+
 	@FXML
 	Label Welcome;
-	
+
 	@FXML
 	private StackPane stackPane;
-	
+
 	@FXML
 	private AnchorPane anchorRoot;
-	
+
 	@FXML
 	private Button switchtoconfig;
 
@@ -72,7 +72,7 @@ public class CallBackController implements Initializable{
 		lc.toNewScene("readyconfig");
 		root.translateYProperty().set(scene.getHeight());
 		stackPane.getChildren().add(root);
-		
+
 		Timeline timeline = new Timeline();
 		KeyValue keyValue = new KeyValue(root.translateYProperty(),0,Interpolator.EASE_OUT);
 		KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.3), keyValue);
@@ -81,8 +81,8 @@ public class CallBackController implements Initializable{
 			stackPane.getChildren().remove(anchorRoot);
 		});
 		timeline.play();
-		
-		
+
+
 	}
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -91,24 +91,30 @@ public class CallBackController implements Initializable{
 		Platform.runLater(() -> {
 			display1 = new Label();
 			display1.setPrefWidth(100);
-			display1.setPrefHeight(250);
+			display1.setPrefHeight(30);
 			display1.setLayoutX(anchorRoot.getScene().getWidth() / 2 - display1.getPrefWidth() / 2);
 			display1.setLayoutY(anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2 - 45);
 			display1.setTextAlignment(TextAlignment.CENTER);
+			display1.setBorder(new Border(new BorderStroke(Color.RED,
+					BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
 			display2 = new Label();
 			display2.setPrefWidth(100);
-			display2.setPrefHeight(250);
+			display2.setPrefHeight(30);
 			display2.setLayoutX(anchorRoot.getScene().getWidth() / 2 - display1.getPrefWidth() / 2);
 			display2.setLayoutY(anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2);
 			display2.setTextAlignment(TextAlignment.CENTER);
+			display2.setBorder(new Border(new BorderStroke(Color.GREEN,
+					BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
 			display3 = new Label();
 			display3.setPrefWidth(100);
-			display3.setPrefHeight(250);
+			display3.setPrefHeight(30);
 			display3.setLayoutX(anchorRoot.getScene().getWidth() / 2 - display1.getPrefWidth() / 2);
 			display3.setLayoutY(anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2 + 45);
 			display3.setTextAlignment(TextAlignment.CENTER);
+			display3.setBorder(new Border(new BorderStroke(Color.ORANGE,
+					BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
 			//prev.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getFl()
 			//		+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getSl());
@@ -123,9 +129,13 @@ public class CallBackController implements Initializable{
 
 			anchorRoot.getChildren().addAll(display1, display2, display3);
 			pmoveUp = new BounceOutUp(display1);
-			currentUp = new SlideAndFade(display2, display2.getLayoutBounds().getMaxY()-45);
-			afterUp = new SlideAndFade(display3, display3.getLayoutBounds().getMaxY()-45);
+			currentUp = new SlideAndFade(display2, -45);
+			afterUp = new SlideAndFade(display3, -45);
 			afterIn = new BounceInLeft(display3);
+
+			System.out.println("d1 " + display1.getLayoutBounds().getMaxY());
+			System.out.println("d2 " +display2.getLayoutBounds().getMaxY());
+			System.out.println("d3 " +display3.getLayoutBounds().getMaxY());
 
 			//pmoveUp.play();
 			//currentUp.play();
@@ -136,19 +146,28 @@ public class CallBackController implements Initializable{
 
 	public void updateCurrentDisplay() {
 		//pmoveUp.play();
-
+		/*
+		System.out.println(
+				display3.getLayoutBounds().getMaxY()
+		);
+		System.out.println(
+				display3.getLayoutY()
+		);
 		System.out.println((anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2 - 45));
 		System.out.println("d1 " + display1.getLayoutY());
 		System.out.println("d2 " +display2.getLayoutY());
 		System.out.println("d3 " +display3.getLayoutY());
-		if(display1.getLayoutY() <= (anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2 - 45)) {
+
+		 */
+		System.out.println("d1 " + display1.getLayoutBounds().getMaxY());
+		System.out.println("d2 " +display2.getLayoutBounds().getMaxY());
+		System.out.println("d3 " +display3.getLayoutBounds().getMaxY());
+		if(display1.getLayoutBounds().getMaxY() <= 35) {
 			currentUp.setOnFinished((actionEvent -> {
-				display2.setLayoutY((anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2 - 45));
 				currentUp.setNode(display3);
 			}));
 			currentUp.play();
 			afterUp.setOnFinished((actionEvent -> {
-				display3.setLayoutY((anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2));
 				afterUp.setNode(display1);
 			}));
 			afterUp.play();
@@ -158,7 +177,7 @@ public class CallBackController implements Initializable{
 					+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getSl());
 			afterIn.play();
 		}
-		else if(display2.getLayoutY() <= (anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2 - 45)) {
+		else if(display2.getLayoutBounds().getMaxY() <= 35) {
 			currentUp.setOnFinished((actionEvent -> {
 				currentUp.setNode(display1);
 			}));
@@ -173,7 +192,7 @@ public class CallBackController implements Initializable{
 					+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getSl());
 			afterIn.play();
 		}
-		else if(display3.getLayoutY() <= (anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2 - 45)) {
+		else if(display3.getLayoutBounds().getMaxY() <= 35) {
 			currentUp.setOnFinished((actionEvent -> {
 				currentUp.setNode(display2);
 			}));

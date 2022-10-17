@@ -59,21 +59,17 @@ public class RunLoopManager {
 						return;
 					}
 					for (int i = 1; i < upm.getUpdates().getSize(); i++) {
-						if (!isRunning)
-							return;
 						excuteUpdate(upm.getUpdates().getUpdates(i));
 						CURRENTDISPLAY=i;
 
-
+						if (!isRunning) return;
 						Platform.runLater(()-> LoadingController.callBackController.updateCurrentDisplay());
 					}
 					while (isRunning) {
 						for (int i = 0; i < upm.getUpdates().getSize(); i++) {
-							if (!isRunning)
-								return;
 							excuteUpdate(upm.getUpdates().getUpdates(i));
 							CURRENTDISPLAY=i;
-
+							if (!isRunning) return;
 							Platform.runLater(()->LoadingController.callBackController.updateCurrentDisplay());
 						}
 
