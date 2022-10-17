@@ -39,7 +39,7 @@ public class FileManager {
 			}
 			
 			FileOutputStream outputStream = new FileOutputStream(file);
-			outputStream.write(gson.toJson(obj).getBytes());
+			outputStream.write(gson.toJson(obj).getBytes("UTF8"));
 			outputStream.flush();
 			outputStream.close();
 			return true;
@@ -55,7 +55,7 @@ public class FileManager {
 		try {
 			
 			FileInputStream fileInputStream = new FileInputStream(file);
-			InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
+			InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream,"UTF8");
 			BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 			
 			StringBuilder builder = new StringBuilder();
@@ -68,7 +68,7 @@ public class FileManager {
 			bufferedReader.close();
 			inputStreamReader.close();
 			fileInputStream.close();
-			
+
 			return gson.fromJson(builder.toString(), c);
 			
 		}
