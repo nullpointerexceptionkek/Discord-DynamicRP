@@ -4,6 +4,7 @@ import java.awt.*;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Arrays;
+import java.util.Optional;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -42,6 +43,7 @@ public class CustomDiscordRPC extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);
 			primaryStage.setOnCloseRequest((event)->{
+				event.consume();
 				onclose();
 			});
 			primaryStage.show();
@@ -115,10 +117,14 @@ public class CustomDiscordRPC extends Application {
 		alert.setTitle("Close");
 		alert.setHeaderText("SystemTray is supported");
 		alert.setContentText("minimize to System tray instead of being closed?");
-		if(!(alert.showAndWait().get() == yesButton)) {
+		ButtonType result = alert.showAndWait().get();
+
+		if(result.equals(yesButton)) {
+			primaryStage.close();
+		} else if(result.equals(noButton)){
 			RunLoopManager.onClose();
-		}
 	}
+		}
 
 
 }
