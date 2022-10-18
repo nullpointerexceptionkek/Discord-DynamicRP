@@ -1,1 +1,68 @@
-{"TimeStampMode":"Custom","Updates":[{"Delay":16000,"Image":"1","ImageText":"","SmallImage":"","SmallText":"","Firstline":"傻逼","SecondLine":"傻逼傻逼傻逼傻逼傻逼傻逼傻逼傻逼傻逼傻逼"},{"Delay":16000,"Image":"2","ImageText":"First line 1","SmallImage":"","SmallText":"","Firstline":"First line 2","SecondLine":"Second line 2"},{"Delay":16000,"Image":"3","ImageText":"First line 1","SmallImage":"","SmallText":"","Firstline":"First line 3","SecondLine":"Second line 3"},{"Delay":16000,"Image":"4","ImageText":"First line 1","SmallImage":"","SmallText":"","Firstline":"First line 4","SecondLine":"Second line 4"},{"Delay":16000,"Image":"5","ImageText":"First line 1","SmallImage":"","SmallText":"","Firstline":"First line 5","SecondLine":"Second line 5"},{"Delay":16000,"Image":"6","ImageText":"First line 1","SmallImage":"","SmallText":"","Firstline":"First line 6","SecondLine":"Second line 6"},{"Delay":16000,"Image":"7","ImageText":"First line 1","SmallImage":"","SmallText":"","Firstline":"First line 7","SecondLine":"Second line 7"}]}
+{
+  "TimeStampMode": "Custom",
+  "Updates": [
+    {
+      "Delay": 16000,
+      "Image": "1",
+      "ImageText": "",
+      "SmallImage": "",
+      "SmallText": "",
+      "Firstline": "傻逼",
+      "SecondLine": "傻逼傻逼傻逼傻逼傻逼傻逼傻逼傻逼傻逼傻逼"
+    },
+    {
+      "Delay": 16000,
+      "Image": "2",
+      "ImageText": "First line 1",
+      "SmallImage": "",
+      "SmallText": "",
+      "Firstline": "First line 2",
+      "SecondLine": "Second line 2"
+    },
+    {
+      "Delay": 16000,
+      "Image": "3",
+      "ImageText": "First line 1",
+      "SmallImage": "",
+      "SmallText": "",
+      "Firstline": "First line 3",
+      "SecondLine": "Second line 3"
+    },
+    {
+      "Delay": 16000,
+      "Image": "4",
+      "ImageText": "First line 1",
+      "SmallImage": "",
+      "SmallText": "",
+      "Firstline": "First line 4",
+      "SecondLine": "Second line 4"
+    },
+    {
+      "Delay": 16000,
+      "Image": "5",
+      "ImageText": "First line 1",
+      "SmallImage": "",
+      "SmallText": "",
+      "Firstline": "First line 5",
+      "SecondLine": "Second line 5"
+    },
+    {
+      "Delay": 16000,
+      "Image": "6",
+      "ImageText": "First line 1",
+      "SmallImage": "2",
+      "SmallText": "",
+      "Firstline": "First line 6",
+      "SecondLine": "Second line 6"
+    },
+    {
+      "Delay": 16000,
+      "Image": "7",
+      "ImageText": "First line 1",
+      "SmallImage": "",
+      "SmallText": "",
+      "Firstline": "First line 7",
+      "SecondLine": "Second line 7"
+    }
+  ]
+}

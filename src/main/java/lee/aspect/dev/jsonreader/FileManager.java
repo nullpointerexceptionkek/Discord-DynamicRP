@@ -25,7 +25,7 @@ public class FileManager {
 		GsonBuilder builder = new GsonBuilder();
 		builder.registerTypeAdapter(Script.class, new ScriptAdapter());
 		builder.registerTypeAdapter(Settings.class, new SettingsAdapter());
-		gson = builder.create();
+		gson = builder.setPrettyPrinting().create();
 	}
 	
 	public static Gson getGson() {
