@@ -15,6 +15,7 @@ target/
 # User-specific stuff
 .idea/**/workspace.xml
 .idea/**/shelf
+.CustomDiscordRPC/runtime
 
 # Sensitive or high-churn files
 .idea/**/uiDesigner.xml
