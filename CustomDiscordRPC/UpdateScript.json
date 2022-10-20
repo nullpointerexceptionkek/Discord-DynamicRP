@@ -2,7 +2,7 @@
   "TimeStampMode": "Custom",
   "Updates": [
     {
-      "Delay": 16000,
+      "Delay": 5000,
       "Image": "1",
       "ImageText": "",
       "SmallImage": "",
@@ -11,7 +11,7 @@
       "SecondLine": "傻逼傻逼傻逼傻逼傻逼傻逼傻逼傻逼傻逼傻逼"
     },
     {
-      "Delay": 16000,
+      "Delay": 5000,
       "Image": "2",
       "ImageText": "First line 1",
       "SmallImage": "",
@@ -20,7 +20,7 @@
       "SecondLine": "Second line 2"
     },
     {
-      "Delay": 16000,
+      "Delay": 5000,
       "Image": "3",
       "ImageText": "First line 1",
       "SmallImage": "",
@@ -29,7 +29,7 @@
       "SecondLine": "Second line 3"
     },
     {
-      "Delay": 16000,
+      "Delay": 5000,
       "Image": "4",
       "ImageText": "First line 1",
       "SmallImage": "",

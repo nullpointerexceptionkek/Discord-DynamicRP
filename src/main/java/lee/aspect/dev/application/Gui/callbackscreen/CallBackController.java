@@ -93,7 +93,8 @@ public class CallBackController implements Initializable{
 			display1.setPrefWidth(100);
 			display1.setPrefHeight(30);
 			display1.setLayoutX(anchorRoot.getScene().getWidth() / 2 - display1.getPrefWidth() / 2);
-			display1.setLayoutY(anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2 - 45);
+			display1.setLayoutY(anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2);
+			display1.setTranslateY(-45);
 			display1.setTextAlignment(TextAlignment.CENTER);
 			display1.setBorder(new Border(new BorderStroke(Color.RED,
 					BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
@@ -111,7 +112,8 @@ public class CallBackController implements Initializable{
 			display3.setPrefWidth(100);
 			display3.setPrefHeight(30);
 			display3.setLayoutX(anchorRoot.getScene().getWidth() / 2 - display1.getPrefWidth() / 2);
-			display3.setLayoutY(anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2 + 45);
+			display3.setLayoutY(anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2);
+			display3.setTranslateY(45);
 			display3.setTextAlignment(TextAlignment.CENTER);
 			display3.setBorder(new Border(new BorderStroke(Color.ORANGE,
 					BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
@@ -130,12 +132,8 @@ public class CallBackController implements Initializable{
 			anchorRoot.getChildren().addAll(display1, display2, display3);
 			pmoveUp = new BounceOutUp(display1);
 			currentUp = new SlideAndFade(display2, -45);
-			afterUp = new SlideAndFade(display3, -45);
+			afterUp = new SlideAndFade(display3, 0);
 			afterIn = new BounceInLeft(display3);
-
-			System.out.println("d1 " + display1.getLayoutBounds().getMaxY());
-			System.out.println("d2 " +display2.getLayoutBounds().getMaxY());
-			System.out.println("d3 " +display3.getLayoutBounds().getMaxY());
 
 			//pmoveUp.play();
 			//currentUp.play();
@@ -159,40 +157,34 @@ public class CallBackController implements Initializable{
 		System.out.println("d3 " +display3.getLayoutY());
 
 		 */
-		System.out.println("d1 " + display1.getLayoutBounds().getMaxY());
-		System.out.println("d2 " +display2.getLayoutBounds().getMaxY());
-		System.out.println("d3 " +display3.getLayoutBounds().getMaxY());
-		if(display1.getLayoutBounds().getMaxY() <= 35) {
-			currentUp.setOnFinished((actionEvent -> {
-				currentUp.setNode(display3);
-			}));
+		System.out.println("d1 " + (display1.getLayoutY() + display1.getTranslateY()));
+		System.out.println("d2 " +(display2.getLayoutY() + display2.getTranslateY()));
+		System.out.println("d3 " +(display3.getLayoutY() + display3.getTranslateY()));
+
+		if((display1.getLayoutY() + display1.getTranslateY()) <= 230) {
+			System.out.println("d1");
 			currentUp.play();
-			afterUp.setOnFinished((actionEvent -> {
-				afterUp.setNode(display1);
-			}));
 			afterUp.play();
-			display1.setLayoutY(anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2 + 45);
+			display1.setTranslateY(45);
 			afterIn.setNode(display1);
 			display1.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getFl()
 					+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getSl());
 			afterIn.play();
 		}
-		else if(display2.getLayoutBounds().getMaxY() <= 35) {
-			currentUp.setOnFinished((actionEvent -> {
-				currentUp.setNode(display1);
-			}));
+		else if((display2.getLayoutY() + display2.getTranslateY()) <= 230) {
+			System.out.println("d2");
+			currentUp.setNode(display3);
 			currentUp.play();
-			afterUp.setOnFinished((actionEvent -> {
-				afterUp.setNode(display2);
-			}));
+			afterUp.setNode(display1);
 			afterUp.play();
-			display2.setLayoutY(anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2 + 45);
+			display2.setTranslateY(45);
 			afterIn.setNode(display2);
 			display2.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getFl()
 					+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getSl());
 			afterIn.play();
 		}
-		else if(display3.getLayoutBounds().getMaxY() <= 35) {
+		else if((display3.getLayoutY() + display3.getTranslateY()) <= 230) {
+			System.out.println("d3");
 			currentUp.setOnFinished((actionEvent -> {
 				currentUp.setNode(display2);
 			}));
@@ -201,7 +193,7 @@ public class CallBackController implements Initializable{
 				afterUp.setNode(display3);
 			}));
 			afterUp.play();
-			display3.setLayoutY(anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2 + 45);
+			display3.setTranslateY(45);
 			afterIn.setNode(display3);
 			display3.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getFl()
 					+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getSl());
