@@ -163,7 +163,9 @@ public class CallBackController implements Initializable{
 
 		if((display1.getLayoutY() + display1.getTranslateY()) <= 230) {
 			System.out.println("d1");
+			currentUp = new SlideAndFade(display2, -45);
 			currentUp.play();
+			afterUp = new SlideAndFade(display3, 0);
 			afterUp.play();
 			display1.setTranslateY(45);
 			afterIn.setNode(display1);
@@ -173,9 +175,9 @@ public class CallBackController implements Initializable{
 		}
 		else if((display2.getLayoutY() + display2.getTranslateY()) <= 230) {
 			System.out.println("d2");
-			currentUp.setNode(display3);
+			currentUp = new SlideAndFade(display3,-45);
 			currentUp.play();
-			afterUp.setNode(display1);
+			afterUp = new SlideAndFade(display1,0);
 			afterUp.play();
 			display2.setTranslateY(45);
 			afterIn.setNode(display2);
@@ -185,13 +187,9 @@ public class CallBackController implements Initializable{
 		}
 		else if((display3.getLayoutY() + display3.getTranslateY()) <= 230) {
 			System.out.println("d3");
-			currentUp.setOnFinished((actionEvent -> {
-				currentUp.setNode(display2);
-			}));
+			currentUp = new SlideAndFade(display1, -45);
 			currentUp.play();
-			afterUp.setOnFinished((actionEvent -> {
-				afterUp.setNode(display3);
-			}));
+			afterUp = new SlideAndFade(display2, 0);
 			afterUp.play();
 			display3.setTranslateY(45);
 			afterIn.setNode(display3);
