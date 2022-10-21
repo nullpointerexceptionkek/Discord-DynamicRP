@@ -51,7 +51,7 @@ public class CallBackController implements Initializable{
 
 	private Label display3;
 
-	private BounceOutUp pmoveUp;
+	private BounceOutRight pmoveUp;
 
 	private SlideAndFade currentUp;
 
@@ -130,7 +130,7 @@ public class CallBackController implements Initializable{
 			display3.setText("3");
 
 			anchorRoot.getChildren().addAll(display1, display2, display3);
-			pmoveUp = new BounceOutUp(display1);
+			pmoveUp = new BounceOutRight(display1);
 			currentUp = new SlideAndFade(display2, -45);
 			afterUp = new SlideAndFade(display3, 0);
 			afterIn = new BounceInLeft(display3);
@@ -162,40 +162,49 @@ public class CallBackController implements Initializable{
 		System.out.println("d3 " +(display3.getLayoutY() + display3.getTranslateY()));
 
 		if((display1.getLayoutY() + display1.getTranslateY()) <= 230) {
-			System.out.println("d1");
+			pmoveUp.setNode(display1);
+			pmoveUp.setOnFinished((actionEvent -> {
+				display1.setTranslateY(45);
+				afterIn.setNode(display1);
+				display1.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getFl()
+						+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getSl());
+				afterIn.play();
+			}));
+			pmoveUp.play();
 			currentUp = new SlideAndFade(display2, -45);
 			currentUp.play();
 			afterUp = new SlideAndFade(display3, 0);
 			afterUp.play();
-			display1.setTranslateY(45);
-			afterIn.setNode(display1);
-			display1.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getFl()
-					+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getSl());
-			afterIn.play();
 		}
 		else if((display2.getLayoutY() + display2.getTranslateY()) <= 230) {
-			System.out.println("d2");
+			pmoveUp.setNode(display2);
+			pmoveUp.setOnFinished((actionEvent -> {
+				display2.setTranslateY(45);
+				afterIn.setNode(display2);
+				display2.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getFl()
+						+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getSl());
+				afterIn.play();
+			}));
+			pmoveUp.play();
 			currentUp = new SlideAndFade(display3,-45);
 			currentUp.play();
 			afterUp = new SlideAndFade(display1,0);
 			afterUp.play();
-			display2.setTranslateY(45);
-			afterIn.setNode(display2);
-			display2.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getFl()
-					+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getSl());
-			afterIn.play();
 		}
 		else if((display3.getLayoutY() + display3.getTranslateY()) <= 230) {
-			System.out.println("d3");
+			pmoveUp.setNode(display3);
+			pmoveUp.setOnFinished((actionEvent -> {
+				display3.setTranslateY(45);
+				afterIn.setNode(display3);
+				display3.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getFl()
+						+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getSl());
+				afterIn.play();
+			}));
+			pmoveUp.play();
 			currentUp = new SlideAndFade(display1, -45);
 			currentUp.play();
 			afterUp = new SlideAndFade(display2, 0);
 			afterUp.play();
-			display3.setTranslateY(45);
-			afterIn.setNode(display3);
-			display3.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getFl()
-					+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getSl());
-			afterIn.play();
 		}
 		else{
 			System.err.println("Animation have encounter an error, this should not be happend");
