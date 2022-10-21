@@ -81,7 +81,7 @@ public class LoadingController implements Initializable{
 						try {
 							switch(file) {
 							case "callback":
-								var loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/CallBack.fxml"));
+								var loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/Scenes/CallBack.fxml"));
 								Parent root = loader.load();
 								stackPane.getChildren().add(root);
 								callBackController = loader.getController();
@@ -93,7 +93,7 @@ public class LoadingController implements Initializable{
 								animation.play();
 								break;
 								case "readyconfig":
-									Parent root1 = FXMLLoader.load(getClass().getResource("/lee/aspect/dev/ReadyConfig.fxml"));
+									Parent root1 = FXMLLoader.load(getClass().getResource("/lee/aspect/dev/Scenes/ReadyConfig.fxml"));
 									Scene scene1 = anchorRoot.getScene();
 
 									root1.translateYProperty().set(scene1.getHeight());
@@ -109,7 +109,7 @@ public class LoadingController implements Initializable{
 									timeline1.play();
 								break;
 							default:
-								Parent root2 = FXMLLoader.load(getClass().getResource("/lee/aspect/dev/ReadyConfig.fxml"));
+								Parent root2 = FXMLLoader.load(getClass().getResource("/lee/aspect/dev/Scenes/ReadyConfig.fxml"));
 								Scene scene2 = anchorRoot.getScene();
 								
 								root2.translateYProperty().set(scene2.getHeight());

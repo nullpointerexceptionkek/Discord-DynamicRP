@@ -4,7 +4,6 @@ import java.awt.*;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Arrays;
-import java.util.Optional;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -36,7 +35,7 @@ public class CustomDiscordRPC extends Application {
 		try {
 			primaryStage= pstage;
 			RunLoopManager.init();
-			Parent root = FXMLLoader.load(getClass().getResource("/lee/aspect/dev/ReadyConfig.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/lee/aspect/dev/Scenes/ReadyConfig.fxml"));
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource(Settings.getTheme().Themepass()).toExternalForm());
 			primaryStage.setTitle("Custom Discord RPC");

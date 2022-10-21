@@ -96,7 +96,7 @@ public class ConfigController implements Initializable{
 		ArrayList<Updates> u = new ArrayList<>(displayUpdates.getItems());
 		Script.setTotalupdates(u); 
 		RunLoopManager.saveScripToFile();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/LoadingScreen.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/Scenes/LoadingScreen.fxml"));
 		Parent root = loader.load();
 		root.getStylesheets().add(getClass().getResource(Settings.getTheme().Themepass()).toExternalForm());
 		LoadingController lc = loader.getController();
@@ -131,7 +131,7 @@ public class ConfigController implements Initializable{
 	public void switchToSetting(ActionEvent event) throws IOException, InterruptedException {
 		Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		stage.close();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/Settings.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/Scenes/Settings.fxml"));
 		Parent root = loader.load();
 		root.getStylesheets().add(getClass().getResource(Settings.getTheme().Themepass()).toExternalForm());
 		SettingController ec = loader.getController();
@@ -170,7 +170,7 @@ public class ConfigController implements Initializable{
 	//it will also set the appid to only accept numbers and if loaded is not null, it will leave it empty
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		ImageView imageView = new ImageView(getClass().getResource("/lee/aspect/dev/settingsImage.png").toExternalForm());
+		ImageView imageView = new ImageView(getClass().getResource("/lee/aspect/dev/icon/settingsImage.png").toExternalForm());
 		imageView.setFitHeight(25);
 		imageView.setPreserveRatio(true);
 		settingButton.setGraphic(imageView);
@@ -252,7 +252,7 @@ public class ConfigController implements Initializable{
 	//this will open up a new window and edit the arraylist
 	private void showListConfig(int numberInList, double x, double y) {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/EditListScript.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/Scenes/EditListScript.fxml"));
 			Parent root = loader.load();
 			root.getStylesheets().add(getClass().getResource(Settings.getTheme().Themepass()).toExternalForm());
 			EditListController ec = loader.getController();
