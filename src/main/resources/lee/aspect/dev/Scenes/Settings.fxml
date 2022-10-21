@@ -26,10 +26,10 @@
                </font>
             </Label>
             <Label alignment="CENTER" layoutX="198.0" layoutY="27.0" prefHeight="32.0" prefWidth="99.0" text="Calcium" />
-            <Label alignment="CENTER" layoutX="54.0" layoutY="320.0" prefHeight="32.0" prefWidth="234.0" text="Minimize to systemtray" />
+            <Label alignment="CENTER" layoutX="54.0" layoutY="320.0" prefHeight="32.0" prefWidth="234.0" text="Minimize to system tray" />
             <ChoiceBox layoutX="85.0" layoutY="346.0" prefHeight="25.0" prefWidth="173.0" />
             <CheckBox layoutX="49.0" layoutY="378.0" mnemonicParsing="false" text="Shutdown Interface when minimize to tray" />
-            <CheckBox layoutX="49.0" layoutY="401.0" mnemonicParsing="false" text="Disable unnessary animation" />
+            <CheckBox layoutX="49.0" layoutY="401.0" mnemonicParsing="false" text="Disable unnecessary animation" />
             <CheckBox layoutX="49.0" layoutY="425.0" mnemonicParsing="false" text="Ultra low resource mode" />
             <CheckBox layoutX="49.0" layoutY="449.0" mnemonicParsing="false" text="Launch Callback when System start" />
             <Label alignment="CENTER" layoutX="54.0" layoutY="296.0" prefHeight="32.0" prefWidth="234.0" text="Performance">

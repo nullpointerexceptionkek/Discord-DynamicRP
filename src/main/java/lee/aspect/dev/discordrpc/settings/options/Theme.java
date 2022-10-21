@@ -1,4 +1,4 @@
-package lee.aspect.dev.discordrpc.settings;
+package lee.aspect.dev.discordrpc.settings.options;
 
 public enum Theme {
 

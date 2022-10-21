@@ -20,7 +20,7 @@ import lee.aspect.dev.application.Gui.config.ready.ConfigController;
 import lee.aspect.dev.application.CustomDiscordRPC;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.discordrpc.settings.Settings;
-import lee.aspect.dev.discordrpc.settings.Theme;
+import lee.aspect.dev.discordrpc.settings.options.Theme;
 
 public class SettingController implements Initializable{
 

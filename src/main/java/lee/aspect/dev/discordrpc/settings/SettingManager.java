@@ -1,5 +1,6 @@
 package lee.aspect.dev.discordrpc.settings;
 
+import lee.aspect.dev.discordrpc.settings.options.Theme;
 import lee.aspect.dev.jsonreader.FileManager;
 
 import java.io.File;

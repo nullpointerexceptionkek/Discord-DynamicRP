@@ -1,4 +1,9 @@
 {
-  "Theme": "light",
+  "Theme": "lightgreen",
+  "MinimizeMode": "Ask",
+  "ShutDownInterfaceWhenTray": false,
+  "LowResourceMode": false,
+  "NoAnimation": false,
+  "StartLaunch": false,
   "Apikey": "1002317125899272332"
 }
