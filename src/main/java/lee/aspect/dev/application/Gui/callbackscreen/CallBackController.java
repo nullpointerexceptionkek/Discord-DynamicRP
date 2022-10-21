@@ -118,16 +118,20 @@ public class CallBackController implements Initializable{
 			display3.setBorder(new Border(new BorderStroke(Color.ORANGE,
 					BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
-			//prev.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getFl()
-			//		+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getSl());
-			//display2.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getFl()
-			//		+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getSl());
-			//display3.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getFl()
-			//		+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getSl());
+			if(Script.getTotalupdates().size() == 1) {
+				display2.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getFl()
+						+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getSl());
+			} else {
+				if(RunLoopManager.getCURRENTDISPLAY() > 0)
+					display1.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()-1).getFl()
+							+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()-1).getSl());
+				display2.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getFl()
+						+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getSl());
+				display3.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY() >= Script.getTotalupdates().size()-1 ? 0 :RunLoopManager.getCURRENTDISPLAY()+1).getFl()
+						+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY() >= Script.getTotalupdates().size()-1 ? 0 :RunLoopManager.getCURRENTDISPLAY()+1).getSl());
+			}
 
-			display1.setText("1");
-			display2.setText("2");
-			display3.setText("3");
+
 
 			anchorRoot.getChildren().addAll(display1, display2, display3);
 			pmoveUp = new BounceOutRight(display1);
@@ -135,39 +139,18 @@ public class CallBackController implements Initializable{
 			afterUp = new SlideAndFade(display3, 0);
 			afterIn = new BounceInLeft(display3);
 
-			//pmoveUp.play();
-			//currentUp.play();
-			//afterUp.play();
-			//afterIn.play();
 		});
 	}
 
 	public void updateCurrentDisplay() {
-		//pmoveUp.play();
-		/*
-		System.out.println(
-				display3.getLayoutBounds().getMaxY()
-		);
-		System.out.println(
-				display3.getLayoutY()
-		);
-		System.out.println((anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2 - 45));
-		System.out.println("d1 " + display1.getLayoutY());
-		System.out.println("d2 " +display2.getLayoutY());
-		System.out.println("d3 " +display3.getLayoutY());
-
-		 */
-		System.out.println("d1 " + (display1.getLayoutY() + display1.getTranslateY()));
-		System.out.println("d2 " +(display2.getLayoutY() + display2.getTranslateY()));
-		System.out.println("d3 " +(display3.getLayoutY() + display3.getTranslateY()));
 
 		if((display1.getLayoutY() + display1.getTranslateY()) <= 230) {
 			pmoveUp.setNode(display1);
 			pmoveUp.setOnFinished((actionEvent -> {
 				display1.setTranslateY(45);
 				afterIn.setNode(display1);
-				display1.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getFl()
-						+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getSl());
+				display1.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY() >= Script.getTotalupdates().size()-1 ? 0 :RunLoopManager.getCURRENTDISPLAY()+1).getFl()
+						+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY() >= Script.getTotalupdates().size()-1 ? 0 :RunLoopManager.getCURRENTDISPLAY()+1).getSl());
 				afterIn.play();
 			}));
 			pmoveUp.play();
@@ -181,8 +164,8 @@ public class CallBackController implements Initializable{
 			pmoveUp.setOnFinished((actionEvent -> {
 				display2.setTranslateY(45);
 				afterIn.setNode(display2);
-				display2.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getFl()
-						+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getSl());
+				display2.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY() >= Script.getTotalupdates().size()-1 ? 0 :RunLoopManager.getCURRENTDISPLAY()+1).getFl()
+						+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY() >= Script.getTotalupdates().size()-1 ? 0 :RunLoopManager.getCURRENTDISPLAY()+1).getSl());
 				afterIn.play();
 			}));
 			pmoveUp.play();
@@ -196,8 +179,8 @@ public class CallBackController implements Initializable{
 			pmoveUp.setOnFinished((actionEvent -> {
 				display3.setTranslateY(45);
 				afterIn.setNode(display3);
-				display3.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getFl()
-						+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()+1).getSl());
+				display3.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY() >= Script.getTotalupdates().size()-1 ? 0 :RunLoopManager.getCURRENTDISPLAY()+1).getFl()
+						+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY() >= Script.getTotalupdates().size()-1 ? 0 :RunLoopManager.getCURRENTDISPLAY()+1).getSl());
 				afterIn.play();
 			}));
 			pmoveUp.play();

@@ -36,33 +36,6 @@
       "SmallText": "",
       "Firstline": "First line 4",
       "SecondLine": "Second line 4"
-    },
-    {
-      "Delay": 5000,
-      "Image": "5",
-      "ImageText": "First line 1",
-      "SmallImage": "",
-      "SmallText": "",
-      "Firstline": "First line 5",
-      "SecondLine": "Second line 5"
-    },
-    {
-      "Delay": 16000,
-      "Image": "6",
-      "ImageText": "First line 1",
-      "SmallImage": "2",
-      "SmallText": "",
-      "Firstline": "First line 6",
-      "SecondLine": "Second line 6"
-    },
-    {
-      "Delay": 16000,
-      "Image": "7",
-      "ImageText": "First line 1",
-      "SmallImage": "",
-      "SmallText": "",
-      "Firstline": "First line 7",
-      "SecondLine": "Second line 7"
     }
   ]
 }
