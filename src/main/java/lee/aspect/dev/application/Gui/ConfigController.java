@@ -1,4 +1,4 @@
-package lee.aspect.dev.application.Gui.config.ready;
+package lee.aspect.dev.application.Gui;
 
 
 
@@ -33,9 +33,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import lee.aspect.dev.animationengine.animation.FadeIn;
-import lee.aspect.dev.application.Gui.LoadingScreen.LoadingController;
-import lee.aspect.dev.application.Gui.Settings.SettingController;
-import lee.aspect.dev.application.Gui.config.EditListController;
+import lee.aspect.dev.application.Gui.LoadingController;
+import lee.aspect.dev.application.Gui.SettingController;
+import lee.aspect.dev.application.Gui.EditListController;
 import lee.aspect.dev.application.RunLoopManager;
 import lee.aspect.dev.discordrpc.Script;
 import lee.aspect.dev.discordrpc.Updates;

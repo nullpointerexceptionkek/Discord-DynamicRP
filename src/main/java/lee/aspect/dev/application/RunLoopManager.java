@@ -1,16 +1,12 @@
 package lee.aspect.dev.application;
 
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
-import lee.aspect.dev.application.Gui.LoadingScreen.LoadingController;
-import lee.aspect.dev.application.Gui.callbackscreen.CallBackController;
+import lee.aspect.dev.application.Gui.LoadingController;
 import lee.aspect.dev.discordrpc.DiscordRP;
 import lee.aspect.dev.discordrpc.UpdateManager;
 import lee.aspect.dev.discordrpc.Updates;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.jsonreader.FileManager;
-
-import java.io.IOException;
 
 public class RunLoopManager {
 

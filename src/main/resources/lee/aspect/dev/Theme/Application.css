@@ -7,7 +7,11 @@
 	-fx-font-family: "Uni Sans";
 	-fx-alignment: center;
 	-fx-text-fill: #ffffff;
-} 
+}
+
+.check-box{
+	-fx-text-fill: #ffffff;
+}
 
 .text-field{
 	-fx-font-family: "Uni Sans";

@@ -1,4 +1,4 @@
-package lee.aspect.dev.application.Gui.Settings;
+package lee.aspect.dev.application.Gui;
 
 import java.io.IOException;
 import java.net.URL;
@@ -16,7 +16,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import lee.aspect.dev.application.Gui.config.ready.ConfigController;
 import lee.aspect.dev.application.CustomDiscordRPC;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.discordrpc.settings.Settings;

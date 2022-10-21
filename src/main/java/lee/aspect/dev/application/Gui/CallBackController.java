@@ -1,4 +1,4 @@
-package lee.aspect.dev.application.Gui.callbackscreen;
+package lee.aspect.dev.application.Gui;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,7 +23,6 @@ import javafx.scene.text.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import lee.aspect.dev.animationengine.animation.*;
-import lee.aspect.dev.application.Gui.LoadingScreen.LoadingController;
 import lee.aspect.dev.application.RunLoopManager;
 import lee.aspect.dev.discordrpc.DiscordRP;
 import lee.aspect.dev.discordrpc.Script;

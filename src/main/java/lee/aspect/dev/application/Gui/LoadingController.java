@@ -1,4 +1,4 @@
-package lee.aspect.dev.application.Gui.LoadingScreen;
+package lee.aspect.dev.application.Gui;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,7 +18,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import lee.aspect.dev.animationengine.animation.RotateIn;
-import lee.aspect.dev.application.Gui.callbackscreen.CallBackController;
+import lee.aspect.dev.application.Gui.CallBackController;
 import lee.aspect.dev.application.RunLoopManager;
 
 public class LoadingController implements Initializable{

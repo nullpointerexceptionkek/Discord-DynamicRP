@@ -11,16 +11,8 @@ module lee.aspect.dev {
 
 
     opens lee.aspect.dev.application to javafx.controls,javafx.fxml,javafx.graphics;
-    opens lee.aspect.dev.application.Gui.Settings to javafx.controls,javafx.fxml,javafx.graphics;
-    opens lee.aspect.dev.application.Gui.callbackscreen to javafx.controls,javafx.fxml,javafx.graphics;
-    opens lee.aspect.dev.application.Gui.config.ready to javafx.controls,javafx.fxml,javafx.graphics;
-    opens lee.aspect.dev.application.Gui.config to javafx.controls,javafx.fxml,javafx.graphics;
-    opens lee.aspect.dev.application.Gui.LoadingScreen to javafx.controls,javafx.fxml,javafx.graphics;
+    opens lee.aspect.dev.application.Gui to javafx.controls, javafx.fxml, javafx.graphics;
 
     exports lee.aspect.dev.application to javafx.controls,javafx.fxml,javafx.graphics;
-    exports lee.aspect.dev.application.Gui.Settings to javafx.controls,javafx.fxml,javafx.graphics;
-    exports lee.aspect.dev.application.Gui.callbackscreen to javafx.controls,javafx.fxml,javafx.graphics;
-    exports lee.aspect.dev.application.Gui.config.ready to javafx.controls,javafx.fxml,javafx.graphics;
-    exports lee.aspect.dev.application.Gui.config to javafx.controls,javafx.fxml,javafx.graphics;
-    exports lee.aspect.dev.application.Gui.LoadingScreen to javafx.controls,javafx.fxml,javafx.graphics;
+    exports lee.aspect.dev.application.Gui to javafx.controls,javafx.fxml,javafx.graphics;
 }
