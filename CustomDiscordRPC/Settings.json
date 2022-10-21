@@ -4,6 +4,6 @@
   "ShutDownInterfaceWhenTray": true,
   "LowResourceMode": true,
   "NoAnimation": true,
-  "StartLaunch": false,
+  "StartLaunch": true,
   "Apikey": "1002317125899272332"
 }

@@ -1,21 +1,23 @@
 package lee.aspect.dev.discordrpc;
 
+import lee.aspect.dev.discordrpc.settings.options.TimeStampMode;
+
 import java.util.ArrayList;
 
 public class Script {
 	private static ArrayList<Updates> totalupdates;
 	
-	private static String timestampmode = "Default";
+	private static TimeStampMode timestampmode = TimeStampMode.applaunch;
 	
 	public Script() {
 		totalupdates = new ArrayList<Updates>();
 	}
 	
-	public static void setTimestampmode(String timestampmode) {
+	public static void setTimestampmode(TimeStampMode timestampmode) {
 		Script.timestampmode = timestampmode;
 	}
 	
-	public static String getTimestampmode() {
+	public static TimeStampMode getTimestampmode() {
 		return timestampmode;
 	}
 	

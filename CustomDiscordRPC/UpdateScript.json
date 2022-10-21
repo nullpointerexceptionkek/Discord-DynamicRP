@@ -1,41 +1,32 @@
 {
-  "TimeStampMode": "Custom",
+  "TimeStampMode": "none",
   "Updates": [
     {
-      "Delay": 5000,
+      "Delay": 16000,
       "Image": "1",
       "ImageText": "",
       "SmallImage": "",
       "SmallText": "",
-      "Firstline": "傻逼",
-      "SecondLine": "傻逼傻逼傻逼傻逼傻逼傻逼傻逼傻逼傻逼傻逼"
+      "Firstline": "First line 1",
+      "SecondLine": "Second line 1"
     },
     {
-      "Delay": 5000,
+      "Delay": 16000,
       "Image": "2",
-      "ImageText": "First line 1",
+      "ImageText": "",
       "SmallImage": "",
       "SmallText": "",
       "Firstline": "First line 2",
       "SecondLine": "Second line 2"
     },
     {
-      "Delay": 5000,
+      "Delay": 16000,
       "Image": "3",
-      "ImageText": "First line 1",
+      "ImageText": "",
       "SmallImage": "",
       "SmallText": "",
       "Firstline": "First line 3",
       "SecondLine": "Second line 3"
-    },
-    {
-      "Delay": 5000,
-      "Image": "4",
-      "ImageText": "First line 1",
-      "SmallImage": "",
-      "SmallText": "",
-      "Firstline": "First line 4",
-      "SecondLine": "Second line 4"
     }
   ]
 }

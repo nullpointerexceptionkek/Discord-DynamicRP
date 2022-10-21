@@ -1,4 +1,4 @@
-package lee.aspect.dev.discordrpc;
+package lee.aspect.dev.discordrpc.settings.options;
 
 public enum TimeStampMode {
 

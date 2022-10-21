@@ -8,6 +8,7 @@ import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import lee.aspect.dev.discordrpc.Script;
 import lee.aspect.dev.discordrpc.Updates;
+import lee.aspect.dev.discordrpc.settings.options.TimeStampMode;
 
 
 public class ScriptAdapter extends TypeAdapter<Script>{
@@ -29,7 +30,7 @@ public class ScriptAdapter extends TypeAdapter<Script>{
 				}
 				switch (name) {
 					case "TimeStampMode":
-						Script.setTimestampmode(reader.nextString());
+						Script.setTimestampmode(TimeStampMode.valueOf(reader.nextString()));
 						break;
 					case "Updates":
 						reader.beginArray();
@@ -105,7 +106,7 @@ public class ScriptAdapter extends TypeAdapter<Script>{
 		}
 		writter.beginObject();
 		writter.name("TimeStampMode");
-		writter.value(Script.getTimestampmode());
+		writter.value(Script.getTimestampmode().name());
 		writter.name("Updates");
 		writter.beginArray();
 		//time, String image, String imagetext, String smallimage, String smalltext, String f1, String sl

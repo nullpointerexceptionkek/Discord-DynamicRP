@@ -41,6 +41,7 @@ import lee.aspect.dev.discordrpc.Script;
 import lee.aspect.dev.discordrpc.Updates;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.discordrpc.settings.Settings;
+import lee.aspect.dev.discordrpc.settings.options.TimeStampMode;
 
 public class ConfigController implements Initializable{
 	
@@ -72,16 +73,16 @@ public class ConfigController implements Initializable{
 	
 	public void getTimeStampMode(ActionEvent event){
 		if(applaunch.isSelected()) {
-			Script.setTimestampmode("Default");
+			Script.setTimestampmode(TimeStampMode.applaunch);
 		} 
 		else if(none.isSelected()){
-			Script.setTimestampmode("None");
+			Script.setTimestampmode(TimeStampMode.none);
 		}
 		else if(local.isSelected()){
-			Script.setTimestampmode("Local time");
+			Script.setTimestampmode(TimeStampMode.current);
 		}
 		else if(custom.isSelected()){
-			Script.setTimestampmode("Custom");
+			Script.setTimestampmode(TimeStampMode.CDFromDayEnd);
 		}
 	}
 	
@@ -204,24 +205,24 @@ public class ConfigController implements Initializable{
 		try {
 			//set the timestamp mode
 			switch(Script.getTimestampmode()) {
-				case "Default":
+				case applaunch:
 					applaunch.setSelected(true);
 					break;
 				
-				case "None":
+				case none:
 					none.setSelected(true);
 					break;
 					
-				case "Local time":
+				case current:
 					local.setSelected(true);
 					break;
 				
-				case "Custom":
+				case CDFromDayEnd:
 					custom.setSelected(true);
 					break;
 				default:
 					applaunch.setSelected(true);
-					Script.setTimestampmode("Default");
+					Script.setTimestampmode(TimeStampMode.applaunch);
 			
 			}
 			displayUpdates.getItems().addAll(Script.getTotalupdates());	

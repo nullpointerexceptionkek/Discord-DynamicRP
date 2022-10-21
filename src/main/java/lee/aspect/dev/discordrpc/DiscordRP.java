@@ -31,32 +31,31 @@ public class DiscordRP {
 	public void LaunchReadyCallBack(Updates updates){
 		Calendar calendar = Calendar.getInstance();
 		switch(Script.getTimestampmode()) {
-		case "Default":
-			useStartTimeStamp = true;
-			this.created = System.currentTimeMillis();
-			break;
-		
-		case "None":
-			created = -1;
-			break;
+			case applaunch:
+				useStartTimeStamp = true;
+				this.created = System.currentTimeMillis();
+				break;
+			case none:
+				created = -1;
+				break;
 			
-		case "Local time":
-			useStartTimeStamp = true;
-			calendar.set(Calendar.HOUR_OF_DAY, 0);
-	        calendar.set(Calendar.MINUTE, 0);
-	        calendar.set(Calendar.SECOND, 0);
-	        calendar.set(Calendar.MILLISECOND, 0);
-			this.created = calendar.getTimeInMillis();
-			break;
+			case current:
+				useStartTimeStamp = true;
+				calendar.set(Calendar.HOUR_OF_DAY, 0);
+	        	calendar.set(Calendar.MINUTE, 0);
+	        	calendar.set(Calendar.SECOND, 0);
+	        	calendar.set(Calendar.MILLISECOND, 0);
+				this.created = calendar.getTimeInMillis();
+				break;
 		
-		case "Custom":
-			useStartTimeStamp = false;
-			calendar.set(Calendar.HOUR_OF_DAY, 24);
-	        calendar.set(Calendar.MINUTE, 0);
-	        calendar.set(Calendar.SECOND, 0);
-	        calendar.set(Calendar.MILLISECOND, 0);
-			this.created = calendar.getTimeInMillis();
-			break;
+			case CDFromDayEnd:
+				useStartTimeStamp = false;
+				calendar.set(Calendar.HOUR_OF_DAY, 24);
+	        	calendar.set(Calendar.MINUTE, 0);
+	        	calendar.set(Calendar.SECOND, 0);
+	        	calendar.set(Calendar.MILLISECOND, 0);
+				this.created = calendar.getTimeInMillis();
+				break;
 		}
 		created = (long) Math.floor(created/1000);
 		current = (long) Math.floor(System.currentTimeMillis()/1000);
