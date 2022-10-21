@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
@@ -19,6 +20,7 @@ import javafx.stage.Stage;
 import lee.aspect.dev.application.CustomDiscordRPC;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.discordrpc.settings.Settings;
+import lee.aspect.dev.discordrpc.settings.options.MinimizeMode;
 import lee.aspect.dev.discordrpc.settings.options.Theme;
 
 public class SettingController implements Initializable{
@@ -27,7 +29,22 @@ public class SettingController implements Initializable{
 	private Button goBack;
 	
 	@FXML
-	private ChoiceBox<Theme> theme;
+	private ChoiceBox<Theme> themeChoiceBox;
+
+	@FXML
+	private ChoiceBox<MinimizeMode> minimizeModeChoiceBox;
+
+	@FXML
+	private CheckBox shutDownInterfaceCheckBox;
+
+	@FXML
+	private CheckBox noAnimationCheckBox;
+
+	@FXML
+	private CheckBox lowResourceCheckBox;
+
+	@FXML
+	private CheckBox startLaunchCheckBox;
 	
 	@FXML
 	private AnchorPane anchorRoot;
@@ -53,12 +70,41 @@ public class SettingController implements Initializable{
 	}
 
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {	
-		theme.getItems().addAll(EnumSet.allOf(Theme.class));
-		theme.setValue((Settings.getTheme()));
-		theme.setOnAction((event) -> {
-			Settings.setTheme(theme.getValue());
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		//add theme to theme choice box
+		themeChoiceBox.getItems().addAll(EnumSet.allOf(Theme.class));
+		themeChoiceBox.setValue((Settings.getTheme()));
+		themeChoiceBox.setOnAction((event) -> {
+			Settings.setTheme(themeChoiceBox.getValue());
 		});
+		//add min to min choice box
+		minimizeModeChoiceBox.getItems().addAll(EnumSet.allOf(MinimizeMode.class));
+		minimizeModeChoiceBox.setValue((Settings.getMinimizeMode()));
+		minimizeModeChoiceBox.setOnAction((event) -> {
+			Settings.setMinimizeMode(minimizeModeChoiceBox.getValue());
+		});
+		//add for booleans
+		shutDownInterfaceCheckBox.setSelected(Settings.isShutDownInterfaceWhenTray());
+		shutDownInterfaceCheckBox.setOnAction((actionEvent -> {
+			Settings.setShutDownInterfaceWhenTray(shutDownInterfaceCheckBox.isSelected());
+		}));
+
+		noAnimationCheckBox.setSelected(Settings.isNoAnimation());
+		noAnimationCheckBox.setOnAction((actionEvent -> {
+			Settings.setNoAnimation(noAnimationCheckBox.isSelected());
+		}));
+
+		lowResourceCheckBox.setSelected(Settings.isLowResourceMode());
+		lowResourceCheckBox.setOnAction((actionEvent -> {
+			Settings.setLowResourceMode(lowResourceCheckBox.isSelected());
+		}));
+
+		startLaunchCheckBox.setSelected(Settings.isStartLaunch());
+		startLaunchCheckBox.setOnAction((actionEvent -> {
+			Settings.setStartLaunch(startLaunchCheckBox.isSelected());
+		}));
+
+
 		SettingManager.saveSettingToFile();
 		
 	}

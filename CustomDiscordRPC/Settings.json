@@ -1,9 +1,9 @@
 {
   "Theme": "dark",
   "MinimizeMode": "Ask",
-  "ShutDownInterfaceWhenTray": false,
-  "LowResourceMode": false,
-  "NoAnimation": false,
+  "ShutDownInterfaceWhenTray": true,
+  "LowResourceMode": true,
+  "NoAnimation": true,
   "StartLaunch": false,
   "Apikey": "1002317125899272332"
 }
