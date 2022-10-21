@@ -33,9 +33,12 @@ public class BounceOutRight extends AnimationFX {
     @Override
     void initTimeline() {
         setTimeline(new Timeline(
+                /*
                 new KeyFrame(Duration.millis(0),
                         new KeyValue(getNode().opacityProperty(), 1, AnimateFXInterpolator.EASE)
                 ),
+
+                 */
                 new KeyFrame(Duration.millis(200),
                         new KeyValue(getNode().opacityProperty(), 1, AnimateFXInterpolator.EASE),
                         new KeyValue(getNode().translateXProperty(), -20, AnimateFXInterpolator.EASE)

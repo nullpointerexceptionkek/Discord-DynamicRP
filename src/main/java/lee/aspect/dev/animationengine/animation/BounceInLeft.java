@@ -12,13 +12,15 @@ import javafx.util.Duration;
  */
 public class BounceInLeft extends AnimationFX {
 
+    private double Opac;
     /**
      * Create new BounceInLeft
      *
      * @param node The node to affect
      */
-    public BounceInLeft(Node node) {
+    public BounceInLeft(Node node,double endOpac) {
         super(node);
+        this.Opac = endOpac;
     }
 
     public BounceInLeft() {
@@ -41,7 +43,7 @@ public class BounceInLeft extends AnimationFX {
                                 new KeyValue(getNode().translateXProperty(), startX, Interpolator.SPLINE(0.215, 0.610, 0.355, 1.000))
                         ),
                         new KeyFrame(Duration.millis(600),
-                                new KeyValue(getNode().opacityProperty(), 1, Interpolator.SPLINE(0.215, 0.610, 0.355, 1.000)),
+                                new KeyValue(getNode().opacityProperty(), Opac, Interpolator.SPLINE(0.215, 0.610, 0.355, 1.000)),
                                 new KeyValue(getNode().translateXProperty(), 25, Interpolator.SPLINE(0.215, 0.610, 0.355, 1.000))
                         ),
                         new KeyFrame(Duration.millis(750),

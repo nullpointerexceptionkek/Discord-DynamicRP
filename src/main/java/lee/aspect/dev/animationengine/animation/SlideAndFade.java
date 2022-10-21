@@ -12,12 +12,12 @@ public class SlideAndFade extends AnimationFX{
     private double y;
 
 
-    public SlideAndFade(final Node node, double y){
+    public SlideAndFade(final Node node, double y,double opacity){
         super(node);
         this.y = y;
         getTimeline().getKeyFrames().addAll(
-                //new KeyFrame(Duration.millis(0),
-                    //new KeyValue(getNode().translateYProperty(), node.getLayoutY(),Interpolator.LINEAR)),
+                new KeyFrame(Duration.millis(400),
+                    new KeyValue(getNode().opacityProperty(), opacity,Interpolator.LINEAR)),
                 new KeyFrame(Duration.millis(400),
                         new KeyValue(getNode().translateYProperty(), y,Interpolator.LINEAR)
                 ));

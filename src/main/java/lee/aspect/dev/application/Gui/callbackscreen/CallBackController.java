@@ -96,8 +96,8 @@ public class CallBackController implements Initializable{
 			display1.setLayoutY(anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2);
 			display1.setTranslateY(-45);
 			display1.setTextAlignment(TextAlignment.CENTER);
-			display1.setBorder(new Border(new BorderStroke(Color.RED,
-					BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+			//display1.setBorder(new Border(new BorderStroke(Color.RED,
+			//		BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
 			display2 = new Label();
 			display2.setPrefWidth(100);
@@ -105,8 +105,8 @@ public class CallBackController implements Initializable{
 			display2.setLayoutX(anchorRoot.getScene().getWidth() / 2 - display1.getPrefWidth() / 2);
 			display2.setLayoutY(anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2);
 			display2.setTextAlignment(TextAlignment.CENTER);
-			display2.setBorder(new Border(new BorderStroke(Color.GREEN,
-					BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+			//display2.setBorder(new Border(new BorderStroke(Color.GREEN,
+			//		BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
 			display3 = new Label();
 			display3.setPrefWidth(100);
@@ -115,8 +115,8 @@ public class CallBackController implements Initializable{
 			display3.setLayoutY(anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2);
 			display3.setTranslateY(45);
 			display3.setTextAlignment(TextAlignment.CENTER);
-			display3.setBorder(new Border(new BorderStroke(Color.ORANGE,
-					BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+			//display3.setBorder(new Border(new BorderStroke(Color.ORANGE,
+			//		BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
 			if(Script.getTotalupdates().size() == 1) {
 				display2.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getFl()
@@ -125,19 +125,19 @@ public class CallBackController implements Initializable{
 				if(RunLoopManager.getCURRENTDISPLAY() > 0)
 					display1.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()-1).getFl()
 							+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()-1).getSl());
+				display1.opacityProperty().set(0.3);
 				display2.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getFl()
 						+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getSl());
 				display3.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY() >= Script.getTotalupdates().size()-1 ? 0 :RunLoopManager.getCURRENTDISPLAY()+1).getFl()
 						+ '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY() >= Script.getTotalupdates().size()-1 ? 0 :RunLoopManager.getCURRENTDISPLAY()+1).getSl());
+				display3.opacityProperty().set(0.8);
 			}
 
 
 
 			anchorRoot.getChildren().addAll(display1, display2, display3);
 			pmoveUp = new BounceOutRight(display1);
-			currentUp = new SlideAndFade(display2, -45);
-			afterUp = new SlideAndFade(display3, 0);
-			afterIn = new BounceInLeft(display3);
+			afterIn = new BounceInLeft(display3,0.8);
 
 		});
 	}
@@ -154,9 +154,9 @@ public class CallBackController implements Initializable{
 				afterIn.play();
 			}));
 			pmoveUp.play();
-			currentUp = new SlideAndFade(display2, -45);
+			currentUp = new SlideAndFade(display2, -45,0.3);
 			currentUp.play();
-			afterUp = new SlideAndFade(display3, 0);
+			afterUp = new SlideAndFade(display3, 0,1);
 			afterUp.play();
 		}
 		else if((display2.getLayoutY() + display2.getTranslateY()) <= 230) {
@@ -169,9 +169,9 @@ public class CallBackController implements Initializable{
 				afterIn.play();
 			}));
 			pmoveUp.play();
-			currentUp = new SlideAndFade(display3,-45);
+			currentUp = new SlideAndFade(display3,-45,0.3);
 			currentUp.play();
-			afterUp = new SlideAndFade(display1,0);
+			afterUp = new SlideAndFade(display1,0,1);
 			afterUp.play();
 		}
 		else if((display3.getLayoutY() + display3.getTranslateY()) <= 230) {
@@ -184,9 +184,9 @@ public class CallBackController implements Initializable{
 				afterIn.play();
 			}));
 			pmoveUp.play();
-			currentUp = new SlideAndFade(display1, -45);
+			currentUp = new SlideAndFade(display1, -45,0.3);
 			currentUp.play();
-			afterUp = new SlideAndFade(display2, 0);
+			afterUp = new SlideAndFade(display2, 0,1);
 			afterUp.play();
 		}
 		else{
