@@ -52,7 +52,7 @@ public class ConfigController implements Initializable{
 	private TextField appID;
 	
 	@FXML
-	protected ListView<Updates> displayUpdates;
+	protected ListView<String> displayUpdates;
 	
 	@FXML
 	private Button callbackButton;
@@ -92,10 +92,6 @@ public class ConfigController implements Initializable{
 		String DiscordAppID = appID.getText();
 		Settings.setDiscordAPIKey(DiscordAppID);
 		SettingManager.saveSettingToFile();
-
-		System.out.println(displayUpdates.getItems());
-		ArrayList<Updates> u = new ArrayList<>(displayUpdates.getItems());
-		Script.setTotalupdates(u); 
 		RunLoopManager.saveScripToFile();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/Scenes/LoadingScreen.fxml"));
 		Parent root = loader.load();
@@ -104,25 +100,12 @@ public class ConfigController implements Initializable{
 		lc.toNewScene(1000,"callback");
 		Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		Scene scene = callbackButton.getScene();
-		//root.translateYProperty().set(scene.getHeight());
 		stackPane.getChildren().add(root);
 
 		FadeIn animation = new FadeIn(stackPane);
 		animation.setSpeed(2.00);
 		stackPane.getChildren().remove(anchorRoot);
-		//animation.setOnFinished((actionEvent -> stackPane.getChildren().remove(anchorRoot)));
 		animation.play();
-
-		/*
-		Timeline timeline = new Timeline();
-		KeyValue keyValue = new KeyValue(root.translateYProperty(), 0,Interpolator.EASE_IN);
-		KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.3), keyValue);
-		timeline.getKeyFrames().add(keyFrame);
-		timeline.setOnFinished(event1 -> {
-			stackPane.getChildren().remove(anchorRoot);
-		});
-		timeline.play();
-		*/
 
 		
 		
@@ -161,8 +144,7 @@ public class ConfigController implements Initializable{
 					Script.getTotalupdates().get(currentCount-2).getButton2Url()));
 		
 		else Script.addUpdates(new Updates(16000, String.valueOf(currentCount), "" + currentCount,"","","First line ", "Second line " + currentCount));
-		displayUpdates.getItems().clear();		
-		displayUpdates.getItems().addAll(Script.getTotalupdates());	
+		displayUpdates.getItems().add("Fl: \"" + Script.getTotalupdates().get(Script.getTotalupdates().size()-1).getFl() + "\" Sl: \"" + Script.getTotalupdates().get(Script.getTotalupdates().size()-1).getSl()+"\"");
 	}
 
 	
@@ -224,7 +206,10 @@ public class ConfigController implements Initializable{
 					Script.setTimestampmode(TimeStampMode.applaunch);
 			
 			}
-			displayUpdates.getItems().addAll(Script.getTotalupdates());	
+			displayUpdates.getItems().clear();
+			for(int i = 0;i < Script.getTotalupdates().size();i++) {
+				displayUpdates.getItems().add("Fl: \"" + Script.getTotalupdates().get(i).getFl() + "\" Sl: \"" + Script.getTotalupdates().get(i).getSl()+"\"");
+			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
