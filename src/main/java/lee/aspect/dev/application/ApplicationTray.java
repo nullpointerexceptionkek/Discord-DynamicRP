@@ -1,6 +1,8 @@
 package lee.aspect.dev.application;
 
 import javafx.application.Platform;
+import lee.aspect.dev.application.Gui.LoadingController;
+import lee.aspect.dev.discordrpc.settings.Settings;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -70,7 +72,16 @@ public class ApplicationTray {
 
         showInterface.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Platform.runLater(()-> CustomDiscordRPC.primaryStage.show());
+                if(Settings.isShutDownInterfaceWhenTray()){
+                    trayIcon.displayMessage("CDiscordRPC",
+                            "Application cannot start interface when ShutDownInterface is on, please exit and relaunch the program to see interface", TrayIcon.MessageType.ERROR);
+                    return;
+                }
+                CustomDiscordRPC.isOnSystemTray = false;
+                Platform.runLater(()-> {
+                    CustomDiscordRPC.primaryStage.show();
+                    Platform.runLater(()-> LoadingController.callBackController.updateCurrentDisplay());
+                });
             }
         });
 

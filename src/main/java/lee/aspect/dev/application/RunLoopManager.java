@@ -62,14 +62,16 @@ public class RunLoopManager {
 						CURRENTDISPLAY=i;
 
 						if (!isRunning) return;
-						Platform.runLater(()-> LoadingController.callBackController.updateCurrentDisplay());
+						if(!CustomDiscordRPC.isOnSystemTray)
+							Platform.runLater(()-> LoadingController.callBackController.updateCurrentDisplay());
 					}
 					while (isRunning) {
 						for (int i = 0; i < upm.getUpdates().getSize(); i++) {
 							excuteUpdate(upm.getUpdates().getUpdates(i));
 							CURRENTDISPLAY=i;
 							if (!isRunning) return;
-							Platform.runLater(()->LoadingController.callBackController.updateCurrentDisplay());
+							if(!CustomDiscordRPC.isOnSystemTray)
+								Platform.runLater(()->LoadingController.callBackController.updateCurrentDisplay());
 						}
 
 					}

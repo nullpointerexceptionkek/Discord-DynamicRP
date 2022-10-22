@@ -1,5 +1,6 @@
 package lee.aspect.dev.application.Gui;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.EnumSet;
@@ -78,12 +79,14 @@ public class SettingController implements Initializable{
 			Settings.setTheme(themeChoiceBox.getValue());
 		});
 		//add min to min choice box
+		minimizeModeChoiceBox.setDisable(!SystemTray.isSupported());
 		minimizeModeChoiceBox.getItems().addAll(EnumSet.allOf(MinimizeMode.class));
 		minimizeModeChoiceBox.setValue((Settings.getMinimizeMode()));
 		minimizeModeChoiceBox.setOnAction((event) -> {
 			Settings.setMinimizeMode(minimizeModeChoiceBox.getValue());
 		});
 		//add for booleans
+		shutDownInterfaceCheckBox.setDisable(!SystemTray.isSupported());
 		shutDownInterfaceCheckBox.setSelected(Settings.isShutDownInterfaceWhenTray());
 		shutDownInterfaceCheckBox.setOnAction((actionEvent -> {
 			Settings.setShutDownInterfaceWhenTray(shutDownInterfaceCheckBox.isSelected());

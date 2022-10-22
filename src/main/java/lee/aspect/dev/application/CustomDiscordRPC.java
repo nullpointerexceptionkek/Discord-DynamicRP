@@ -15,6 +15,7 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import lee.aspect.dev.discordrpc.settings.Settings;
+import lee.aspect.dev.discordrpc.settings.options.MinimizeMode;
 
 import javax.swing.*;
 
@@ -23,6 +24,8 @@ import javax.swing.*;
  */
 public class CustomDiscordRPC extends Application {
 	public static Stage primaryStage;
+
+	public static boolean isOnSystemTray = false;
 
 	/**
 	 * Launches the config interface
@@ -58,10 +61,10 @@ public class CustomDiscordRPC extends Application {
 		        JOptionPane.showMessageDialog(new JFrame(), message, "Error",
 		            JOptionPane.ERROR_MESSAGE);
 		    System.exit(1);
-		       
+
 		}
-		
-		
+
+
 	}
 
 	/**
@@ -74,28 +77,10 @@ public class CustomDiscordRPC extends Application {
 		new ApplicationTray();
 		System.out.println(Arrays.toString(args));
 		launch(args);
-		//check if already running
-		/*
-		ServerSocket ss;
-		 ss = null;
-		    try {
-		        ss = new ServerSocket(1044);
-		        launch(args);
-		    } catch (IOException e) {
-		        System.err.println("Application already running!");
-			    String message = "\"Custom Discord RP\"\n"
-			            + "It looks like you are trying to create\n"
-			            + "mutiple instance of the program";
-			        JOptionPane.showMessageDialog(new JFrame(), message, "Application Running",
-			            JOptionPane.ERROR_MESSAGE);
-			    System.exit(1);
-		    }
-
-		 */
 	}
 	@Override
-	public void stop() throws Exception {
-		RunLoopManager.onClose();
+	public void stop() {
+		//RunLoopManager.onClose();
 	}
 
 	/**
@@ -109,21 +94,35 @@ public class CustomDiscordRPC extends Application {
 			RunLoopManager.onClose();
 			return;
 		}
-		var alert = new Alert(Alert.AlertType.CONFIRMATION);
-		ButtonType yesButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
-		ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
-		alert.getButtonTypes().setAll(yesButton, noButton);
-		alert.setTitle("Close");
-		alert.setHeaderText("SystemTray is supported");
-		alert.setContentText("minimize to System tray instead of being closed?");
-		ButtonType result = alert.showAndWait().get();
-
-		if(result.equals(yesButton)) {
-			primaryStage.close();
-		} else if(result.equals(noButton)){
-			RunLoopManager.onClose();
-	}
+		switch (Settings.getMinimizeMode()) {
+			case Ask:
+				var alert = new Alert(Alert.AlertType.CONFIRMATION);
+				ButtonType yesButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+				ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
+				alert.getButtonTypes().setAll(yesButton, noButton);
+				alert.setTitle("Close");
+				alert.setHeaderText("SystemTray is supported");
+				alert.setContentText("minimize to System tray instead of being closed?");
+				ButtonType result = alert.showAndWait().get();
+				if(result.equals(yesButton)) {
+					primaryStage.close();
+					isOnSystemTray = true;
+					if(Settings.isShutDownInterfaceWhenTray()) Platform.exit();
+				} else if(result.equals(noButton)){
+					RunLoopManager.onClose();
+				}
+				break;
+			case Always:
+				primaryStage.close();
+				isOnSystemTray = true;
+				if(Settings.isShutDownInterfaceWhenTray()) Platform.exit();
+				break;
+			case Never:
+				RunLoopManager.onClose();
+				break;
 		}
+
+	}
 
 
 }
