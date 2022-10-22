@@ -122,19 +122,11 @@ public class EditListController extends ConfigController implements Initializabl
 	
 	private void gobacktoConfig() throws IOException {
 		stage = (Stage) scenePane.getScene().getWindow();
-		double x = stage.getX();
-		double y = stage.getY();
 		stage.close();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/Scenes/ReadyConfig.fxml"));
 		Parent root = loader.load();
 		root.getStylesheets().add(getClass().getResource(Settings.getTheme().Themepass()).toExternalForm());
-		ConfigController cc = loader.getController();
-		stage = CustomDiscordRPC.primaryStage;
-		stage.setResizable(false);
-		stage.setX(x);stage.setY(y);
-		stage.setTitle("Custom Discord RP" );
-		stage.setScene(new Scene(root));
-		stage.show();
+		CustomDiscordRPC.primaryStage.setScene(new Scene(root));
 		numberInList = -1;
 	}
 

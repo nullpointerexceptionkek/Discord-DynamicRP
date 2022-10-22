@@ -148,7 +148,6 @@ public class ConfigController implements Initializable{
 	
 	public void addnewitem() {
 		currentCount++;
-		System.out.println(currentCount);
 		if(Script.getTotalupdates().size()>0)
 			Script.addUpdates(new Updates((Script.getTotalupdates().get(currentCount-2).getWait()), 
 					String.valueOf(currentCount),
@@ -161,7 +160,7 @@ public class ConfigController implements Initializable{
 					Script.getTotalupdates().get(currentCount-2).getButton2Text(),
 					Script.getTotalupdates().get(currentCount-2).getButton2Url()));
 		
-		else Script.addUpdates(new Updates(16000, String.valueOf(currentCount), "First line " + currentCount,"","","", "Second line " + currentCount));
+		else Script.addUpdates(new Updates(16000, String.valueOf(currentCount), "" + currentCount,"","","First line ", "Second line " + currentCount));
 		displayUpdates.getItems().clear();		
 		displayUpdates.getItems().addAll(Script.getTotalupdates());	
 	}
@@ -240,8 +239,8 @@ public class ConfigController implements Initializable{
                     if(event.getClickCount() == 2){
                     	if(!((displayUpdates.getSelectionModel().getSelectedIndex()) == -1)) {
                     		showListConfig(displayUpdates.getSelectionModel().getSelectedIndex(),displayUpdates.getScene().getWindow().getX(),displayUpdates.getScene().getWindow().getY());
-                    		Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-                    		stage.close();
+                    		//Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+							//stage.close();
                     	}
                     }
                 }
@@ -260,7 +259,7 @@ public class ConfigController implements Initializable{
 			//loader.setController(ec);
 			ec.setnumberInList(numberInList);
 	        Stage stage = new Stage();
-	        stage.setTitle("Config Editor");
+	        stage.setTitle("Config Editor - index: " + (numberInList+1));
 	        stage.setScene(new Scene(root));
 	        stage.setX(x);stage.setY(y);
 	        stage.setResizable(false);
