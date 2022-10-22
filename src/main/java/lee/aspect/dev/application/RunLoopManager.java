@@ -37,6 +37,9 @@ public class RunLoopManager {
 	public static void initCallBack() {
 		if(runloop == null)
 			discordRP.LaunchReadyCallBack(upm.getUpdates().getUpdates(0));
+		else {
+			discordRP.LaunchReadyCallBack(upm.getUpdates().getUpdates(getCURRENTDISPLAY()));
+		}
 		isRunning = true;
 
 	}
