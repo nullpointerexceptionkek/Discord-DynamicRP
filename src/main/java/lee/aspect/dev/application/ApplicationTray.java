@@ -80,7 +80,8 @@ public class ApplicationTray {
                 CustomDiscordRPC.isOnSystemTray = false;
                 Platform.runLater(()-> {
                     CustomDiscordRPC.primaryStage.show();
-                    Platform.runLater(()-> LoadingController.callBackController.updateCurrentDisplay());
+                    if(RunLoopManager.isRunning)
+                        Platform.runLater(()-> LoadingController.callBackController.updateCurrentDisplay());
                 });
             }
         });

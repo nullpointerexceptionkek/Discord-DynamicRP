@@ -4,7 +4,6 @@ package lee.aspect.dev.application.Gui;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
@@ -33,9 +32,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import lee.aspect.dev.animationengine.animation.FadeIn;
-import lee.aspect.dev.application.Gui.LoadingController;
-import lee.aspect.dev.application.Gui.SettingController;
-import lee.aspect.dev.application.Gui.EditListController;
 import lee.aspect.dev.application.RunLoopManager;
 import lee.aspect.dev.discordrpc.Script;
 import lee.aspect.dev.discordrpc.Updates;
@@ -95,7 +91,7 @@ public class ConfigController implements Initializable{
 		RunLoopManager.saveScripToFile();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/Scenes/LoadingScreen.fxml"));
 		Parent root = loader.load();
-		root.getStylesheets().add(getClass().getResource(Settings.getTheme().Themepass()).toExternalForm());
+		root.getStylesheets().add(getClass().getResource(Settings.getTheme().getThemepass()).toExternalForm());
 		LoadingController lc = loader.getController();
 		lc.toNewScene(1000,"callback");
 		Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -117,7 +113,7 @@ public class ConfigController implements Initializable{
 		stage.close();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/Scenes/Settings.fxml"));
 		Parent root = loader.load();
-		root.getStylesheets().add(getClass().getResource(Settings.getTheme().Themepass()).toExternalForm());
+		root.getStylesheets().add(getClass().getResource(Settings.getTheme().getThemepass()).toExternalForm());
 		SettingController ec = loader.getController();
 		//loader.setController(ec);
         stage = new Stage();
@@ -239,7 +235,7 @@ public class ConfigController implements Initializable{
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/Scenes/EditListScript.fxml"));
 			Parent root = loader.load();
-			root.getStylesheets().add(getClass().getResource(Settings.getTheme().Themepass()).toExternalForm());
+			root.getStylesheets().add(getClass().getResource(Settings.getTheme().getThemepass()).toExternalForm());
 			EditListController ec = loader.getController();
 			//loader.setController(ec);
 			ec.setnumberInList(numberInList);

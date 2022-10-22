@@ -1,0 +1,79 @@
+/* for anime lovers */
+.root{
+	-fx-background-image: url('MikuSnow.png');
+
+}
+
+.label{
+	-fx-font-size:12;
+	-fx-font-family: "Book Antiqua";
+	-fx-alignment: center;
+	-fx-text-fill: #e0dddd;
+} 
+
+.text-field{
+	-fx-font-family: "Book Antiqua";
+	-fx-background-color: #ebedef;
+	-fx-text-fill: #3e4348;
+	-fx-prompt-text-fill: #656d78;
+}
+
+
+.button{
+	-fx-font-family: "Book Antiqua";
+	-fx-background-color:#5865f2;
+	-fx-text-fill: #ffffff;
+}
+.button:hover {
+	-fx-font-family: "Book Antiqua";
+	-fx-background-color: #4752c4;
+}
+
+
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+	-fx-font-family: "Book Antiqua";
+    -fx-background-color: #5865f2;
+    -fx-text-fill: #ffffff;
+}
+
+.list-cell:even {
+	-fx-font-family: "Book Antiqua";
+    -fx-background-color: #ebedef;
+    -fx-text-fill: #424448;
+}
+.list-cell:odd {
+	-fx-font-family: "Book Antiqua";
+    -fx-background-color: #ebedef;
+    -fx-text-fill: #424448;
+}
+
+.list-cell:filled:hover {
+	-fx-font-family: "Book Antiqua";
+    -fx-background-color: #f2f3f5;
+    -fx-text-fill: #424448;
+}
+
+.radio-button {
+	-fx-font-family: "Book Antiqua";
+	-fx-text-fill: #e0dddd;
+}
+
+.choice-box{
+	-fx-text-fill: #e0dddd;
+	-fx-background-color: #2d2d2d;
+	-fx-background-fills: #3e4348;
+}
+.check-box{
+	-fx-text-fill: #e0dddd;
+}
+.context-menu{
+	-fx-background-color: #18191c;
+	-fx-text-fill: #a3a4a8;
+
+}
+
+#titleLabel{
+	-fx-font-weight: bold;
+	-fx-text-fill: #1e1e1e;
+	-fx-font-size:20;
+}

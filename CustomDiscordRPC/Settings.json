@@ -1,6 +1,6 @@
 {
-  "Theme": "dark",
-  "MinimizeMode": "Ask",
+  "Theme": "mikuSnow",
+  "MinimizeMode": "Never",
   "ShutDownInterfaceWhenTray": false,
   "LowResourceMode": false,
   "NoAnimation": false,

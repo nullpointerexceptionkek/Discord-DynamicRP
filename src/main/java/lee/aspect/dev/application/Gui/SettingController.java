@@ -30,7 +30,7 @@ public class SettingController implements Initializable{
 	private Button goBack;
 	
 	@FXML
-	private ChoiceBox<Theme> themeChoiceBox;
+	private ChoiceBox<String> themeChoiceBox;
 
 	@FXML
 	private ChoiceBox<MinimizeMode> minimizeModeChoiceBox;
@@ -58,7 +58,7 @@ public class SettingController implements Initializable{
 		stage.close();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/Scenes/ReadyConfig.fxml"));
 		Parent root = loader.load();
-		root.getStylesheets().add(getClass().getResource(Settings.getTheme().Themepass()).toExternalForm());
+		root.getStylesheets().add(getClass().getResource(Settings.getTheme().getThemepass()).toExternalForm());
 		ConfigController ec = loader.getController();
 		//loader.setController(ec);
         stage = CustomDiscordRPC.primaryStage;
@@ -73,10 +73,17 @@ public class SettingController implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		//add theme to theme choice box
-		themeChoiceBox.getItems().addAll(EnumSet.allOf(Theme.class));
-		themeChoiceBox.setValue((Settings.getTheme()));
+		EnumSet.allOf(Theme.class).forEach((theme) -> {
+			themeChoiceBox.getItems().add(theme.getDisplayName());
+		});
+		themeChoiceBox.setValue((Settings.getTheme().getDisplayName()));
 		themeChoiceBox.setOnAction((event) -> {
-			Settings.setTheme(themeChoiceBox.getValue());
+			EnumSet.allOf(Theme.class).forEach((theme) -> {
+				if(themeChoiceBox.getValue().equals(theme.getDisplayName())){
+					Settings.setTheme(theme);
+					return;
+				}
+			});
 		});
 		//add min to min choice box
 		minimizeModeChoiceBox.setDisable(!SystemTray.isSupported());

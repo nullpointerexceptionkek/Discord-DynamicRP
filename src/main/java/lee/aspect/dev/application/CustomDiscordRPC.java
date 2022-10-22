@@ -15,7 +15,6 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import lee.aspect.dev.discordrpc.settings.Settings;
-import lee.aspect.dev.discordrpc.settings.options.MinimizeMode;
 
 import javax.swing.*;
 
@@ -40,7 +39,7 @@ public class CustomDiscordRPC extends Application {
 			RunLoopManager.init();
 			Parent root = FXMLLoader.load(getClass().getResource("/lee/aspect/dev/Scenes/ReadyConfig.fxml"));
 			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource(Settings.getTheme().Themepass()).toExternalForm());
+			scene.getStylesheets().add(getClass().getResource(Settings.getTheme().getThemepass()).toExternalForm());
 			primaryStage.setTitle("Custom Discord RPC");
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);

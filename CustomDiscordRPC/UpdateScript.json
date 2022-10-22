@@ -1,5 +1,5 @@
 {
-  "TimeStampMode": "applaunch",
+  "TimeStampMode": "CDFromDayEnd",
   "Updates": [
     {
       "Delay": 16000,
