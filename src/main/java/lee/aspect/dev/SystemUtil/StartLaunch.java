@@ -1,5 +1,8 @@
 package lee.aspect.dev.SystemUtil;
 
+import lee.aspect.dev.SystemUtil.Exceptions.FileNotAJarException;
+import lee.aspect.dev.SystemUtil.Exceptions.UnsupportedOSException;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -7,26 +10,46 @@ import java.net.URISyntaxException;
 
 public class StartLaunch {
 
-    public StartLaunch() throws URISyntaxException, IOException {
+    private static final File STARTUPDIR =  new File(System.getProperty("user.home") + "\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup");
 
-        var path = new File(StartLaunch.class.getProtectionDomain().getCodeSource().getLocation()
-                .toURI()).getPath();
+    private static final File CDRP = new File(STARTUPDIR,"CDRP.bat");
 
+    public static void CreateBat() throws IOException, UnsupportedOSException, FileNotAJarException, URISyntaxException {
+        final File currentJar = new File(RestartApplication.class.getProtectionDomain().getCodeSource().getLocation().toURI());
 
-        File startupbat = new File(System.getProperty("user.home") + "\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup");
-        System.out.println(System.getProperty("user.home") + "\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup");
-
-        File file = new File(startupbat,"cdrp.bat");
-        if(!startupbat.exists()) {
-            file.createNewFile();
+        if(!currentJar.getName().endsWith(".jar")){
+            throw new FileNotAJarException();
         }
-        FileOutputStream outputStream = new FileOutputStream(file);
-        outputStream.write(new String("start \"\" javaw -jar --module-path \"C:\\Program Files\\Java\\JavaFX\\openjfx-18.0.2_windows-x64_bin-sdk\\javafx-sdk-18.0.2\\lib\" --add-modules javafx.controls,javafx.fxml D:\\lee17\\Documents\\customdiscordrpc\\FxGui.jar").getBytes());
+
+        if(!isOnWindows()) throw new UnsupportedOSException("Start Launch currently only support windows");
+
+        System.out.println(STARTUPDIR);
+
+        if(!CDRP.exists()) {
+            CDRP.createNewFile();
+        }
+        FileOutputStream outputStream = new FileOutputStream(CDRP);
+        //"start \"\" javaw -jar " + currentJar + " --StartLaunch"
+        outputStream.write(new String("java -jar " + currentJar + " --StartLaunch").getBytes());
         outputStream.flush();
         outputStream.close();
 
 
 
     }
+
+    public static boolean isOnWindows(){
+        String osName = System.getProperty("os.name").toLowerCase();
+        return osName.contains("win");
+    }
+
+    public static boolean isBatCreated(){
+        return CDRP.exists();
+    }
+
+    public static void deleteBat(){
+        if(isBatCreated()) CDRP.delete();
+    }
+
 
 }

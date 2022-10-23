@@ -74,6 +74,7 @@ public class CustomDiscordRPC extends Application {
 	public static void Launch(String[] args) {
 		Platform.setImplicitExit(false);
 		new ApplicationTray();
+		System.out.println("LaunchArgs: ");
 		System.out.println(Arrays.toString(args));
 		launch(args);
 	}

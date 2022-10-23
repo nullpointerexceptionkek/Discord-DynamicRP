@@ -16,8 +16,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import lee.aspect.dev.SystemUtil.Exceptions.CannotRestartException;
+import lee.aspect.dev.SystemUtil.Exceptions.FileNotAJarException;
 import lee.aspect.dev.SystemUtil.RestartApplication;
+import lee.aspect.dev.SystemUtil.StartLaunch;
 import lee.aspect.dev.animationengine.animation.SlideOutLeft;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.discordrpc.settings.Settings;
@@ -108,10 +109,24 @@ public class SettingController implements Initializable {
 		lowResourceCheckBox.setOnAction((actionEvent -> {
 			Settings.setLowResourceMode(lowResourceCheckBox.isSelected());
 		}));
-
+		startLaunchCheckBox.setDisable(!StartLaunch.isOnWindows());
 		startLaunchCheckBox.setSelected(Settings.isStartLaunch());
 		startLaunchCheckBox.setOnAction((actionEvent -> {
 			Settings.setStartLaunch(startLaunchCheckBox.isSelected());
+			if(startLaunchCheckBox.isSelected()) {
+				try {
+					StartLaunch.CreateBat();
+				} catch(Exception e){
+					var alertException = new Alert(Alert.AlertType.ERROR);
+					alertException.setTitle("Exception");
+					alertException.setHeaderText("We have encounter an exception");
+					alertException.setContentText("Start up Launch cannot be created");
+					alertException.show();
+					startLaunchCheckBox.setSelected(false);
+				}
+			} else {
+				StartLaunch.deleteBat();
+			}
 		}));
 
 
@@ -131,7 +146,7 @@ public class SettingController implements Initializable {
 		if (result.equals(yesButton)) {
 			try {
 				RestartApplication.FullRestart();
-			} catch (URISyntaxException | IOException | CannotRestartException e) {
+			} catch (URISyntaxException | IOException | FileNotAJarException e) {
 				var alertException = new Alert(Alert.AlertType.ERROR);
 				alertException.setTitle("Exception");
 				alertException.setHeaderText("We have encounter an exception");
