@@ -6,20 +6,23 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URISyntaxException;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import lee.aspect.dev.SystemUtil.RestartApplication;
+import lee.aspect.dev.application.CustomDiscordRPC;
 import lee.aspect.dev.discordrpc.Script;
 import lee.aspect.dev.discordrpc.settings.Settings;
 
 
 public class FileManager {
-
 	private static Gson gson;
-	
-	private static File ROOT_DIR = new File("CustomDiscordRPC");
-	
+
+	private static File ROOT_DIR = new File(System.getProperty("user.home") + "\\CustomDiscordRPC");
+
 	public static void init() {
+		System.out.println(ROOT_DIR);
 		if(!ROOT_DIR.exists()) { ROOT_DIR.mkdir();}
 		
 		GsonBuilder builder = new GsonBuilder();
