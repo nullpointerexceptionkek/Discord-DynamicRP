@@ -44,6 +44,7 @@ public class ApplicationTray {
         final PopupMenu popup = new PopupMenu();
         final TrayIcon trayIcon =
                 new TrayIcon(createImage("/lee/aspect/dev/icon/SystemTrayIcon.png", "tray icon"));
+        trayIcon.setImageAutoSize(true);
         final SystemTray tray = SystemTray.getSystemTray();
 
         // Create a popup menu components
