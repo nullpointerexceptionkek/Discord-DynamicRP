@@ -230,7 +230,6 @@ public class ConfigController implements Initializable{
 			Parent root = loader.load();
 			root.getStylesheets().add(getClass().getResource(Settings.getTheme().getThemepass()).toExternalForm());
 			EditListController ec = loader.getController();
-			//loader.setController(ec);
 			ec.setnumberInList(numberInList);
 	        Stage stage = new Stage();
 	        stage.setTitle("Config Editor - index: " + (numberInList+1));

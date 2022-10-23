@@ -14,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import lee.aspect.dev.SystemUtil.Exceptions.FileNotAJarException;
@@ -69,6 +70,11 @@ public class SettingController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		goBack.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+		ImageView imageView = new ImageView(getClass().getResource("/lee/aspect/dev/icon/back.png").toExternalForm());
+		imageView.setFitHeight(25);
+		imageView.setFitWidth(25);
+		goBack.setGraphic(imageView);
 		//add theme to theme choice box
 		EnumSet.allOf(Theme.class).forEach((theme) -> {
 			themeChoiceBox.getItems().add(theme.getDisplayName());
