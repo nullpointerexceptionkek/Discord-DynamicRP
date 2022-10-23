@@ -28,7 +28,7 @@ public class DiscordRP {
 	public static boolean autoReconnect = true;
 	
 	
-	public void LaunchReadyCallBack(Updates updates){
+	public void LaunchReadyCallBack(Updates updates) throws NoDiscordClientException {
 		Calendar calendar = Calendar.getInstance();
 		switch(Script.getTimestampmode()) {
 			case applaunch:
@@ -65,7 +65,6 @@ public class DiscordRP {
 		 * https://discord.com/developers/docs/topics/rpc#rpc
 		 */
 
-	try {
 		callback = new Callback();
 		client = new IPCClient(Long.valueOf(Settings.getDiscordAPIKey())); // your client id
 		client.setListener(new IPCListener() {
@@ -92,10 +91,6 @@ public class DiscordRP {
 		});
 
 		client.connect();
-	} catch (NoDiscordClientException e) {
-		throw new RuntimeException(e);
-	}
-
 	}
 
 

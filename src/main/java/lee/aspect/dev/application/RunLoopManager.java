@@ -2,17 +2,19 @@ package lee.aspect.dev.application;
 
 import javafx.application.Platform;
 import lee.aspect.dev.application.Gui.LoadingController;
+import lee.aspect.dev.discordipc.exceptions.NoDiscordClientException;
 import lee.aspect.dev.discordrpc.DiscordRP;
 import lee.aspect.dev.discordrpc.UpdateManager;
 import lee.aspect.dev.discordrpc.Updates;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.jsonreader.FileManager;
+import org.jetbrains.annotations.NotNull;
 
 public class RunLoopManager {
 
 	public static boolean isRunning = false;
 
-	private static DiscordRP discordRP = new DiscordRP();
+	private static final DiscordRP discordRP = new DiscordRP();
 
 	private static UpdateManager upm;
 
@@ -31,10 +33,47 @@ public class RunLoopManager {
 
 	}
 
+	public static void runFromStartLunch(){
+		FileManager.init();
+		SettingManager.init();
+		upm = new UpdateManager();
+		var delay = 16000;
+		do{
+			try {
+				discordRP.LaunchReadyCallBack(upm.getUpdates().getUpdates(0));
+				break;
+			} catch (NoDiscordClientException ex) {
+				try {
+					Thread.sleep(Math.min(delay, 60000));
+					delay+=3000;
+				} catch (InterruptedException e) {
+					throw new RuntimeException(ex);
+				}
+			}
+		}while (true); //everyone likes while true
+		isRunning = true;
+		new Thread(()->{
+			if (upm.getUpdates().getSize() == 1) {
+				return;
+			}
+			for (int i = 1; i < upm.getUpdates().getSize(); i++) {
+				excuteUpdate(upm.getUpdates().getUpdates(i));
+				if(!isRunning) return;
+			}
+			while (isRunning) {
+				for (int i = 0; i < upm.getUpdates().getSize(); i++) {
+					excuteUpdate(upm.getUpdates().getUpdates(i));
+					if(!isRunning) return;
+				}
+
+			}
+		}).start();
+	}
+
 	/**
 	 * Launches DiscordRP
 	 */
-	public static void initCallBack() {
+	public static void initCallBack() throws NoDiscordClientException {
 		if(runloop == null)
 			discordRP.LaunchReadyCallBack(upm.getUpdates().getUpdates(0));
 		else {
@@ -93,8 +132,7 @@ public class RunLoopManager {
 
 
 
-
-	private static void excuteUpdate(Updates update) {
+	private static void excuteUpdate(@NotNull Updates update) {
 		if(update.getWait() == -1) {
 			discordRP.update(update);
 			return;

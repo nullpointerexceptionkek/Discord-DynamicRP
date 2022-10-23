@@ -51,6 +51,12 @@ public class Launch {
             });
 
             Runtime.getRuntime().addShutdownHook(shutdown);
+            for(String arg : args){
+                if(arg.contains("--StartLaunch")) {
+                    CustomDiscordRPC.LaunchSlient();
+                    return;
+                }
+            }
             CustomDiscordRPC.Launch(args);
         } catch (IOException e){
             throw new RuntimeException("Could not start application",e);

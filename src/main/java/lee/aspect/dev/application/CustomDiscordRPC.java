@@ -78,6 +78,11 @@ public class CustomDiscordRPC extends Application {
 		System.out.println(Arrays.toString(args));
 		launch(args);
 	}
+
+	public static void LaunchSlient(){
+		new ApplicationTray();
+		RunLoopManager.runFromStartLunch();
+	}
 	@Override
 	public void stop() {
 		//RunLoopManager.onClose();
