@@ -30,7 +30,7 @@ public class StartLaunch {
         }
         FileOutputStream outputStream = new FileOutputStream(CDRP);
         //"start \"\" javaw -jar " + currentJar + " --StartLaunch"
-        outputStream.write(new String("java -jar " + currentJar + " --StartLaunch").getBytes());
+        outputStream.write(new String("start \"\" javaw -jar " + currentJar + " --StartLaunch").getBytes());
         outputStream.flush();
         outputStream.close();
 

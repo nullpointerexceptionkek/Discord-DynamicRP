@@ -10,6 +10,8 @@ import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.jsonreader.FileManager;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
+
 public class RunLoopManager {
 
 	public static boolean isRunning = false;
@@ -42,7 +44,7 @@ public class RunLoopManager {
 			try {
 				discordRP.LaunchReadyCallBack(upm.getUpdates().getUpdates(0));
 				break;
-			} catch (NoDiscordClientException ex) {
+			} catch (NoDiscordClientException | RuntimeException ex) {
 				try {
 					Thread.sleep(Math.min(delay, 60000));
 					delay+=3000;
