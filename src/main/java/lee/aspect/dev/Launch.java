@@ -29,6 +29,9 @@ public class Launch {
     public static void main(String[]args){
         try {
             f = new File(FileManager.getROOT_DIR(),"runtime");
+
+            if(!FileManager.getROOT_DIR().exists()) FileManager.getROOT_DIR().mkdir();
+
             if(f.exists()) f.delete();
             channel = new RandomAccessFile(f,"rw").getChannel();
             lock = channel.tryLock();
