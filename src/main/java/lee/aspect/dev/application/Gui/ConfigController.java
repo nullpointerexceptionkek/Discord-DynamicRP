@@ -31,7 +31,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import lee.aspect.dev.animationengine.animation.FadeIn;
+import lee.aspect.dev.animationengine.animation.*;
 import lee.aspect.dev.application.RunLoopManager;
 import lee.aspect.dev.discordrpc.Script;
 import lee.aspect.dev.discordrpc.Updates;
@@ -94,12 +94,9 @@ public class ConfigController implements Initializable{
 		root.getStylesheets().add(getClass().getResource(Settings.getTheme().getThemepass()).toExternalForm());
 		LoadingController lc = loader.getController();
 		lc.toNewScene(1000,"callback");
-		Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		Scene scene = callbackButton.getScene();
 		stackPane.getChildren().add(root);
 
-		FadeIn animation = new FadeIn(stackPane);
-		animation.setSpeed(2.00);
+		FadeIn animation = new FadeIn(root);
 		stackPane.getChildren().remove(anchorRoot);
 		animation.play();
 
@@ -109,19 +106,15 @@ public class ConfigController implements Initializable{
 	}
 	
 	public void switchToSetting(ActionEvent event) throws IOException, InterruptedException {
-		Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		stage.close();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/Scenes/Settings.fxml"));
 		Parent root = loader.load();
 		root.getStylesheets().add(getClass().getResource(Settings.getTheme().getThemepass()).toExternalForm());
-		SettingController ec = loader.getController();
-		//loader.setController(ec);
-        stage = new Stage();
-        stage.setTitle("Settings");
-        stage.setScene(new Scene(root));
-        stage.setX(displayUpdates.getScene().getWindow().getX());stage.setY(displayUpdates.getScene().getWindow().getY());
-        stage.setResizable(false);
-        stage.show();
+		stackPane.getChildren().add(root);
+		var animation = new SlideInLeft(root);
+		animation.setOnFinished((actionEvent)->{
+				stackPane.getChildren().remove(anchorRoot);
+		});
+		animation.play();
 		
 	}
 	

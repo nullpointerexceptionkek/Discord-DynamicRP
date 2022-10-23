@@ -34,7 +34,7 @@ public class SlideInLeft extends AnimationFX {
     void initTimeline() {
         setTimeline(new Timeline(
                 new KeyFrame(Duration.millis(0),
-                        new KeyValue(getNode().translateXProperty(), -getNode().getBoundsInParent().getWidth(), AnimateFXInterpolator.EASE)
+                        new KeyValue(getNode().translateXProperty(), -1.68687*getNode().getBoundsInParent().getWidth(), AnimateFXInterpolator.EASE)
                 ),
                 new KeyFrame(Duration.millis(1000),
                         new KeyValue(getNode().translateXProperty(), 0, AnimateFXInterpolator.EASE)

@@ -9,16 +9,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
-import lee.aspect.dev.application.CustomDiscordRPC;
+import lee.aspect.dev.animationengine.animation.SlideOutLeft;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.discordrpc.settings.Settings;
 import lee.aspect.dev.discordrpc.settings.options.MinimizeMode;
@@ -48,25 +45,21 @@ public class SettingController implements Initializable{
 	private CheckBox startLaunchCheckBox;
 	
 	@FXML
-	private AnchorPane anchorRoot;
+	private AnchorPane settingsAnchorPane;
 	
 	@FXML
 	private StackPane stackPane;
 	
 	public void switchBack(ActionEvent event) throws IOException {
-		Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		stage.close();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/Scenes/ReadyConfig.fxml"));
 		Parent root = loader.load();
 		root.getStylesheets().add(getClass().getResource(Settings.getTheme().getThemepass()).toExternalForm());
-		ConfigController ec = loader.getController();
-		//loader.setController(ec);
-        stage = CustomDiscordRPC.primaryStage;
-        stage.setTitle("Custom Discord RP");
-        stage.setScene(new Scene(root));
-        stage.setX(goBack.getScene().getWindow().getX());stage.setY(goBack.getScene().getWindow().getY());
-        stage.setResizable(false);
-        stage.show();
+		stackPane.getChildren().add(0,root);
+		var animation = new SlideOutLeft(settingsAnchorPane);
+		animation.setOnFinished((actionEvent)->{
+			stackPane.getChildren().remove(settingsAnchorPane);
+		});
+		animation.play();
 		
 	}
 
@@ -81,6 +74,9 @@ public class SettingController implements Initializable{
 			EnumSet.allOf(Theme.class).forEach((theme) -> {
 				if(themeChoiceBox.getValue().equals(theme.getDisplayName())){
 					Settings.setTheme(theme);
+					Parent root = settingsAnchorPane.getParent();
+					root.getStylesheets().removeAll();
+					root.getStylesheets().add(getClass().getResource(Settings.getTheme().getThemepass()).toExternalForm());
 					return;
 				}
 			});

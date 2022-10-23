@@ -17,6 +17,7 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
+import lee.aspect.dev.animationengine.animation.FadeOut;
 import lee.aspect.dev.animationengine.animation.RotateIn;
 import lee.aspect.dev.application.Gui.CallBackController;
 import lee.aspect.dev.application.RunLoopManager;
@@ -85,10 +86,14 @@ public class LoadingController implements Initializable{
 								Parent root = loader.load();
 								stackPane.getChildren().add(root);
 								callBackController = loader.getController();
-								var animation = new RotateIn(stackPane);
+								var animation = new RotateIn(root);
 								animation.setCycleCount(1).setDelay(Duration.valueOf("100ms"));
 								animation.setOnFinished(actionEvent -> {
-									stackPane.getChildren().remove(anchorRoot);
+									var fadeOut = new FadeOut(anchorRoot);
+									fadeOut.setOnFinished((actionEvent1 -> {
+										stackPane.getChildren().remove(anchorRoot);
+									}));
+									fadeOut.play();
 								});
 								animation.play();
 								break;

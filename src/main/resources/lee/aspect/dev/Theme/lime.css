@@ -1,6 +1,9 @@
 .root {
 	-fx-background-color: #D8E2DC;
 }
+#settingsAnchorPane{
+	-fx-background-color: #D8E2DC;
+}
 
 .label{
 	-fx-font-size:12;
