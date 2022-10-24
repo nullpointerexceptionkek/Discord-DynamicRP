@@ -7,7 +7,9 @@ public enum Theme {
 
 	lime("/lee/aspect/dev/Theme/lime.css", "lime"),
 
-	mikuSnow("/lee/aspect/dev/Theme/MikuSnow/MikuSnow.css", "Miku snow");
+	mikuSnow("/lee/aspect/dev/Theme/MikuSnow/MikuSnow.css", "Miku snow"),
+
+	huTao("/lee/aspect/dev/Theme/Hutao/Hutao.css","Hutao");
 	
 	private final String themePath;
 

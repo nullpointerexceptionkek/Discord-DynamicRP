@@ -88,33 +88,27 @@ public class CallBackController implements Initializable{
 		Welcome.setText("Welcome " + DiscordRP.discordName + "!!!");
 		Platform.runLater(() -> {
 			display1 = new Label();
-			display1.setPrefWidth(100);
-			display1.setPrefHeight(30);
+			display1.setPrefWidth(150);
+			display1.setPrefHeight(45);
 			display1.setLayoutX(anchorRoot.getScene().getWidth() / 2 - display1.getPrefWidth() / 2);
 			display1.setLayoutY(anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2);
 			display1.setTranslateY(-45);
 			display1.setTextAlignment(TextAlignment.CENTER);
-			//display1.setBorder(new Border(new BorderStroke(Color.RED,
-			//		BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
 			display2 = new Label();
-			display2.setPrefWidth(100);
-			display2.setPrefHeight(30);
+			display2.setPrefWidth(150);
+			display2.setPrefHeight(45);
 			display2.setLayoutX(anchorRoot.getScene().getWidth() / 2 - display1.getPrefWidth() / 2);
 			display2.setLayoutY(anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2);
 			display2.setTextAlignment(TextAlignment.CENTER);
-			//display2.setBorder(new Border(new BorderStroke(Color.GREEN,
-			//		BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
 			display3 = new Label();
-			display3.setPrefWidth(100);
-			display3.setPrefHeight(30);
+			display3.setPrefWidth(150);
+			display3.setPrefHeight(45);
 			display3.setLayoutX(anchorRoot.getScene().getWidth() / 2 - display1.getPrefWidth() / 2);
 			display3.setLayoutY(anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2);
 			display3.setTranslateY(45);
 			display3.setTextAlignment(TextAlignment.CENTER);
-			//display3.setBorder(new Border(new BorderStroke(Color.ORANGE,
-			//		BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
 			if(Script.getTotalupdates().size() == 1) {
 				display2.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getFl()

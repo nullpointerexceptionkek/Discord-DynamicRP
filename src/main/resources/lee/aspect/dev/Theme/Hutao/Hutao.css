@@ -1,0 +1,80 @@
+/* for genshin lovers */
+.root{
+	-fx-background-image: url('Hutao.png');
+
+}
+
+#settingsAnchorPane{
+	-fx-background-image: url('HutaoSettings.png');
+}
+
+.label{
+	-fx-font-size:13;
+	-fx-font-family: "Calibri";
+	-fx-alignment: center;
+	-fx-text-fill: #ffffff;
+	-fx-font-weight: bold;
+}
+
+.check-box{
+	-fx-text-fill: #3c3137;
+	-fx-background-color: rgba(253, 208, 206, 0.64);
+}
+
+.text-field{
+	-fx-font-family: "Calibri";
+	-fx-background-color: #f87772;
+	-fx-text-fill: #3c3137;
+	-fx-prompt-text-fill: #687275;
+}
+
+
+.button{
+	-fx-font-family: "Calibri";
+	-fx-background-color:#f8726d;
+	-fx-text-fill: #3c3137;
+}
+.button:hover {
+	-fx-font-family: "Calibri";
+	-fx-background-color: #b4131a;
+}
+
+
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+	-fx-font-family: "Calibri";
+	-fx-background-color: #f6423c;
+	-fx-text-fill: #3c3137;
+}
+
+.list-cell:even {
+	-fx-font-family: "Calibri";
+	-fx-background-color: #fdd0ce;
+	-fx-text-fill: #3c3137;
+}
+.list-cell:odd {
+	-fx-font-family: "Calibri";
+	-fx-background-color: #fdd0ce;
+	-fx-text-fill: #3c3137;
+}
+
+.list-cell:filled:hover {
+	-fx-font-family: "Calibri";
+	-fx-background-color: #f8726d;
+	-fx-text-fill: #3c3137;
+}
+
+.choice-box{
+	-fx-background-color: #40444b;
+	-fx-background-fills: #ffffff;
+}
+
+.context-menu{
+	-fx-background-color: #18191c;
+	-fx-text-fill: #a3a4a8;
+
+}
+
+#titleLabel{
+	-fx-font-size:20;
+}
+
