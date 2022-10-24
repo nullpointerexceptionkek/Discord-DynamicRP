@@ -15,7 +15,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Button fx:id="switchtoconfig" layoutX="116.0" layoutY="496.0" mnemonicParsing="false" onAction="#switchToConfig" text="Close call back" />
+            <Button fx:id="switchToConfig" layoutX="116.0" layoutY="496.0" mnemonicParsing="false" onAction="#switchToConfig" text="Close call back" />
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="106.0" layoutY="70.0" prefHeight="18.0" prefWidth="123.0" text="Current displaying" />
             <Label fx:id="Welcome" alignment="CENTER" contentDisplay="CENTER" layoutX="12.0" layoutY="46.0" prefHeight="18.0" prefWidth="311.0" text="Connecting" />
          </children>
