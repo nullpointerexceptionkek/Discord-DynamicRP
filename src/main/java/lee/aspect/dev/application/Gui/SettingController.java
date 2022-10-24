@@ -56,6 +56,7 @@ public class SettingController implements Initializable {
 	private StackPane stackPane;
 
 	public void switchBack(ActionEvent event) throws IOException {
+		goBack.setDisable(true);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/Scenes/ReadyConfig.fxml"));
 		Parent root = loader.load();
 		root.getStylesheets().add(getClass().getResource(Settings.getTheme().getThemepass()).toExternalForm());

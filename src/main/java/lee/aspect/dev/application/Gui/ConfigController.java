@@ -13,7 +13,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -84,6 +83,7 @@ public class ConfigController implements Initializable{
 	}
 	
 	public void switchToCallBack(ActionEvent event) throws IOException, InterruptedException{
+		callbackButton.setDisable(true);
 		//update DiscordRP app id and save it to the file
 		if(displayUpdates.getItems().size() < 1) return;
 		String DiscordAppID = appID.getText();
@@ -107,6 +107,7 @@ public class ConfigController implements Initializable{
 	}
 	
 	public void switchToSetting(ActionEvent event) throws IOException, InterruptedException {
+		settingButton.setDisable(true);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/Scenes/Settings.fxml"));
 		Parent root = loader.load();
 		root.getStylesheets().add(getClass().getResource(Settings.getTheme().getThemepass()).toExternalForm());

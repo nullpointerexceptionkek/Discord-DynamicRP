@@ -10,7 +10,6 @@ import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.jsonreader.FileManager;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
 
 public class RunLoopManager {
 
