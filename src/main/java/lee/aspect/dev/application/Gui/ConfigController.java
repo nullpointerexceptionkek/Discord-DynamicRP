@@ -1,37 +1,20 @@
 package lee.aspect.dev.application.Gui;
 
 
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import lee.aspect.dev.animationengine.animation.*;
+import lee.aspect.dev.animationengine.animation.FadeIn;
+import lee.aspect.dev.animationengine.animation.SlideInLeft;
 import lee.aspect.dev.application.RunLoopManager;
 import lee.aspect.dev.discordrpc.Script;
 import lee.aspect.dev.discordrpc.Updates;
@@ -39,8 +22,14 @@ import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.discordrpc.settings.Settings;
 import lee.aspect.dev.discordrpc.settings.options.TimeStampMode;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.Objects;
+import java.util.ResourceBundle;
+
 public class ConfigController implements Initializable{
-	
+
+	public ToggleGroup timeStampMode;
 	@FXML
 	private Label titleLabel;
 	
@@ -57,7 +46,7 @@ public class ConfigController implements Initializable{
 	private Button settingButton;
 	
 	@FXML
-	private RadioButton applaunch, none, local, custom;
+	private RadioButton appLaunch, none, local, custom;
 	
 	@FXML
 	private AnchorPane anchorRoot;
@@ -67,8 +56,8 @@ public class ConfigController implements Initializable{
 	
 	private int currentCount;
 	
-	public void getTimeStampMode(ActionEvent event){
-		if(applaunch.isSelected()) {
+	public void getTimeStampMode(){
+		if(appLaunch.isSelected()) {
 			Script.setTimestampmode(TimeStampMode.applaunch);
 		} 
 		else if(none.isSelected()){
@@ -82,7 +71,7 @@ public class ConfigController implements Initializable{
 		}
 	}
 	
-	public void switchToCallBack(ActionEvent event) throws IOException, InterruptedException{
+	public void switchToCallBack() throws IOException {
 		callbackButton.setDisable(true);
 		//update DiscordRP app id and save it to the file
 		if(displayUpdates.getItems().size() < 1) return;
@@ -92,7 +81,7 @@ public class ConfigController implements Initializable{
 		RunLoopManager.saveScripToFile();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/Scenes/LoadingScreen.fxml"));
 		Parent root = loader.load();
-		root.getStylesheets().add(getClass().getResource(Settings.getTheme().getThemepass()).toExternalForm());
+		root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(Settings.getTheme().getThemepass())).toExternalForm());
 		LoadingController lc = loader.getController();
 		lc.toNewScene(1000, LoadingController.Load.CallBackScreen);
 		stackPane.getChildren().add(root);
@@ -106,21 +95,19 @@ public class ConfigController implements Initializable{
 
 	}
 	
-	public void switchToSetting(ActionEvent event) throws IOException, InterruptedException {
+	public void switchToSetting() throws IOException {
 		settingButton.setDisable(true);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/Scenes/Settings.fxml"));
 		Parent root = loader.load();
-		root.getStylesheets().add(getClass().getResource(Settings.getTheme().getThemepass()).toExternalForm());
+		root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(Settings.getTheme().getThemepass())).toExternalForm());
 		stackPane.getChildren().add(root);
 		var animation = new SlideInLeft(root);
-		animation.setOnFinished((actionEvent)->{
-				stackPane.getChildren().remove(anchorRoot);
-		});
+		animation.setOnFinished((actionEvent)-> stackPane.getChildren().remove(anchorRoot));
 		animation.play();
 		
 	}
 	
-	public void addnewitem() {
+	public void addNewItem() {
 		currentCount++;
 		if(Script.getTotalupdates().size()>0)
 			Script.addUpdates(new Updates((Script.getTotalupdates().get(currentCount-2).getWait()), 
@@ -143,7 +130,7 @@ public class ConfigController implements Initializable{
 	//it will also set the appid to only accept numbers and if loaded is not null, it will leave it empty
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		ImageView imageView = new ImageView(getClass().getResource("/lee/aspect/dev/icon/settingsImage.png").toExternalForm());
+		ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/lee/aspect/dev/icon/settingsImage.png")).toExternalForm());
 		imageView.setFitHeight(25);
 		imageView.setPreserveRatio(true);
 		settingButton.setGraphic(imageView);
@@ -159,16 +146,11 @@ public class ConfigController implements Initializable{
 
         
 		currentCount = Script.getTotalupdates().size();
-		appID.textProperty().addListener(new ChangeListener<String>() {
-		    @Override
-		    public void changed(ObservableValue<? extends String> observable, String oldValue, 
-		        String newValue) {
-		    	if(newValue == null) return;
-		        if (!newValue.matches("\\d*")) {
-		            appID.setText(newValue.replaceAll("[^\\d]", ""));
-		        }
-		    }
-		    
+		appID.textProperty().addListener((observable, oldValue, newValue) -> {
+			if(newValue == null) return;
+			if (!newValue.matches("\\d*")) {
+				appID.setText(newValue.replaceAll("\\D", ""));
+			}
 		});
 		appID.setText(Settings.getDiscordAPIKey());
 		
@@ -178,7 +160,7 @@ public class ConfigController implements Initializable{
 			//set the timestamp mode
 			switch(Script.getTimestampmode()) {
 				case applaunch:
-					applaunch.setSelected(true);
+					appLaunch.setSelected(true);
 					break;
 				
 				case none:
@@ -193,7 +175,7 @@ public class ConfigController implements Initializable{
 					custom.setSelected(true);
 					break;
 				default:
-					applaunch.setSelected(true);
+					appLaunch.setSelected(true);
 					Script.setTimestampmode(TimeStampMode.applaunch);
 			
 			}
@@ -207,34 +189,27 @@ public class ConfigController implements Initializable{
 		
 		displayUpdates.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		
-		//check if the list is double clicked
-		displayUpdates.setOnMouseClicked(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				if(event.getButton().equals(MouseButton.PRIMARY)){
-                    if(event.getClickCount() == 2){
-                    	if(!((displayUpdates.getSelectionModel().getSelectedIndex()) == -1)) {
-                    		showListConfig(displayUpdates.getSelectionModel().getSelectedIndex(),displayUpdates.getScene().getWindow().getX(),displayUpdates.getScene().getWindow().getY());
-                    		//Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-							//stage.close();
-                    	}
-                    }
-                }
-				
+		//check if the list is double-clicked
+		displayUpdates.setOnMouseClicked(event -> {
+			if(event.getButton().equals(MouseButton.PRIMARY)){
+				if(event.getClickCount() == 2){
+					if(!((displayUpdates.getSelectionModel().getSelectedIndex()) == -1)) {
+						showListConfig(displayUpdates.getSelectionModel().getSelectedIndex(),displayUpdates.getScene().getWindow().getX(),displayUpdates.getScene().getWindow().getY());
+					}
+				}
 			}
-
-        });
+		});
 	}
 	//this will open up a new window and edit the arraylist
 	private void showListConfig(int numberInList, double x, double y) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/Scenes/EditListScript.fxml"));
 			Parent root = loader.load();
-			root.getStylesheets().add(getClass().getResource(Settings.getTheme().getThemepass()).toExternalForm());
+			root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(Settings.getTheme().getThemepass())).toExternalForm());
 			EditListController ec = loader.getController();
 			ec.setnumberInList(numberInList);
 	        Stage stage = new Stage();
-			stage.getIcons().add(new Image(getClass().getResourceAsStream("/lee/aspect/dev/icon/settingsImage.png")));
+			stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/lee/aspect/dev/icon/settingsImage.png"))));
 	        stage.setTitle("Config Editor - index: " + (numberInList+1));
 	        stage.setScene(new Scene(root));
 	        stage.setX(x);stage.setY(y);
