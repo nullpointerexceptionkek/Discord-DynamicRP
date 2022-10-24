@@ -19,10 +19,14 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import lee.aspect.dev.animationengine.animation.FadeOut;
 import lee.aspect.dev.animationengine.animation.RotateIn;
-import lee.aspect.dev.application.Gui.CallBackController;
 import lee.aspect.dev.application.RunLoopManager;
 
 public class LoadingController implements Initializable{
+	public enum Load {
+		ConfigScreen,
+		CallBackScreen,
+		Error;
+	}
 
 	@FXML
 	private ProgressIndicator progress;
@@ -33,7 +37,7 @@ public class LoadingController implements Initializable{
 	@FXML
 	private AnchorPane anchorRoot;
 	
-	private String file;
+	private Load file;
 	
 	private Long sleep;
 
@@ -48,21 +52,21 @@ public class LoadingController implements Initializable{
 		@Override
 		public void run() {
 			if(file == null) {
-				file = "null";
+				file = Load.Error;
 			}
 			try {
 				switch(file) {
-				case "callback":
+					case CallBackScreen:
 					try {
 						RunLoopManager.initCallBack();
 						RunLoopManager.startUpdate();
 					} catch(RuntimeException e) {
-						file = "error running callback";
+						file = Load.Error;
 						break;
 					}
 
 					break;
-				case "readyconfig":
+					case ConfigScreen:
 					try{
 						RunLoopManager.closeCallBack();
 					} catch (RuntimeException e) {
@@ -80,7 +84,7 @@ public class LoadingController implements Initializable{
 					public void run() {
 						try {
 							switch(file) {
-							case "callback":
+								case CallBackScreen:
 								var loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/Scenes/CallBack.fxml"));
 								Parent root = loader.load();
 								stackPane.getChildren().add(root);
@@ -96,7 +100,7 @@ public class LoadingController implements Initializable{
 								});
 								animation.play();
 								break;
-								case "readyconfig":
+								case ConfigScreen:
 									Parent root1 = FXMLLoader.load(getClass().getResource("/lee/aspect/dev/Scenes/ReadyConfig.fxml"));
 									Scene scene1 = anchorRoot.getScene();
 
@@ -144,13 +148,13 @@ public class LoadingController implements Initializable{
 		}
 	}
 	
-	public void toNewScene(long sleep, String file)  {
+	public void toNewScene(long sleep, Load file)  {
 		this.sleep = sleep;
 		this.file = file;
 		
 	}
 	
-	public void toNewScene(String file)  {
+	public void toNewScene(Load file)  {
 		this.file = file;
 		
 	}

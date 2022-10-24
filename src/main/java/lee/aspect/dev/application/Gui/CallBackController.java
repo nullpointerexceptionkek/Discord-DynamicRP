@@ -67,7 +67,7 @@ public class CallBackController implements Initializable{
 		Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		Scene scene = stage.getScene();
 		LoadingController lc = loader.getController();
-		lc.toNewScene("readyconfig");
+		lc.toNewScene(LoadingController.Load.ConfigScreen);
 		root.translateYProperty().set(scene.getHeight());
 		stackPane.getChildren().add(root);
 

@@ -94,7 +94,7 @@ public class ConfigController implements Initializable{
 		Parent root = loader.load();
 		root.getStylesheets().add(getClass().getResource(Settings.getTheme().getThemepass()).toExternalForm());
 		LoadingController lc = loader.getController();
-		lc.toNewScene(1000,"callback");
+		lc.toNewScene(1000, LoadingController.Load.CallBackScreen);
 		stackPane.getChildren().add(root);
 
 		FadeIn animation = new FadeIn(root);
