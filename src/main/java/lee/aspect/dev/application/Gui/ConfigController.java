@@ -25,6 +25,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -232,6 +233,7 @@ public class ConfigController implements Initializable{
 			EditListController ec = loader.getController();
 			ec.setnumberInList(numberInList);
 	        Stage stage = new Stage();
+			stage.getIcons().add(new Image(getClass().getResourceAsStream("/lee/aspect/dev/icon/settingsImage.png")));
 	        stage.setTitle("Config Editor - index: " + (numberInList+1));
 	        stage.setScene(new Scene(root));
 	        stage.setX(x);stage.setY(y);

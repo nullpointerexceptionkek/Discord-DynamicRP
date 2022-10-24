@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import lee.aspect.dev.discordrpc.settings.Settings;
 
@@ -36,6 +37,7 @@ public class CustomDiscordRPC extends Application {
 	public void start(Stage pstage) {
 		try {
 			primaryStage= pstage;
+			primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/lee/aspect/dev/icon/SystemTrayIcon.png")));
 			RunLoopManager.init();
 			Parent root = FXMLLoader.load(getClass().getResource("/lee/aspect/dev/Scenes/ReadyConfig.fxml"));
 			Scene scene = new Scene(root);
