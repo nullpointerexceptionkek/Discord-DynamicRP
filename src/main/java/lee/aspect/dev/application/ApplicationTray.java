@@ -24,7 +24,7 @@ public class ApplicationTray {
         UIManager.put("swing.boldMetal", Boolean.FALSE);
         //Schedule a job for the event-dispatching thread:
         //adding TrayIcon.
-        SwingUtilities.invokeLater(() -> createAndShowGUI());
+        SwingUtilities.invokeLater(ApplicationTray::createAndShowGUI);
     }
 
     private static void createAndShowGUI() {

@@ -4,16 +4,16 @@ package lee.aspect.dev.application.interfaceGui;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import lee.aspect.dev.animationengine.animation.FadeIn;
 import lee.aspect.dev.animationengine.animation.FadeOut;
 import lee.aspect.dev.animationengine.animation.SlideInLeft;
@@ -68,10 +68,14 @@ public class ConfigController implements Initializable {
     }
 
     public void switchToCallBack() throws IOException {
-        callbackButton.setDisable(true);
-        //update DiscordRP app id and save it to the file
-        if (displayUpdates.getItems().size() < 1) return;
         String DiscordAppID = appID.getText();
+        if (displayUpdates.getItems().size() < 1) return;
+        if(DiscordAppID.isEmpty() || DiscordAppID.isBlank()){
+            appID.setBackground(new Background(new BackgroundFill(Color.rgb(204,51,0), new CornerRadii(5), Insets.EMPTY)));
+            return;
+        }
+
+        callbackButton.setDisable(true);
         Settings.setDiscordAPIKey(DiscordAppID);
         SettingManager.saveSettingToFile();
         RunLoopManager.saveScripToFile();
