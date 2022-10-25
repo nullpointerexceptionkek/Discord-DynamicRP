@@ -70,22 +70,15 @@ public class RunLoopManager {
     }
 
     /**
-     * Launches DiscordRP
+     * Sent each data to DiscordIPC according to the config
      */
-    public static void initCallBack() throws NoDiscordClientException {
+    public static void startUpdate() throws NoDiscordClientException {
         if (runloop == null)
             discordRP.LaunchReadyCallBack(upm.getUpdates().getUpdates(0));
         else {
             discordRP.LaunchReadyCallBack(upm.getUpdates().getUpdates(getCURRENTDISPLAY()));
         }
         isRunning = true;
-
-    }
-
-    /**
-     * Sent each data to DiscordIPC according to the config
-     */
-    public static void startUpdate() {
 
         if (runloop == null) {
             System.out.println("Thread is not created, creating a new thread");

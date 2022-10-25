@@ -19,9 +19,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import lee.aspect.dev.animationengine.animation.BounceInLeft;
-import lee.aspect.dev.animationengine.animation.BounceOutRight;
-import lee.aspect.dev.animationengine.animation.SlideAndFade;
+import lee.aspect.dev.animationengine.animation.*;
 import lee.aspect.dev.application.RunLoopManager;
 import lee.aspect.dev.discordrpc.DiscordRP;
 import lee.aspect.dev.discordrpc.Script;
@@ -48,23 +46,26 @@ public class CallBackController implements Initializable {
 
     private BounceInLeft afterIn;
 
-    public void switchToConfig(ActionEvent event) throws IOException {
+    public void switchToConfig() throws IOException {
         switchToConfig.setDisable(true);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/scenes/LoadingScreen.fxml"));
         Parent root = loader.load();
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = stage.getScene();
-        LoadingController lc = loader.getController();
-        lc.toNewScene(LoadingController.Load.ConfigScreen);
-        root.translateYProperty().set(scene.getHeight());
-        stackPane.getChildren().add(root);
 
-        Timeline timeline = new Timeline();
-        KeyValue keyValue = new KeyValue(root.translateYProperty(), 0, Interpolator.EASE_OUT);
-        KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.3), keyValue);
-        timeline.getKeyFrames().add(keyFrame);
-        timeline.setOnFinished(event1 -> stackPane.getChildren().remove(anchorRoot));
-        timeline.play();
+        var fadeOut = new FadeOut(anchorRoot);
+        fadeOut.setOnFinished((actionEvent -> {
+            stackPane.getChildren().remove(anchorRoot);
+            var fadeIn = new FadeIn(root);
+            fadeIn.setOnFinished((actionEvent1) -> {
+                LoadingController lc = loader.getController();
+                lc.toNewScene(LoadingController.Load.ConfigScreen);
+            });
+            root.setOpacity(0);
+            stackPane.getChildren().add(root);
+            fadeIn.play();
+        }));
+        fadeOut.setSpeed(5);
+        fadeOut.play();
+
 
 
     }

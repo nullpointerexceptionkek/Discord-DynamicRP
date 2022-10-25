@@ -13,7 +13,9 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import lee.aspect.dev.animationengine.animation.FadeIn;
+import lee.aspect.dev.animationengine.animation.FadeOut;
 import lee.aspect.dev.animationengine.animation.SlideInLeft;
 import lee.aspect.dev.application.RunLoopManager;
 import lee.aspect.dev.discordrpc.Script;
@@ -76,14 +78,20 @@ public class ConfigController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/scenes/LoadingScreen.fxml"));
         Parent root = loader.load();
         root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(Settings.getTheme().getThemepass())).toExternalForm());
-        LoadingController lc = loader.getController();
-        lc.toNewScene(1000, LoadingController.Load.CallBackScreen);
-        stackPane.getChildren().add(root);
-
-        FadeIn animation = new FadeIn(root);
-        stackPane.getChildren().remove(anchorRoot);
-        animation.play();
-
+        var fadeOut = new FadeOut(anchorRoot);
+        fadeOut.setOnFinished((actionEvent -> {
+            stackPane.getChildren().remove(anchorRoot);
+            var fadeIn = new FadeIn(root);
+            fadeIn.setOnFinished((actionEvent1) -> {
+                LoadingController lc = loader.getController();
+                lc.toNewScene(LoadingController.Load.CallBackScreen);
+            });
+            root.setOpacity(0);
+            stackPane.getChildren().add(root);
+            fadeIn.play();
+        }));
+        fadeOut.setSpeed(5);
+        fadeOut.play();
 
     }
 
