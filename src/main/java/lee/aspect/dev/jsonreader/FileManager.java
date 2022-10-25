@@ -1,94 +1,83 @@
 package lee.aspect.dev.jsonreader;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URISyntaxException;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import lee.aspect.dev.SystemUtil.RestartApplication;
-import lee.aspect.dev.application.CustomDiscordRPC;
 import lee.aspect.dev.discordrpc.Script;
 import lee.aspect.dev.discordrpc.settings.Settings;
 
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+
 
 public class FileManager {
-	private static Gson gson;
+    private static final File ROOT_DIR = new File(System.getProperty("user.home") + "\\CustomDiscordRPC");
+    private static Gson gson;
 
-	private static File ROOT_DIR = new File(System.getProperty("user.home") + "\\CustomDiscordRPC");
+    public static void init() {
+        System.out.println(ROOT_DIR);
+        if (!ROOT_DIR.exists()) {
+            ROOT_DIR.mkdir();
+        }
 
-	public static void init() {
-		System.out.println(ROOT_DIR);
-		if(!ROOT_DIR.exists()) { ROOT_DIR.mkdir();}
-		
-		GsonBuilder builder = new GsonBuilder();
-		builder.registerTypeAdapter(Script.class, new ScriptAdapter());
-		builder.registerTypeAdapter(Settings.class, new SettingsAdapter());
-		gson = builder.setPrettyPrinting().create();
-	}
-	
-	public static Gson getGson() {
-		return gson;
-	}
-	
-	public static boolean writeJsonTofile(File file, Object obj) {
-		try {
-			if(!file.exists()) {
-				file.createNewFile();
-			}
-			
-			FileOutputStream outputStream = new FileOutputStream(file);
-			outputStream.write(gson.toJson(obj).getBytes("UTF8"));
-			outputStream.flush();
-			outputStream.close();
-			return true;
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(Script.class, new ScriptAdapter());
+        builder.registerTypeAdapter(Settings.class, new SettingsAdapter());
+        gson = builder.setPrettyPrinting().create();
+    }
 
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
-	
-	public static <T extends Object> T readFromJson(File file, Class<T> c) {
-		
-		try {
-			
-			FileInputStream fileInputStream = new FileInputStream(file);
-			InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream,"UTF8");
-			BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-			
-			StringBuilder builder = new StringBuilder();
-			String line;
-			
-			while((line = bufferedReader.readLine()) != null) {
-				builder.append(line);
-			}
-			
-			bufferedReader.close();
-			inputStreamReader.close();
-			fileInputStream.close();
+    public static Gson getGson() {
+        return gson;
+    }
 
-			return gson.fromJson(builder.toString(), c);
-			
-		}
-		catch(IOException e) {
-			e.printStackTrace();
-			return null;
-		}
-		
-	}
-	
-	public static File getROOT_DIR() {
-		return ROOT_DIR;
-	}
-	
-	
-	
-	
-	
-	
+    public static boolean writeJsonTofile(File file, Object obj) {
+        try {
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            FileOutputStream outputStream = new FileOutputStream(file);
+            outputStream.write(gson.toJson(obj).getBytes(StandardCharsets.UTF_8));
+            outputStream.flush();
+            outputStream.close();
+            return true;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static <T> T readFromJson(File file, Class<T> c) {
+
+        try {
+
+            FileInputStream fileInputStream = new FileInputStream(file);
+            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, StandardCharsets.UTF_8);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+            StringBuilder builder = new StringBuilder();
+            String line;
+
+            while ((line = bufferedReader.readLine()) != null) {
+                builder.append(line);
+            }
+
+            bufferedReader.close();
+            inputStreamReader.close();
+            fileInputStream.close();
+
+            return gson.fromJson(builder.toString(), c);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public static File getROOT_DIR() {
+        return ROOT_DIR;
+    }
+
+
 }

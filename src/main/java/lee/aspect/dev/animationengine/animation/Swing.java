@@ -12,6 +12,8 @@ import javafx.util.Duration;
  */
 public class Swing extends AnimationFX {
 
+    private Rotate rotation;
+
     /**
      * Create new Swing
      *
@@ -23,8 +25,6 @@ public class Swing extends AnimationFX {
 
     public Swing() {
     }
-
-    private Rotate rotation;
 
     @Override
     AnimationFX resetNode() {

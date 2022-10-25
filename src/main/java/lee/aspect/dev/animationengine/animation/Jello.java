@@ -13,6 +13,8 @@ import javafx.util.Duration;
  */
 
 public class Jello extends AnimationFX {
+    private Shear shear;
+
     /**
      * Create new Jello
      *
@@ -32,11 +34,9 @@ public class Jello extends AnimationFX {
         return this;
     }
 
-    private Shear shear;
-
     @Override
     void initTimeline() {
-         shear = new Shear();
+        shear = new Shear();
         Bounds bounds = getNode().getLayoutBounds();
         shear.setPivotX(bounds.getWidth() / 2);
         shear.setPivotY(bounds.getHeight() / 2);

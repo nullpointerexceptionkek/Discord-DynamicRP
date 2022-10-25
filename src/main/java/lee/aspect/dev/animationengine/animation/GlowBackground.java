@@ -21,8 +21,6 @@ import javafx.util.Duration;
 public class GlowBackground extends AnimationFX {
 
     private final Background originalBackground;
-    private CornerRadii originalRadii;
-    private Insets originalInsets;
 
     /**
      * Constructs the animation
@@ -35,6 +33,8 @@ public class GlowBackground extends AnimationFX {
     public GlowBackground(Region node, Color colorA, Color colorB, int colorSteps) {
         super(node);
         this.originalBackground = getNode().backgroundProperty().get();
+        CornerRadii originalRadii;
+        Insets originalInsets;
         if (originalBackground != null && !originalBackground.getFills().isEmpty()) {
             BackgroundFill lastFill = originalBackground.getFills().get(originalBackground.getFills().size() - 1);
             originalRadii = lastFill.getRadii();

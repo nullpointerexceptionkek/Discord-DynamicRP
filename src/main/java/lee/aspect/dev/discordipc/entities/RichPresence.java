@@ -37,9 +37,6 @@ public class RichPresence {
     private final String partyId;
     private final int partySize;
     private final int partyMax;
-    private final String matchSecret;
-    private final String joinSecret;
-    private final String spectateSecret;
     private final boolean instance;
 
     private final String button1Text;
@@ -47,6 +44,7 @@ public class RichPresence {
 
     private final String button2Text;
     private final String button2Url;
+
     public RichPresence(String state, String details, long startTimestamp, long endTimestamp,
                         String largeImageKey, String largeImageText, String smallImageKey, String smallImageText,
                         String partyId, int partySize, int partyMax, String matchSecret, String joinSecret,
@@ -62,9 +60,6 @@ public class RichPresence {
         this.partyId = partyId;
         this.partySize = partySize;
         this.partyMax = partyMax;
-        this.matchSecret = matchSecret;
-        this.joinSecret = joinSecret;
-        this.spectateSecret = spectateSecret;
         this.instance = instance;
         this.button1Text = button1Text;
         this.button1Url = button1Url;
@@ -82,65 +77,39 @@ public class RichPresence {
      * @return A JSONObject payload for updating a user's Rich Presence.
      */
     public JSONObject toJson() {
-        /*
-            return new JSONObject()
-                    .put("state", state)
-                    .put("details", details)
-                    .put("timestamps", new JSONObject()
-                            .put("start", startTimestamp == null ? null : startTimestamp.toEpochSecond())
-                            .put("end", endTimestamp == null ? null : endTimestamp.toEpochSecond()))
-                    .put("assets", new JSONObject()
-                            .put("large_image", largeImageKey)
-                            .put("large_text", largeImageText)
-                            .put("small_image", smallImageKey)
-                            .put("small_text", smallImageText))
-                    .put("party", partyId == null ? null : new JSONObject()
-                            .put("id", partyId)
-                            .put("size", new JSONArray().put(partySize).put(partyMax)))
-                    .put("instance", instance)
-
-                    .put("buttons", new JSONArray()
-                            .put(new JSONObject()
-                                    .put("label", button1Text)
-                                    .put("url", button1Url))
-                            .put(new JSONObject()
-                                    .put("label", button2Text)
-                                    .put("url", button2Url)));
-
-         */
         JSONObject jsonObject = new JSONObject()
                 .put("state", state)
                 .put("details", details)
                 .put("timestamps", new JSONObject()
                         .put("start", startTimestamp < 100 ? null : startTimestamp)
-                        .put("end", endTimestamp <100 ? null : endTimestamp));
+                        .put("end", endTimestamp < 100 ? null : endTimestamp));
         JSONObject assets = new JSONObject();
-            if(largeImageKey != null && !largeImageKey.isEmpty()) {
-                assets.put("large_image", largeImageKey);
-                if(largeImageText != null && !largeImageText.isEmpty()) assets.put("large_text", largeImageText);
-                if(smallImageKey != null && !smallImageKey.isEmpty()) {
-                    assets.put("small_image", smallImageKey);
-                    if(smallImageText!= null && !smallImageText.isEmpty()) assets.put("small_text", smallImageText);
-                }
+        if (largeImageKey != null && !largeImageKey.isEmpty()) {
+            assets.put("large_image", largeImageKey);
+            if (largeImageText != null && !largeImageText.isEmpty()) assets.put("large_text", largeImageText);
+            if (smallImageKey != null && !smallImageKey.isEmpty()) {
+                assets.put("small_image", smallImageKey);
+                if (smallImageText != null && !smallImageText.isEmpty()) assets.put("small_text", smallImageText);
             }
-            jsonObject.put("assets",assets);
+        }
+        jsonObject.put("assets", assets);
 
         jsonObject.put("party", partyId == null ? null : new JSONObject()
                         .put("id", partyId)
                         .put("size", new JSONArray().put(partySize).put(partyMax)))
                 .put("instance", instance);
-        if(button1Text !=null) {
+        if (button1Text != null) {
             JSONArray buttons = new JSONArray()
                     .put(new JSONObject()
-                    .put("label", button1Text)
-                    .put("url", button1Url));
+                            .put("label", button1Text)
+                            .put("url", button1Url));
 
-            if(button2Text != null) {
+            if (button2Text != null) {
                 buttons.put(new JSONObject()
                         .put("label", button2Text)
                         .put("url", button2Url));
             }
-            jsonObject.put("buttons",buttons);
+            jsonObject.put("buttons", buttons);
         }
 
         return jsonObject;

@@ -12,6 +12,8 @@ import javafx.util.Duration;
  */
 public class JackInTheBox extends AnimationFX {
 
+    private Rotate rotate;
+
     /**
      * Create new JackInTheBox animation
      *
@@ -25,8 +27,6 @@ public class JackInTheBox extends AnimationFX {
     public JackInTheBox() {
     }
 
-    private Rotate rotate;
-
     @Override
     AnimationFX resetNode() {
         getNode().setScaleX(1);
@@ -39,7 +39,7 @@ public class JackInTheBox extends AnimationFX {
 
     @Override
     void initTimeline() {
-         rotate = new Rotate(30, getNode().getBoundsInParent().getWidth() / 2, getNode().getBoundsInParent().getHeight());
+        rotate = new Rotate(30, getNode().getBoundsInParent().getWidth() / 2, getNode().getBoundsInParent().getHeight());
         getNode().getTransforms().add(rotate);
         setTimeline(new Timeline(
                 new KeyFrame(Duration.millis(0),

@@ -1,7 +1,5 @@
 package lee.aspect.dev.jsonreader;
 
-import java.io.IOException;
-
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
@@ -9,6 +7,9 @@ import com.google.gson.stream.JsonWriter;
 import lee.aspect.dev.discordrpc.settings.Settings;
 import lee.aspect.dev.discordrpc.settings.options.MinimizeMode;
 import lee.aspect.dev.discordrpc.settings.options.Theme;
+
+import java.io.IOException;
+import java.util.Objects;
 
 
 public class SettingsAdapter extends TypeAdapter<Settings> {
@@ -29,8 +30,8 @@ public class SettingsAdapter extends TypeAdapter<Settings> {
                 if (token == JsonToken.NAME) {
                     name = reader.nextName();
                 }
-                switch (name) {
-                    case "Theme":
+                switch (Objects.requireNonNull(name)) {
+                    case "theme":
                         Settings.setTheme(Theme.valueOf(reader.nextString()));
                         break;
                     case "MinimizeMode":
@@ -73,7 +74,7 @@ public class SettingsAdapter extends TypeAdapter<Settings> {
             return;
         }
         writter.beginObject();
-        writter.name("Theme");
+        writter.name("theme");
         writter.value(Settings.getTheme().name());
         writter.name("MinimizeMode");
         writter.value(Settings.getMinimizeMode().name());

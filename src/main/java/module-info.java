@@ -11,10 +11,10 @@ module lee.aspect.dev {
     requires org.jetbrains.annotations;
 
 
-    opens lee.aspect.dev.application to javafx.controls,javafx.fxml,javafx.graphics;
-    opens lee.aspect.dev.application.Gui to javafx.controls, javafx.fxml, javafx.graphics;
+    opens lee.aspect.dev.application to javafx.controls, javafx.fxml, javafx.graphics;
+    opens lee.aspect.dev.application.interfaceGui to javafx.controls, javafx.fxml, javafx.graphics;
 
-    exports lee.aspect.dev.application to javafx.controls,javafx.fxml,javafx.graphics;
-    exports lee.aspect.dev.application.Gui to javafx.controls,javafx.fxml,javafx.graphics;
+    exports lee.aspect.dev.application to javafx.controls, javafx.fxml, javafx.graphics;
+    exports lee.aspect.dev.application.interfaceGui to javafx.controls, javafx.fxml, javafx.graphics;
     exports lee.aspect.dev.discordipc.exceptions;
 }

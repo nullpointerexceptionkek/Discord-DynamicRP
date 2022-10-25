@@ -1,40 +1,32 @@
 package lee.aspect.dev.application;
 
 import javafx.application.Platform;
-import lee.aspect.dev.application.Gui.LoadingController;
+import lee.aspect.dev.application.interfaceGui.LoadingController;
 import lee.aspect.dev.discordrpc.settings.Settings;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.net.URL;
 import javax.swing.*;
+import java.awt.*;
+import java.net.URL;
+import java.util.Objects;
 
 public class ApplicationTray {
 
-    public ApplicationTray(){
+    public ApplicationTray() {
         /* Use an appropriate Look and Feel */
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
             //UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-        } catch (UnsupportedLookAndFeelException ex) {
-            ex.printStackTrace();
-        } catch (IllegalAccessException ex) {
-            ex.printStackTrace();
-        } catch (InstantiationException ex) {
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
+        } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException |
+                 IllegalAccessException ex) {
             ex.printStackTrace();
         }
         /* Turn off metal's use of bold fonts */
         UIManager.put("swing.boldMetal", Boolean.FALSE);
         //Schedule a job for the event-dispatching thread:
         //adding TrayIcon.
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                createAndShowGUI();
-            }
-        });
+        SwingUtilities.invokeLater(() -> createAndShowGUI());
     }
+
     private static void createAndShowGUI() {
         //Check the SystemTray support
         if (!SystemTray.isSupported()) {
@@ -43,7 +35,7 @@ public class ApplicationTray {
         }
         final PopupMenu popup = new PopupMenu();
         final TrayIcon trayIcon =
-                new TrayIcon(createImage("/lee/aspect/dev/icon/SystemTrayIcon.png", "tray icon"));
+                new TrayIcon(Objects.requireNonNull(createImage("/lee/aspect/dev/icon/SystemTrayIcon.png", "tray icon")));
         trayIcon.setImageAutoSize(true);
         final SystemTray tray = SystemTray.getSystemTray();
 
@@ -64,34 +56,26 @@ public class ApplicationTray {
             return;
         }
 
-        trayIcon.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null,
-                        "This dialog box is run from System Tray");
+        trayIcon.addActionListener(e -> JOptionPane.showMessageDialog(null,
+                "This dialog box is run from System Tray"));
+
+        showInterface.addActionListener(e -> {
+            if (Settings.isShutDownInterfaceWhenTray()) {
+                trayIcon.displayMessage("CDiscordRPC",
+                        "Application cannot start interface when ShutDownInterface is on, please exit and relaunch the program to see interface", TrayIcon.MessageType.ERROR);
+                return;
             }
+            CustomDiscordRPC.isOnSystemTray = false;
+            Platform.runLater(() -> {
+                CustomDiscordRPC.primaryStage.show();
+                if (RunLoopManager.isRunning)
+                    Platform.runLater(() -> LoadingController.callBackController.updateCurrentDisplay());
+            });
         });
 
-        showInterface.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if(Settings.isShutDownInterfaceWhenTray()){
-                    trayIcon.displayMessage("CDiscordRPC",
-                            "Application cannot start interface when ShutDownInterface is on, please exit and relaunch the program to see interface", TrayIcon.MessageType.ERROR);
-                    return;
-                }
-                CustomDiscordRPC.isOnSystemTray = false;
-                Platform.runLater(()-> {
-                    CustomDiscordRPC.primaryStage.show();
-                    if(RunLoopManager.isRunning)
-                        Platform.runLater(()-> LoadingController.callBackController.updateCurrentDisplay());
-                });
-            }
-        });
-
-        exitItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                tray.remove(trayIcon);
-                RunLoopManager.onClose();
-            }
+        exitItem.addActionListener(e -> {
+            tray.remove(trayIcon);
+            RunLoopManager.onClose();
         });
     }
 

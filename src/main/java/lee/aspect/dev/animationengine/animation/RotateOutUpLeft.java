@@ -13,6 +13,7 @@ import javafx.util.Duration;
 public class RotateOutUpLeft extends AnimationFX {
 
     private Rotate rotate;
+
     /**
      * Create new RotateOutUpLeft
      *

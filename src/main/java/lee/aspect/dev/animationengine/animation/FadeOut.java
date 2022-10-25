@@ -12,6 +12,7 @@ import javafx.util.Duration;
 public class FadeOut extends AnimationFX {
     /**
      * Create a new FadeOut animation
+     *
      * @param node the node to affect
      */
     public FadeOut(Node node) {

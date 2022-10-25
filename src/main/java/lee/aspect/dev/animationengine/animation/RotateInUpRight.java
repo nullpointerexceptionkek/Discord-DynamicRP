@@ -12,6 +12,8 @@ import javafx.util.Duration;
  */
 public class RotateInUpRight extends AnimationFX {
 
+    private Rotate rotate;
+
     /**
      * Create new RotateInUpRight
      *
@@ -23,8 +25,6 @@ public class RotateInUpRight extends AnimationFX {
 
     public RotateInUpRight() {
     }
-
-    private Rotate rotate;
 
     @Override
     AnimationFX resetNode() {

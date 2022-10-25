@@ -1,4 +1,4 @@
-package lee.aspect.dev.application.Gui;
+package lee.aspect.dev.application.interfaceGui;
 
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
@@ -50,7 +50,7 @@ public class CallBackController implements Initializable {
 
     public void switchToConfig(ActionEvent event) throws IOException {
         switchToConfig.setDisable(true);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/Scenes/LoadingScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/scenes/LoadingScreen.fxml"));
         Parent root = loader.load();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = stage.getScene();

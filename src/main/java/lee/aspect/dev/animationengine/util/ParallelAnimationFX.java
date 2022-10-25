@@ -13,25 +13,10 @@ import lee.aspect.dev.animationengine.animation.AnimationFX;
  */
 public class ParallelAnimationFX {
 
+    private final ObservableList<AnimationFX> animations = FXCollections.observableArrayList();
     private Animation.Status status;
-
     private ObjectProperty<Node> node;
-
     private boolean reset;
-
-    /**
-     * The node property
-     *
-     * @return node property
-     */
-    public final ObjectProperty<Node> nodeProperty() {
-        if (node == null) {
-            node = new SimpleObjectProperty<>(this, "node", null);
-        }
-        return node;
-    }
-
-    private ObservableList<AnimationFX> animations = FXCollections.observableArrayList();
 
     public ParallelAnimationFX(Node node) {
         nodeProperty().set(node);
@@ -50,6 +35,18 @@ public class ParallelAnimationFX {
     }
 
     public ParallelAnimationFX() {
+    }
+
+    /**
+     * The node property
+     *
+     * @return node property
+     */
+    public final ObjectProperty<Node> nodeProperty() {
+        if (node == null) {
+            node = new SimpleObjectProperty<>(this, "node", null);
+        }
+        return node;
     }
 
     /**
@@ -90,7 +87,7 @@ public class ParallelAnimationFX {
      * Initialize which animation to play after another
      */
     private void initAnimations() {
-        for (AnimationFX animation: animations) {
+        for (AnimationFX animation : animations) {
             if (nodeProperty().get() != null) {
                 if (animation.getNode() == null) {
                     animation.setNode(nodeProperty().get());

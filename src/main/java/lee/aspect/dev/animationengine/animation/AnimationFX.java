@@ -73,17 +73,6 @@ public abstract class AnimationFX {
     }
 
     /**
-     * Function to reset the node or not when the animation is finished
-     *
-     * @param reset
-     * @return
-     */
-    public AnimationFX setResetOnFinished(boolean reset) {
-        this.reset = reset;
-        return this;
-    }
-
-    /**
      * Play the animation
      */
     public void play() {
@@ -112,7 +101,6 @@ public abstract class AnimationFX {
      */
     abstract void initTimeline();
 
-
     public Timeline getTimeline() {
         return timeline;
     }
@@ -123,6 +111,17 @@ public abstract class AnimationFX {
 
     public boolean isResetOnFinished() {
         return reset;
+    }
+
+    /**
+     * Function to reset the node or not when the animation is finished
+     *
+     * @param reset
+     * @return
+     */
+    public AnimationFX setResetOnFinished(boolean reset) {
+        this.reset = reset;
+        return this;
     }
 
     protected void setReset(boolean reset) {

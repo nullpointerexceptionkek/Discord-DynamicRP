@@ -1,4 +1,4 @@
-package lee.aspect.dev.application.Gui;
+package lee.aspect.dev.application.interfaceGui;
 
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
@@ -95,7 +95,7 @@ public class LoadingController implements Initializable {
                         try {
                             switch (file) {
                                 case CallBackScreen:
-                                    var loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/Scenes/CallBack.fxml"));
+                                    var loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/scenes/CallBack.fxml"));
                                     Parent root = loader.load();
                                     stackPane.getChildren().add(root);
                                     callBackController = loader.getController();
@@ -109,7 +109,7 @@ public class LoadingController implements Initializable {
                                     animation.play();
                                     break;
                                 case ConfigScreen:
-                                    Parent root1 = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/lee/aspect/dev/Scenes/ReadyConfig.fxml")));
+                                    Parent root1 = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml")));
                                     Scene scene1 = anchorRoot.getScene();
 
                                     root1.translateYProperty().set(scene1.getHeight());
@@ -123,7 +123,7 @@ public class LoadingController implements Initializable {
                                     timeline1.play();
                                     break;
                                 default:
-                                    Parent root2 = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/lee/aspect/dev/Scenes/ReadyConfig.fxml")));
+                                    Parent root2 = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml")));
                                     Scene scene2 = anchorRoot.getScene();
 
                                     root2.translateYProperty().set(scene2.getHeight());

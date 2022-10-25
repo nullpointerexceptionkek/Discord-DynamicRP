@@ -33,7 +33,7 @@ public class SlideOutDown extends AnimationFX {
 
     @Override
     void initTimeline() {
-      setTimeline(  new Timeline(
+        setTimeline(new Timeline(
                 new KeyFrame(Duration.millis(0),
                         new KeyValue(getNode().translateYProperty(), 0, AnimateFXInterpolator.EASE)
                 ),

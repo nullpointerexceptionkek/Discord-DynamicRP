@@ -13,25 +13,10 @@ import lee.aspect.dev.animationengine.animation.AnimationFX;
  */
 public class SequentialAnimationFX {
 
+    private final ObservableList<AnimationFX> animations = FXCollections.observableArrayList();
     private Animation.Status status;
-
     private ObjectProperty<Node> node;
-
     private boolean reset;
-
-    /**
-     * The node property
-     *
-     * @return node property
-     */
-    public final ObjectProperty<Node> nodeProperty() {
-        if (node == null) {
-            node = new SimpleObjectProperty<>(this, "node", null);
-        }
-        return node;
-    }
-
-    private ObservableList<AnimationFX> animations = FXCollections.observableArrayList();
 
     public SequentialAnimationFX(Node node) {
         nodeProperty().set(node);
@@ -50,6 +35,18 @@ public class SequentialAnimationFX {
     }
 
     public SequentialAnimationFX() {
+    }
+
+    /**
+     * The node property
+     *
+     * @return node property
+     */
+    public final ObjectProperty<Node> nodeProperty() {
+        if (node == null) {
+            node = new SimpleObjectProperty<>(this, "node", null);
+        }
+        return node;
     }
 
     /**

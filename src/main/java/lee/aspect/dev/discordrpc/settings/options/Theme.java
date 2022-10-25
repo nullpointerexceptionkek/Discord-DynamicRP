@@ -2,28 +2,29 @@ package lee.aspect.dev.discordrpc.settings.options;
 
 public enum Theme {
 
-	light("/lee/aspect/dev/Theme/Light.css", "Discord light"),
-	dark("/lee/aspect/dev/Theme/Dark.css", "Discord dark"),
+    light("/lee/aspect/dev/theme/Light.css", "Discord light"),
+    dark("/lee/aspect/dev/theme/Dark.css", "Discord dark"),
 
-	lime("/lee/aspect/dev/Theme/lime.css", "lime"),
+    lime("/lee/aspect/dev/theme/lime.css", "lime"),
 
-	mikuSnow("/lee/aspect/dev/Theme/MikuSnow/MikuSnow.css", "Miku snow"),
+    mikuSnow("/lee/aspect/dev/theme/mikuSnow/MikuSnow.css", "Miku snow"),
 
-	huTao("/lee/aspect/dev/Theme/Hutao/Hutao.css","Hutao");
-	
-	private final String themePath;
+    huTao("/lee/aspect/dev/theme/hutao/Hutao.css", "Hutao");
 
-	private final String displayName;
+    private final String themePath;
 
-	Theme(String string, String displayName) {
-		this.themePath = string;
-		this.displayName = displayName;
-	}
-	public String getThemepass() {
-		return themePath;
-	}
+    private final String displayName;
 
-	public String getDisplayName() {
-		return displayName;
-	}
+    Theme(String string, String displayName) {
+        this.themePath = string;
+        this.displayName = displayName;
+    }
+
+    public String getThemepass() {
+        return themePath;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
 }

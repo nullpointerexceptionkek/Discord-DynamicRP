@@ -1,7 +1,6 @@
 package lee.aspect.dev;
 
 import lee.aspect.dev.application.CustomDiscordRPC;
-import lee.aspect.dev.application.RunLoopManager;
 import lee.aspect.dev.jsonreader.FileManager;
 
 import javax.swing.*;
@@ -10,7 +9,6 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
-import java.util.Arrays;
 
 public class Launch {
 
@@ -23,20 +21,21 @@ public class Launch {
      * Redirect main Class to {@link CustomDiscordRPC Launch}
      * This program is used to customize Discord rich perference via a interface by JavaFX
      * It connects to Discord via IPC by the libary {@link lee.aspect.dev.discordipc}
+     *
      * @param args
      * @author Aspect
      */
-    public static void main(String[]args){
+    public static void main(String[] args) {
         try {
-            f = new File(FileManager.getROOT_DIR(),"runtime");
+            f = new File(FileManager.getROOT_DIR(), "runtime");
 
-            if(!FileManager.getROOT_DIR().exists()) FileManager.getROOT_DIR().mkdir();
+            if (!FileManager.getROOT_DIR().exists()) FileManager.getROOT_DIR().mkdir();
 
-            if(f.exists()) f.delete();
-            channel = new RandomAccessFile(f,"rw").getChannel();
+            if (f.exists()) f.delete();
+            channel = new RandomAccessFile(f, "rw").getChannel();
             lock = channel.tryLock();
 
-            if(lock == null) {
+            if (lock == null) {
                 channel.close();
                 String message = "\"Custom Discord RP\"\n"
                         + "It looks like you are trying to create\n"
@@ -46,32 +45,30 @@ public class Launch {
                 System.exit(-1);
             }
 
-            Thread shutdown = new Thread(() -> {
-                unlock();
-            });
+            Thread shutdown = new Thread(Launch::unlock);
 
             Runtime.getRuntime().addShutdownHook(shutdown);
-            for(String arg : args){
-                if(arg.contains("--StartLaunch")) {
+            for (String arg : args) {
+                if (arg.contains("--StartLaunch")) {
                     CustomDiscordRPC.LaunchSlient();
                     return;
                 }
             }
             CustomDiscordRPC.Launch(args);
-        } catch (IOException e){
-            throw new RuntimeException("Could not start application",e);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not start application", e);
         }
 
     }
 
     public static void unlock() {
         try {
-            if(lock != null) {
+            if (lock != null) {
                 lock.release();
                 channel.close();
                 f.delete();
             }
-        } catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

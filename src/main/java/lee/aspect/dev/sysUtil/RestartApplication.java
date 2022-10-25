@@ -1,6 +1,6 @@
-package lee.aspect.dev.SystemUtil;
+package lee.aspect.dev.sysUtil;
 
-import lee.aspect.dev.SystemUtil.Exceptions.FileNotAJarException;
+import lee.aspect.dev.sysUtil.exceptions.FileNotAJarException;
 import lee.aspect.dev.application.RunLoopManager;
 
 import java.io.File;
@@ -15,7 +15,7 @@ public class RestartApplication {
         final File currentJar = new File(RestartApplication.class.getProtectionDomain().getCodeSource().getLocation().toURI());
 
         /* is it a jar file? */
-        if(!currentJar.getName().endsWith(".jar")){
+        if (!currentJar.getName().endsWith(".jar")) {
             throw new FileNotAJarException();
         }
 

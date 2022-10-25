@@ -10,7 +10,7 @@ import javafx.util.Duration;
 /**
  * @author Loïc Sculier aka typhon0
  */
-public class FadeInRight extends AnimationFX{
+public class FadeInRight extends AnimationFX {
 
     /**
      * Create new FadeInRight
@@ -48,6 +48,6 @@ public class FadeInRight extends AnimationFX{
 
         ));
     }
-    
+
 }
 

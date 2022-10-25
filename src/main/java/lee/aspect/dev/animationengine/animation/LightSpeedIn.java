@@ -13,6 +13,8 @@ import javafx.util.Duration;
  */
 
 public class LightSpeedIn extends AnimationFX {
+    private Shear shear;
+
     /**
      * Create new LightSpeedIn
      *
@@ -24,7 +26,6 @@ public class LightSpeedIn extends AnimationFX {
 
     public LightSpeedIn() {
     }
-    private  Shear shear;
 
     @Override
     AnimationFX resetNode() {
@@ -37,7 +38,7 @@ public class LightSpeedIn extends AnimationFX {
 
     @Override
     void initTimeline() {
-         shear = new Shear();
+        shear = new Shear();
         getNode().getTransforms().add(shear);
         setTimeline(new Timeline(
                 new KeyFrame(Duration.millis(0),

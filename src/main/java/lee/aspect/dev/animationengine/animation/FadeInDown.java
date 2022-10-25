@@ -10,7 +10,7 @@ import javafx.util.Duration;
 /**
  * @author Loïc Sculier aka typhon0
  */
-public class FadeInDown extends AnimationFX{
+public class FadeInDown extends AnimationFX {
 
     /**
      * Create new FadeInDown
