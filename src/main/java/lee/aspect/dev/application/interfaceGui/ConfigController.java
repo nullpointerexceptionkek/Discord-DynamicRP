@@ -73,14 +73,15 @@ public class ConfigController implements Initializable {
         String DiscordAppID = appID.getText();
         if (displayUpdates.getItems().size() < 1) {
             displayUpdates.setBackground(new Background(new BackgroundFill(Color.rgb(204,51,0,0.9), new CornerRadii(5), Insets.EMPTY)));
-            if(!anchorRoot.getChildren().contains(invalidIndex)) anchorRoot.getChildren().add(invalidIndex);
+            if(!anchorRoot.getChildren().contains(invalidIndex)) {
+                invalidIndex = WarningManager.setWarning(displayUpdates,16,"Index must be greater than one");
+                anchorRoot.getChildren().add(invalidIndex);
+            }
             new Shake(anchorRoot).play();
             return;
         }
         if(DiscordAppID.isEmpty() || DiscordAppID.isBlank()){
-            appID.setBackground(new Background(new BackgroundFill(Color.rgb(204,51,0,0.9), new CornerRadii(5), Insets.EMPTY)));
-            if(!anchorRoot.getChildren().contains(invalidAppID)) anchorRoot.getChildren().add(invalidAppID);
-            new Shake(anchorRoot).play();
+            invalidDiscordAppID("Invalid Application ID");
             return;
         }
 
@@ -121,6 +122,10 @@ public class ConfigController implements Initializable {
     }
 
     public void addNewItem() {
+        if(anchorRoot.getChildren().contains(invalidIndex)) {
+            anchorRoot.getChildren().remove(invalidIndex);
+            displayUpdates.setBackground(null);
+        }
         currentCount++;
         if (Script.getTotalupdates().size() > 0)
             Script.addUpdates(new Updates((Script.getTotalupdates().get(currentCount - 2).getWait()),
@@ -144,10 +149,6 @@ public class ConfigController implements Initializable {
     //it will also set the appid to only accept numbers and if loaded is not null, it will leave it empty
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        //init warnings
-        invalidIndex = WarningManager.setWarning(displayUpdates,16,"Index must be greater than one");
-        invalidAppID = WarningManager.setWarning(appID,16,"Invalid Application ID");
-
         ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/lee/aspect/dev/icon/settingsImage.png")).toExternalForm());
         imageView.setFitHeight(25);
         imageView.setPreserveRatio(true);
@@ -168,7 +169,9 @@ public class ConfigController implements Initializable {
             if (newValue == null) return;
             if (!newValue.matches("\\d*")) {
                 appID.setText(newValue.replaceAll("\\D", ""));
+                return;
             }
+            if(anchorRoot.getChildren().contains(invalidAppID)) anchorRoot.getChildren().remove(invalidAppID);
         });
         appID.setText(Settings.getDiscordAPIKey());
 
@@ -205,7 +208,6 @@ public class ConfigController implements Initializable {
         }
 
         displayUpdates.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
         //check if the list is double-clicked
         displayUpdates.setOnMouseClicked(event -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
@@ -237,6 +239,15 @@ public class ConfigController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void invalidDiscordAppID(String msg){
+        appID.setBackground(new Background(new BackgroundFill(Color.rgb(204,51,0,0.9), new CornerRadii(5), Insets.EMPTY)));
+        if(!anchorRoot.getChildren().contains(invalidAppID)){
+            invalidAppID = WarningManager.setWarning(appID,16,msg);
+            anchorRoot.getChildren().add(invalidAppID);
+        }
+        new Shake(anchorRoot).play();
     }
 
 
