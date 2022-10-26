@@ -53,18 +53,6 @@ public class Shake extends AnimationFX {
                         new KeyValue(getNode().translateXProperty(), -10, AnimateFXInterpolator.EASE)
                 ),
                 new KeyFrame(Duration.millis(600),
-                        new KeyValue(getNode().translateXProperty(), 10, AnimateFXInterpolator.EASE)
-                ),
-                new KeyFrame(Duration.millis(700),
-                        new KeyValue(getNode().translateXProperty(), -10, AnimateFXInterpolator.EASE)
-                ),
-                new KeyFrame(Duration.millis(800),
-                        new KeyValue(getNode().translateXProperty(), 10, AnimateFXInterpolator.EASE)
-                ),
-                new KeyFrame(Duration.millis(900),
-                        new KeyValue(getNode().translateXProperty(), -10, AnimateFXInterpolator.EASE)
-                ),
-                new KeyFrame(Duration.millis(1000),
                         new KeyValue(getNode().translateXProperty(), 0, AnimateFXInterpolator.EASE)
                 )
         ));

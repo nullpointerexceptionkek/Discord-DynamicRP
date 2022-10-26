@@ -14,9 +14,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import lee.aspect.dev.animationengine.animation.FadeIn;
-import lee.aspect.dev.animationengine.animation.FadeOut;
-import lee.aspect.dev.animationengine.animation.SlideInLeft;
+import lee.aspect.dev.animationengine.animation.*;
 import lee.aspect.dev.application.RunLoopManager;
 import lee.aspect.dev.discordrpc.Script;
 import lee.aspect.dev.discordrpc.Updates;
@@ -53,6 +51,10 @@ public class ConfigController implements Initializable {
     @FXML
     private StackPane stackPane;
 
+    private ImageView invalidIndex;
+
+    private ImageView invalidAppID;
+
     private int currentCount;
 
     public void getTimeStampMode() {
@@ -69,10 +71,16 @@ public class ConfigController implements Initializable {
 
     public void switchToCallBack() throws IOException {
         String DiscordAppID = appID.getText();
-        if (displayUpdates.getItems().size() < 1) return;
+        if (displayUpdates.getItems().size() < 1) {
+            displayUpdates.setBackground(new Background(new BackgroundFill(Color.rgb(204,51,0,0.9), new CornerRadii(5), Insets.EMPTY)));
+            if(!anchorRoot.getChildren().contains(invalidIndex)) anchorRoot.getChildren().add(invalidIndex);
+            new Shake(anchorRoot).play();
+            return;
+        }
         if(DiscordAppID.isEmpty() || DiscordAppID.isBlank()){
-            appID.setBackground(new Background(new BackgroundFill(Color.rgb(204,51,0), new CornerRadii(5), Insets.EMPTY)));
-            anchorRoot.getChildren().add(WarningManager.setWarning(appID,16,"Invalid Application ID"));
+            appID.setBackground(new Background(new BackgroundFill(Color.rgb(204,51,0,0.9), new CornerRadii(5), Insets.EMPTY)));
+            if(!anchorRoot.getChildren().contains(invalidAppID)) anchorRoot.getChildren().add(invalidAppID);
+            new Shake(anchorRoot).play();
             return;
         }
 
@@ -136,6 +144,10 @@ public class ConfigController implements Initializable {
     //it will also set the appid to only accept numbers and if loaded is not null, it will leave it empty
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+        //init warnings
+        invalidIndex = WarningManager.setWarning(displayUpdates,16,"Index must be greater than one");
+        invalidAppID = WarningManager.setWarning(appID,16,"Invalid Application ID");
+
         ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/lee/aspect/dev/icon/settingsImage.png")).toExternalForm());
         imageView.setFitHeight(25);
         imageView.setPreserveRatio(true);
