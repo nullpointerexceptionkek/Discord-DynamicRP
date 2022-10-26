@@ -72,7 +72,7 @@ public class ConfigController implements Initializable {
         if (displayUpdates.getItems().size() < 1) return;
         if(DiscordAppID.isEmpty() || DiscordAppID.isBlank()){
             appID.setBackground(new Background(new BackgroundFill(Color.rgb(204,51,0), new CornerRadii(5), Insets.EMPTY)));
-            anchorRoot.getChildren().add(WarningManager.setWarning(appID,16));
+            anchorRoot.getChildren().add(WarningManager.setWarning(appID,16,"Invalid Application ID"));
             return;
         }
 

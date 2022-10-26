@@ -196,7 +196,6 @@ public abstract class Pipe {
                 callbacks.put(nonce, callback);
             write(p.toBytes());
             LOGGER.debug(String.format("Sent packet: %s", p));
-            System.out.println(p);
             if (listener != null)
                 listener.onPacketSent(ipcClient, p);
         } catch (IOException ex) {
