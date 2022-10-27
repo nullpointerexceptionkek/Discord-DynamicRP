@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.util.Duration;
+import lee.aspect.dev.discordrpc.settings.Settings;
 
 
 /**
@@ -76,7 +77,8 @@ public abstract class AnimationFX {
      * Play the animation
      */
     public void play() {
-        timeline.play();
+        if(!Settings.isNoAnimation())
+            timeline.play();
     }
 
     /**
@@ -106,7 +108,8 @@ public abstract class AnimationFX {
     }
 
     public void setTimeline(Timeline timeline) {
-        this.timeline = timeline;
+        if(!Settings.isNoAnimation())
+            this.timeline = timeline;
     }
 
     public boolean isResetOnFinished() {
@@ -133,6 +136,7 @@ public abstract class AnimationFX {
     }
 
     public void setNode(Node node) {
+        if(Settings.isNoAnimation()) return;
         this.node = node;
         initTimeline();
         timeline.statusProperty().addListener((observable, oldValue, newValue) -> {
@@ -178,6 +182,7 @@ public abstract class AnimationFX {
      * @return
      */
     public AnimationFX setSpeed(double value) {
+        if(Settings.isNoAnimation()) return null;
         this.timeline.setRate(value);
         return this;
     }
@@ -199,7 +204,9 @@ public abstract class AnimationFX {
      * @param value
      */
     public final void setOnFinished(EventHandler<ActionEvent> value) {
-        this.timeline.setOnFinished(value);
+        if(!Settings.isNoAnimation())
+            this.timeline.setOnFinished(value);
+        else value.handle(new ActionEvent(this, null));
     }
 
 }
