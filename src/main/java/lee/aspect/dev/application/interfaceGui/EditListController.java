@@ -1,6 +1,5 @@
 package lee.aspect.dev.application.interfaceGui;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -8,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lee.aspect.dev.application.CustomDiscordRPC;
@@ -52,22 +52,25 @@ public class EditListController extends ConfigController implements Initializabl
     @FXML
     private Button DeleteButton;
     @FXML
-    private AnchorPane scenePane;
+    private AnchorPane anchorPane;
+
+    private ImageView delayTooSmall;
+
     private int numberInList = -1;
 
-    public void cancelSaves(ActionEvent event) throws IOException {
-        stage = (Stage) scenePane.getScene().getWindow();
+    public void cancelSaves() throws IOException {
+        stage = (Stage) anchorPane.getScene().getWindow();
         gobacktoConfig();
     }
 
-    public void saveChanges(ActionEvent event) throws IOException {
+    public void saveChanges() throws IOException {
         Script.setUpdates(new Updates(Long.parseLong(Wait.getText()), image.getText(), imagetext.getText(), smallimage.getText(),
                 smalltext.getText(), firstline.getText(), secondline.getText(), button1Text.getText(),
                 button1Url.getText(), button2Text.getText(), button2Url.getText()), numberInList);
         gobacktoConfig();
     }
 
-    public void deleteThisItem(ActionEvent event) throws IOException {
+    public void deleteThisItem() throws IOException {
         Script.getTotalupdates().remove(numberInList);
         gobacktoConfig();
     }
@@ -75,9 +78,17 @@ public class EditListController extends ConfigController implements Initializabl
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         Wait.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
+            if (!newValue.matches("\\d*"))
                 Wait.setText(newValue.replaceAll("\\D", ""));
-            }
+            if(Wait.getText().isBlank() || Wait.getText().isEmpty()) return;
+            if (Long.parseLong(Wait.getText()) < 16000) {
+                if (!anchorPane.getChildren().contains(delayTooSmall)) {
+                    delayTooSmall =
+                            WarningManager.setWarning(Wait, 16, "It is recommended to set the delay above 16 second");
+                    anchorPane.getChildren().add(delayTooSmall);
+                }
+            } else anchorPane.getChildren().remove(delayTooSmall);
+
 
         });
     }
@@ -99,7 +110,7 @@ public class EditListController extends ConfigController implements Initializabl
     }
 
     private void gobacktoConfig() throws IOException {
-        stage = (Stage) scenePane.getScene().getWindow();
+        stage = (Stage) anchorPane.getScene().getWindow();
         stage.close();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml"));
         Parent root = loader.load();
