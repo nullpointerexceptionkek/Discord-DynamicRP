@@ -74,7 +74,7 @@ public class ConfigController implements Initializable {
         if (displayUpdates.getItems().size() < 1) {
             displayUpdates.setBackground(new Background(new BackgroundFill(Color.rgb(204,51,0,0.9), new CornerRadii(5), Insets.EMPTY)));
             if(!anchorRoot.getChildren().contains(invalidIndex)) {
-                invalidIndex = WarningManager.setWarning(displayUpdates,16,"Index must be greater than one");
+                invalidIndex = WarningManager.setWarning(displayUpdates,16,"Index must be greater than one", WarningManager.Mode.Left);
                 anchorRoot.getChildren().add(invalidIndex);
             }
             new Shake(anchorRoot).play();
@@ -244,7 +244,7 @@ public class ConfigController implements Initializable {
     public void invalidDiscordAppID(String msg){
         appID.setBackground(new Background(new BackgroundFill(Color.rgb(204,51,0,0.9), new CornerRadii(5), Insets.EMPTY)));
         if(!anchorRoot.getChildren().contains(invalidAppID)){
-            invalidAppID = WarningManager.setWarning(appID,16,msg);
+            invalidAppID = WarningManager.setWarning(appID,16,msg, WarningManager.Mode.Left);
             anchorRoot.getChildren().add(invalidAppID);
         }
         new Shake(anchorRoot).play();
