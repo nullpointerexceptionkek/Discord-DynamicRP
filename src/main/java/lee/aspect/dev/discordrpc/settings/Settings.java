@@ -11,16 +11,16 @@ public class Settings {
 
     private static MinimizeMode minimizeMode = MinimizeMode.Ask;
     private static boolean NoAnimation = false;
-    private static boolean LowResourceMode = false;
+    private static boolean StartTrayOnlyInterfaceClose = false;
     private static boolean StartLaunch = false;
     private static boolean ShutDownInterfaceWhenTray = false;
 
-    public static boolean isLowResourceMode() {
-        return LowResourceMode;
+    public static boolean isStartTrayOnlyInterfaceClose() {
+        return StartTrayOnlyInterfaceClose;
     }
 
-    public static void setLowResourceMode(boolean lowResourceMode) {
-        LowResourceMode = lowResourceMode;
+    public static void setStartTrayOnlyInterfaceClose(boolean startTrayOnlyInterfaceClose) {
+        StartTrayOnlyInterfaceClose = startTrayOnlyInterfaceClose;
     }
 
     public static boolean isStartLaunch() {

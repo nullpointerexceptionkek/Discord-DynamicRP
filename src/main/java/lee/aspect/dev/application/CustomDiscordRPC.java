@@ -35,7 +35,9 @@ public class CustomDiscordRPC extends Application {
      */
     public static void Launch(String[] args) {
         Platform.setImplicitExit(false);
-        new ApplicationTray();
+        RunLoopManager.init();
+        if(!Settings.isStartTrayOnlyInterfaceClose())
+            new ApplicationTray();
         System.out.println("LaunchArgs: ");
         System.out.println(Arrays.toString(args));
         launch(args);
@@ -58,7 +60,6 @@ public class CustomDiscordRPC extends Application {
         try {
             primaryStage = pstage;
             primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/lee/aspect/dev/icon/SystemTrayIcon.png"))));
-            RunLoopManager.init();
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml")));
             Scene scene = new Scene(root);
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(Settings.getTheme().getThemepass())).toExternalForm());
@@ -116,6 +117,7 @@ public class CustomDiscordRPC extends Application {
                 ButtonType result = alert.showAndWait().get();
                 if (result.equals(yesButton)) {
                     primaryStage.close();
+                    if(Settings.isStartTrayOnlyInterfaceClose()) new ApplicationTray();
                     isOnSystemTray = true;
                     if (Settings.isShutDownInterfaceWhenTray()) Platform.exit();
                 } else if (result.equals(noButton)) {
@@ -125,6 +127,7 @@ public class CustomDiscordRPC extends Application {
             case Always:
                 primaryStage.close();
                 isOnSystemTray = true;
+                if(Settings.isStartTrayOnlyInterfaceClose()) new ApplicationTray();
                 if (Settings.isShutDownInterfaceWhenTray()) Platform.exit();
                 break;
             case Never:

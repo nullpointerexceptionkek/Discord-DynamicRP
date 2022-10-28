@@ -31,8 +31,8 @@
                   text="Shutdown Interface when minimize to tray"/>
         <CheckBox fx:id="noAnimationCheckBox" layoutX="49.0" layoutY="401.0" mnemonicParsing="false"
                   text="Disable unnecessary animation"/>
-        <CheckBox fx:id="lowResourceCheckBox" layoutX="49.0" layoutY="425.0" mnemonicParsing="false"
-                  text="Ultra low resource mode"/>
+        <CheckBox fx:id="startTrayOnlyCloseCheckBox" layoutX="49.0" layoutY="425.0" mnemonicParsing="false"
+                  text="Start system tray only when interface is closed"/>
         <CheckBox fx:id="startLaunchCheckBox" layoutX="49.0" layoutY="449.0" mnemonicParsing="false"
                   text="Launch Callback when System start"/>
         <Label alignment="CENTER" layoutX="54.0" layoutY="296.0" prefHeight="32.0" prefWidth="234.0"

@@ -40,8 +40,8 @@ public class SettingsAdapter extends TypeAdapter<Settings> {
                     case "ShutDownInterfaceWhenTray":
                         Settings.setShutDownInterfaceWhenTray(reader.nextBoolean());
                         break;
-                    case "LowResourceMode":
-                        Settings.setLowResourceMode(reader.nextBoolean());
+                    case "StartTrayOnlyInterfaceClose":
+                        Settings.setStartTrayOnlyInterfaceClose(reader.nextBoolean());
                         break;
                     case "NoAnimation":
                         Settings.setNoAnimation(reader.nextBoolean());
@@ -80,8 +80,8 @@ public class SettingsAdapter extends TypeAdapter<Settings> {
         writter.value(Settings.getMinimizeMode().name());
         writter.name("ShutDownInterfaceWhenTray");
         writter.value(Settings.isShutDownInterfaceWhenTray());
-        writter.name("LowResourceMode");
-        writter.value(Settings.isLowResourceMode());
+        writter.name("StartTrayOnlyInterfaceClose");
+        writter.value(Settings.isStartTrayOnlyInterfaceClose());
         writter.name("NoAnimation");
         writter.value(Settings.isNoAnimation());
         writter.name("StartLaunch");

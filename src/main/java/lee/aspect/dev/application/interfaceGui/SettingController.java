@@ -45,7 +45,7 @@ public class SettingController implements Initializable {
     private CheckBox noAnimationCheckBox;
 
     @FXML
-    private CheckBox lowResourceCheckBox;
+    private CheckBox startTrayOnlyCloseCheckBox;
 
     @FXML
     private CheckBox startLaunchCheckBox;
@@ -100,12 +100,15 @@ public class SettingController implements Initializable {
         noAnimationCheckBox.setSelected(Settings.isNoAnimation());
         noAnimationCheckBox.setOnAction((actionEvent -> Settings.setNoAnimation(noAnimationCheckBox.isSelected())));
 
-        lowResourceCheckBox.setSelected(Settings.isLowResourceMode());
-        lowResourceCheckBox.setOnAction((actionEvent -> Settings.setLowResourceMode(lowResourceCheckBox.isSelected())));
+        startTrayOnlyCloseCheckBox.setSelected(!SystemTray.isSupported());
+        startTrayOnlyCloseCheckBox.setSelected(Settings.isStartTrayOnlyInterfaceClose());
+        startTrayOnlyCloseCheckBox.setOnAction((actionEvent -> {
+            Settings.setStartTrayOnlyInterfaceClose(startTrayOnlyCloseCheckBox.isSelected());
+            applyChange();
+        }));
         startLaunchCheckBox.setDisable(!StartLaunch.isOnWindows());
         startLaunchCheckBox.setSelected(Settings.isStartLaunch());
         startLaunchCheckBox.setOnAction((actionEvent -> {
-            Settings.setStartLaunch(startLaunchCheckBox.isSelected());
             if (startLaunchCheckBox.isSelected()) {
                 try {
                     StartLaunch.CreateBat();
@@ -120,6 +123,7 @@ public class SettingController implements Initializable {
             } else {
                 StartLaunch.deleteBat();
             }
+            Settings.setStartLaunch(startLaunchCheckBox.isSelected());
         }));
 
 
