@@ -16,7 +16,6 @@ import lee.aspect.dev.sysUtil.StartLaunch;
 import lee.aspect.dev.animationengine.animation.SlideOutLeft;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.discordrpc.settings.Settings;
-import lee.aspect.dev.discordrpc.settings.options.MinimizeMode;
 import lee.aspect.dev.discordrpc.settings.options.Theme;
 
 import java.awt.*;
@@ -36,7 +35,7 @@ public class SettingController implements Initializable {
     private ChoiceBox<String> themeChoiceBox;
 
     @FXML
-    private ChoiceBox<MinimizeMode> minimizeModeChoiceBox;
+    private ChoiceBox<Settings.MinimizeMode> minimizeModeChoiceBox;
 
     @FXML
     private CheckBox shutDownInterfaceCheckBox;
@@ -56,7 +55,7 @@ public class SettingController implements Initializable {
     @FXML
     private StackPane stackPane;
 
-    public void switchBack(ActionEvent event) throws IOException {
+    public void switchBack() throws IOException {
         goBack.setDisable(true);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml"));
         Parent root = loader.load();
@@ -89,7 +88,10 @@ public class SettingController implements Initializable {
         }));
         //add min to min choice box
         minimizeModeChoiceBox.setDisable(!SystemTray.isSupported());
-        minimizeModeChoiceBox.getItems().addAll(EnumSet.allOf(MinimizeMode.class));
+        for(Settings.MinimizeMode mode : Settings.MinimizeMode.values()){
+            if(mode != Settings.MinimizeMode.WaitAndSee)
+                minimizeModeChoiceBox.getItems().add(mode);
+        }
         minimizeModeChoiceBox.setValue((Settings.getMinimizeMode()));
         minimizeModeChoiceBox.setOnAction((event) -> Settings.setMinimizeMode(minimizeModeChoiceBox.getValue()));
         //add for booleans

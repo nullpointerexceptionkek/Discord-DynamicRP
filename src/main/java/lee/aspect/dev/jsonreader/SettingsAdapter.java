@@ -5,7 +5,6 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import lee.aspect.dev.discordrpc.settings.Settings;
-import lee.aspect.dev.discordrpc.settings.options.MinimizeMode;
 import lee.aspect.dev.discordrpc.settings.options.Theme;
 
 import java.io.IOException;
@@ -35,7 +34,7 @@ public class SettingsAdapter extends TypeAdapter<Settings> {
                         Settings.setTheme(Theme.valueOf(reader.nextString()));
                         break;
                     case "MinimizeMode":
-                        Settings.setMinimizeMode(MinimizeMode.valueOf(reader.nextString()));
+                        Settings.setMinimizeMode(Settings.MinimizeMode.valueOf(reader.nextString()));
                         break;
                     case "ShutDownInterfaceWhenTray":
                         Settings.setShutDownInterfaceWhenTray(reader.nextBoolean());

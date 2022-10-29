@@ -3,13 +3,14 @@ package lee.aspect.dev.application;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import lee.aspect.dev.application.interfaceGui.WarningManager;
+import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.discordrpc.settings.Settings;
 
 import javax.swing.*;
@@ -107,22 +108,27 @@ public class CustomDiscordRPC extends Application {
         }
         switch (Settings.getMinimizeMode()) {
             case Ask:
-                var alert = new Alert(Alert.AlertType.CONFIRMATION);
-                ButtonType yesButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
-                ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
-                alert.getButtonTypes().setAll(yesButton, noButton);
-                alert.setTitle("Close");
-                alert.setHeaderText("SystemTray is supported");
-                alert.setContentText("minimize to System tray instead of being closed?");
-                ButtonType result = alert.showAndWait().get();
-                if (result.equals(yesButton)) {
+               Alert alert = WarningManager.createAlertWithOptOut(
+                       Alert.AlertType.CONFIRMATION,
+                       "Minimize to System Tray",null,
+                       "Do you want to minimize to System Tray?",
+                       "Do not show again", param -> Settings.setMinimizeMode(param ? Settings.MinimizeMode.WaitAndSee : Settings.MinimizeMode.Ask),ButtonType.YES,ButtonType.NO,ButtonType.CANCEL);
+                var result = alert.showAndWait();
+                if (result.filter(buttonType -> buttonType == ButtonType.YES).isPresent()) {
+                    if(Settings.getMinimizeMode() == Settings.MinimizeMode.WaitAndSee)
+                        Settings.setMinimizeMode(Settings.MinimizeMode.Always);
+
                     primaryStage.close();
                     if(Settings.isStartTrayOnlyInterfaceClose()) new ApplicationTray();
                     isOnSystemTray = true;
                     if (Settings.isShutDownInterfaceWhenTray()) Platform.exit();
-                } else if (result.equals(noButton)) {
+                } else if (result.filter(buttonType -> buttonType == ButtonType.NO).isPresent()) {
+                    if(Settings.getMinimizeMode() == Settings.MinimizeMode.WaitAndSee)
+                        Settings.setMinimizeMode(Settings.MinimizeMode.Never);
                     RunLoopManager.onClose();
+                    return;
                 }
+                SettingManager.saveSettingToFile();
                 break;
             case Always:
                 primaryStage.close();
@@ -130,7 +136,7 @@ public class CustomDiscordRPC extends Application {
                 if(Settings.isStartTrayOnlyInterfaceClose()) new ApplicationTray();
                 if (Settings.isShutDownInterfaceWhenTray()) Platform.exit();
                 break;
-            case Never:
+            default:
                 RunLoopManager.onClose();
                 break;
         }

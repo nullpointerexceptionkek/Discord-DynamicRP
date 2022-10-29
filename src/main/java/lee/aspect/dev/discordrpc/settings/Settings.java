@@ -1,10 +1,11 @@
 package lee.aspect.dev.discordrpc.settings;
 
-import lee.aspect.dev.discordrpc.settings.options.MinimizeMode;
 import lee.aspect.dev.discordrpc.settings.options.Theme;
 
 public class Settings {
-
+    public enum MinimizeMode {
+        Ask, Always, Never, WaitAndSee
+    }
     private static String DiscordAPIKey;
 
     private static Theme theme = Theme.dark;
