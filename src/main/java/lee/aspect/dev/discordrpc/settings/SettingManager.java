@@ -1,6 +1,5 @@
 package lee.aspect.dev.discordrpc.settings;
 
-import lee.aspect.dev.discordrpc.settings.options.Theme;
 import lee.aspect.dev.jsonreader.FileManager;
 
 import java.io.File;
@@ -18,7 +17,7 @@ public class SettingManager {
         Settings loaded = FileManager.readFromJson(new File(FileManager.getROOT_DIR(), "Settings.json"), Settings.class);
         if (loaded == null) {
             settings = new Settings();
-            Settings.setTheme(Theme.dark);
+            Settings.setTheme(Settings.Theme.dark);
             Settings.setDiscordAPIKey("");
             loaded = settings;
             saveSettingToFile();

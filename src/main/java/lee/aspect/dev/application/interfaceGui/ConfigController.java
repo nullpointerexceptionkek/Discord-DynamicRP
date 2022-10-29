@@ -20,7 +20,6 @@ import lee.aspect.dev.discordrpc.Script;
 import lee.aspect.dev.discordrpc.Updates;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.discordrpc.settings.Settings;
-import lee.aspect.dev.discordrpc.settings.options.TimeStampMode;
 
 import java.io.IOException;
 import java.net.URL;
@@ -59,13 +58,13 @@ public class ConfigController implements Initializable {
 
     public void getTimeStampMode() {
         if (appLaunch.isSelected()) {
-            Script.setTimestampmode(TimeStampMode.applaunch);
+            Script.setTimestampmode(Script.TimeStampMode.applaunch);
         } else if (none.isSelected()) {
-            Script.setTimestampmode(TimeStampMode.none);
+            Script.setTimestampmode(Script.TimeStampMode.none);
         } else if (local.isSelected()) {
-            Script.setTimestampmode(TimeStampMode.current);
+            Script.setTimestampmode(Script.TimeStampMode.current);
         } else if (custom.isSelected()) {
-            Script.setTimestampmode(TimeStampMode.CDFromDayEnd);
+            Script.setTimestampmode(Script.TimeStampMode.CDFromDayEnd);
         }
     }
 
@@ -196,7 +195,7 @@ public class ConfigController implements Initializable {
                     break;
                 default:
                     appLaunch.setSelected(true);
-                    Script.setTimestampmode(TimeStampMode.applaunch);
+                    Script.setTimestampmode(Script.TimeStampMode.applaunch);
 
             }
             displayUpdates.getItems().clear();

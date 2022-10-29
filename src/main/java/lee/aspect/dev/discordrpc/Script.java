@@ -1,11 +1,19 @@
 package lee.aspect.dev.discordrpc;
 
-import lee.aspect.dev.discordrpc.settings.options.TimeStampMode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Script {
+    public enum TimeStampMode {
+
+        applaunch,
+        CDFromDayEnd,
+        current,
+        none,
+        custom
+
+    }
     private static ArrayList<Updates> totalupdates;
 
     private static TimeStampMode timestampmode = TimeStampMode.applaunch;

@@ -1,6 +1,5 @@
 package lee.aspect.dev.application.interfaceGui;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -16,7 +15,6 @@ import lee.aspect.dev.sysUtil.StartLaunch;
 import lee.aspect.dev.animationengine.animation.SlideOutLeft;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.discordrpc.settings.Settings;
-import lee.aspect.dev.discordrpc.settings.options.Theme;
 
 import java.awt.*;
 import java.io.IOException;
@@ -75,9 +73,9 @@ public class SettingController implements Initializable {
         imageView.setFitWidth(25);
         goBack.setGraphic(imageView);
         //add theme to theme choice box
-        EnumSet.allOf(Theme.class).forEach((theme) -> themeChoiceBox.getItems().add(theme.getDisplayName()));
+        EnumSet.allOf(Settings.Theme.class).forEach((theme) -> themeChoiceBox.getItems().add(theme.getDisplayName()));
         themeChoiceBox.setValue((Settings.getTheme().getDisplayName()));
-        themeChoiceBox.setOnAction((event) -> EnumSet.allOf(Theme.class).forEach((theme) -> {
+        themeChoiceBox.setOnAction((event) -> EnumSet.allOf(Settings.Theme.class).forEach((theme) -> {
             if (themeChoiceBox.getValue().equals(theme.getDisplayName())) {
                 Settings.setTheme(theme);
                 Parent root = settingsAnchorPane.getParent();
