@@ -43,8 +43,12 @@ public class Script {
         totalupdates.addAll(Arrays.asList(updates));
 
     }
+    public static void addUpdates(int index,Updates... updates) {
+        totalupdates.addAll(index,Arrays.asList(updates));
 
-    public static void setUpdates(Updates u, int index) {
+    }
+
+    public static void setUpdates(int index,Updates u) {
         totalupdates.set(index, u);
     }
 

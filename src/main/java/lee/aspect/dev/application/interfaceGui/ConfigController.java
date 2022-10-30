@@ -1,6 +1,7 @@
 package lee.aspect.dev.application.interfaceGui;
 
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -55,6 +56,8 @@ public class ConfigController implements Initializable {
     private ImageView invalidAppID;
 
     private int currentCount;
+
+    private int index = -1;
 
     public void getTimeStampMode() {
         if (appLaunch.isSelected()) {
@@ -154,11 +157,53 @@ public class ConfigController implements Initializable {
         settingButton.setGraphic(imageView);
         settingButton.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
         ContextMenu contextMenu = new ContextMenu();
-        contextMenu.getItems().addAll(
-                new MenuItem("Copy"),
-                new MenuItem("Paste"),
-                new MenuItem("Delete")
-        );
+        MenuItem copyItem = new MenuItem("Copy");
+        MenuItem pasteItem = new MenuItem("Paste");
+        MenuItem deleteItem = new MenuItem("Delete");
+        MenuItem insertRowAbove = new MenuItem("Insert New Above");
+        MenuItem insertRowBelow = new MenuItem("Insert New Below");
+
+        copyItem.setOnAction((actionEvent) -> {
+            if (displayUpdates.getSelectionModel().getSelectedIndex() != -1) {
+                ObservableList<Integer> selectedIndices = displayUpdates.getSelectionModel().getSelectedIndices();
+                //TODO: copy the selected item
+            }
+        });
+        pasteItem.setOnAction((actionEvent) -> {
+            if (displayUpdates.getSelectionModel().getSelectedIndex() != -1) {
+                ObservableList<Integer> selectedIndices = displayUpdates.getSelectionModel().getSelectedIndices();
+            }
+        });
+        deleteItem.setOnAction((actionEvent) -> {
+            if (displayUpdates.getSelectionModel().getSelectedIndex() != -1) {
+                ObservableList<Integer> selectedIndices = displayUpdates.getSelectionModel().getSelectedIndices();
+                System.out.println(selectedIndices);
+                for (Integer selectedIndex : selectedIndices) {
+                    System.out.println(selectedIndex.intValue());
+                    Script.getTotalupdates().remove(selectedIndex.intValue());
+                    displayUpdates.getItems().remove(selectedIndex.intValue());
+                }
+                //TODO: delete the selected item idk why it is not working
+            }
+        });
+        insertRowBelow.setOnAction((actionEvent) -> {
+            if (displayUpdates.getSelectionModel().getSelectedIndex() != -1) {
+                int index = displayUpdates.getSelectionModel().getSelectedIndex();
+                Script.addUpdates(index + 1, new Updates(16000, String.valueOf(currentCount), "" + currentCount, "", "", "First line ", "Second line " + currentCount));
+                displayUpdates.getItems().add(index + 1, "Fl: \"" + Script.getTotalupdates().get(index + 1).getFl() + "\" Sl: \"" + Script.getTotalupdates().get(index + 1).getSl() + "\"");
+            }
+        });
+        insertRowAbove.setOnAction((actionEvent) -> {
+            if (displayUpdates.getSelectionModel().getSelectedIndex() != -1) {
+                int index = displayUpdates.getSelectionModel().getSelectedIndex();
+                Script.addUpdates(index, new Updates(16000, String.valueOf(currentCount), "" + currentCount, "", "", "First line ", "Second line " + currentCount));
+                displayUpdates.getItems().add(index, "Fl: \"" + Script.getTotalupdates().get(index).getFl() + "\" Sl: \"" + Script.getTotalupdates().get(index).getSl() + "\"");
+            }
+        });
+
+
+
+        contextMenu.getItems().addAll(copyItem, pasteItem, deleteItem, insertRowAbove,insertRowBelow);
         //TilePane tilePane = new TilePane(displayUpdates);
         displayUpdates.setContextMenu(contextMenu);
 
@@ -248,6 +293,4 @@ public class ConfigController implements Initializable {
         }
         new Shake(anchorRoot).play();
     }
-
-
 }

@@ -64,9 +64,9 @@ public class EditListController extends ConfigController implements Initializabl
     }
 
     public void saveChanges() throws IOException {
-        Script.setUpdates(new Updates(Long.parseLong(Wait.getText()), image.getText(), imagetext.getText(), smallimage.getText(),
+        Script.setUpdates(numberInList, new Updates(Long.parseLong(Wait.getText()), image.getText(), imagetext.getText(), smallimage.getText(),
                 smalltext.getText(), firstline.getText(), secondline.getText(), button1Text.getText(),
-                button1Url.getText(), button2Text.getText(), button2Url.getText()), numberInList);
+                button1Url.getText(), button2Text.getText(), button2Url.getText()));
         gobacktoConfig();
     }
 

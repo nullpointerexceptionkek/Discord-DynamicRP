@@ -6,7 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import lee.aspect.dev.application.interfaceGui.CallBackController;
 import lee.aspect.dev.application.interfaceGui.ConfigController;
-import lee.aspect.dev.application.interfaceGui.LoadingController;
 import lee.aspect.dev.discordipc.exceptions.NoDiscordClientException;
 import lee.aspect.dev.discordrpc.settings.Settings;
 
