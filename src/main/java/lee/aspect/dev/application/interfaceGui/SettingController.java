@@ -104,7 +104,7 @@ public class SettingController implements Initializable {
         startTrayOnlyCloseCheckBox.setSelected(Settings.isStartTrayOnlyInterfaceClose());
         startTrayOnlyCloseCheckBox.setOnAction((actionEvent -> {
             Settings.setStartTrayOnlyInterfaceClose(startTrayOnlyCloseCheckBox.isSelected());
-            applyChange();
+            mustRestart();
         }));
         startLaunchCheckBox.setDisable(!StartLaunch.isOnWindows());
         startLaunchCheckBox.setSelected(Settings.isStartLaunch());
@@ -152,5 +152,25 @@ public class SettingController implements Initializable {
             }
         }
 
+    }
+
+    private void mustRestart(){
+        var alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Apply changes");
+        alert.setHeaderText("Some changes need the application \n to restart inorder to apply");
+        alert.setContentText("restart now?");
+        ButtonType result = alert.showAndWait().get();
+        if (result.equals(ButtonType.OK)) {
+            try {
+                RestartApplication.FullRestart();
+            } catch (URISyntaxException | IOException | FileNotAJarException e) {
+                var alertException = new Alert(Alert.AlertType.ERROR);
+                alertException.setTitle("Exception");
+                alertException.setHeaderText("Cannot restart");
+                alertException.setContentText("The application will be force closed");
+                alertException.showAndWait();
+                System.exit(-1);
+            }
+        }
     }
 }

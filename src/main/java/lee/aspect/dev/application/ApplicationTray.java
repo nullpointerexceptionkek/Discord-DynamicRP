@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import lee.aspect.dev.application.interfaceGui.CallBackController;
 import lee.aspect.dev.application.interfaceGui.ConfigController;
 import lee.aspect.dev.application.interfaceGui.LoadingController;
 import lee.aspect.dev.discordipc.exceptions.NoDiscordClientException;
@@ -20,8 +21,6 @@ public class ApplicationTray {
     private static TrayIcon trayIcon;
 
     private static SystemTray tray;
-
-    private static Screen currentScreen = Screen.UnSpecified;
 
     public static void initTray() {
         /* Use an appropriate Look and Feel */
@@ -53,8 +52,8 @@ public class ApplicationTray {
 
         // Create a popup menu components
         MenuItem aboutItem = new MenuItem("About");
-        MenuItem startRPCItem = new MenuItem("StartRPC");
-        MenuItem closeRPCItem = new MenuItem("closeRPC");
+        MenuItem startRPCItem = new MenuItem("Start RPC");
+        MenuItem closeRPCItem = new MenuItem("Close RPC");
         MenuItem showInterface = new MenuItem("Show Interface");
         MenuItem exitItem = new MenuItem("Exit");
 
@@ -88,14 +87,23 @@ public class ApplicationTray {
                 JOptionPane.showMessageDialog(null, "Discord RPC is already running", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 try {
-                    if(CustomDiscordRPC.isOnSystemTray) {
+                    if(Settings.isShutDownInterfaceWhenTray()) {
                         RunLoopManager.startUpdate();
-                        currentScreen = Screen.CallBackScreen;
-                    } else {
-                        Platform.runLater(()-> {
-                            refreshCallBack();
-                        });
+                        return;
                     }
+                    Platform.runLater(()-> {
+                        try {
+                            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(CustomDiscordRPC.class.getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml")));
+                            Parent root = loader.load();
+                            Scene scene = new Scene(root);
+                            scene.getStylesheets().add(Objects.requireNonNull(ApplicationTray.class.getResource(Settings.getTheme().getThemepass())).toExternalForm());
+                            CustomDiscordRPC.primaryStage.setScene(scene);
+                            ConfigController controller = loader.getController();
+                            controller.switchToCallBack();
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    });
                 } catch (NoDiscordClientException ex) {
                     JOptionPane.showMessageDialog(null, "Fail to start call back", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -103,8 +111,23 @@ public class ApplicationTray {
         });
         closeRPCItem.addActionListener(e -> {
             if (RunLoopManager.isRunning) {
-                RunLoopManager.closeCallBack();
-                currentScreen = Screen.ConfigScreen;
+                if(Settings.isShutDownInterfaceWhenTray()) {
+                    RunLoopManager.closeCallBack();
+                    return;
+                }
+                Platform.runLater(()-> {
+                    try {
+                        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(CustomDiscordRPC.class.getResource("/lee/aspect/dev/scenes/CallBack.fxml")));
+                        Parent root = loader.load();
+                        Scene scene = new Scene(root);
+                        scene.getStylesheets().add(Objects.requireNonNull(ApplicationTray.class.getResource(Settings.getTheme().getThemepass())).toExternalForm());
+                        CustomDiscordRPC.primaryStage.setScene(scene);
+                        CallBackController controller = loader.getController();
+                        controller.switchToConfig();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
             } else {
                 JOptionPane.showMessageDialog(null, "Discord RPC is not running", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -139,48 +162,10 @@ public class ApplicationTray {
             return;
         }
         Platform.runLater(()->{
-            switch (currentScreen) {
-                case ConfigScreen:
-                        try {
-                            Parent root = FXMLLoader.load(Objects.requireNonNull(CustomDiscordRPC.class.getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml")));
-                            CustomDiscordRPC.primaryStage.getScene().setRoot(root);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                    break;
-                case CallBackScreen:
-                    refreshCallBack();
-                    break;
-                default:
-                    if (RunLoopManager.isRunning) LoadingController.callBackController.updateCurrentDisplay();
-            }
-            currentScreen = Screen.UnSpecified;
             CustomDiscordRPC.primaryStage.show();
         });
         CustomDiscordRPC.isOnSystemTray = false;
         if (Settings.isStartTrayOnlyInterfaceClose()) tray.remove(trayIcon);
-    }
-
-    private enum Screen {
-        ConfigScreen,
-        CallBackScreen,
-
-        UnSpecified
-    }
-
-    private static void refreshCallBack(){
-        try {
-            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(CustomDiscordRPC.class.getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml")));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            scene.getStylesheets().add(Objects.requireNonNull(ApplicationTray.class.getResource(Settings.getTheme().getThemepass())).toExternalForm());
-            CustomDiscordRPC.primaryStage.setScene(scene);
-            ConfigController controller = loader.getController();
-            controller.switchToCallBack();
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
     }
 
 }
