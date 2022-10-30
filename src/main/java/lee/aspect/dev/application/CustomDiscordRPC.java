@@ -38,14 +38,14 @@ public class CustomDiscordRPC extends Application {
         Platform.setImplicitExit(false);
         RunLoopManager.init();
         if(!Settings.isStartTrayOnlyInterfaceClose())
-            new ApplicationTray();
+            ApplicationTray.initTray();
         System.out.println("LaunchArgs: ");
         System.out.println(Arrays.toString(args));
         launch(args);
     }
 
     public static void LaunchSlient() {
-        new ApplicationTray();
+        ApplicationTray.initTray();
         RunLoopManager.runFromStartLunch();
     }
 
@@ -119,7 +119,7 @@ public class CustomDiscordRPC extends Application {
                         Settings.setMinimizeMode(Settings.MinimizeMode.Always);
 
                     primaryStage.close();
-                    if(Settings.isStartTrayOnlyInterfaceClose()) new ApplicationTray();
+                    if(Settings.isStartTrayOnlyInterfaceClose()) ApplicationTray.initTray();
                     isOnSystemTray = true;
                     if (Settings.isShutDownInterfaceWhenTray()) Platform.exit();
                 } else if (result.filter(buttonType -> buttonType == ButtonType.NO).isPresent()) {
@@ -133,7 +133,7 @@ public class CustomDiscordRPC extends Application {
             case Always:
                 primaryStage.close();
                 isOnSystemTray = true;
-                if(Settings.isStartTrayOnlyInterfaceClose()) new ApplicationTray();
+                if(Settings.isStartTrayOnlyInterfaceClose()) ApplicationTray.initTray();
                 if (Settings.isShutDownInterfaceWhenTray()) Platform.exit();
                 break;
             default:

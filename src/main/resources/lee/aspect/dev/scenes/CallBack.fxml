@@ -5,21 +5,15 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
-<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="stackPane" xmlns="http://javafx.com/javafx/18"
-           fx:controller="lee.aspect.dev.application.interfaceGui.CallBackController">
-    <AnchorPane fx:id="anchorRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-                minWidth="-Infinity" prefHeight="540.0" prefWidth="334.0">
-        <Label fx:id="titleLabel" alignment="CENTER" layoutX="50.0" layoutY="14.0" prefHeight="32.0"
-               prefWidth="234.0" text="CallBack Launched!!!">
+
+<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lee.aspect.dev.application.interfaceGui.CallBackController">
+    <AnchorPane fx:id="anchorRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="334.0">
+        <Label fx:id="titleLabel" alignment="CENTER" layoutX="50.0" layoutY="14.0" prefHeight="32.0" prefWidth="234.0" text="CallBack Launched!!!">
             <font>
-                <Font size="20.0"/>
+                <Font size="20.0" />
             </font>
         </Label>
-        <Button fx:id="switchToConfig" layoutX="116.0" layoutY="496.0" mnemonicParsing="false"
-                onAction="#switchToConfig" text="Close call back"/>
-        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="106.0" layoutY="70.0" prefHeight="18.0"
-               prefWidth="123.0" text="Current displaying"/>
-        <Label fx:id="Welcome" alignment="CENTER" contentDisplay="CENTER" layoutX="12.0" layoutY="46.0"
-               prefHeight="18.0" prefWidth="311.0" text="Connecting"/>
+        <Button fx:id="switchToConfig" layoutX="116.0" layoutY="496.0" mnemonicParsing="false" onAction="#switchToConfig" text="Close call back" />
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="106.0" layoutY="46.0" prefHeight="18.0" prefWidth="123.0" text="Current displaying" />
     </AnchorPane>
 </StackPane>

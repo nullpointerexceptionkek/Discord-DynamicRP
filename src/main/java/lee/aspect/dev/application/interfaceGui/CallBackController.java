@@ -26,8 +26,6 @@ public class CallBackController implements Initializable {
     @FXML
     Label Playing;
     @FXML
-    Label Welcome;
-    @FXML
     private StackPane stackPane;
     @FXML
     private AnchorPane anchorRoot;
@@ -64,7 +62,6 @@ public class CallBackController implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         switchToConfig.setDisable(false);
-        Welcome.setText("Welcome " + DiscordRP.discordName + "!!!");
         Platform.runLater(() -> {
             setDefault(display1, -45);
             setDefault(display2, 0);

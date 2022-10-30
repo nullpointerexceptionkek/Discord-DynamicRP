@@ -2,6 +2,14 @@ package lee.aspect.dev.discordrpc.settings;
 
 
 public class Settings {
+
+    //info
+    public final static String VERSION = "1.0.0";
+
+    public final static String AUTHOR = "Aspect Development";
+
+    public final static String NAME = "Custom Discord Rich Presence";
+
     public enum MinimizeMode {
         Ask, Always, Never, WaitAndSee
     }
