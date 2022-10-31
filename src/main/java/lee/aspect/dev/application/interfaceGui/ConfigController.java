@@ -152,7 +152,7 @@ public class ConfigController implements Initializable {
         else
             Script.addUpdates(new Updates(16000, String.valueOf(index), "" + index, "", "", "First line ", "Second line " + index));
         displayUpdates.getItems().add("Fl: \"" + Script.getTotalupdates().get(Script.getTotalupdates().size() - 1).getFl() + "\" Sl: \"" + Script.getTotalupdates().get(Script.getTotalupdates().size() - 1).getSl() + "\"");
-        UndoRedo.addUndo(new Updates[]{Script.getTotalupdates().get(index)});
+        UndoRedoManager.addUndo(new UndoRedoManager.UndoRedo(UndoRedoManager.Type.add,new Updates[]{Script.getTotalupdates().get(index)}));
     }
 
 
@@ -211,7 +211,7 @@ public class ConfigController implements Initializable {
                     Script.getTotalupdates().remove(selectedIndices.get(i) -i);
                 }
                 refreshDisplayUpdates();
-                UndoRedo.addRedo(undoUpdates.toArray(Updates[]::new));
+                UndoRedoManager.addUndo(new UndoRedoManager.UndoRedo(UndoRedoManager.Type.remove,undoUpdates.toArray(Updates[]::new)));
             }
         });
         insertRowBelow.setOnAction((actionEvent) -> {
@@ -219,7 +219,7 @@ public class ConfigController implements Initializable {
                 int index = displayUpdates.getSelectionModel().getSelectedIndex();
                 Script.addUpdates(index + 1, new Updates(16000, String.valueOf(index), "" + index, "", "", "First line ", "Second line " + index));
                 displayUpdates.getItems().add(index + 1, "Fl: \"" + Script.getTotalupdates().get(index + 1).getFl() + "\" Sl: \"" + Script.getTotalupdates().get(index + 1).getSl() + "\"");
-                UndoRedo.addUndo(new Updates[]{Script.getTotalupdates().get(index)});
+                UndoRedoManager.addUndo(new UndoRedoManager.UndoRedo(UndoRedoManager.Type.add,new Updates[]{Script.getTotalupdates().get(index)}));
             }
         });
         insertRowAbove.setOnAction((actionEvent) -> {
@@ -227,19 +227,31 @@ public class ConfigController implements Initializable {
                 int index = displayUpdates.getSelectionModel().getSelectedIndex();
                 Script.addUpdates(index, new Updates(16000, String.valueOf(index), "" + index, "", "", "First line ", "Second line " + index));
                 displayUpdates.getItems().add(index, "Fl: \"" + Script.getTotalupdates().get(index).getFl() + "\" Sl: \"" + Script.getTotalupdates().get(index).getSl() + "\"");
-                UndoRedo.addUndo(new Updates[]{Script.getTotalupdates().get(index)});
+                UndoRedoManager.addUndo(new UndoRedoManager.UndoRedo(UndoRedoManager.Type.add,new Updates[]{Script.getTotalupdates().get(index)}));
             }
         });
 
         undoItem.setOnAction((actionEvent) -> {
-            for(Updates update : UndoRedo.getUndo()){
-                Script.getTotalupdates().remove(update);
+            if(UndoRedoManager.getUndo().type.equals(UndoRedoManager.Type.add)){
+                for(Updates updates : UndoRedoManager.getUndo().updates){
+                    Script.getTotalupdates().remove(updates);
+                }
+            } else {
+                for(Updates updates : UndoRedoManager.getUndo().updates) {
+                    Script.getTotalupdates().add(updates);
+                }
             }
             refreshDisplayUpdates();
         });
         redoItem.setOnAction((actionEvent) -> {
-            for(Updates update : UndoRedo.getRedo()){
-                Script.getTotalupdates().add(update);
+            if(UndoRedoManager.getRedo().type.equals(UndoRedoManager.Type.add)){
+                for(Updates updates : UndoRedoManager.getRedo().updates){
+                    Script.getTotalupdates().remove(updates);
+                }
+            } else {
+                for(Updates updates : UndoRedoManager.getRedo().updates) {
+                    Script.getTotalupdates().add(updates);
+                }
             }
             refreshDisplayUpdates();
         });
@@ -346,29 +358,43 @@ public class ConfigController implements Initializable {
         new Shake(anchorRoot).play();
     }
 
-    private static class UndoRedo { ;
-        private static Updates[][] undo = new Updates[10][];
-        private static Updates[][] redo = new Updates[10][];
+    private static class UndoRedoManager {
+        public enum Type{
+            add, remove
+        }
+        private static class UndoRedo{
+            public Type type;
+            public Updates[] updates;
+            public UndoRedo(Type type, Updates[] updates){
+                this.type = type;
+                this.updates = updates;
+            }
+
+        }
+
+
+        private static UndoRedo[] undo = new UndoRedo[10];
+        private static UndoRedo[] redo = new UndoRedo[10];
         private static int undoIndex = 0;
         private static int redoIndex = 0;
 
-        public static void addUndo(Updates []undo) {
-            UndoRedo.undo[undoIndex] = undo;
+        public static void addUndo(UndoRedo undo) {
+            UndoRedoManager.undo[undoIndex] = undo;
             undoIndex++;
             if (undoIndex == 10) {
                 undoIndex = 0;
             }
         }
 
-        public static void addRedo(Updates []redo) {
-            UndoRedo.redo[redoIndex] = redo;
+        public static void addRedo(UndoRedo redo) {
+            UndoRedoManager.redo[redoIndex] = redo;
             redoIndex++;
             if (redoIndex == 10) {
                 redoIndex = 0;
             }
         }
 
-        public static Updates[] getUndo() {
+        public static UndoRedo getUndo() {
             undoIndex--;
             if (undoIndex < 0) {
                 undoIndex = 9;
@@ -377,7 +403,7 @@ public class ConfigController implements Initializable {
             return undo[undoIndex];
         }
 
-        public static Updates[] getRedo() {
+        public static UndoRedo getRedo() {
             redoIndex--;
             if (redoIndex < 0) {
                 redoIndex = 9;
