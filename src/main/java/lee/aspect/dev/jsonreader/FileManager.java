@@ -3,6 +3,7 @@ package lee.aspect.dev.jsonreader;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lee.aspect.dev.discordrpc.Script;
+import lee.aspect.dev.discordrpc.Updates;
 import lee.aspect.dev.discordrpc.settings.Settings;
 
 import java.io.*;
@@ -22,6 +23,7 @@ public class FileManager {
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Script.class, new ScriptAdapter());
         builder.registerTypeAdapter(Settings.class, new SettingsAdapter());
+        builder.registerTypeAdapter(Updates.class, new UpdatesAdapter());
         gson = builder.setPrettyPrinting().create();
     }
 
@@ -77,6 +79,15 @@ public class FileManager {
 
     public static File getROOT_DIR() {
         return ROOT_DIR;
+    }
+
+    public static String toGson(Object o){
+        return gson.toJson(o);
+
+    }
+
+    public static <T> T readFromJson(String json, Class<T> c){
+        return gson.fromJson(json, c);
     }
 
 

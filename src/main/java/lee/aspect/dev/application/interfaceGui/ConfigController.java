@@ -9,6 +9,10 @@ import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -21,9 +25,16 @@ import lee.aspect.dev.discordrpc.Script;
 import lee.aspect.dev.discordrpc.Updates;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.discordrpc.settings.Settings;
+import lee.aspect.dev.jsonreader.FileManager;
 
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -164,12 +175,31 @@ public class ConfigController implements Initializable {
         copyItem.setOnAction((actionEvent) -> {
             if (displayUpdates.getSelectionModel().getSelectedIndex() != -1) {
                 ObservableList<Integer> selectedIndices = displayUpdates.getSelectionModel().getSelectedIndices();
-                //TODO: copy the selected item
+                Updates[] copiedItem = new Updates[selectedIndices.size()];
+                for (int i = 0; i < selectedIndices.size(); i++) {
+                    copiedItem[i] = Script.getTotalupdates().get(selectedIndices.get(i));
+                }
+                StringSelection stringSelection = new StringSelection(FileManager.toGson(copiedItem));
+                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                clipboard.setContents(stringSelection, null);
+
             }
         });
         pasteItem.setOnAction((actionEvent) -> {
             if (displayUpdates.getSelectionModel().getSelectedIndex() != -1) {
-                ObservableList<Integer> selectedIndices = displayUpdates.getSelectionModel().getSelectedIndices();
+                int selectedIndex = displayUpdates.getSelectionModel().getSelectedIndex();
+                try {
+                    String data = (String) Toolkit.getDefaultToolkit()
+                            .getSystemClipboard().getData(DataFlavor.stringFlavor);
+                    FileManager.readFromJson(data, Updates[].class);
+                    Script.getTotalupdates().addAll(selectedIndex, List.of(FileManager.readFromJson(data, Updates[].class)));displayUpdates.getItems().clear();
+                    for (int i = 0; i < Script.getTotalupdates().size(); i++) {
+                        displayUpdates.getItems().add("Fl: \"" + Script.getTotalupdates().get(i).getFl() + "\" Sl: \"" + Script.getTotalupdates().get(i).getSl() + "\"");
+                    }
+
+                } catch (UnsupportedFlavorException | IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
         deleteItem.setOnAction((actionEvent) -> {
