@@ -55,9 +55,7 @@ public class ConfigController implements Initializable {
 
     private ImageView invalidAppID;
 
-    private int currentCount;
-
-    private int index = -1;
+    //private int index = -1;
 
     public void getTimeStampMode() {
         if (appLaunch.isSelected()) {
@@ -128,21 +126,21 @@ public class ConfigController implements Initializable {
             anchorRoot.getChildren().remove(invalidIndex);
             displayUpdates.setBackground(null);
         }
-        currentCount++;
+        int index = Script.getTotalupdates().size() - 1;
         if (Script.getTotalupdates().size() > 0)
-            Script.addUpdates(new Updates((Script.getTotalupdates().get(currentCount - 2).getWait()),
-                    String.valueOf(currentCount),
-                    Script.getTotalupdates().get(currentCount - 2).getImagetext(),
-                    Script.getTotalupdates().get(currentCount - 2).getSmallimage()
-                    , Script.getTotalupdates().get(currentCount - 2).getSmalltext(),
-                    "First line " + currentCount, "Second line " + currentCount,
-                    Script.getTotalupdates().get(currentCount - 2).getButton1Text(),
-                    Script.getTotalupdates().get(currentCount - 2).getButton1Url(),
-                    Script.getTotalupdates().get(currentCount - 2).getButton2Text(),
-                    Script.getTotalupdates().get(currentCount - 2).getButton2Url()));
+            Script.addUpdates(new Updates((Script.getTotalupdates().get(index).getWait()),
+                    String.valueOf(index),
+                    Script.getTotalupdates().get(index).getImagetext(),
+                    Script.getTotalupdates().get(index).getSmallimage()
+                    , Script.getTotalupdates().get(index).getSmalltext(),
+                    "First line " + index, "Second line " + index,
+                    Script.getTotalupdates().get(index).getButton1Text(),
+                    Script.getTotalupdates().get(index).getButton1Url(),
+                    Script.getTotalupdates().get(index).getButton2Text(),
+                    Script.getTotalupdates().get(index).getButton2Url()));
 
         else
-            Script.addUpdates(new Updates(16000, String.valueOf(currentCount), "" + currentCount, "", "", "First line ", "Second line " + currentCount));
+            Script.addUpdates(new Updates(16000, String.valueOf(index), "" + index, "", "", "First line ", "Second line " + index));
         displayUpdates.getItems().add("Fl: \"" + Script.getTotalupdates().get(Script.getTotalupdates().size() - 1).getFl() + "\" Sl: \"" + Script.getTotalupdates().get(Script.getTotalupdates().size() - 1).getSl() + "\"");
     }
 
@@ -177,26 +175,23 @@ public class ConfigController implements Initializable {
         deleteItem.setOnAction((actionEvent) -> {
             if (displayUpdates.getSelectionModel().getSelectedIndex() != -1) {
                 ObservableList<Integer> selectedIndices = displayUpdates.getSelectionModel().getSelectedIndices();
-                System.out.println(selectedIndices);
-                for (Integer selectedIndex : selectedIndices) {
-                    System.out.println(selectedIndex.intValue());
-                    Script.getTotalupdates().remove(selectedIndex.intValue());
-                    displayUpdates.getItems().remove(selectedIndex.intValue());
+                for (int i = 0; i < selectedIndices.size(); i++) {
+                    Script.getTotalupdates().remove(selectedIndices.get(i) -i);
                 }
-                //TODO: delete the selected item idk why it is not working
+                displayUpdates.getItems().removeAll(displayUpdates.getSelectionModel().getSelectedItems());
             }
         });
         insertRowBelow.setOnAction((actionEvent) -> {
             if (displayUpdates.getSelectionModel().getSelectedIndex() != -1) {
                 int index = displayUpdates.getSelectionModel().getSelectedIndex();
-                Script.addUpdates(index + 1, new Updates(16000, String.valueOf(currentCount), "" + currentCount, "", "", "First line ", "Second line " + currentCount));
+                Script.addUpdates(index + 1, new Updates(16000, String.valueOf(index), "" + index, "", "", "First line ", "Second line " + index));
                 displayUpdates.getItems().add(index + 1, "Fl: \"" + Script.getTotalupdates().get(index + 1).getFl() + "\" Sl: \"" + Script.getTotalupdates().get(index + 1).getSl() + "\"");
             }
         });
         insertRowAbove.setOnAction((actionEvent) -> {
             if (displayUpdates.getSelectionModel().getSelectedIndex() != -1) {
                 int index = displayUpdates.getSelectionModel().getSelectedIndex();
-                Script.addUpdates(index, new Updates(16000, String.valueOf(currentCount), "" + currentCount, "", "", "First line ", "Second line " + currentCount));
+                Script.addUpdates(index, new Updates(16000, String.valueOf(index), "" + index, "", "", "First line ", "Second line " + index));
                 displayUpdates.getItems().add(index, "Fl: \"" + Script.getTotalupdates().get(index).getFl() + "\" Sl: \"" + Script.getTotalupdates().get(index).getSl() + "\"");
             }
         });
@@ -208,7 +203,6 @@ public class ConfigController implements Initializable {
         displayUpdates.setContextMenu(contextMenu);
 
 
-        currentCount = Script.getTotalupdates().size();
         appID.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null) return;
             if (!newValue.matches("\\d*")) {
