@@ -34,9 +34,8 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.*;
 import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
 
 public class ConfigController implements Initializable {
 
@@ -153,6 +152,7 @@ public class ConfigController implements Initializable {
         else
             Script.addUpdates(new Updates(16000, String.valueOf(index), "" + index, "", "", "First line ", "Second line " + index));
         displayUpdates.getItems().add("Fl: \"" + Script.getTotalupdates().get(Script.getTotalupdates().size() - 1).getFl() + "\" Sl: \"" + Script.getTotalupdates().get(Script.getTotalupdates().size() - 1).getSl() + "\"");
+        UndoRedo.addUndo(new Updates[]{Script.getTotalupdates().get(index)});
     }
 
 
@@ -171,6 +171,8 @@ public class ConfigController implements Initializable {
         MenuItem deleteItem = new MenuItem("Delete");
         MenuItem insertRowAbove = new MenuItem("Insert New Above");
         MenuItem insertRowBelow = new MenuItem("Insert New Below");
+        MenuItem undoItem = new MenuItem("Undo");
+        MenuItem redoItem = new MenuItem("Redo");
 
         copyItem.setOnAction((actionEvent) -> {
             if (displayUpdates.getSelectionModel().getSelectedIndex() != -1) {
@@ -192,10 +194,8 @@ public class ConfigController implements Initializable {
                     String data = (String) Toolkit.getDefaultToolkit()
                             .getSystemClipboard().getData(DataFlavor.stringFlavor);
                     FileManager.readFromJson(data, Updates[].class);
-                    Script.getTotalupdates().addAll(selectedIndex, List.of(FileManager.readFromJson(data, Updates[].class)));displayUpdates.getItems().clear();
-                    for (int i = 0; i < Script.getTotalupdates().size(); i++) {
-                        displayUpdates.getItems().add("Fl: \"" + Script.getTotalupdates().get(i).getFl() + "\" Sl: \"" + Script.getTotalupdates().get(i).getSl() + "\"");
-                    }
+                    Script.getTotalupdates().addAll(selectedIndex, List.of(FileManager.readFromJson(data, Updates[].class)));
+                    refreshDisplayUpdates();
 
                 } catch (UnsupportedFlavorException | IOException e) {
                     e.printStackTrace();
@@ -204,11 +204,14 @@ public class ConfigController implements Initializable {
         });
         deleteItem.setOnAction((actionEvent) -> {
             if (displayUpdates.getSelectionModel().getSelectedIndex() != -1) {
+                ArrayList<Updates> undoUpdates = new ArrayList<>();
                 ObservableList<Integer> selectedIndices = displayUpdates.getSelectionModel().getSelectedIndices();
                 for (int i = 0; i < selectedIndices.size(); i++) {
+                    undoUpdates.add(Script.getTotalupdates().get(selectedIndices.get(i) -i));
                     Script.getTotalupdates().remove(selectedIndices.get(i) -i);
                 }
-                displayUpdates.getItems().removeAll(displayUpdates.getSelectionModel().getSelectedItems());
+                refreshDisplayUpdates();
+                UndoRedo.addRedo(undoUpdates.toArray(Updates[]::new));
             }
         });
         insertRowBelow.setOnAction((actionEvent) -> {
@@ -216,6 +219,7 @@ public class ConfigController implements Initializable {
                 int index = displayUpdates.getSelectionModel().getSelectedIndex();
                 Script.addUpdates(index + 1, new Updates(16000, String.valueOf(index), "" + index, "", "", "First line ", "Second line " + index));
                 displayUpdates.getItems().add(index + 1, "Fl: \"" + Script.getTotalupdates().get(index + 1).getFl() + "\" Sl: \"" + Script.getTotalupdates().get(index + 1).getSl() + "\"");
+                UndoRedo.addUndo(new Updates[]{Script.getTotalupdates().get(index)});
             }
         });
         insertRowAbove.setOnAction((actionEvent) -> {
@@ -223,12 +227,32 @@ public class ConfigController implements Initializable {
                 int index = displayUpdates.getSelectionModel().getSelectedIndex();
                 Script.addUpdates(index, new Updates(16000, String.valueOf(index), "" + index, "", "", "First line ", "Second line " + index));
                 displayUpdates.getItems().add(index, "Fl: \"" + Script.getTotalupdates().get(index).getFl() + "\" Sl: \"" + Script.getTotalupdates().get(index).getSl() + "\"");
+                UndoRedo.addUndo(new Updates[]{Script.getTotalupdates().get(index)});
             }
+        });
+
+        undoItem.setOnAction((actionEvent) -> {
+            for(Updates update : UndoRedo.getUndo()){
+                Script.getTotalupdates().remove(update);
+            }
+            refreshDisplayUpdates();
+        });
+        redoItem.setOnAction((actionEvent) -> {
+            for(Updates update : UndoRedo.getRedo()){
+                Script.getTotalupdates().add(update);
+            }
+            refreshDisplayUpdates();
         });
 
 
 
-        contextMenu.getItems().addAll(copyItem, pasteItem, deleteItem, insertRowAbove,insertRowBelow);
+        contextMenu.getItems().addAll(copyItem, pasteItem, deleteItem);
+        contextMenu.getItems().add(new SeparatorMenuItem());
+        contextMenu.getItems().addAll(insertRowAbove,insertRowBelow);
+        contextMenu.getItems().add(new SeparatorMenuItem());
+        contextMenu.getItems().addAll(undoItem, redoItem);
+
+
         //TilePane tilePane = new TilePane(displayUpdates);
         displayUpdates.setContextMenu(contextMenu);
 
@@ -267,10 +291,7 @@ public class ConfigController implements Initializable {
                     Script.setTimestampmode(Script.TimeStampMode.applaunch);
 
             }
-            displayUpdates.getItems().clear();
-            for (int i = 0; i < Script.getTotalupdates().size(); i++) {
-                displayUpdates.getItems().add("Fl: \"" + Script.getTotalupdates().get(i).getFl() + "\" Sl: \"" + Script.getTotalupdates().get(i).getSl() + "\"");
-            }
+            refreshDisplayUpdates();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -309,6 +330,13 @@ public class ConfigController implements Initializable {
         }
     }
 
+    private void refreshDisplayUpdates(){
+        displayUpdates.getItems().clear();
+        for (int i = 0; i < Script.getTotalupdates().size(); i++) {
+            displayUpdates.getItems().add("Fl: \"" + Script.getTotalupdates().get(i).getFl() + "\" Sl: \"" + Script.getTotalupdates().get(i).getSl() + "\"");
+        }
+    }
+
     public void invalidDiscordAppID(String msg){
         appID.setBackground(new Background(new BackgroundFill(Color.rgb(204,51,0,0.9), new CornerRadii(5), Insets.EMPTY)));
         if(!anchorRoot.getChildren().contains(invalidAppID)){
@@ -316,5 +344,46 @@ public class ConfigController implements Initializable {
             anchorRoot.getChildren().add(invalidAppID);
         }
         new Shake(anchorRoot).play();
+    }
+
+    private static class UndoRedo { ;
+        private static Updates[][] undo = new Updates[10][];
+        private static Updates[][] redo = new Updates[10][];
+        private static int undoIndex = 0;
+        private static int redoIndex = 0;
+
+        public static void addUndo(Updates []undo) {
+            UndoRedo.undo[undoIndex] = undo;
+            undoIndex++;
+            if (undoIndex == 10) {
+                undoIndex = 0;
+            }
+        }
+
+        public static void addRedo(Updates []redo) {
+            UndoRedo.redo[redoIndex] = redo;
+            redoIndex++;
+            if (redoIndex == 10) {
+                redoIndex = 0;
+            }
+        }
+
+        public static Updates[] getUndo() {
+            undoIndex--;
+            if (undoIndex < 0) {
+                undoIndex = 9;
+            }
+            addRedo(undo[undoIndex]);
+            return undo[undoIndex];
+        }
+
+        public static Updates[] getRedo() {
+            redoIndex--;
+            if (redoIndex < 0) {
+                redoIndex = 9;
+            }
+            addUndo(redo[redoIndex]);
+            return redo[redoIndex];
+        }
     }
 }
