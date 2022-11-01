@@ -8,18 +8,21 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import lee.aspect.dev.animationengine.animation.*;
+import lee.aspect.dev.animationengine.animation.FadeIn;
+import lee.aspect.dev.animationengine.animation.FadeOut;
+import lee.aspect.dev.animationengine.animation.Shake;
+import lee.aspect.dev.animationengine.animation.SlideInLeft;
 import lee.aspect.dev.application.RunLoopManager;
 import lee.aspect.dev.discordrpc.Script;
 import lee.aspect.dev.discordrpc.Updates;
@@ -34,8 +37,8 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 public class ConfigController implements Initializable {
 
@@ -82,15 +85,15 @@ public class ConfigController implements Initializable {
     public void switchToCallBack() throws IOException {
         String DiscordAppID = appID.getText();
         if (displayUpdates.getItems().size() < 1) {
-            displayUpdates.setBackground(new Background(new BackgroundFill(Color.rgb(204,51,0,0.9), new CornerRadii(5), Insets.EMPTY)));
-            if(!anchorRoot.getChildren().contains(invalidIndex)) {
-                invalidIndex = WarningManager.setWarning(displayUpdates,16,"Index must be greater than one", WarningManager.Mode.Left);
+            displayUpdates.setBackground(new Background(new BackgroundFill(Color.rgb(204, 51, 0, 0.9), new CornerRadii(5), Insets.EMPTY)));
+            if (!anchorRoot.getChildren().contains(invalidIndex)) {
+                invalidIndex = WarningManager.setWarning(displayUpdates, 16, "Index must be greater than one", WarningManager.Mode.Left);
                 anchorRoot.getChildren().add(invalidIndex);
             }
             new Shake(anchorRoot).play();
             return;
         }
-        if(DiscordAppID.isEmpty() || DiscordAppID.isBlank()){
+        if (DiscordAppID.isEmpty() || DiscordAppID.isBlank()) {
             invalidDiscordAppID("Invalid Application ID");
             return;
         }
@@ -132,7 +135,7 @@ public class ConfigController implements Initializable {
     }
 
     public void addNewItem() {
-        if(anchorRoot.getChildren().contains(invalidIndex)) {
+        if (anchorRoot.getChildren().contains(invalidIndex)) {
             anchorRoot.getChildren().remove(invalidIndex);
             displayUpdates.setBackground(null);
         }
@@ -152,7 +155,7 @@ public class ConfigController implements Initializable {
         else
             Script.addUpdates(new Updates(16000, String.valueOf(index), "" + index, "", "", "First line ", "Second line " + index));
         displayUpdates.getItems().add("Fl: \"" + Script.getTotalupdates().get(Script.getTotalupdates().size() - 1).getFl() + "\" Sl: \"" + Script.getTotalupdates().get(Script.getTotalupdates().size() - 1).getSl() + "\"");
-        UndoRedoManager.addUndo(new UndoRedoManager.UndoRedo(UndoRedoManager.Type.add,new Updates[]{Script.getTotalupdates().get(index)}));
+        UndoRedoManager.addUndo(new UndoRedoManager.UndoRedo(UndoRedoManager.Type.add, new Updates[]{Script.getTotalupdates().get(index)}));
     }
 
 
@@ -207,11 +210,11 @@ public class ConfigController implements Initializable {
                 ArrayList<Updates> undoUpdates = new ArrayList<>();
                 ObservableList<Integer> selectedIndices = displayUpdates.getSelectionModel().getSelectedIndices();
                 for (int i = 0; i < selectedIndices.size(); i++) {
-                    undoUpdates.add(Script.getTotalupdates().get(selectedIndices.get(i) -i));
-                    Script.getTotalupdates().remove(selectedIndices.get(i) -i);
+                    undoUpdates.add(Script.getTotalupdates().get(selectedIndices.get(i) - i));
+                    Script.getTotalupdates().remove(selectedIndices.get(i) - i);
                 }
                 refreshDisplayUpdates();
-                UndoRedoManager.addUndo(new UndoRedoManager.UndoRedo(UndoRedoManager.Type.remove,undoUpdates.toArray(Updates[]::new)));
+                UndoRedoManager.addUndo(new UndoRedoManager.UndoRedo(UndoRedoManager.Type.remove, undoUpdates.toArray(Updates[]::new)));
             }
         });
         insertRowBelow.setOnAction((actionEvent) -> {
@@ -219,7 +222,7 @@ public class ConfigController implements Initializable {
                 int index = displayUpdates.getSelectionModel().getSelectedIndex();
                 Script.addUpdates(index + 1, new Updates(16000, String.valueOf(index), "" + index, "", "", "First line ", "Second line " + index));
                 displayUpdates.getItems().add(index + 1, "Fl: \"" + Script.getTotalupdates().get(index + 1).getFl() + "\" Sl: \"" + Script.getTotalupdates().get(index + 1).getSl() + "\"");
-                UndoRedoManager.addUndo(new UndoRedoManager.UndoRedo(UndoRedoManager.Type.add,new Updates[]{Script.getTotalupdates().get(index)}));
+                UndoRedoManager.addUndo(new UndoRedoManager.UndoRedo(UndoRedoManager.Type.add, new Updates[]{Script.getTotalupdates().get(index)}));
             }
         });
         insertRowAbove.setOnAction((actionEvent) -> {
@@ -227,40 +230,17 @@ public class ConfigController implements Initializable {
                 int index = displayUpdates.getSelectionModel().getSelectedIndex();
                 Script.addUpdates(index, new Updates(16000, String.valueOf(index), "" + index, "", "", "First line ", "Second line " + index));
                 displayUpdates.getItems().add(index, "Fl: \"" + Script.getTotalupdates().get(index).getFl() + "\" Sl: \"" + Script.getTotalupdates().get(index).getSl() + "\"");
-                UndoRedoManager.addUndo(new UndoRedoManager.UndoRedo(UndoRedoManager.Type.add,new Updates[]{Script.getTotalupdates().get(index)}));
+                UndoRedoManager.addUndo(new UndoRedoManager.UndoRedo(UndoRedoManager.Type.add, new Updates[]{Script.getTotalupdates().get(index)}));
             }
         });
 
-        undoItem.setOnAction((actionEvent) -> {
-            if(UndoRedoManager.getUndo().type.equals(UndoRedoManager.Type.add)){
-                for(Updates updates : UndoRedoManager.getUndo().updates){
-                    Script.getTotalupdates().remove(updates);
-                }
-            } else {
-                for(Updates updates : UndoRedoManager.getUndo().updates) {
-                    Script.getTotalupdates().add(updates);
-                }
-            }
-            refreshDisplayUpdates();
-        });
-        redoItem.setOnAction((actionEvent) -> {
-            if(UndoRedoManager.getRedo().type.equals(UndoRedoManager.Type.add)){
-                for(Updates updates : UndoRedoManager.getRedo().updates){
-                    Script.getTotalupdates().remove(updates);
-                }
-            } else {
-                for(Updates updates : UndoRedoManager.getRedo().updates) {
-                    Script.getTotalupdates().add(updates);
-                }
-            }
-            refreshDisplayUpdates();
-        });
-
+        undoItem.setOnAction((actionEvent) -> applyActionUndoRedo(false));
+        redoItem.setOnAction((actionEvent) -> applyActionUndoRedo(true));
 
 
         contextMenu.getItems().addAll(copyItem, pasteItem, deleteItem);
         contextMenu.getItems().add(new SeparatorMenuItem());
-        contextMenu.getItems().addAll(insertRowAbove,insertRowBelow);
+        contextMenu.getItems().addAll(insertRowAbove, insertRowBelow);
         contextMenu.getItems().add(new SeparatorMenuItem());
         contextMenu.getItems().addAll(undoItem, redoItem);
 
@@ -275,7 +255,7 @@ public class ConfigController implements Initializable {
                 appID.setText(newValue.replaceAll("\\D", ""));
                 return;
             }
-            if(anchorRoot.getChildren().contains(invalidAppID)) anchorRoot.getChildren().remove(invalidAppID);
+            anchorRoot.getChildren().remove(invalidAppID);
         });
         appID.setText(Settings.getDiscordAPIKey());
 
@@ -342,39 +322,40 @@ public class ConfigController implements Initializable {
         }
     }
 
-    private void refreshDisplayUpdates(){
+    private void refreshDisplayUpdates() {
         displayUpdates.getItems().clear();
         for (int i = 0; i < Script.getTotalupdates().size(); i++) {
             displayUpdates.getItems().add("Fl: \"" + Script.getTotalupdates().get(i).getFl() + "\" Sl: \"" + Script.getTotalupdates().get(i).getSl() + "\"");
         }
     }
 
-    public void invalidDiscordAppID(String msg){
-        appID.setBackground(new Background(new BackgroundFill(Color.rgb(204,51,0,0.9), new CornerRadii(5), Insets.EMPTY)));
-        if(!anchorRoot.getChildren().contains(invalidAppID)){
-            invalidAppID = WarningManager.setWarning(appID,16,msg, WarningManager.Mode.Left);
+    public void invalidDiscordAppID(String msg) {
+        appID.setBackground(new Background(new BackgroundFill(Color.rgb(204, 51, 0, 0.9), new CornerRadii(5), Insets.EMPTY)));
+        if (!anchorRoot.getChildren().contains(invalidAppID)) {
+            invalidAppID = WarningManager.setWarning(appID, 16, msg, WarningManager.Mode.Left);
             anchorRoot.getChildren().add(invalidAppID);
         }
         new Shake(anchorRoot).play();
     }
 
-    private static class UndoRedoManager {
-        public enum Type{
-            add, remove
-        }
-        private static class UndoRedo{
-            public Type type;
-            public Updates[] updates;
-            public UndoRedo(Type type, Updates[] updates){
-                this.type = type;
-                this.updates = updates;
+    private void applyActionUndoRedo(boolean type) {
+        var action = type ? UndoRedoManager.getRedo() : UndoRedoManager.getUndo();
+        if (action.type == null || action.updates == null) return;
+        if (action.type.equals(UndoRedoManager.Type.remove)) {
+            for (Updates updates : action.updates) {
+                Script.getTotalupdates().remove(updates);
             }
-
+        } else {
+            for (Updates updates : action.updates) {
+                Script.getTotalupdates().add(updates);
+            }
         }
+        refreshDisplayUpdates();
+    }
 
-
-        private static UndoRedo[] undo = new UndoRedo[10];
-        private static UndoRedo[] redo = new UndoRedo[10];
+    private static class UndoRedoManager {
+        private static final UndoRedo[] undo = new UndoRedo[10];
+        private static final UndoRedo[] redo = new UndoRedo[10];
         private static int undoIndex = 0;
         private static int redoIndex = 0;
 
@@ -399,7 +380,12 @@ public class ConfigController implements Initializable {
             if (undoIndex < 0) {
                 undoIndex = 9;
             }
-            addRedo(undo[undoIndex]);
+            var add = undo[undoIndex];
+            if (!(add.type == null || add.updates == null)) {
+                add.type = add.type == Type.add ? Type.remove : Type.add;
+                addRedo(add);
+            }
+            System.out.println("Undo: " + undo[undoIndex].type + " " + Arrays.toString(undo[undoIndex].updates));
             return undo[undoIndex];
         }
 
@@ -408,8 +394,28 @@ public class ConfigController implements Initializable {
             if (redoIndex < 0) {
                 redoIndex = 9;
             }
-            addUndo(redo[redoIndex]);
+            var add = undo[undoIndex];
+            if (!(add.type == null || add.updates == null)) {
+                add.type = add.type == Type.add ? Type.remove : Type.add;
+                addUndo(add);
+            }
+            System.out.println("Redo: " + redo[redoIndex].type + " " + Arrays.toString(redo[redoIndex].updates));
             return redo[redoIndex];
+        }
+
+        public enum Type {
+            add, remove
+        }
+
+        private static class UndoRedo {
+            public Type type;
+            public Updates[] updates;
+
+            public UndoRedo(Type type, Updates[] updates) {
+                this.type = type;
+                this.updates = updates;
+            }
+
         }
     }
 }
