@@ -340,7 +340,7 @@ public class ConfigController implements Initializable {
 
     private void applyActionUndoRedo(boolean type) {
         var action = type ? UndoRedoManager.getRedo() : UndoRedoManager.getUndo();
-        if (action.type == null || action.updates == null) return;
+        if (action == null) return;
         if (action.type.equals(UndoRedoManager.Type.remove)) {
             for (Updates updates : action.updates) {
                 Script.getTotalupdates().remove(updates);
@@ -381,11 +381,11 @@ public class ConfigController implements Initializable {
                 undoIndex = 9;
             }
             var add = undo[undoIndex];
-            if (!(add.type == null || add.updates == null)) {
+            if (add!=null) {
                 add.type = add.type == Type.add ? Type.remove : Type.add;
                 addRedo(add);
             }
-            System.out.println("Undo: " + undo[undoIndex].type + " " + Arrays.toString(undo[undoIndex].updates));
+            //System.out.println("Undo: " + undo[undoIndex].type + " " + Arrays.toString(undo[undoIndex].updates));
             return undo[undoIndex];
         }
 
@@ -395,11 +395,11 @@ public class ConfigController implements Initializable {
                 redoIndex = 9;
             }
             var add = undo[undoIndex];
-            if (!(add.type == null || add.updates == null)) {
+            if (add != null) {
                 add.type = add.type == Type.add ? Type.remove : Type.add;
                 addUndo(add);
             }
-            System.out.println("Redo: " + redo[redoIndex].type + " " + Arrays.toString(redo[redoIndex].updates));
+            //System.out.println("Redo: " + redo[redoIndex].type + " " + Arrays.toString(redo[redoIndex].updates));
             return redo[redoIndex];
         }
 
