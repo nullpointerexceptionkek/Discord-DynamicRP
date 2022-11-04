@@ -44,39 +44,20 @@ public class DiscordRP {
                 calendar.set(Calendar.MILLISECOND, 0);
                 this.created = calendar.getTimeInMillis();
                 break;
+            case custom:
+                //TODO: Custom Time
+                break;
         }
-        created = (long) Math.floor(created / 1000);
-        current = (long) Math.floor(System.currentTimeMillis() / 1000);
+        created = (long) Math.floor(created / 1000f);
+        current = (long) Math.floor(System.currentTimeMillis() / 1000f);
 
-        /**
-         * offical discord ipc doc
+        /*
+         * official discord ipc doc
          * https://discord.com/developers/docs/topics/rpc#rpc
          */
 
         callback = new Callback();
-        client = new IPCClient(Long.parseLong(Settings.getDiscordAPIKey())); // your client id
-        client.setListener(new IPCListener() {
-            @Override
-            public void onReady(IPCClient client) {
-                RichPresence.Builder builder = new RichPresence.Builder();
-                builder.setState(updates.getSl())
-                        .setDetails(updates.getFl())
-                        .setLargeImage(updates.getImage(), updates.getImagetext())
-                        .setSmallImage(updates.getSmallimage(), updates.getSmalltext())
-                        .setButton1Text(updates.getButton1Text())
-                        .setButton1Url(updates.getButton1Url())
-                        .setButton2Text(updates.getButton2Text())
-                        .setButton2Url(updates.getButton2Url());
-                if (!(created == -1)) {
-                    if (created > current) {
-                        builder.setEndTimestamp(created);
-                    } else {
-                        builder.setStartTimestamp(created);
-                    }
-                }
-                client.sendRichPresence(builder.build(), callback);
-            }
-        });
+        setIPCClient(updates);
 
         client.connect();
     }
@@ -89,49 +70,10 @@ public class DiscordRP {
 
     public void update(Updates updates) {
         try {
-            RichPresence.Builder builder = new RichPresence.Builder();
-            builder.setState(updates.getSl())
-                    .setDetails(updates.getFl())
-                    .setLargeImage(updates.getImage(), updates.getImagetext())
-                    .setSmallImage(updates.getSmallimage(), updates.getSmalltext())
-                    .setButton1Text(updates.getButton1Text())
-                    .setButton1Url(updates.getButton1Url())
-                    .setButton2Text(updates.getButton2Text())
-                    .setButton2Url(updates.getButton2Url());
-            if (!(created == -1)) {
-                if (created > current) {
-                    builder.setEndTimestamp(created);
-                } else {
-                    builder.setStartTimestamp(created);
-                }
-            }
-            client.sendRichPresence(builder.build(), callback);
+            setBuilder(updates, client);
         } catch (IllegalStateException | NullPointerException e) {
             if (autoReconnect && RunLoopManager.isRunning) {
-                client = new IPCClient(Long.parseLong(Settings.getDiscordAPIKey())); // your client id
-                client.setListener(new IPCListener() {
-                    @Override
-                    public void onReady(IPCClient client) {
-                        RichPresence.Builder builder = new RichPresence.Builder();
-                        builder.setState(updates.getSl())
-                                .setDetails(updates.getFl())
-                                .setLargeImage(updates.getImage(), updates.getImagetext())
-                                .setSmallImage(updates.getSmallimage(), updates.getSmalltext())
-                                .setButton1Text(updates.getButton1Text())
-                                .setButton1Url(updates.getButton1Url())
-                                .setButton2Text(updates.getButton2Text())
-                                .setButton2Url(updates.getButton2Url());
-                        if (!(created == -1)) {
-                            if (created > current) {
-                                builder.setEndTimestamp(created);
-                            } else {
-                                builder.setStartTimestamp(created);
-                            }
-                        }
-                        client.sendRichPresence(builder.build(), callback);
-                    }
-                });
-
+                setIPCClient(updates);
                 try {
                     client.connect();
                 } catch (NoDiscordClientException ex) {
@@ -139,6 +81,41 @@ public class DiscordRP {
                 }
             }
         }
+    }
+
+    private void setBuilder(Updates updates, IPCClient client) {
+        RichPresence.Builder builder = new RichPresence.Builder();
+        builder.setState(updates.getSl())
+                .setDetails(updates.getFl())
+                .setLargeImage(updates.getImage(), updates.getImagetext())
+                .setSmallImage(updates.getSmallimage(), updates.getSmalltext())
+                .setButton1Text(updates.getButton1Text())
+                .setButton1Url(updates.getButton1Url())
+                .setButton2Text(updates.getButton2Text())
+                .setButton2Url(updates.getButton2Url());
+        if (!(created == -1)) {
+            if(Script.getTimestampmode() == Script.TimeStampMode.sinceUpdate){
+                builder.setStartTimestamp((long) Math.floor(System.currentTimeMillis() / 1000f));
+            }
+            else {
+                if (created > current) {
+                    builder.setEndTimestamp(created);
+                } else {
+                    builder.setStartTimestamp(created);
+                }
+            }
+        }
+        client.sendRichPresence(builder.build(), callback);
+    }
+
+    private void setIPCClient(Updates updates) {
+        client = new IPCClient(Long.parseLong(Settings.getDiscordAPIKey()));
+        client.setListener(new IPCListener() {
+            @Override
+            public void onReady(IPCClient client) {
+                setBuilder(updates, client);
+            }
+        });
     }
 
 

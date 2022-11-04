@@ -50,7 +50,7 @@ public class Launch {
             Runtime.getRuntime().addShutdownHook(shutdown);
             for (String arg : args) {
                 if (arg.contains("--StartLaunch")) {
-                    CustomDiscordRPC.LaunchSlient();
+                    CustomDiscordRPC.LaunchSilently();
                     return;
                 }
             }

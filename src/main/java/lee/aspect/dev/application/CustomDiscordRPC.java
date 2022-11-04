@@ -31,7 +31,6 @@ public class CustomDiscordRPC extends Application {
      * This is the "main" function of the program, this method is getting called on start up
      * Sets the basic property of JavaFX and calls {@link #start(Stage)} to Launch the application interface
      *
-     * @param args
      */
     public static void Launch(String[] args) {
         Platform.setImplicitExit(false);
@@ -43,7 +42,7 @@ public class CustomDiscordRPC extends Application {
         launch(args);
     }
 
-    public static void LaunchSlient() {
+    public static void LaunchSilently() {
         ApplicationTray.initTray();
         RunLoopManager.runFromStartLunch();
     }
@@ -53,12 +52,11 @@ public class CustomDiscordRPC extends Application {
      * This method should be only called by javaFX
      * inits {@link RunLoopManager}
      *
-     * @param pstage
      */
     @Override
-    public void start(Stage pstage) {
+    public void start(Stage pStage) {
         try {
-            primaryStage = pstage;
+            primaryStage = pStage;
             primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/lee/aspect/dev/icon/SystemTrayIcon.png"))));
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml")));
             Scene scene = new Scene(root);
