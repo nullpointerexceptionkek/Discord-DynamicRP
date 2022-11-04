@@ -7,16 +7,19 @@ import java.util.Arrays;
 public class Script {
     public enum TimeStampMode {
 
-        applaunch,
-        CDFromDayEnd,
-        current,
+        appLaunch,
+        cdFromDayEnd,
+        localTime,
         none,
-        custom
+
+        sinceUpdate,
+
+        custom;
 
     }
     private static ArrayList<Updates> totalupdates;
 
-    private static TimeStampMode timestampmode = TimeStampMode.applaunch;
+    private static TimeStampMode timestampmode = TimeStampMode.appLaunch;
 
     public Script() {
         totalupdates = new ArrayList<>();

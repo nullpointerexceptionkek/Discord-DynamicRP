@@ -14,7 +14,6 @@ import java.util.Calendar;
 public class DiscordRP {
 
     public static final boolean autoReconnect = true;
-    public static String discordName;
     public static IPCClient client;
     public static Callback callback;
     private long created = -1;
@@ -23,16 +22,14 @@ public class DiscordRP {
     public void LaunchReadyCallBack(Updates updates) throws NoDiscordClientException {
         Calendar calendar = Calendar.getInstance();
         switch (Script.getTimestampmode()) {
-            case applaunch:
-                boolean useStartTimeStamp = true;
+            case appLaunch:
                 this.created = System.currentTimeMillis();
                 break;
             case none:
                 created = -1;
                 break;
 
-            case current:
-                useStartTimeStamp = true;
+            case localTime:
                 calendar.set(Calendar.HOUR_OF_DAY, 0);
                 calendar.set(Calendar.MINUTE, 0);
                 calendar.set(Calendar.SECOND, 0);
@@ -40,8 +37,7 @@ public class DiscordRP {
                 this.created = calendar.getTimeInMillis();
                 break;
 
-            case CDFromDayEnd:
-                useStartTimeStamp = false;
+            case cdFromDayEnd:
                 calendar.set(Calendar.HOUR_OF_DAY, 24);
                 calendar.set(Calendar.MINUTE, 0);
                 calendar.set(Calendar.SECOND, 0);

@@ -75,3 +75,7 @@
 #titleLabel {
     -fx-font-size: 20;
 }
+.radio-button {
+    -fx-font-family: "Uni Sans";
+    -fx-text-fill: #ffffff;
+}

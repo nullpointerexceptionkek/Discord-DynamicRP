@@ -41,8 +41,11 @@ import java.util.List;
 import java.util.*;
 
 public class ConfigController implements Initializable {
+    @FXML
+    private ToggleGroup timeStampMode;
 
-    public ToggleGroup timeStampMode;
+    @FXML
+    private ChoiceBox updateMode;
     @FXML
     protected ListView<String> displayUpdates;
     @FXML
@@ -56,7 +59,7 @@ public class ConfigController implements Initializable {
     private Button settingButton;
 
     @FXML
-    private RadioButton appLaunch, none, local, custom;
+    private RadioButton appLaunch,local, cdFomEndDay, sinceUpdate, none, custom;
 
     @FXML
     private AnchorPane anchorRoot;
@@ -71,14 +74,27 @@ public class ConfigController implements Initializable {
     //private int index = -1;
 
     public void getTimeStampMode() {
-        if (appLaunch.isSelected()) {
-            Script.setTimestampmode(Script.TimeStampMode.applaunch);
-        } else if (none.isSelected()) {
-            Script.setTimestampmode(Script.TimeStampMode.none);
-        } else if (local.isSelected()) {
-            Script.setTimestampmode(Script.TimeStampMode.current);
-        } else if (custom.isSelected()) {
-            Script.setTimestampmode(Script.TimeStampMode.CDFromDayEnd);
+        RadioButton selectedRadioButton = (RadioButton) timeStampMode.getSelectedToggle();
+        String toggleGroupValue = selectedRadioButton.getId();
+        switch (toggleGroupValue){
+            case "appLaunch":
+                Script.setTimestampmode(Script.TimeStampMode.appLaunch);
+                break;
+            case "local":
+                Script.setTimestampmode(Script.TimeStampMode.localTime);
+                break;
+            case "sinceUpdate":
+                Script.setTimestampmode(Script.TimeStampMode.sinceUpdate);
+                break;
+            case "cdFomEndDay":
+                Script.setTimestampmode(Script.TimeStampMode.cdFromDayEnd);
+                break;
+            case "custom":
+                Script.setTimestampmode(Script.TimeStampMode.custom);
+                break;
+            case "none":
+                Script.setTimestampmode(Script.TimeStampMode.none);
+                break;
         }
     }
 
@@ -263,7 +279,7 @@ public class ConfigController implements Initializable {
         try {
             //set the timestamp mode
             switch (Script.getTimestampmode()) {
-                case applaunch:
+                case appLaunch:
                     appLaunch.setSelected(true);
                     break;
 
@@ -271,16 +287,16 @@ public class ConfigController implements Initializable {
                     none.setSelected(true);
                     break;
 
-                case current:
+                case localTime:
                     local.setSelected(true);
                     break;
 
-                case CDFromDayEnd:
+                case cdFromDayEnd:
                     custom.setSelected(true);
                     break;
                 default:
                     appLaunch.setSelected(true);
-                    Script.setTimestampmode(Script.TimeStampMode.applaunch);
+                    Script.setTimestampmode(Script.TimeStampMode.appLaunch);
 
             }
             refreshDisplayUpdates();

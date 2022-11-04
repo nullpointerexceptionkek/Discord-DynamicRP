@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import lee.aspect.dev.discordrpc.settings.Settings;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -72,12 +73,13 @@ public class WarningManager {
                 return optOut;
             }
         });
+        alert.getDialogPane().getStylesheets().add(Objects.requireNonNull(WarningManager.class.getResource(Settings.getTheme().getThemepass())).toExternalForm());
         alert.getDialogPane().getButtonTypes().addAll(buttonTypes);
         alert.getDialogPane().setContentText(message);
         // Fool the dialog into thinking there is some expandable content
         // a Group won't take up any space if it has no children
         alert.getDialogPane().setExpandableContent(new Group());
-        alert.getDialogPane().setExpanded(true);
+        alert.getDialogPane().setExpanded(false);
         // Reset the dialog graphic using the default style
         alert.getDialogPane().setGraphic(graphic);
         alert.setTitle(title);
