@@ -56,12 +56,12 @@ public class RunLoopManager {
                 return;
             }
             for (int i = 1; i < upm.getUpdates().getSize(); i++) {
-                excuteUpdate(upm.getUpdates().getUpdates(i));
+                executeUpdate(upm.getUpdates().getUpdates(i));
                 if (!isRunning) return;
             }
             while (isRunning) {
                 for (int i = 0; i < upm.getUpdates().getSize(); i++) {
-                    excuteUpdate(upm.getUpdates().getUpdates(i));
+                    executeUpdate(upm.getUpdates().getUpdates(i));
                     if (!isRunning) return;
                 }
 
@@ -89,7 +89,7 @@ public class RunLoopManager {
                         return;
                     }
                     for (int i = 1; i < upm.getUpdates().getSize(); i++) {
-                        excuteUpdate(upm.getUpdates().getUpdates(i));
+                        executeUpdate(upm.getUpdates().getUpdates(i));
                         CURRENTDISPLAY = i;
 
                         if (!isRunning) return;
@@ -98,7 +98,7 @@ public class RunLoopManager {
                     }
                     while (isRunning) {
                         for (int i = 0; i < upm.getUpdates().getSize(); i++) {
-                            excuteUpdate(upm.getUpdates().getUpdates(i));
+                            executeUpdate(upm.getUpdates().getUpdates(i));
                             CURRENTDISPLAY = i;
                             if (!isRunning) return;
                             if (!CustomDiscordRPC.isOnSystemTray)
@@ -122,17 +122,15 @@ public class RunLoopManager {
     }
 
 
-    private static void excuteUpdate(@NotNull Updates update) {
+    private static void executeUpdate(@NotNull Updates update) {
         if (update.getWait() == -1) {
             discordRP.update(update);
             return;
         }
 
         try {
-            //Thread.sleep((update.getWait() <= 3000 )? 3000 : update.getWait());
             Thread.sleep(update.getWait());
             discordRP.update(update);
-            System.out.println("Sented Update Request, trans: " + update);
 
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
