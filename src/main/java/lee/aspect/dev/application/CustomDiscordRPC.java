@@ -2,18 +2,12 @@ package lee.aspect.dev.application;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import lee.aspect.dev.application.interfaceGui.WarningManager;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.discordrpc.settings.Settings;
@@ -53,18 +47,6 @@ public class CustomDiscordRPC extends Application {
         RunLoopManager.runFromStartLunch();
     }
 
-    class WindowButtons extends HBox {
-
-        public WindowButtons() {
-            Button closeBtn = new Button("X");
-
-            closeBtn.setOnAction(actionEvent -> Platform.exit());
-
-            this.getChildren().add(closeBtn);
-        }
-    }
-
-
     /**
      * Launches the config interface
      * This method should be only called by javaFX
@@ -75,29 +57,13 @@ public class CustomDiscordRPC extends Application {
     public void start(Stage pStage) {
         try {
             primaryStage = pStage;
-            primaryStage.initStyle(StageStyle.UNDECORATED);
-            BorderPane borderPane = new BorderPane();
-            ToolBar toolBar = new ToolBar();
-
-            int height = 25;
-            toolBar.setPrefHeight(height);
-            toolBar.setMinHeight(height);
-            toolBar.setMaxHeight(height);
-            toolBar.getItems().add(new WindowButtons());
-
-            borderPane.setTop(toolBar);
-
             primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/lee/aspect/dev/icon/SystemTrayIcon.png"))));
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml")));
-            borderPane.setCenter(root);
-            Scene scene = new Scene(borderPane);
+            Scene scene = new Scene(root);
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(Settings.getTheme().getThemepass())).toExternalForm());
             primaryStage.setTitle("Custom Discord RPC");
             primaryStage.setScene(scene);
-            primaryStage.setResizable(true);
-
-
-
+            primaryStage.setResizable(false);
             primaryStage.setOnCloseRequest((event) -> {
                 event.consume();
                 onclose();
@@ -139,11 +105,11 @@ public class CustomDiscordRPC extends Application {
         }
         switch (Settings.getMinimizeMode()) {
             case Ask:
-               Alert alert = WarningManager.createAlertWithOptOut(
-                       Alert.AlertType.CONFIRMATION,
-                       "Minimize to System Tray",null,
-                       "Do you want to minimize to System Tray?",
-                       "Do not show again", param -> Settings.setMinimizeMode(param ? Settings.MinimizeMode.WaitAndSee : Settings.MinimizeMode.Ask),ButtonType.YES,ButtonType.NO,ButtonType.CANCEL);
+                Alert alert = WarningManager.createAlertWithOptOut(
+                        Alert.AlertType.CONFIRMATION,
+                        "Minimize to System Tray",null,
+                        "Do you want to minimize to System Tray?",
+                        "Do not show again", param -> Settings.setMinimizeMode(param ? Settings.MinimizeMode.WaitAndSee : Settings.MinimizeMode.Ask),ButtonType.YES,ButtonType.NO,ButtonType.CANCEL);
                 var result = alert.showAndWait();
                 if (result.filter(buttonType -> buttonType == ButtonType.YES).isPresent()) {
                     if(Settings.getMinimizeMode() == Settings.MinimizeMode.WaitAndSee)

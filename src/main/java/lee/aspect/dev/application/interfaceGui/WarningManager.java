@@ -73,7 +73,7 @@ public class WarningManager {
                 return optOut;
             }
         });
-        alert.getDialogPane().getStylesheets().add(Objects.requireNonNull(WarningManager.class.getResource(Settings.getTheme().getThemepass())).toExternalForm());
+        //alert.getDialogPane().getStylesheets().add(Objects.requireNonNull(WarningManager.class.getResource(Settings.getTheme().getThemepass())).toExternalForm());
         alert.getDialogPane().getButtonTypes().addAll(buttonTypes);
         alert.getDialogPane().setContentText(message);
         // Fool the dialog into thinking there is some expandable content
