@@ -19,8 +19,8 @@ public class Launch {
 
     /**
      * Redirect main Class to {@link CustomDiscordRPC Launch}
-     * This program is used to customize Discord rich perference via a interface by JavaFX
-     * It connects to Discord via IPC by the libary {@link lee.aspect.dev.discordipc}
+     * This program is used to customize Discord rich preference via interface by JavaFX
+     * It connects to Discord via IPC by the library {@link lee.aspect.dev.discordipc}
      *
      * @param args
      * @author Aspect
@@ -37,12 +37,18 @@ public class Launch {
 
             if (lock == null) {
                 channel.close();
+                Object[] options = { "Yes, I want to start the application", "Quit Application" };
                 String message = "\"Custom Discord RP\"\n"
                         + "It looks like you are trying to create\n"
-                        + "mutiple instance of the program";
-                JOptionPane.showMessageDialog(new JFrame(), message, "Application Running",
-                        JOptionPane.ERROR_MESSAGE);
-                System.exit(-1);
+                        + "multiple instance of the program\n"
+                        + "Do you want to start the application anyway?";
+                int result =JOptionPane.showOptionDialog(new JFrame(), message, "Application Running", JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE, null, options,null);
+                if(result == JOptionPane.YES_OPTION) {
+                    CustomDiscordRPC.Launch(args);
+                } else {
+                    System.exit(0);
+                }
             }
 
             Thread shutdown = new Thread(Launch::unlock);
@@ -61,16 +67,17 @@ public class Launch {
 
     }
 
-    public static void unlock() {
+    public static boolean unlock() {
         try {
             if (lock != null) {
                 lock.release();
                 channel.close();
-                f.delete();
+               return f.delete();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
 
