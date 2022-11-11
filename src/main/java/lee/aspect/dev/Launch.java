@@ -35,6 +35,10 @@ import java.io.RandomAccessFile;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 
+/**
+ * This class checks whether if the application is already launched and add shutdown hook;
+ * @author lee
+ */
 public class Launch {
 
     public final static String VERSION = "v1.0.0";

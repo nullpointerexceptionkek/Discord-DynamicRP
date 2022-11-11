@@ -41,6 +41,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 
+/**
+ * This class manages the system tray
+ */
 public class ApplicationTray {
 
     private static TrayIcon trayIcon;

@@ -31,7 +31,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import lee.aspect.dev.discordrpc.settings.Settings;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -42,6 +41,10 @@ public class WarningManager {
         Left,Right,Up,Down
     }
 
+    /**
+     * Creates a warning icon
+     * @return ImageView
+     */
     public static ImageView setWarning(double x, double y, int size, String message){
         ImageView warning = new ImageView(Objects.requireNonNull(WarningManager.class.getResource("/lee/aspect/dev/icon/Warning.png")).toExternalForm());
         warning.setFitHeight(size);
@@ -51,7 +54,10 @@ public class WarningManager {
         Tooltip.install(warning, new Tooltip(message));
         return warning;
     }
-
+    /**
+     * Creates a warning icon
+     * @return ImageView
+     */
     public static ImageView setWarning(Parent parent, int size, String message, Mode mode, double ofSetX, double ofSetY){
         switch(mode) {
             case Up:
@@ -70,15 +76,24 @@ public class WarningManager {
                 return null;
         }
     }
-
+    /**
+     * Creates a warning icon
+     * @return ImageView
+     */
     public static ImageView setWarning(Parent p){
         return setWarning(p,16,"",Mode.Left);
     }
-
+    /**
+     * Creates a warning icon
+     * @return ImageView
+     */
     public static ImageView setWarning(Parent parent, int size, String message, Mode mode){
         return setWarning(parent,size,message,mode,0,0);
     }
-
+    /**
+     * Creates a alert with a checkbox
+     * @return Alert
+     */
     public static Alert createAlertWithOptOut(Alert.AlertType type, String title, String headerText,
                                               String message, String optOutMessage, Consumer<Boolean> optOutAction,
                                               ButtonType... buttonTypes) {
