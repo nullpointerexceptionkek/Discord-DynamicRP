@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Project Scrope" pattern="src:lee.aspect.dev.*||src:lee.aspect.dev.application.*||src:lee.aspect.dev.application.interfaceGui.*||src:lee.aspect.dev.jsonreader.*||src:lee.aspect.dev.discordrpc.*||src:lee.aspect.dev.discordrpc.settings.*||src:lee.aspect.dev.sysUtil.*||src:lee.aspect.dev.sysUtil.exceptions.*" />
+</component>
