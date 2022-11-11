@@ -37,6 +37,11 @@ import java.nio.channels.FileLock;
 
 public class Launch {
 
+    public final static String VERSION = "v1.0.0";
+
+    public final static String AUTHOR = "lee";
+
+    public final static String NAME = "CDiscordRP";
     public static File f;
     public static FileChannel channel;
     public static FileLock lock;
@@ -93,6 +98,7 @@ public class Launch {
     }
 
     public static boolean unlock() {
+        System.out.println("Author: " + AUTHOR + " Project: " + NAME+ " " +VERSION) ;
         try {
             if (lock != null) {
                 lock.release();

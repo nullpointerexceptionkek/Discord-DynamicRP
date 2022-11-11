@@ -29,6 +29,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import lee.aspect.dev.Launch;
 import lee.aspect.dev.application.interfaceGui.CallBackController;
 import lee.aspect.dev.application.interfaceGui.ConfigController;
 import lee.aspect.dev.discordipc.exceptions.NoDiscordClientException;
@@ -100,9 +101,9 @@ public class ApplicationTray {
         }
         trayIcon.addActionListener(e -> LaunchInterface());
         aboutItem.addActionListener(e -> JOptionPane.showMessageDialog(null,
-                Settings.AUTHOR + '\n' +
-                        Settings.NAME + '\n' +
-                        "Version: " + Settings.VERSION,
+                "Author: " + Launch.AUTHOR + '\n' +
+                        Launch.NAME + '\n' +
+                        "Version: " + Launch.VERSION,
                 "About", JOptionPane.INFORMATION_MESSAGE
         ));
 
