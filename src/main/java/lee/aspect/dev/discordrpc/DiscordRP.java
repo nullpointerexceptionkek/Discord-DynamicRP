@@ -35,6 +35,8 @@ import lee.aspect.dev.discordrpc.settings.Settings;
 
 import java.util.Calendar;
 
+import static java.lang.Thread.currentThread;
+
 
 public class DiscordRP {
 
@@ -106,6 +108,10 @@ public class DiscordRP {
                 } catch (NoDiscordClientException ex) {
                     throw new RuntimeException(ex);
                 }
+            } else{
+                currentThread().interrupt();
+                RunLoopManager.setRunloop(null);
+                RunLoopManager.isRunning = false;
             }
         }
     }

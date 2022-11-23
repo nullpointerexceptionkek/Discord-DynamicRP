@@ -36,7 +36,7 @@ import lee.aspect.dev.jsonreader.FileManager;
 import org.jetbrains.annotations.NotNull;
 
 
-public class RunLoopManager {
+public abstract class RunLoopManager {
 
     private static final DiscordRP discordRP = new DiscordRP();
     public static boolean isRunning = false;
@@ -98,11 +98,14 @@ public class RunLoopManager {
      * Sent each data to DiscordIPC according to the config
      */
     public static void startUpdate() throws NoDiscordClientException {
-        if (runloop == null)
+        if (runloop == null) {
+            CURRENTDISPLAY = 0;
             discordRP.LaunchReadyCallBack(upm.getUpdates().getUpdates(0));
+        }
         else {
             discordRP.LaunchReadyCallBack(upm.getUpdates().getUpdates(getCURRENTDISPLAY()));
         }
+
         isRunning = true;
 
         if (runloop == null) {
@@ -178,5 +181,9 @@ public class RunLoopManager {
 
     public static int getCURRENTDISPLAY() {
         return CURRENTDISPLAY;
+    }
+
+    public static void setRunloop(Thread runloop) {
+        RunLoopManager.runloop = runloop;
     }
 }
