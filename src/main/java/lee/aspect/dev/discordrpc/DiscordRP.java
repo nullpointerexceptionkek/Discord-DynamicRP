@@ -48,7 +48,7 @@ public class DiscordRP {
         Calendar calendar = Calendar.getInstance();
         switch (Script.getTimestampmode()) {
             case appLaunch:
-                this.created = System.currentTimeMillis();
+                this.created = (long) Math.ceil(System.currentTimeMillis());
                 break;
             case none:
                 created = -1;
@@ -59,7 +59,7 @@ public class DiscordRP {
                 calendar.set(Calendar.MINUTE, 0);
                 calendar.set(Calendar.SECOND, 0);
                 calendar.set(Calendar.MILLISECOND, 0);
-                this.created = calendar.getTimeInMillis();
+                this.created = (long) Math.ceil(calendar.getTimeInMillis());
                 break;
 
             case cdFromDayEnd:
@@ -67,14 +67,16 @@ public class DiscordRP {
                 calendar.set(Calendar.MINUTE, 0);
                 calendar.set(Calendar.SECOND, 0);
                 calendar.set(Calendar.MILLISECOND, 0);
-                this.created = calendar.getTimeInMillis();
+                this.created = (long) Math.ceil(calendar.getTimeInMillis());
+                break;
+            case sinceUpdate:
+                created = 0;
                 break;
             case custom:
                 //TODO: Custom Time
                 break;
         }
-        created = (long) Math.floor(created / 1000f);
-        current = (long) Math.floor(System.currentTimeMillis() / 1000f);
+        current = (long) Math.ceil(System.currentTimeMillis());
 
         /*
          * official discord ipc doc
@@ -110,6 +112,7 @@ public class DiscordRP {
 
     private void setBuilder(Updates updates, IPCClient client) {
         RichPresence.Builder builder = new RichPresence.Builder();
+        long currentTime = (long) Math.ceil(System.currentTimeMillis());
         builder.setState(updates.getSl())
                 .setDetails(updates.getFl())
                 .setLargeImage(updates.getImage(), updates.getImagetext())
@@ -120,7 +123,7 @@ public class DiscordRP {
                 .setButton2Url(updates.getButton2Url());
         if (!(created == -1)) {
             if(Script.getTimestampmode() == Script.TimeStampMode.sinceUpdate){
-                builder.setStartTimestamp((long) Math.floor(System.currentTimeMillis() / 1000f));
+                builder.setStartTimestamp(currentTime);
             }
             else {
                 if (created > current) {

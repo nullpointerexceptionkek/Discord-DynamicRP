@@ -317,6 +317,14 @@ public class ConfigController implements Initializable {
                     break;
 
                 case cdFromDayEnd:
+                    cdFomEndDay.setSelected(true);
+                    break;
+
+                case sinceUpdate:
+                    sinceUpdate.setSelected(true);
+                    break;
+
+                case custom:
                     custom.setSelected(true);
                     break;
                 default:

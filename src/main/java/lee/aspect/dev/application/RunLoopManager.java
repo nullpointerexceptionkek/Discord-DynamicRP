@@ -148,20 +148,16 @@ public class RunLoopManager {
 
 
     private static void executeUpdate(@NotNull Updates update) {
-        if (update.getWait() == -1) {
-            discordRP.update(update);
-            return;
-        }
-
         try {
+            if (update.getWait() == -1) {
+                discordRP.update(update);
+                return;
+            }
             Thread.sleep(update.getWait());
             discordRP.update(update);
-
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
 
     }
 
