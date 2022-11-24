@@ -72,10 +72,8 @@ public class DiscordRP {
                 this.created = (long) Math.ceil(calendar.getTimeInMillis());
                 break;
             case sinceUpdate:
-                created = 0;
-                break;
             case custom:
-                //TODO: Custom Time
+                created = 0;
                 break;
         }
         current = (long) Math.ceil(System.currentTimeMillis());
@@ -128,15 +126,26 @@ public class DiscordRP {
                 .setButton2Text(updates.getButton2Text())
                 .setButton2Url(updates.getButton2Url());
         if (!(created == -1)) {
-            if(Script.getTimestampmode() == Script.TimeStampMode.sinceUpdate){
-                builder.setStartTimestamp(currentTime);
-            }
-            else {
-                if (created > current) {
-                    builder.setEndTimestamp(created);
-                } else {
-                    builder.setStartTimestamp(created);
-                }
+            switch(Script.getTimestampmode()){
+                case custom:
+                    System.out.println("custom" + Script.getCustomTimestamp());
+                    System.out.println("current" + current);
+                    if (Script.getCustomTimestamp() > current) {
+                        builder.setEndTimestamp(Script.getCustomTimestamp());
+                    } else {
+                        builder.setStartTimestamp(Script.getCustomTimestamp());
+                    }
+                    break;
+                case sinceUpdate:
+                    builder.setStartTimestamp(currentTime);
+                    break;
+                default:
+                    if (created > current) {
+                        builder.setEndTimestamp(created);
+                    } else {
+                        builder.setStartTimestamp(created);
+                    }
+                    break;
             }
         }
         client.sendRichPresence(builder.build(), callback);

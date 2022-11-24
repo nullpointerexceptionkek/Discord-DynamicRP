@@ -42,6 +42,8 @@ public class Script {
         custom;
 
     }
+
+    private static long customTimestamp;
     private static ArrayList<Updates> totalupdates;
 
     private static TimeStampMode timestampmode = TimeStampMode.appLaunch;
@@ -96,6 +98,14 @@ public class Script {
     public int getSize() {
         return totalupdates.size();
 
+    }
+
+    public static void setCustomTimestamp(long customTimestamp) {
+        Script.customTimestamp = customTimestamp;
+    }
+
+    public static long getCustomTimestamp() {
+        return customTimestamp;
     }
 
     @Override

@@ -57,6 +57,9 @@ public class ScriptAdapter extends TypeAdapter<Script> {
                     case "TimeStampMode":
                         Script.setTimestampmode(Script.TimeStampMode.valueOf(reader.nextString()));
                         break;
+                    case "CustomTimeStamp":
+                        Script.setCustomTimestamp(reader.nextLong());
+                        break;
                     case "Updates":
                         reader.beginArray();
                         while (reader.peek() != JsonToken.END_ARRAY) {
@@ -132,6 +135,8 @@ public class ScriptAdapter extends TypeAdapter<Script> {
         writter.beginObject();
         writter.name("TimeStampMode");
         writter.value(Script.getTimestampmode().name());
+        writter.name("CustomTimeStamp");
+        writter.value(Script.getCustomTimestamp());
         writter.name("Updates");
         writter.beginArray();
         //time, String image, String imagetext, String smallimage, String smalltext, String f1, String sl

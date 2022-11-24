@@ -87,6 +87,9 @@ public class ConfigController implements Initializable {
     private RadioButton appLaunch,local, cdFomEndDay, sinceUpdate, none, custom;
 
     @FXML
+    private TextField CustomTimeInput;
+
+    @FXML
     private AnchorPane anchorRoot;
 
     @FXML
@@ -138,7 +141,7 @@ public class ConfigController implements Initializable {
             invalidDiscordAppID("Invalid Application ID");
             return;
         }
-
+        Script.setCustomTimestamp(Long.parseLong(CustomTimeInput.getText()));
         callbackButton.setDisable(true);
         Settings.setDiscordAPIKey(DiscordAppID);
         SettingManager.saveSettingToFile();
@@ -299,6 +302,14 @@ public class ConfigController implements Initializable {
             anchorRoot.getChildren().remove(invalidAppID);
         });
         appID.setText(Settings.getDiscordAPIKey());
+
+        CustomTimeInput.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == null) return;
+            if (!newValue.matches("\\d*")) {
+                CustomTimeInput.setText(newValue.replaceAll("\\D", ""));
+            }
+        });
+        CustomTimeInput.setText(String.valueOf(Script.getCustomTimestamp()));
 
 
         try {
