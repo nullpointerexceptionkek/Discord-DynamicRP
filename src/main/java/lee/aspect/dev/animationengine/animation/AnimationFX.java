@@ -6,7 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.util.Duration;
-import lee.aspect.dev.discordrpc.settings.Settings;
+import lee.aspect.dev.discordrpc.settings.SettingManager;
 
 
 /**
@@ -77,7 +77,7 @@ public abstract class AnimationFX {
      * Play the animation
      */
     public void play() {
-        if(!Settings.isNoAnimation())
+        if(!SettingManager.SETTINGS.isNoAnimation())
             timeline.play();
     }
 
@@ -108,7 +108,7 @@ public abstract class AnimationFX {
     }
 
     public void setTimeline(Timeline timeline) {
-        if(!Settings.isNoAnimation())
+        if(!SettingManager.SETTINGS.isNoAnimation())
             this.timeline = timeline;
     }
 
@@ -136,7 +136,7 @@ public abstract class AnimationFX {
     }
 
     public void setNode(Node node) {
-        if(Settings.isNoAnimation()) return;
+        if(SettingManager.SETTINGS.isNoAnimation()) return;
         this.node = node;
         initTimeline();
         timeline.statusProperty().addListener((observable, oldValue, newValue) -> {
@@ -182,7 +182,7 @@ public abstract class AnimationFX {
      * @return
      */
     public AnimationFX setSpeed(double value) {
-        if(Settings.isNoAnimation()) return null;
+        if(SettingManager.SETTINGS.isNoAnimation()) return null;
         this.timeline.setRate(value);
         return this;
     }
@@ -204,7 +204,7 @@ public abstract class AnimationFX {
      * @param value
      */
     public final void setOnFinished(EventHandler<ActionEvent> value) {
-        if(!Settings.isNoAnimation())
+        if(!SettingManager.SETTINGS.isNoAnimation())
             this.timeline.setOnFinished(value);
         else value.handle(new ActionEvent(this, null));
     }

@@ -60,7 +60,7 @@ public class CustomDiscordRPC extends Application {
     public static void Launch(String[] args) {
         Platform.setImplicitExit(false);
         RunLoopManager.init();
-        if(!Settings.isStartTrayOnlyInterfaceClose())
+        if(!SettingManager.SETTINGS.isStartTrayOnlyInterfaceClose())
             ApplicationTray.initTray();
         System.out.println("LaunchArgs: ");
         System.out.println(Arrays.toString(args));
@@ -85,7 +85,7 @@ public class CustomDiscordRPC extends Application {
             primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/lee/aspect/dev/icon/SystemTrayIcon.png"))));
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml")));
             Scene scene = new Scene(root);
-            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(Settings.getTheme().getThemepass())).toExternalForm());
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(SettingManager.SETTINGS.getTheme().getThemepass())).toExternalForm());
             primaryStage.setTitle("Custom Discord RPC");
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
@@ -128,25 +128,25 @@ public class CustomDiscordRPC extends Application {
             RunLoopManager.onClose();
             return;
         }
-        switch (Settings.getMinimizeMode()) {
+        switch (SettingManager.SETTINGS.getMinimizeMode()) {
             case Ask:
                 Alert alert = WarningManager.createAlertWithOptOut(
                         Alert.AlertType.CONFIRMATION,
                         "Minimize to System Tray",null,
                         "Do you want to minimize to System Tray?",
-                        "Do not show again", param -> Settings.setMinimizeMode(param ? Settings.MinimizeMode.WaitAndSee : Settings.MinimizeMode.Ask),ButtonType.YES,ButtonType.NO,ButtonType.CANCEL);
+                        "Do not show again", param -> SettingManager.SETTINGS.setMinimizeMode(param ? Settings.MinimizeMode.WaitAndSee : Settings.MinimizeMode.Ask),ButtonType.YES,ButtonType.NO,ButtonType.CANCEL);
                 var result = alert.showAndWait();
                 if (result.filter(buttonType -> buttonType == ButtonType.YES).isPresent()) {
-                    if(Settings.getMinimizeMode() == Settings.MinimizeMode.WaitAndSee)
-                        Settings.setMinimizeMode(Settings.MinimizeMode.Always);
+                    if(SettingManager.SETTINGS.getMinimizeMode() == Settings.MinimizeMode.WaitAndSee)
+                        SettingManager.SETTINGS.setMinimizeMode(Settings.MinimizeMode.Always);
 
                     primaryStage.close();
-                    if(Settings.isStartTrayOnlyInterfaceClose()) ApplicationTray.initTray();
+                    if(SettingManager.SETTINGS.isStartTrayOnlyInterfaceClose()) ApplicationTray.initTray();
                     isOnSystemTray = true;
-                    if (Settings.isShutDownInterfaceWhenTray()) Platform.exit();
+                    if (SettingManager.SETTINGS.isShutDownInterfaceWhenTray()) Platform.exit();
                 } else if (result.filter(buttonType -> buttonType == ButtonType.NO).isPresent()) {
-                    if(Settings.getMinimizeMode() == Settings.MinimizeMode.WaitAndSee)
-                        Settings.setMinimizeMode(Settings.MinimizeMode.Never);
+                    if(SettingManager.SETTINGS.getMinimizeMode() == Settings.MinimizeMode.WaitAndSee)
+                        SettingManager.SETTINGS.setMinimizeMode(Settings.MinimizeMode.Never);
                     RunLoopManager.onClose();
                     return;
                 }
@@ -155,8 +155,8 @@ public class CustomDiscordRPC extends Application {
             case Always:
                 primaryStage.close();
                 isOnSystemTray = true;
-                if(Settings.isStartTrayOnlyInterfaceClose()) ApplicationTray.initTray();
-                if (Settings.isShutDownInterfaceWhenTray()) Platform.exit();
+                if(SettingManager.SETTINGS.isStartTrayOnlyInterfaceClose()) ApplicationTray.initTray();
+                if (SettingManager.SETTINGS.isShutDownInterfaceWhenTray()) Platform.exit();
                 break;
             default:
                 RunLoopManager.onClose();

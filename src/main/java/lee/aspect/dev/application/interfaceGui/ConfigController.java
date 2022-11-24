@@ -52,7 +52,6 @@ import lee.aspect.dev.application.RunLoopManager;
 import lee.aspect.dev.discordrpc.Script;
 import lee.aspect.dev.discordrpc.Updates;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
-import lee.aspect.dev.discordrpc.settings.Settings;
 import lee.aspect.dev.jsonreader.FileManager;
 
 import java.awt.*;
@@ -143,12 +142,12 @@ public class ConfigController implements Initializable {
         }
         Script.setCustomTimestamp(Long.parseLong(CustomTimeInput.getText()));
         callbackButton.setDisable(true);
-        Settings.setDiscordAPIKey(DiscordAppID);
+        SettingManager.SETTINGS.setDiscordAPIKey(DiscordAppID);
         SettingManager.saveSettingToFile();
         RunLoopManager.saveScripToFile();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/scenes/LoadingScreen.fxml"));
         Parent root = loader.load();
-        root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(Settings.getTheme().getThemepass())).toExternalForm());
+        root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(SettingManager.SETTINGS.getTheme().getThemepass())).toExternalForm());
         var fadeOut = new FadeOut(anchorRoot);
         fadeOut.setOnFinished((actionEvent -> {
             stackPane.getChildren().remove(anchorRoot);
@@ -170,7 +169,7 @@ public class ConfigController implements Initializable {
         settingButton.setDisable(true);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/scenes/Settings.fxml"));
         Parent root = loader.load();
-        root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(Settings.getTheme().getThemepass())).toExternalForm());
+        root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(SettingManager.SETTINGS.getTheme().getThemepass())).toExternalForm());
         stackPane.getChildren().add(root);
         var animation = new SlideInLeft(root);
         animation.setOnFinished((actionEvent) -> stackPane.getChildren().remove(anchorRoot));
@@ -301,7 +300,7 @@ public class ConfigController implements Initializable {
             }
             anchorRoot.getChildren().remove(invalidAppID);
         });
-        appID.setText(Settings.getDiscordAPIKey());
+        appID.setText(SettingManager.SETTINGS.getDiscordAPIKey());
 
         CustomTimeInput.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null) return;
@@ -366,7 +365,7 @@ public class ConfigController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/scenes/EditListScript.fxml"));
             Parent root = loader.load();
-            root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(Settings.getTheme().getThemepass())).toExternalForm());
+            root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(SettingManager.SETTINGS.getTheme().getThemepass())).toExternalForm());
             EditListController ec = loader.getController();
             ec.setnumberInList(numberInList);
             Stage stage = new Stage();

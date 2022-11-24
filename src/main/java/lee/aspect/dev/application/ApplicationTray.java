@@ -33,7 +33,7 @@ import lee.aspect.dev.Launch;
 import lee.aspect.dev.application.interfaceGui.CallBackController;
 import lee.aspect.dev.application.interfaceGui.ConfigController;
 import lee.aspect.dev.discordipc.exceptions.NoDiscordClientException;
-import lee.aspect.dev.discordrpc.settings.Settings;
+import lee.aspect.dev.discordrpc.settings.SettingManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -115,7 +115,7 @@ public class ApplicationTray {
                 JOptionPane.showMessageDialog(null, "Discord RPC is already running", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 try {
-                    if(Settings.isShutDownInterfaceWhenTray()) {
+                    if(SettingManager.SETTINGS.isShutDownInterfaceWhenTray()) {
                         RunLoopManager.startUpdate();
                         return;
                     }
@@ -124,7 +124,7 @@ public class ApplicationTray {
                             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(CustomDiscordRPC.class.getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml")));
                             Parent root = loader.load();
                             Scene scene = new Scene(root);
-                            scene.getStylesheets().add(Objects.requireNonNull(ApplicationTray.class.getResource(Settings.getTheme().getThemepass())).toExternalForm());
+                            scene.getStylesheets().add(Objects.requireNonNull(ApplicationTray.class.getResource(SettingManager.SETTINGS.getTheme().getThemepass())).toExternalForm());
                             CustomDiscordRPC.primaryStage.setScene(scene);
                             ConfigController controller = loader.getController();
                             controller.switchToCallBack();
@@ -139,7 +139,7 @@ public class ApplicationTray {
         });
         closeRPCItem.addActionListener(e -> {
             if (RunLoopManager.isRunning) {
-                if(Settings.isShutDownInterfaceWhenTray()) {
+                if(SettingManager.SETTINGS.isShutDownInterfaceWhenTray()) {
                     RunLoopManager.closeCallBack();
                     return;
                 }
@@ -148,7 +148,7 @@ public class ApplicationTray {
                         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(CustomDiscordRPC.class.getResource("/lee/aspect/dev/scenes/CallBack.fxml")));
                         Parent root = loader.load();
                         Scene scene = new Scene(root);
-                        scene.getStylesheets().add(Objects.requireNonNull(ApplicationTray.class.getResource(Settings.getTheme().getThemepass())).toExternalForm());
+                        scene.getStylesheets().add(Objects.requireNonNull(ApplicationTray.class.getResource(SettingManager.SETTINGS.getTheme().getThemepass())).toExternalForm());
                         CustomDiscordRPC.primaryStage.setScene(scene);
                         CallBackController controller = loader.getController();
                         controller.switchToConfig();
@@ -184,7 +184,7 @@ public class ApplicationTray {
     }
 
     private static void LaunchInterface() {
-        if (Settings.isShutDownInterfaceWhenTray()) {
+        if (SettingManager.SETTINGS.isShutDownInterfaceWhenTray()) {
             trayIcon.displayMessage("CDiscordRPC",
                     "Application cannot start interface when ShutDownInterface is on, please exit and relaunch the program to see interface", TrayIcon.MessageType.ERROR);
             return;
@@ -193,7 +193,7 @@ public class ApplicationTray {
             CustomDiscordRPC.primaryStage.show();
         });
         CustomDiscordRPC.isOnSystemTray = false;
-        if (Settings.isStartTrayOnlyInterfaceClose()) tray.remove(trayIcon);
+        if (SettingManager.SETTINGS.isStartTrayOnlyInterfaceClose()) tray.remove(trayIcon);
     }
 
 }

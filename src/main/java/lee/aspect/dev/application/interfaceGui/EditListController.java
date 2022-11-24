@@ -38,7 +38,7 @@ import javafx.stage.Stage;
 import lee.aspect.dev.application.CustomDiscordRPC;
 import lee.aspect.dev.discordrpc.Script;
 import lee.aspect.dev.discordrpc.Updates;
-import lee.aspect.dev.discordrpc.settings.Settings;
+import lee.aspect.dev.discordrpc.settings.SettingManager;
 
 import java.io.IOException;
 import java.net.URL;
@@ -139,7 +139,7 @@ public class EditListController extends ConfigController implements Initializabl
         stage.close();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml"));
         Parent root = loader.load();
-        root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(Settings.getTheme().getThemepass())).toExternalForm());
+        root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(SettingManager.SETTINGS.getTheme().getThemepass())).toExternalForm());
         CustomDiscordRPC.primaryStage.setScene(new Scene(root));
         numberInList = -1;
     }

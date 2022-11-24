@@ -29,6 +29,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
+import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.discordrpc.settings.Settings;
 
 import java.io.IOException;
@@ -55,25 +56,25 @@ public class SettingsAdapter extends TypeAdapter<Settings> {
                 }
                 switch (Objects.requireNonNull(name)) {
                     case "theme":
-                        Settings.setTheme(Settings.Theme.valueOf(reader.nextString()));
+                        settings.setTheme(Settings.Theme.valueOf(reader.nextString()));
                         break;
                     case "MinimizeMode":
-                        Settings.setMinimizeMode(Settings.MinimizeMode.valueOf(reader.nextString()));
+                        settings.setMinimizeMode(Settings.MinimizeMode.valueOf(reader.nextString()));
                         break;
                     case "ShutDownInterfaceWhenTray":
-                        Settings.setShutDownInterfaceWhenTray(reader.nextBoolean());
+                        settings.setShutDownInterfaceWhenTray(reader.nextBoolean());
                         break;
                     case "StartTrayOnlyInterfaceClose":
-                        Settings.setStartTrayOnlyInterfaceClose(reader.nextBoolean());
+                        settings.setStartTrayOnlyInterfaceClose(reader.nextBoolean());
                         break;
                     case "NoAnimation":
-                        Settings.setNoAnimation(reader.nextBoolean());
+                        settings.setNoAnimation(reader.nextBoolean());
                         break;
                     case "StartLaunch":
-                        Settings.setStartLaunch(reader.nextBoolean());
+                        settings.setStartLaunch(reader.nextBoolean());
                         break;
                     case "Apikey":
-                        Settings.setDiscordAPIKey(reader.nextString());
+                        settings.setDiscordAPIKey(reader.nextString());
                         break;
 
                 }
@@ -98,19 +99,19 @@ public class SettingsAdapter extends TypeAdapter<Settings> {
         }
         writter.beginObject();
         writter.name("theme");
-        writter.value(Settings.getTheme().name());
+        writter.value(SettingManager.SETTINGS.getTheme().name());
         writter.name("MinimizeMode");
-        writter.value(Settings.getMinimizeMode().name());
+        writter.value(SettingManager.SETTINGS.getMinimizeMode().name());
         writter.name("ShutDownInterfaceWhenTray");
-        writter.value(Settings.isShutDownInterfaceWhenTray());
+        writter.value(SettingManager.SETTINGS.isShutDownInterfaceWhenTray());
         writter.name("StartTrayOnlyInterfaceClose");
-        writter.value(Settings.isStartTrayOnlyInterfaceClose());
+        writter.value(SettingManager.SETTINGS.isStartTrayOnlyInterfaceClose());
         writter.name("NoAnimation");
-        writter.value(Settings.isNoAnimation());
+        writter.value(SettingManager.SETTINGS.isNoAnimation());
         writter.name("StartLaunch");
-        writter.value(Settings.isStartLaunch());
+        writter.value(SettingManager.SETTINGS.isStartLaunch());
         writter.name("Apikey");
-        writter.value(Settings.getDiscordAPIKey());
+        writter.value(SettingManager.SETTINGS.getDiscordAPIKey());
         writter.endObject();
 
     }

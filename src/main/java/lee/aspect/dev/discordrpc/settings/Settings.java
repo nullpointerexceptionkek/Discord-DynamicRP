@@ -59,70 +59,70 @@ public class Settings {
             return displayName;
         }
     }
-    private static String DiscordAPIKey;
+    private String DiscordAPIKey;
 
-    private static Theme theme = Theme.dark;
+    private Theme theme = Theme.dark;
 
-    private static MinimizeMode minimizeMode = MinimizeMode.Ask;
-    private static boolean NoAnimation = false;
-    private static boolean StartTrayOnlyInterfaceClose = false;
-    private static boolean StartLaunch = false;
-    private static boolean ShutDownInterfaceWhenTray = false;
+    private MinimizeMode minimizeMode = MinimizeMode.Ask;
+    private boolean NoAnimation = false;
+    private boolean StartTrayOnlyInterfaceClose = false;
+    private boolean StartLaunch = false;
+    private boolean ShutDownInterfaceWhenTray = false;
 
-    public static boolean isStartTrayOnlyInterfaceClose() {
+    public boolean isStartTrayOnlyInterfaceClose() {
         return StartTrayOnlyInterfaceClose;
     }
 
-    public static void setStartTrayOnlyInterfaceClose(boolean startTrayOnlyInterfaceClose) {
-        StartTrayOnlyInterfaceClose = startTrayOnlyInterfaceClose;
+    public void setStartTrayOnlyInterfaceClose(boolean startTrayOnlyInterfaceClose) {
+        this.StartTrayOnlyInterfaceClose = startTrayOnlyInterfaceClose;
     }
 
-    public static boolean isStartLaunch() {
+    public boolean isStartLaunch() {
         return StartLaunch;
     }
 
-    public static void setStartLaunch(boolean startLaunch) {
-        StartLaunch = startLaunch;
+    public void setStartLaunch(boolean startLaunch) {
+        this.StartLaunch = startLaunch;
     }
 
-    public static boolean isShutDownInterfaceWhenTray() {
+    public boolean isShutDownInterfaceWhenTray() {
         return ShutDownInterfaceWhenTray;
     }
 
-    public static void setShutDownInterfaceWhenTray(boolean shutDownInterfaceWhenTray) {
-        ShutDownInterfaceWhenTray = shutDownInterfaceWhenTray;
+    public void setShutDownInterfaceWhenTray(boolean shutDownInterfaceWhenTray) {
+        this.ShutDownInterfaceWhenTray = shutDownInterfaceWhenTray;
     }
 
-    public static Theme getTheme() {
+    public Theme getTheme() {
         return theme;
     }
 
-    public static void setTheme(Theme theme) {
-        Settings.theme = theme;
+    public void setTheme(Theme theme) {
+        this.theme = theme;
     }
 
-    public static MinimizeMode getMinimizeMode() {
+    public MinimizeMode getMinimizeMode() {
         return minimizeMode;
     }
 
-    public static void setMinimizeMode(MinimizeMode minimizeMode) {
-        Settings.minimizeMode = minimizeMode;
+    public void setMinimizeMode(MinimizeMode minimizeMode) {
+        this.minimizeMode = minimizeMode;
     }
 
-    public static boolean isNoAnimation() {
+    public boolean isNoAnimation() {
         return NoAnimation;
     }
 
-    public static void setNoAnimation(boolean noAnimation) {
-        NoAnimation = noAnimation;
+    public void setNoAnimation(boolean noAnimation) {
+        this.NoAnimation = noAnimation;
     }
 
-    public static String getDiscordAPIKey() {
+    public String getDiscordAPIKey() {
         return DiscordAPIKey;
     }
 
-    public static void setDiscordAPIKey(String discordAPIKey) {
-        DiscordAPIKey = discordAPIKey;
+    public void setDiscordAPIKey(String discordAPIKey) {
+        this.DiscordAPIKey = discordAPIKey;
     }
 
     @Override

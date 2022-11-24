@@ -30,21 +30,21 @@ import lee.aspect.dev.jsonreader.FileManager;
 import java.io.File;
 
 
-public class SettingManager {
+public abstract class SettingManager {
 
-    private static Settings settings;
+    public static Settings SETTINGS;
 
     public static void init() {
-        settings = loadKeyFromJson();
+        SETTINGS = loadKeyFromJson();
     }
 
-    public static Settings loadKeyFromJson() {
+    private static Settings loadKeyFromJson() {
         Settings loaded = FileManager.readFromJson(new File(FileManager.getROOT_DIR(), "Settings.json"), Settings.class);
         if (loaded == null) {
-            settings = new Settings();
-            Settings.setTheme(Settings.Theme.dark);
-            Settings.setDiscordAPIKey("");
-            loaded = settings;
+            loaded = new Settings();
+            loaded.setTheme(Settings.Theme.dark);
+            loaded.setDiscordAPIKey("");
+            loaded = SETTINGS;
             saveSettingToFile();
         }
         return loaded;
@@ -52,15 +52,7 @@ public class SettingManager {
     }
 
     public static void saveSettingToFile() {
-        FileManager.writeJsonTofile(new File(FileManager.getROOT_DIR(), "Settings.json"), settings);
-    }
-
-    public static Settings getSettings() {
-        return settings;
-    }
-
-    public static void setSettings(Settings settings) {
-        SettingManager.settings = settings;
+        FileManager.writeJsonTofile(new File(FileManager.getROOT_DIR(), "Settings.json"), SETTINGS);
     }
 
 }

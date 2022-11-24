@@ -31,7 +31,7 @@ import lee.aspect.dev.discordipc.IPCListener;
 import lee.aspect.dev.discordipc.entities.Callback;
 import lee.aspect.dev.discordipc.entities.RichPresence;
 import lee.aspect.dev.discordipc.exceptions.NoDiscordClientException;
-import lee.aspect.dev.discordrpc.settings.Settings;
+import lee.aspect.dev.discordrpc.settings.SettingManager;
 
 import java.util.Calendar;
 
@@ -152,7 +152,7 @@ public class DiscordRP {
     }
 
     private void setIPCClient(Updates updates) {
-        client = new IPCClient(Long.parseLong(Settings.getDiscordAPIKey()));
+        client = new IPCClient(Long.parseLong(SettingManager.SETTINGS.getDiscordAPIKey()));
         client.setListener(new IPCListener() {
             @Override
             public void onReady(IPCClient client) {

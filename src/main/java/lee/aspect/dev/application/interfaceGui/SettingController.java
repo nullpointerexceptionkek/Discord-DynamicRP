@@ -82,7 +82,7 @@ public class SettingController implements Initializable {
         goBack.setDisable(true);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml"));
         Parent root = loader.load();
-        root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(Settings.getTheme().getThemepass())).toExternalForm());
+        root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(SettingManager.SETTINGS.getTheme().getThemepass())).toExternalForm());
         stackPane.getChildren().add(0, root);
         var animation = new SlideOutLeft(settingsAnchorPane);
         animation.setOnFinished((actionEvent) -> stackPane.getChildren().remove(settingsAnchorPane));
@@ -99,13 +99,13 @@ public class SettingController implements Initializable {
         goBack.setGraphic(imageView);
         //add theme to theme choice box
         EnumSet.allOf(Settings.Theme.class).forEach((theme) -> themeChoiceBox.getItems().add(theme.getDisplayName()));
-        themeChoiceBox.setValue((Settings.getTheme().getDisplayName()));
+        themeChoiceBox.setValue((SettingManager.SETTINGS.getTheme().getDisplayName()));
         themeChoiceBox.setOnAction((event) -> EnumSet.allOf(Settings.Theme.class).forEach((theme) -> {
             if (themeChoiceBox.getValue().equals(theme.getDisplayName())) {
-                Settings.setTheme(theme);
+                SettingManager.SETTINGS.setTheme(theme);
                 Parent root = settingsAnchorPane.getParent();
                 root.getStylesheets().removeAll();
-                root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(Settings.getTheme().getThemepass())).toExternalForm());
+                root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(SettingManager.SETTINGS.getTheme().getThemepass())).toExternalForm());
                 applyChange();
             }
         }));
@@ -115,24 +115,24 @@ public class SettingController implements Initializable {
             if(mode != Settings.MinimizeMode.WaitAndSee)
                 minimizeModeChoiceBox.getItems().add(mode);
         }
-        minimizeModeChoiceBox.setValue((Settings.getMinimizeMode()));
-        minimizeModeChoiceBox.setOnAction((event) -> Settings.setMinimizeMode(minimizeModeChoiceBox.getValue()));
+        minimizeModeChoiceBox.setValue((SettingManager.SETTINGS.getMinimizeMode()));
+        minimizeModeChoiceBox.setOnAction((event) -> SettingManager.SETTINGS.setMinimizeMode(minimizeModeChoiceBox.getValue()));
         //add for booleans
         shutDownInterfaceCheckBox.setDisable(!SystemTray.isSupported());
-        shutDownInterfaceCheckBox.setSelected(Settings.isShutDownInterfaceWhenTray());
-        shutDownInterfaceCheckBox.setOnAction((actionEvent -> Settings.setShutDownInterfaceWhenTray(shutDownInterfaceCheckBox.isSelected())));
+        shutDownInterfaceCheckBox.setSelected(SettingManager.SETTINGS.isShutDownInterfaceWhenTray());
+        shutDownInterfaceCheckBox.setOnAction((actionEvent -> SettingManager.SETTINGS.setShutDownInterfaceWhenTray(shutDownInterfaceCheckBox.isSelected())));
 
-        noAnimationCheckBox.setSelected(Settings.isNoAnimation());
-        noAnimationCheckBox.setOnAction((actionEvent -> Settings.setNoAnimation(noAnimationCheckBox.isSelected())));
+        noAnimationCheckBox.setSelected(SettingManager.SETTINGS.isNoAnimation());
+        noAnimationCheckBox.setOnAction((actionEvent -> SettingManager.SETTINGS.setNoAnimation(noAnimationCheckBox.isSelected())));
 
         startTrayOnlyCloseCheckBox.setSelected(!SystemTray.isSupported());
-        startTrayOnlyCloseCheckBox.setSelected(Settings.isStartTrayOnlyInterfaceClose());
+        startTrayOnlyCloseCheckBox.setSelected(SettingManager.SETTINGS.isStartTrayOnlyInterfaceClose());
         startTrayOnlyCloseCheckBox.setOnAction((actionEvent -> {
-            Settings.setStartTrayOnlyInterfaceClose(startTrayOnlyCloseCheckBox.isSelected());
+            SettingManager.SETTINGS.setStartTrayOnlyInterfaceClose(startTrayOnlyCloseCheckBox.isSelected());
             mustRestart();
         }));
         startLaunchCheckBox.setDisable(!StartLaunch.isOnWindows());
-        startLaunchCheckBox.setSelected(Settings.isStartLaunch());
+        startLaunchCheckBox.setSelected(SettingManager.SETTINGS.isStartLaunch());
         startLaunchCheckBox.setOnAction((actionEvent -> {
             if (startLaunchCheckBox.isSelected()) {
                 try {
@@ -148,7 +148,7 @@ public class SettingController implements Initializable {
             } else {
                 StartLaunch.deleteBat();
             }
-            Settings.setStartLaunch(startLaunchCheckBox.isSelected());
+            SettingManager.SETTINGS.setStartLaunch(startLaunchCheckBox.isSelected());
         }));
 
 
