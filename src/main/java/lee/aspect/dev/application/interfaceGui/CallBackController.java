@@ -38,6 +38,7 @@ import javafx.scene.text.TextAlignment;
 import lee.aspect.dev.animationengine.animation.*;
 import lee.aspect.dev.application.RunLoopManager;
 import lee.aspect.dev.discordrpc.UpdateManager;
+import lee.aspect.dev.discordrpc.Updates;
 
 import java.io.IOException;
 import java.net.URL;
@@ -114,13 +115,14 @@ public class CallBackController implements Initializable {
         });
     }
 
-    public void updateCurrentDisplay() {
+    public void updateCurrentDisplay(Updates next) {
+        String nextl = next.getFl() + '\n' + next.getSl();
         if ((display1.getLayoutY() + display1.getTranslateY()) <= 230) {
-            updateDisplayLabel(display1, display2, display3);
+            updateDisplayLabel(display1, display2, display3,nextl);
         } else if ((display2.getLayoutY() + display2.getTranslateY()) <= 230) {
-            updateDisplayLabel(display2, display3, display1);
+            updateDisplayLabel(display2, display3, display1, nextl);
         } else if ((display3.getLayoutY() + display3.getTranslateY()) <= 230) {
-            updateDisplayLabel(display3, display1, display2);
+            updateDisplayLabel(display3, display1, display2,nextl);
         } else {
             System.err.println("Animation have encounter an error, this should not be occur");
         }
@@ -137,14 +139,13 @@ public class CallBackController implements Initializable {
         display.setTextAlignment(TextAlignment.CENTER);
     }
 
-    private void updateDisplayLabel(Label Display1, Label Display2, Label Display3) {
+    private void updateDisplayLabel(Label Display1, Label Display2, Label Display3, String next) {
         SlideAndFade CurrentUp, AfterUp;
         pMoveUp.setNode(Display1);
         pMoveUp.setOnFinished((actionEvent -> {
             Display1.setTranslateY(45);
             afterIn.setNode(Display1);
-            Display1.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY() >= UpdateManager.SCRIPT.getTotalupdates().size() - 1 ? 0 : RunLoopManager.getCURRENTDISPLAY() + 1).getFl()
-                    + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY() >= UpdateManager.SCRIPT.getTotalupdates().size() - 1 ? 0 : RunLoopManager.getCURRENTDISPLAY() + 1).getSl());
+            Display1.setText(next);
             afterIn.play();
         }));
         pMoveUp.play();

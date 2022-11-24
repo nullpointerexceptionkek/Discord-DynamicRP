@@ -142,6 +142,7 @@ public class ConfigController implements Initializable {
             return;
         }
         UpdateManager.SCRIPT.setCustomTimestamp(Long.parseLong(CustomTimeInput.getText()));
+        UpdateManager.SCRIPT.setUpdateType(updateMode.getValue());
         callbackButton.setDisable(true);
         SettingManager.SETTINGS.setDiscordAPIKey(DiscordAppID);
         SettingManager.saveSettingToFile();
