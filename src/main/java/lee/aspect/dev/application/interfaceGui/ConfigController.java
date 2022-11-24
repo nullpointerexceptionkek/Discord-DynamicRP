@@ -364,7 +364,7 @@ public class ConfigController implements Initializable {
     //this will open up a new window and edit the arraylist
     private void showListConfig(int numberInList, double x, double y) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/scenes/EditListUpdateManager.script.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/scenes/EditListScript.fxml"));
             Parent root = loader.load();
             root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(SettingManager.SETTINGS.getTheme().getThemepass())).toExternalForm());
             EditListController ec = loader.getController();
