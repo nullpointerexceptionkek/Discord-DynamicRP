@@ -152,7 +152,7 @@ public abstract class RunLoopManager {
                                     CURRENTDISPLAY = i;
                                     if (!isRunning) return;
                                     if (!CustomDiscordRPC.isOnSystemTray){
-                                        int finalI = i == 0 ? UpdateManager.SCRIPT.getSize()-1 : i + 1;
+                                        int finalI = i == 0 ? 1 : i - 1;
                                         Platform.runLater(() -> LoadingController.callBackController.updateCurrentDisplay(UpdateManager.SCRIPT.getUpdates(finalI)));
                                     }
                                 }
