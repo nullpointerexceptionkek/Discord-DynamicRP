@@ -36,7 +36,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lee.aspect.dev.application.CustomDiscordRPC;
-import lee.aspect.dev.discordrpc.Script;
+import lee.aspect.dev.discordrpc.UpdateManager;
 import lee.aspect.dev.discordrpc.Updates;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
 
@@ -89,14 +89,14 @@ public class EditListController extends ConfigController implements Initializabl
     }
 
     public void saveChanges() throws IOException {
-        Script.setUpdates(numberInList, new Updates(Long.parseLong(Wait.getText()), image.getText(), imagetext.getText(), smallimage.getText(),
+        UpdateManager.SCRIPT.setUpdates(numberInList, new Updates(Long.parseLong(Wait.getText()), image.getText(), imagetext.getText(), smallimage.getText(),
                 smalltext.getText(), firstline.getText(), secondline.getText(), button1Text.getText(),
                 button1Url.getText(), button2Text.getText(), button2Url.getText()));
         gobacktoConfig();
     }
 
     public void deleteThisItem() throws IOException {
-        Script.getTotalupdates().remove(numberInList);
+        UpdateManager.SCRIPT.getTotalupdates().remove(numberInList);
         gobacktoConfig();
     }
 
@@ -120,17 +120,17 @@ public class EditListController extends ConfigController implements Initializabl
 
     public void setnumberInList(int numberInList) {
         this.numberInList = numberInList;
-        Wait.setText(String.valueOf(Script.getTotalupdates().get(numberInList).getWait()));
-        image.setText(Script.getTotalupdates().get(numberInList).getImage());
-        imagetext.setText(Script.getTotalupdates().get(numberInList).getImagetext());
-        smallimage.setText(Script.getTotalupdates().get(numberInList).getSmallimage());
-        smalltext.setText(Script.getTotalupdates().get(numberInList).getSmalltext());
-        firstline.setText(Script.getTotalupdates().get(numberInList).getFl());
-        secondline.setText(Script.getTotalupdates().get(numberInList).getSl());
-        button1Text.setText(Script.getTotalupdates().get(numberInList).getButton1Text());
-        button1Url.setText(Script.getTotalupdates().get(numberInList).getButton1Url());
-        button2Text.setText(Script.getTotalupdates().get(numberInList).getButton2Text());
-        button2Url.setText(Script.getTotalupdates().get(numberInList).getButton2Url());
+        Wait.setText(String.valueOf(UpdateManager.SCRIPT.getTotalupdates().get(numberInList).getWait()));
+        image.setText(UpdateManager.SCRIPT.getTotalupdates().get(numberInList).getImage());
+        imagetext.setText(UpdateManager.SCRIPT.getTotalupdates().get(numberInList).getImagetext());
+        smallimage.setText(UpdateManager.SCRIPT.getTotalupdates().get(numberInList).getSmallimage());
+        smalltext.setText(UpdateManager.SCRIPT.getTotalupdates().get(numberInList).getSmalltext());
+        firstline.setText(UpdateManager.SCRIPT.getTotalupdates().get(numberInList).getFl());
+        secondline.setText(UpdateManager.SCRIPT.getTotalupdates().get(numberInList).getSl());
+        button1Text.setText(UpdateManager.SCRIPT.getTotalupdates().get(numberInList).getButton1Text());
+        button1Url.setText(UpdateManager.SCRIPT.getTotalupdates().get(numberInList).getButton1Url());
+        button2Text.setText(UpdateManager.SCRIPT.getTotalupdates().get(numberInList).getButton2Text());
+        button2Url.setText(UpdateManager.SCRIPT.getTotalupdates().get(numberInList).getButton2Url());
 
     }
 

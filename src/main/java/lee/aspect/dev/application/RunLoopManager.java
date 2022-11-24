@@ -40,8 +40,6 @@ public abstract class RunLoopManager {
 
     private static final DiscordRP discordRP = new DiscordRP();
     public static boolean isRunning = false;
-    private static UpdateManager upm;
-
     private static Thread runloop;
 
     private static int CURRENTDISPLAY = 0;
@@ -52,19 +50,15 @@ public abstract class RunLoopManager {
     public static void init() {
         FileManager.init();
         SettingManager.init();
-        upm = new UpdateManager();
-
-
+        UpdateManager.init();
     }
 
     public static void runFromStartLunch() {
-        FileManager.init();
-        SettingManager.init();
-        upm = new UpdateManager();
+        init();
         var delay = 16000;
         do {
             try {
-                discordRP.LaunchReadyCallBack(upm.getUpdates().getUpdates(0));
+                discordRP.LaunchReadyCallBack(UpdateManager.SCRIPT.getUpdates(0));
                 break;
             } catch (NoDiscordClientException | RuntimeException ex) {
                 try {
@@ -77,16 +71,16 @@ public abstract class RunLoopManager {
         } while (true); //everyone likes while true
         isRunning = true;
         new Thread(() -> {
-            if (upm.getUpdates().getSize() == 1) {
+            if (UpdateManager.SCRIPT.getSize() == 1) {
                 return;
             }
-            for (int i = 1; i < upm.getUpdates().getSize(); i++) {
-                executeUpdate(upm.getUpdates().getUpdates(i));
+            for (int i = 1; i < UpdateManager.SCRIPT.getSize(); i++) {
+                executeUpdate(UpdateManager.SCRIPT.getUpdates(i));
                 if (!isRunning) return;
             }
             while (isRunning) {
-                for (int i = 0; i < upm.getUpdates().getSize(); i++) {
-                    executeUpdate(upm.getUpdates().getUpdates(i));
+                for (int i = 0; i < UpdateManager.SCRIPT.getSize(); i++) {
+                    executeUpdate(UpdateManager.SCRIPT.getUpdates(i));
                     if (!isRunning) return;
                 }
 
@@ -100,10 +94,10 @@ public abstract class RunLoopManager {
     public static void startUpdate() throws NoDiscordClientException {
         if (runloop == null) {
             CURRENTDISPLAY = 0;
-            discordRP.LaunchReadyCallBack(upm.getUpdates().getUpdates(0));
+            discordRP.LaunchReadyCallBack(UpdateManager.SCRIPT.getUpdates(0));
         }
         else {
-            discordRP.LaunchReadyCallBack(upm.getUpdates().getUpdates(getCURRENTDISPLAY()));
+            discordRP.LaunchReadyCallBack(UpdateManager.SCRIPT.getUpdates(getCURRENTDISPLAY()));
         }
 
         isRunning = true;
@@ -113,11 +107,11 @@ public abstract class RunLoopManager {
             runloop = new Thread("RunLoop") {
                 @Override
                 public void run() {
-                    if (upm.getUpdates().getSize() == 1) {
+                    if (UpdateManager.SCRIPT.getSize() == 1) {
                         return;
                     }
-                    for (int i = 1; i < upm.getUpdates().getSize(); i++) {
-                        executeUpdate(upm.getUpdates().getUpdates(i));
+                    for (int i = 1; i < UpdateManager.SCRIPT.getSize(); i++) {
+                        executeUpdate(UpdateManager.SCRIPT.getUpdates(i));
                         CURRENTDISPLAY = i;
 
                         if (!isRunning) return;
@@ -125,8 +119,8 @@ public abstract class RunLoopManager {
                             Platform.runLater(() -> LoadingController.callBackController.updateCurrentDisplay());
                     }
                     while (isRunning) {
-                        for (int i = 0; i < upm.getUpdates().getSize(); i++) {
-                            executeUpdate(upm.getUpdates().getUpdates(i));
+                        for (int i = 0; i < UpdateManager.SCRIPT.getSize(); i++) {
+                            executeUpdate(UpdateManager.SCRIPT.getUpdates(i));
                             CURRENTDISPLAY = i;
                             if (!isRunning) return;
                             if (!CustomDiscordRPC.isOnSystemTray)
@@ -166,7 +160,7 @@ public abstract class RunLoopManager {
 
     public static void onClose() {
         SettingManager.saveSettingToFile();
-        upm.saveScriptToFile();
+        UpdateManager.saveScriptToFile();
         try {
             discordRP.shutdown();
         } catch (NullPointerException | IllegalStateException e) {
@@ -176,7 +170,7 @@ public abstract class RunLoopManager {
     }
 
     public static void saveScripToFile() {
-        upm.saveScriptToFile();
+        UpdateManager.saveScriptToFile();
     }
 
     public static int getCURRENTDISPLAY() {

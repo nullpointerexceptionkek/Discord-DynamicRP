@@ -48,7 +48,7 @@ public class DiscordRP {
 
     public void LaunchReadyCallBack(Updates updates) throws NoDiscordClientException {
         Calendar calendar = Calendar.getInstance();
-        switch (Script.getTimestampmode()) {
+        switch (UpdateManager.SCRIPT.getTimestampmode()) {
             case appLaunch:
                 this.created = (long) Math.ceil(System.currentTimeMillis());
                 break;
@@ -126,14 +126,14 @@ public class DiscordRP {
                 .setButton2Text(updates.getButton2Text())
                 .setButton2Url(updates.getButton2Url());
         if (!(created == -1)) {
-            switch(Script.getTimestampmode()){
+            switch(UpdateManager.SCRIPT.getTimestampmode()){
                 case custom:
-                    System.out.println("custom" + Script.getCustomTimestamp());
+                    System.out.println("custom" + UpdateManager.SCRIPT.getCustomTimestamp());
                     System.out.println("current" + current);
-                    if (Script.getCustomTimestamp() > current) {
-                        builder.setEndTimestamp(Script.getCustomTimestamp());
+                    if (UpdateManager.SCRIPT.getCustomTimestamp() > current) {
+                        builder.setEndTimestamp(UpdateManager.SCRIPT.getCustomTimestamp());
                     } else {
-                        builder.setStartTimestamp(Script.getCustomTimestamp());
+                        builder.setStartTimestamp(UpdateManager.SCRIPT.getCustomTimestamp());
                     }
                     break;
                 case sinceUpdate:

@@ -50,6 +50,7 @@ import lee.aspect.dev.animationengine.animation.Shake;
 import lee.aspect.dev.animationengine.animation.SlideInLeft;
 import lee.aspect.dev.application.RunLoopManager;
 import lee.aspect.dev.discordrpc.Script;
+import lee.aspect.dev.discordrpc.UpdateManager;
 import lee.aspect.dev.discordrpc.Updates;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.jsonreader.FileManager;
@@ -105,22 +106,22 @@ public class ConfigController implements Initializable {
         String toggleGroupValue = selectedRadioButton.getId();
         switch (toggleGroupValue){
             case "appLaunch":
-                Script.setTimestampmode(Script.TimeStampMode.appLaunch);
+                UpdateManager.SCRIPT.setTimestampmode(Script.TimeStampMode.appLaunch);
                 break;
             case "local":
-                Script.setTimestampmode(Script.TimeStampMode.localTime);
+                UpdateManager.SCRIPT.setTimestampmode(Script.TimeStampMode.localTime);
                 break;
             case "sinceUpdate":
-                Script.setTimestampmode(Script.TimeStampMode.sinceUpdate);
+                UpdateManager.SCRIPT.setTimestampmode(Script.TimeStampMode.sinceUpdate);
                 break;
             case "cdFomEndDay":
-                Script.setTimestampmode(Script.TimeStampMode.cdFromDayEnd);
+                UpdateManager.SCRIPT.setTimestampmode(Script.TimeStampMode.cdFromDayEnd);
                 break;
             case "custom":
-                Script.setTimestampmode(Script.TimeStampMode.custom);
+                UpdateManager.SCRIPT.setTimestampmode(Script.TimeStampMode.custom);
                 break;
             case "none":
-                Script.setTimestampmode(Script.TimeStampMode.none);
+                UpdateManager.SCRIPT.setTimestampmode(Script.TimeStampMode.none);
                 break;
         }
     }
@@ -140,7 +141,7 @@ public class ConfigController implements Initializable {
             invalidDiscordAppID("Invalid Application ID");
             return;
         }
-        Script.setCustomTimestamp(Long.parseLong(CustomTimeInput.getText()));
+        UpdateManager.SCRIPT.setCustomTimestamp(Long.parseLong(CustomTimeInput.getText()));
         callbackButton.setDisable(true);
         SettingManager.SETTINGS.setDiscordAPIKey(DiscordAppID);
         SettingManager.saveSettingToFile();
@@ -182,23 +183,23 @@ public class ConfigController implements Initializable {
             anchorRoot.getChildren().remove(invalidIndex);
             displayUpdates.setBackground(null);
         }
-        int index = Script.getTotalupdates().size() - 1;
-        if (Script.getTotalupdates().size() > 0)
-            Script.addUpdates(new Updates((Script.getTotalupdates().get(index).getWait()),
+        int index = UpdateManager.SCRIPT.getTotalupdates().size() - 1;
+        if (UpdateManager.SCRIPT.getTotalupdates().size() > 0)
+            UpdateManager.SCRIPT.addUpdates(new Updates((UpdateManager.SCRIPT.getTotalupdates().get(index).getWait()),
                     String.valueOf(index),
-                    Script.getTotalupdates().get(index).getImagetext(),
-                    Script.getTotalupdates().get(index).getSmallimage()
-                    , Script.getTotalupdates().get(index).getSmalltext(),
+                    UpdateManager.SCRIPT.getTotalupdates().get(index).getImagetext(),
+                    UpdateManager.SCRIPT.getTotalupdates().get(index).getSmallimage()
+                    , UpdateManager.SCRIPT.getTotalupdates().get(index).getSmalltext(),
                     "First line " + index, "Second line " + index,
-                    Script.getTotalupdates().get(index).getButton1Text(),
-                    Script.getTotalupdates().get(index).getButton1Url(),
-                    Script.getTotalupdates().get(index).getButton2Text(),
-                    Script.getTotalupdates().get(index).getButton2Url()));
+                    UpdateManager.SCRIPT.getTotalupdates().get(index).getButton1Text(),
+                    UpdateManager.SCRIPT.getTotalupdates().get(index).getButton1Url(),
+                    UpdateManager.SCRIPT.getTotalupdates().get(index).getButton2Text(),
+                    UpdateManager.SCRIPT.getTotalupdates().get(index).getButton2Url()));
 
         else
-            Script.addUpdates(new Updates(16000, String.valueOf(index), "" + index, "", "", "First line ", "Second line " + index));
-        displayUpdates.getItems().add("Fl: \"" + Script.getTotalupdates().get(Script.getTotalupdates().size() - 1).getFl() + "\" Sl: \"" + Script.getTotalupdates().get(Script.getTotalupdates().size() - 1).getSl() + "\"");
-        UndoRedoManager.addUndo(new UndoRedoManager.UndoRedo(UndoRedoManager.Type.add, new Updates[]{Script.getTotalupdates().get(index)}));
+            UpdateManager.SCRIPT.addUpdates(new Updates(16000, String.valueOf(index), "" + index, "", "", "First line ", "Second line " + index));
+        displayUpdates.getItems().add("Fl: \"" + UpdateManager.SCRIPT.getTotalupdates().get(UpdateManager.SCRIPT.getTotalupdates().size() - 1).getFl() + "\" Sl: \"" + UpdateManager.SCRIPT.getTotalupdates().get(UpdateManager.SCRIPT.getTotalupdates().size() - 1).getSl() + "\"");
+        UndoRedoManager.addUndo(new UndoRedoManager.UndoRedo(UndoRedoManager.Type.add, new Updates[]{UpdateManager.SCRIPT.getTotalupdates().get(index)}));
     }
 
 
@@ -225,7 +226,7 @@ public class ConfigController implements Initializable {
                 ObservableList<Integer> selectedIndices = displayUpdates.getSelectionModel().getSelectedIndices();
                 Updates[] copiedItem = new Updates[selectedIndices.size()];
                 for (int i = 0; i < selectedIndices.size(); i++) {
-                    copiedItem[i] = Script.getTotalupdates().get(selectedIndices.get(i));
+                    copiedItem[i] = UpdateManager.SCRIPT.getTotalupdates().get(selectedIndices.get(i));
                 }
                 StringSelection stringSelection = new StringSelection(FileManager.toGson(copiedItem));
                 Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -240,7 +241,7 @@ public class ConfigController implements Initializable {
                     String data = (String) Toolkit.getDefaultToolkit()
                             .getSystemClipboard().getData(DataFlavor.stringFlavor);
                     FileManager.readFromJson(data, Updates[].class);
-                    Script.getTotalupdates().addAll(selectedIndex, List.of(FileManager.readFromJson(data, Updates[].class)));
+                    UpdateManager.SCRIPT.getTotalupdates().addAll(selectedIndex, List.of(FileManager.readFromJson(data, Updates[].class)));
                     refreshDisplayUpdates();
 
                 } catch (UnsupportedFlavorException | IOException e) {
@@ -253,8 +254,8 @@ public class ConfigController implements Initializable {
                 ArrayList<Updates> undoUpdates = new ArrayList<>();
                 ObservableList<Integer> selectedIndices = displayUpdates.getSelectionModel().getSelectedIndices();
                 for (int i = 0; i < selectedIndices.size(); i++) {
-                    undoUpdates.add(Script.getTotalupdates().get(selectedIndices.get(i) - i));
-                    Script.getTotalupdates().remove(selectedIndices.get(i) - i);
+                    undoUpdates.add(UpdateManager.SCRIPT.getTotalupdates().get(selectedIndices.get(i) - i));
+                    UpdateManager.SCRIPT.getTotalupdates().remove(selectedIndices.get(i) - i);
                 }
                 refreshDisplayUpdates();
                 UndoRedoManager.addUndo(new UndoRedoManager.UndoRedo(UndoRedoManager.Type.remove, undoUpdates.toArray(Updates[]::new)));
@@ -263,17 +264,17 @@ public class ConfigController implements Initializable {
         insertRowBelow.setOnAction((actionEvent) -> {
             if (displayUpdates.getSelectionModel().getSelectedIndex() != -1) {
                 int index = displayUpdates.getSelectionModel().getSelectedIndex();
-                Script.addUpdates(index + 1, new Updates(16000, String.valueOf(index), "" + index, "", "", "First line ", "Second line " + index));
-                displayUpdates.getItems().add(index + 1, "Fl: \"" + Script.getTotalupdates().get(index + 1).getFl() + "\" Sl: \"" + Script.getTotalupdates().get(index + 1).getSl() + "\"");
-                UndoRedoManager.addUndo(new UndoRedoManager.UndoRedo(UndoRedoManager.Type.add, new Updates[]{Script.getTotalupdates().get(index)}));
+                UpdateManager.SCRIPT.addUpdates(index + 1, new Updates(16000, String.valueOf(index), "" + index, "", "", "First line ", "Second line " + index));
+                displayUpdates.getItems().add(index + 1, "Fl: \"" + UpdateManager.SCRIPT.getTotalupdates().get(index + 1).getFl() + "\" Sl: \"" + UpdateManager.SCRIPT.getTotalupdates().get(index + 1).getSl() + "\"");
+                UndoRedoManager.addUndo(new UndoRedoManager.UndoRedo(UndoRedoManager.Type.add, new Updates[]{UpdateManager.SCRIPT.getTotalupdates().get(index)}));
             }
         });
         insertRowAbove.setOnAction((actionEvent) -> {
             if (displayUpdates.getSelectionModel().getSelectedIndex() != -1) {
                 int index = displayUpdates.getSelectionModel().getSelectedIndex();
-                Script.addUpdates(index, new Updates(16000, String.valueOf(index), "" + index, "", "", "First line ", "Second line " + index));
-                displayUpdates.getItems().add(index, "Fl: \"" + Script.getTotalupdates().get(index).getFl() + "\" Sl: \"" + Script.getTotalupdates().get(index).getSl() + "\"");
-                UndoRedoManager.addUndo(new UndoRedoManager.UndoRedo(UndoRedoManager.Type.add, new Updates[]{Script.getTotalupdates().get(index)}));
+                UpdateManager.SCRIPT.addUpdates(index, new Updates(16000, String.valueOf(index), "" + index, "", "", "First line ", "Second line " + index));
+                displayUpdates.getItems().add(index, "Fl: \"" + UpdateManager.SCRIPT.getTotalupdates().get(index).getFl() + "\" Sl: \"" + UpdateManager.SCRIPT.getTotalupdates().get(index).getSl() + "\"");
+                UndoRedoManager.addUndo(new UndoRedoManager.UndoRedo(UndoRedoManager.Type.add, new Updates[]{UpdateManager.SCRIPT.getTotalupdates().get(index)}));
             }
         });
 
@@ -308,12 +309,12 @@ public class ConfigController implements Initializable {
                 CustomTimeInput.setText(newValue.replaceAll("\\D", ""));
             }
         });
-        CustomTimeInput.setText(String.valueOf(Script.getCustomTimestamp()));
+        CustomTimeInput.setText(String.valueOf(UpdateManager.SCRIPT.getCustomTimestamp()));
 
 
         try {
             //set the timestamp mode
-            switch (Script.getTimestampmode()) {
+            switch (UpdateManager.SCRIPT.getTimestampmode()) {
                 case appLaunch:
                     appLaunch.setSelected(true);
                     break;
@@ -339,7 +340,7 @@ public class ConfigController implements Initializable {
                     break;
                 default:
                     appLaunch.setSelected(true);
-                    Script.setTimestampmode(Script.TimeStampMode.appLaunch);
+                    UpdateManager.SCRIPT.setTimestampmode(Script.TimeStampMode.appLaunch);
 
             }
             refreshDisplayUpdates();
@@ -363,7 +364,7 @@ public class ConfigController implements Initializable {
     //this will open up a new window and edit the arraylist
     private void showListConfig(int numberInList, double x, double y) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/scenes/EditListScript.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/scenes/EditListUpdateManager.script.fxml"));
             Parent root = loader.load();
             root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(SettingManager.SETTINGS.getTheme().getThemepass())).toExternalForm());
             EditListController ec = loader.getController();
@@ -383,8 +384,8 @@ public class ConfigController implements Initializable {
 
     private void refreshDisplayUpdates() {
         displayUpdates.getItems().clear();
-        for (int i = 0; i < Script.getTotalupdates().size(); i++) {
-            displayUpdates.getItems().add("Fl: \"" + Script.getTotalupdates().get(i).getFl() + "\" Sl: \"" + Script.getTotalupdates().get(i).getSl() + "\"");
+        for (int i = 0; i < UpdateManager.SCRIPT.getTotalupdates().size(); i++) {
+            displayUpdates.getItems().add("Fl: \"" + UpdateManager.SCRIPT.getTotalupdates().get(i).getFl() + "\" Sl: \"" + UpdateManager.SCRIPT.getTotalupdates().get(i).getSl() + "\"");
         }
     }
 
@@ -402,11 +403,11 @@ public class ConfigController implements Initializable {
         if (action == null) return;
         if (action.type.equals(UndoRedoManager.Type.remove)) {
             for (Updates updates : action.updates) {
-                Script.getTotalupdates().remove(updates);
+                UpdateManager.SCRIPT.getTotalupdates().remove(updates);
             }
         } else {
             for (Updates updates : action.updates) {
-                Script.getTotalupdates().add(updates);
+                UpdateManager.SCRIPT.getTotalupdates().add(updates);
             }
         }
         refreshDisplayUpdates();

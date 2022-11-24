@@ -43,47 +43,43 @@ public class Script {
 
     }
 
-    private static long customTimestamp;
-    private static ArrayList<Updates> totalupdates;
+    private long customTimestamp;
+    private ArrayList<Updates> totalupdates;
 
-    private static TimeStampMode timestampmode = TimeStampMode.appLaunch;
+    private TimeStampMode timestampmode = TimeStampMode.appLaunch;
 
     public Script() {
         totalupdates = new ArrayList<>();
     }
 
-    public static TimeStampMode getTimestampmode() {
+    public TimeStampMode getTimestampmode() {
         return timestampmode;
     }
 
-    public static void setTimestampmode(TimeStampMode timestampmode) {
-        Script.timestampmode = timestampmode;
+    public void setTimestampmode(TimeStampMode timestampmode) {
+        this.timestampmode = timestampmode;
     }
 
-    public static ArrayList<Updates> getTotalupdates() {
+    public ArrayList<Updates> getTotalupdates() {
         return totalupdates;
     }
 
 
-    public static void setTotalupdates(ArrayList<Updates> u) {
+    public void setTotalupdates(ArrayList<Updates> u) {
         totalupdates = u;
     }
 
-    public static void addUpdates(Updates... updates) {
+    public void addUpdates(Updates... updates) {
         totalupdates.addAll(Arrays.asList(updates));
 
     }
-    public static void addUpdates(int index,Updates... updates) {
+    public void addUpdates(int index,Updates... updates) {
         totalupdates.addAll(index,Arrays.asList(updates));
 
     }
 
-    public static void setUpdates(int index,Updates u) {
+    public void setUpdates(int index,Updates u) {
         totalupdates.set(index, u);
-    }
-
-    public static Script fromTotalUpdates() {
-        return new Script();
     }
 
     public void removeUpdates(int list) {
@@ -100,11 +96,11 @@ public class Script {
 
     }
 
-    public static void setCustomTimestamp(long customTimestamp) {
-        Script.customTimestamp = customTimestamp;
+    public void setCustomTimestamp(long customTimestamp) {
+        this.customTimestamp = customTimestamp;
     }
 
-    public static long getCustomTimestamp() {
+    public long getCustomTimestamp() {
         return customTimestamp;
     }
 

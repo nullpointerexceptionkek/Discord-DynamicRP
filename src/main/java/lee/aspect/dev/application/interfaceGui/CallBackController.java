@@ -37,8 +37,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.TextAlignment;
 import lee.aspect.dev.animationengine.animation.*;
 import lee.aspect.dev.application.RunLoopManager;
-import lee.aspect.dev.discordrpc.DiscordRP;
-import lee.aspect.dev.discordrpc.Script;
+import lee.aspect.dev.discordrpc.UpdateManager;
 
 import java.io.IOException;
 import java.net.URL;
@@ -92,18 +91,18 @@ public class CallBackController implements Initializable {
             setDefault(display2, 0);
             setDefault(display3, 45);
 
-            if (Script.getTotalupdates().size() == 1) {
-                display2.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getFl()
-                        + '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getSl());
+            if (UpdateManager.SCRIPT.getTotalupdates().size() == 1) {
+                display2.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getFl()
+                        + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getSl());
             } else {
                 if (RunLoopManager.getCURRENTDISPLAY() > 0)
-                    display1.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY() - 1).getFl()
-                            + '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY() - 1).getSl());
+                    display1.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY() - 1).getFl()
+                            + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY() - 1).getSl());
                 display1.opacityProperty().set(0.3);
-                display2.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getFl()
-                        + '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getSl());
-                display3.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY() >= Script.getTotalupdates().size() - 1 ? 0 : RunLoopManager.getCURRENTDISPLAY() + 1).getFl()
-                        + '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY() >= Script.getTotalupdates().size() - 1 ? 0 : RunLoopManager.getCURRENTDISPLAY() + 1).getSl());
+                display2.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getFl()
+                        + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getSl());
+                display3.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY() >= UpdateManager.SCRIPT.getTotalupdates().size() - 1 ? 0 : RunLoopManager.getCURRENTDISPLAY() + 1).getFl()
+                        + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY() >= UpdateManager.SCRIPT.getTotalupdates().size() - 1 ? 0 : RunLoopManager.getCURRENTDISPLAY() + 1).getSl());
                 display3.opacityProperty().set(0.8);
             }
 
@@ -144,8 +143,8 @@ public class CallBackController implements Initializable {
         pMoveUp.setOnFinished((actionEvent -> {
             Display1.setTranslateY(45);
             afterIn.setNode(Display1);
-            Display1.setText(Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY() >= Script.getTotalupdates().size() - 1 ? 0 : RunLoopManager.getCURRENTDISPLAY() + 1).getFl()
-                    + '\n' + Script.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY() >= Script.getTotalupdates().size() - 1 ? 0 : RunLoopManager.getCURRENTDISPLAY() + 1).getSl());
+            Display1.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY() >= UpdateManager.SCRIPT.getTotalupdates().size() - 1 ? 0 : RunLoopManager.getCURRENTDISPLAY() + 1).getFl()
+                    + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY() >= UpdateManager.SCRIPT.getTotalupdates().size() - 1 ? 0 : RunLoopManager.getCURRENTDISPLAY() + 1).getSl());
             afterIn.play();
         }));
         pMoveUp.play();

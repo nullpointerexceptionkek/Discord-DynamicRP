@@ -30,6 +30,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import lee.aspect.dev.discordrpc.Script;
+import lee.aspect.dev.discordrpc.UpdateManager;
 import lee.aspect.dev.discordrpc.Updates;
 
 import java.io.IOException;
@@ -46,7 +47,7 @@ public class ScriptAdapter extends TypeAdapter<Script> {
         }
         try {
             reader.beginObject();
-            Script tu = new Script();
+            Script script = new Script();
             while (reader.hasNext()) {
                 String name = null;
                 JsonToken token = reader.peek();
@@ -55,10 +56,10 @@ public class ScriptAdapter extends TypeAdapter<Script> {
                 }
                 switch (Objects.requireNonNull(name)) {
                     case "TimeStampMode":
-                        Script.setTimestampmode(Script.TimeStampMode.valueOf(reader.nextString()));
+                        script.setTimestampmode(Script.TimeStampMode.valueOf(reader.nextString()));
                         break;
                     case "CustomTimeStamp":
-                        Script.setCustomTimestamp(reader.nextLong());
+                        script.setCustomTimestamp(reader.nextLong());
                         break;
                     case "Updates":
                         reader.beginArray();
@@ -107,7 +108,7 @@ public class ScriptAdapter extends TypeAdapter<Script> {
                                         break;
                                 }
                             }
-                            Script.addUpdates(updates);
+                            script.addUpdates(updates);
                             reader.endObject();
                         }
                         reader.endArray();
@@ -116,7 +117,7 @@ public class ScriptAdapter extends TypeAdapter<Script> {
 
             }
             reader.endObject();
-            return tu;
+            return script;
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Invalid File");
@@ -134,9 +135,9 @@ public class ScriptAdapter extends TypeAdapter<Script> {
         }
         writter.beginObject();
         writter.name("TimeStampMode");
-        writter.value(Script.getTimestampmode().name());
+        writter.value(UpdateManager.SCRIPT.getTimestampmode().name());
         writter.name("CustomTimeStamp");
-        writter.value(Script.getCustomTimestamp());
+        writter.value(UpdateManager.SCRIPT.getCustomTimestamp());
         writter.name("Updates");
         writter.beginArray();
         //time, String image, String imagetext, String smallimage, String smalltext, String f1, String sl
