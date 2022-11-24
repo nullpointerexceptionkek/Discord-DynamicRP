@@ -70,7 +70,7 @@ public class ConfigController implements Initializable {
     private ToggleGroup timeStampMode;
 
     @FXML
-    private ChoiceBox updateMode;
+    private ChoiceBox<Script.UpdateType> updateMode;
     @FXML
     protected ListView<String> displayUpdates;
     @FXML
@@ -220,6 +220,9 @@ public class ConfigController implements Initializable {
         MenuItem insertRowBelow = new MenuItem("Insert New Below");
         MenuItem undoItem = new MenuItem("Undo");
         MenuItem redoItem = new MenuItem("Redo");
+
+        updateMode.getItems().addAll(EnumSet.allOf(Script.UpdateType.class));
+        updateMode.setValue(UpdateManager.SCRIPT.getUpdateType());
 
         copyItem.setOnAction((actionEvent) -> {
             if (displayUpdates.getSelectionModel().getSelectedIndex() != -1) {

@@ -58,7 +58,7 @@ public abstract class RunLoopManager {
         var delay = 16000;
         do {
             try {
-                discordRP.LaunchReadyCallBack(UpdateManager.SCRIPT.getUpdates(0));
+                startUpdate();
                 break;
             } catch (NoDiscordClientException | RuntimeException ex) {
                 try {
@@ -69,23 +69,6 @@ public abstract class RunLoopManager {
                 }
             }
         } while (true); //everyone likes while true
-        isRunning = true;
-        new Thread(() -> {
-            if (UpdateManager.SCRIPT.getSize() == 1) {
-                return;
-            }
-            for (int i = 1; i < UpdateManager.SCRIPT.getSize(); i++) {
-                executeUpdate(UpdateManager.SCRIPT.getUpdates(i));
-                if (!isRunning) return;
-            }
-            while (isRunning) {
-                for (int i = 0; i < UpdateManager.SCRIPT.getSize(); i++) {
-                    executeUpdate(UpdateManager.SCRIPT.getUpdates(i));
-                    if (!isRunning) return;
-                }
-
-            }
-        }).start();
     }
 
     /**
@@ -110,22 +93,73 @@ public abstract class RunLoopManager {
                     if (UpdateManager.SCRIPT.getSize() == 1) {
                         return;
                     }
-                    for (int i = 1; i < UpdateManager.SCRIPT.getSize(); i++) {
-                        executeUpdate(UpdateManager.SCRIPT.getUpdates(i));
-                        CURRENTDISPLAY = i;
+                    switch(UpdateManager.SCRIPT.getUpdateType()){
+                        case Loop:
+                            for (int i = 1; i < UpdateManager.SCRIPT.getSize(); i++) {
+                                executeUpdate(UpdateManager.SCRIPT.getUpdates(i));
+                                CURRENTDISPLAY = i;
 
-                        if (!isRunning) return;
-                        if (!CustomDiscordRPC.isOnSystemTray)
-                            Platform.runLater(() -> LoadingController.callBackController.updateCurrentDisplay());
-                    }
-                    while (isRunning) {
-                        for (int i = 0; i < UpdateManager.SCRIPT.getSize(); i++) {
-                            executeUpdate(UpdateManager.SCRIPT.getUpdates(i));
-                            CURRENTDISPLAY = i;
-                            if (!isRunning) return;
-                            if (!CustomDiscordRPC.isOnSystemTray)
-                                Platform.runLater(() -> LoadingController.callBackController.updateCurrentDisplay());
-                        }
+                                if (!isRunning) return;
+                                if (!CustomDiscordRPC.isOnSystemTray)
+                                    Platform.runLater(() -> LoadingController.callBackController.updateCurrentDisplay());
+                            }
+                            while (isRunning) {
+                                for (int i = 0; i < UpdateManager.SCRIPT.getSize(); i++) {
+                                    executeUpdate(UpdateManager.SCRIPT.getUpdates(i));
+                                    CURRENTDISPLAY = i;
+                                    if (!isRunning) return;
+                                    if (!CustomDiscordRPC.isOnSystemTray)
+                                        Platform.runLater(() -> LoadingController.callBackController.updateCurrentDisplay());
+                                }
+
+                            }
+                            break;
+                        case Stop:
+                            for (int i = 1; i < UpdateManager.SCRIPT.getSize(); i++) {
+                                executeUpdate(UpdateManager.SCRIPT.getUpdates(i));
+                                CURRENTDISPLAY = i;
+
+                                if (!isRunning) return;
+                                if (!CustomDiscordRPC.isOnSystemTray)
+                                    Platform.runLater(() -> LoadingController.callBackController.updateCurrentDisplay());
+                            }
+                        case Random:
+                            while (isRunning) {
+                                int i = (int) (Math.random() * UpdateManager.SCRIPT.getSize());
+                                executeUpdate(UpdateManager.SCRIPT.getUpdates(i));
+                                CURRENTDISPLAY = i;
+                                if (!isRunning) return;
+                                if (!CustomDiscordRPC.isOnSystemTray)
+                                    Platform.runLater(() -> LoadingController.callBackController.updateCurrentDisplay());
+                            }
+                            break;
+                        case Reverse:
+                            for (int i = 1; i < UpdateManager.SCRIPT.getSize(); i++) {
+                                executeUpdate(UpdateManager.SCRIPT.getUpdates(i));
+                                CURRENTDISPLAY = i;
+
+                                if (!isRunning) return;
+                                if (!CustomDiscordRPC.isOnSystemTray)
+                                    Platform.runLater(() -> LoadingController.callBackController.updateCurrentDisplay());
+                            }
+                            while (isRunning) {
+                                for (int i = UpdateManager.SCRIPT.getSize(); i >= 0; i--) {
+                                    executeUpdate(UpdateManager.SCRIPT.getUpdates(i));
+                                    CURRENTDISPLAY = i;
+                                    if (!isRunning) return;
+                                    if (!CustomDiscordRPC.isOnSystemTray)
+                                        Platform.runLater(() -> LoadingController.callBackController.updateCurrentDisplay());
+                                }
+                                for (int i = 0; i < UpdateManager.SCRIPT.getSize(); i++) {
+                                    executeUpdate(UpdateManager.SCRIPT.getUpdates(i));
+                                    CURRENTDISPLAY = i;
+                                    if (!isRunning) return;
+                                    if (!CustomDiscordRPC.isOnSystemTray)
+                                        Platform.runLater(() -> LoadingController.callBackController.updateCurrentDisplay());
+                                }
+
+                            }
+                            break;
 
                     }
                 }

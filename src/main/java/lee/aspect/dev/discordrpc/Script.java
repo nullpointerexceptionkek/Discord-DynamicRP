@@ -30,6 +30,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Script {
+
+    public enum UpdateType {
+        Loop, Reverse, Stop, Random
+    }
+
     public enum TimeStampMode {
 
         appLaunch,
@@ -42,6 +47,8 @@ public class Script {
         custom;
 
     }
+
+    private UpdateType updateType = UpdateType.Loop;
 
     private long customTimestamp;
     private ArrayList<Updates> totalupdates;
@@ -102,6 +109,14 @@ public class Script {
 
     public long getCustomTimestamp() {
         return customTimestamp;
+    }
+
+    public UpdateType getUpdateType() {
+        return updateType;
+    }
+
+    public void setUpdateType(UpdateType updateType) {
+        this.updateType = updateType;
     }
 
     @Override
