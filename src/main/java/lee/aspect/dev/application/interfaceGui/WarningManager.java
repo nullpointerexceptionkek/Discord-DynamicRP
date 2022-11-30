@@ -35,7 +35,7 @@ import javafx.scene.image.ImageView;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-public class WarningManager {
+public abstract class WarningManager {
 
     public enum Mode{
         Left,Right,Up,Down
