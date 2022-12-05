@@ -93,17 +93,17 @@ public class CallBackController implements Initializable {
             setDefault(display3, 45);
 
             if (UpdateManager.SCRIPT.getTotalupdates().size() == 1) {
-                display2.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getFl()
-                        + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getSl());
+                display2.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getFl()
+                        + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getSl());
             } else {
-                if (RunLoopManager.getCURRENTDISPLAY() > 0)
-                    display1.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY() - 1).getFl()
-                            + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY() - 1).getSl());
+                if (RunLoopManager.getCurrentDisplay() > 0)
+                    display1.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay() - 1).getFl()
+                            + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay() - 1).getSl());
                 display1.opacityProperty().set(0.3);
-                display2.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getFl()
-                        + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY()).getSl());
-                display3.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY() >= UpdateManager.SCRIPT.getTotalupdates().size() - 1 ? 0 : RunLoopManager.getCURRENTDISPLAY() + 1).getFl()
-                        + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCURRENTDISPLAY() >= UpdateManager.SCRIPT.getTotalupdates().size() - 1 ? 0 : RunLoopManager.getCURRENTDISPLAY() + 1).getSl());
+                display2.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getFl()
+                        + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getSl());
+                display3.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay() >= UpdateManager.SCRIPT.getTotalupdates().size() - 1 ? 0 : RunLoopManager.getCurrentDisplay() + 1).getFl()
+                        + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay() >= UpdateManager.SCRIPT.getTotalupdates().size() - 1 ? 0 : RunLoopManager.getCurrentDisplay() + 1).getSl());
                 display3.opacityProperty().set(0.8);
             }
 

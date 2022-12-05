@@ -108,7 +108,7 @@ public class DiscordRP {
                 }
             } else{
                 currentThread().interrupt();
-                RunLoopManager.setRunloop(null);
+                RunLoopManager.setRunLoop(null);
                 RunLoopManager.isRunning = false;
             }
         }
