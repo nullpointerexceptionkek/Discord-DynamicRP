@@ -95,18 +95,7 @@ public class CustomDiscordRPC extends Application {
             });
             primaryStage.show();
         } catch (Exception e) {
-            StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
-            e.printStackTrace(pw);
-            String sStackTrace = sw.toString(); // stack trace as a string
-            System.out.println(sStackTrace);
-            String message = "\"Custom Discord RP\"\n"
-                    + "it looks like we cannot connect to javaFX\n"
-                    + "Please check if javaFX is installed";
-            JOptionPane.showMessageDialog(new JFrame(), message, "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            System.exit(1);
-
+            throw new RuntimeException(e);
         }
 
 

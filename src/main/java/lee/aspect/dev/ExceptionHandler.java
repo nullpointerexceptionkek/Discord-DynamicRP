@@ -49,7 +49,8 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
         // add a button to copy the exception to clipboard
         StringSelection stringSelection = new StringSelection(stringWriter.toString());
         Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
-        JOptionPane.showMessageDialog(null, stackTrace, "Critical Exception - CDRP", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, stackTrace, "Oh no a fatal Exception occurs...", JOptionPane.ERROR_MESSAGE);
+        System.exit(1);
     }
 
 

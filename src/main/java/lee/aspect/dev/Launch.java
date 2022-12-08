@@ -60,6 +60,7 @@ public abstract class Launch {
      * @author Aspect
      */
     public static void main(String[] args) {
+        Test.hi();
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
         try {
             f = new File(FileManager.getROOT_DIR(), "runtime");

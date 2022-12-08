@@ -9,6 +9,7 @@ module lee.aspect.dev.launch {
     requires com.kohlschutter.junixsocket.nativecommon;
     requires org.newsclub.net.unix;
     requires org.jetbrains.annotations;
+    requires kotlin.stdlib;
 
     opens lee.aspect.dev.application to javafx.controls, javafx.fxml, javafx.graphics;
     opens lee.aspect.dev.application.interfaceGui to javafx.controls, javafx.fxml, javafx.graphics;
