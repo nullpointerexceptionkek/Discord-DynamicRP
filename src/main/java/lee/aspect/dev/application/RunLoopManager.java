@@ -53,25 +53,28 @@ public abstract class RunLoopManager {
         SettingManager.init();
         UpdateManager.init();
     }
+
+    private static final Object startLock = new Object();
+
     public static void runFromStartLunch() {
         init();
-        var delay = 16000;
         do {
             try {
                 startUpdate();
                 break;
             } catch (NoDiscordClientException | RuntimeException ex) {
-                try {
-                    //TODO: Replace with a better way to check if discord is running
-                    Thread.sleep(Math.min(delay, 60000));
-                    delay += 3000;
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(ex);
+                synchronized (startLock) {
+                    try {
+                        // Wait for a notification from another thread before continuing
+                        startLock.wait();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             }
-        } while (true); //everyone likes while true
-
+        } while (true);
     }
+
 
     /**
      * Sent each data to DiscordIPC according to the config
@@ -183,18 +186,22 @@ public abstract class RunLoopManager {
     }
 
 
-    private static void executeUpdate(@NotNull Updates update) {
-        try {
-            if (update.getWait() == -1) {
-                discordRP.update(update);
-                return;
-            }
-            Thread.sleep(update.getWait());
-            discordRP.update(update);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    private static final Object updateLock = new Object();
 
+    private static void executeUpdate(@NotNull Updates update) {
+        if (update.getWait() == -1) {
+            discordRP.update(update);
+            return;
+        }
+        synchronized (updateLock) {
+            try {
+                // Wait for a notification from another thread before continuing
+                updateLock.wait(update.getWait());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        discordRP.update(update);
     }
 
     public static void onClose() {
