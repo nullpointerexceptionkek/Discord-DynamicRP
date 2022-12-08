@@ -1,4 +1,4 @@
-module lee.aspect.dev {
+module lee.aspect.dev.launch {
     requires javafx.controls;
     requires javafx.fxml;
     requires com.google.gson;
@@ -9,7 +9,6 @@ module lee.aspect.dev {
     requires com.kohlschutter.junixsocket.nativecommon;
     requires org.newsclub.net.unix;
     requires org.jetbrains.annotations;
-
 
     opens lee.aspect.dev.application to javafx.controls, javafx.fxml, javafx.graphics;
     opens lee.aspect.dev.application.interfaceGui to javafx.controls, javafx.fxml, javafx.graphics;
