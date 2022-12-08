@@ -39,7 +39,7 @@ import java.nio.channels.FileLock;
  * This class checks whether if the application is already launched and add shutdown hook;
  * @author lee
  */
-public class Launch {
+public abstract class Launch {
 
     public final static String VERSION = "v1.0.0";
 
@@ -60,6 +60,7 @@ public class Launch {
      * @author Aspect
      */
     public static void main(String[] args) {
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
         try {
             f = new File(FileManager.getROOT_DIR(), "runtime");
 
@@ -114,6 +115,4 @@ public class Launch {
         }
         return false;
     }
-
-
 }
