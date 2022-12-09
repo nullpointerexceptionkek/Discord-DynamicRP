@@ -45,7 +45,6 @@ public abstract class SettingManager {
             loaded = new Settings();
             loaded.setTheme(Settings.Theme.dark);
             loaded.setDiscordAPIKey("");
-            loaded = SETTINGS;
             saveSettingToFile();
         }
         return loaded;

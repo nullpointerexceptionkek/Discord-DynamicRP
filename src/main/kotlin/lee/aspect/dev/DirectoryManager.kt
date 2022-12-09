@@ -26,16 +26,21 @@
 package lee.aspect.dev
 
 import javafx.application.Platform
+import javafx.scene.control.*
+import javafx.scene.control.ButtonBar.ButtonData
+import javafx.scene.layout.VBox
 import javafx.stage.DirectoryChooser
 import lee.aspect.dev.sysUtil.StartLaunch
 import lee.aspect.dev.sysUtil.exceptions.UnsupportedOSException
 import java.io.File
-import javax.swing.JFileChooser
+import java.util.*
+
 
 class DirectoryManager {
     companion object {
 
-        private val defaultDir = System.getProperty("user.home") + "\\CustomDiscordRPC"
+        @JvmField
+        val defaultDir = System.getProperty("user.home") + "\\CustomDiscordRPC"
 
         private var ROOT_DIR = File(getDirectoryEnvironmentVar())
 
@@ -45,79 +50,111 @@ class DirectoryManager {
             if (System.getProperty("CDRPCDir") == null) {
                 writeDirectoryEnvironmentVar(defaultDir)
             }
-            return System.getProperty("CDRPCDir")?:defaultDir
+            return System.getProperty("CDRPCDir") ?: defaultDir
         }
+
         @JvmStatic
         fun writeDirectoryEnvironmentVar(dir: String) {
             //write the directory to the environment variable
 
             //check if the user is on Windows
-            if(StartLaunch.isOnWindows()){
+            if (StartLaunch.isOnWindows()) {
                 ProcessBuilder("setx", "CDRPCDir", dir).start().waitFor()
-            } else if(StartLaunch.isOnMac()){
+            } else if (StartLaunch.isOnMac()) {
                 ProcessBuilder("launchctl", "setenv", "CDRPCDir", dir).start().waitFor()
-            } else if(StartLaunch.isOnLinux()){
+            } else if (StartLaunch.isOnLinux()) {
                 ProcessBuilder("export", "CDRPCDir", dir).start().waitFor()
             } else {
                 throw UnsupportedOSException("invalid os")
             }
 
 
-
         }
+
         @JvmStatic
         fun deleteDirectoryEnvironmentVar() {
-            if(StartLaunch.isOnWindows()){
+            if (StartLaunch.isOnWindows()) {
                 ProcessBuilder("setx", "/m", "CDRPCDir").start().waitFor()
-            } else if(StartLaunch.isOnMac()){
+            } else if (StartLaunch.isOnMac()) {
                 ProcessBuilder("launchctl", "unsetenv", "CDRPCDir").start().waitFor()
-            } else if(StartLaunch.isOnLinux()){
+            } else if (StartLaunch.isOnLinux()) {
                 ProcessBuilder("unset", "CDRPCDir").start().waitFor()
             } else {
                 throw UnsupportedOSException("invalid os")
             }
         }
+
         @JvmStatic
-        fun askForDirectory(){
+        fun askForDirectory() {
             //make a javaFX dialog
             try {
                 Platform.runLater {
-                    val chooser = DirectoryChooser()
-                    chooser.title = "Choose a directory to store your config files"
-                    chooser.initialDirectory = File(defaultDir)
+                    val directoryChooser = DirectoryChooser()
+                    directoryChooser.title = "Choose a directory"
 
-                    val selectedDirectory = chooser.showDialog(null)
-                    if(selectedDirectory != null){
-                        writeDirectoryEnvironmentVar(selectedDirectory.absolutePath)
+                    // create a TextField control for the user to input a directory path
+
+                    // create a TextField control for the user to input a directory path
+                    val directoryPathField = TextField()
+                    directoryPathField.promptText = "Enter a directory path"
+
+                    // create a Button control for the user to open the DirectoryChooser popup
+
+                    // create a Button control for the user to open the DirectoryChooser popup
+                    val chooseDirectoryButton = Button("Choose directory")
+                    chooseDirectoryButton.setOnAction { event ->
+                        val selectedDirectory = directoryChooser.showDialog(null)
+                        if (selectedDirectory != null) {
+                            directoryPathField.text = selectedDirectory.absolutePath
+                        }
+                    }
+
+                    // create a Label to show a message to the user
+
+                    // create a Label to show a message to the user
+                    val messageLabel = Label("Please choose a directory or enter a directory path:")
+
+                    // create a VBox to hold the controls and layout them vertically
+
+                    // create a VBox to hold the controls and layout them vertically
+                    val dialogLayout = VBox(messageLabel, directoryPathField, chooseDirectoryButton)
+                    dialogLayout.spacing = 10.0
+
+                    // create a Dialog to show the controls to the user
+
+                    // create a Dialog to show the controls to the user
+                    val dialog: Dialog<String> = Dialog()
+                    dialog.title = "Select or input a directory"
+                    dialog.dialogPane.content = dialogLayout
+
+                    // add a button to the dialog to allow the user to submit their selection
+
+                    // add a button to the dialog to allow the user to submit their selection
+                    val submitButtonType = ButtonType("Submit", ButtonData.OK_DONE)
+                    dialog.dialogPane.buttonTypes.add(submitButtonType)
+
+                    // show the dialog and wait for the user to either input a directory or select a directory
+
+                    // show the dialog and wait for the user to either input a directory or select a directory
+                    val result: Optional<String> = dialog.showAndWait()
+
+                    // check if the user clicked the submit button and selected a directory or input a directory path
+
+                    // check if the user clicked the submit button and selected a directory or input a directory path
+                    if (result.isPresent && result.get().isNotEmpty()) {
+                        // the user selected a directory or input a directory path, so you can use the selected directory as needed
+                        val directoryPath = result.get()
+                        // ...
+                    } else {
+                        // the user did not select a directory or input a directory path, so you can handle this as needed
+                        // ...
                     }
                 }
             } catch (e: Exception) {
-                //if javafx failed, use swing
-                val chooser = JFileChooser()
-
-                // Set the file chooser to only allow directories
-                chooser.fileSelectionMode = JFileChooser.DIRECTORIES_ONLY
-
-                // Set the initial directory
-                chooser.currentDirectory = File(defaultDir)
-
-                // Set the dialog title
-                chooser.dialogTitle = "Choose a directory to store your config files"
-
-                // Show the directory chooser and get the selected directory
-                val result = chooser.showOpenDialog(null)
-
-                // Check if the user selected a directory
-                if (result == JFileChooser.APPROVE_OPTION) {
-                    // Get the selected directory
-                    val selectedDirectory = chooser.selectedFile
-
-                    // Write the selected directory to an environment variable
-                    writeDirectoryEnvironmentVar(selectedDirectory.absolutePath)
-                }
-
+                throw RuntimeException("JavaFx might not be initialized - $e")
             }
         }
+
         @JvmStatic
         fun getRootDir(): File {
             return System.getenv("CDiscordRPConfigDir")?.let { File(it) } ?: ROOT_DIR
