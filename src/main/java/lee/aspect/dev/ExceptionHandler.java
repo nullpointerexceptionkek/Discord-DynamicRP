@@ -37,6 +37,7 @@ import java.io.StringWriter;
 public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
     @Override
     public void uncaughtException(Thread t, Throwable e) {
+        e.printStackTrace();
         // Write the stack trace to a string using a PrintWriter and StringWriter
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);

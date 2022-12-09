@@ -34,15 +34,15 @@ import lee.aspect.dev.discordrpc.settings.Settings;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
+import static lee.aspect.dev.DirectoryManager.getRootDir;
+
 
 public class FileManager {
-    private static final File ROOT_DIR = new File(System.getProperty("user.home") + "\\CustomDiscordRPC");
     private static Gson gson;
 
     public static void init() {
-        System.out.println(ROOT_DIR);
-        if (!ROOT_DIR.exists()) {
-            ROOT_DIR.mkdir();
+        if (!getRootDir().exists()) {
+            getRootDir().mkdir();
         }
 
         GsonBuilder builder = new GsonBuilder();
@@ -100,10 +100,6 @@ public class FileManager {
             return null;
         }
 
-    }
-
-    public static File getROOT_DIR() {
-        return ROOT_DIR;
     }
 
     public static String toGson(Object o){

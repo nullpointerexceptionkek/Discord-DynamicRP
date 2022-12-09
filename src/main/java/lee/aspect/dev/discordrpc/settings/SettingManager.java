@@ -25,6 +25,7 @@
 
 package lee.aspect.dev.discordrpc.settings;
 
+import lee.aspect.dev.DirectoryManager;
 import lee.aspect.dev.jsonreader.FileManager;
 
 import java.io.File;
@@ -39,7 +40,7 @@ public abstract class SettingManager {
     }
 
     private static Settings loadKeyFromJson() {
-        Settings loaded = FileManager.readFromJson(new File(FileManager.getROOT_DIR(), "Settings.json"), Settings.class);
+        Settings loaded = FileManager.readFromJson(new File(DirectoryManager.getRootDir(), "Settings.json"), Settings.class);
         if (loaded == null) {
             loaded = new Settings();
             loaded.setTheme(Settings.Theme.dark);
@@ -52,7 +53,7 @@ public abstract class SettingManager {
     }
 
     public static void saveSettingToFile() {
-        FileManager.writeJsonTofile(new File(FileManager.getROOT_DIR(), "Settings.json"), SETTINGS);
+        FileManager.writeJsonTofile(new File(DirectoryManager.getRootDir(), "Settings.json"), SETTINGS);
     }
 
 }
