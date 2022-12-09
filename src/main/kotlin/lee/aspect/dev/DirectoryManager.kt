@@ -46,11 +46,11 @@ class DirectoryManager {
 
         @JvmStatic
         fun getDirectoryEnvironmentVar(): String {
-            println("getDirectoryEnvironmentVar: ${System.getenv("CDRPCDir")}")
-            if (System.getProperty("CDRPCDir") == null) {
+            if (System.getenv("CDRPCDir") == null) {
                 writeDirectoryEnvironmentVar(defaultDir)
             }
-            return System.getProperty("CDRPCDir") ?: defaultDir
+            println("CDRPCDir: ${System.getenv("CDRPCDir")}")
+            return System.getenv("CDRPCDir")
         }
 
         @JvmStatic
