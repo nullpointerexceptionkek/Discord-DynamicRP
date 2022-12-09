@@ -27,6 +27,8 @@ package lee.aspect.dev
 
 import javafx.application.Platform
 import javafx.stage.DirectoryChooser
+import lee.aspect.dev.sysUtil.StartLaunch
+import lee.aspect.dev.sysUtil.exceptions.UnsupportedOSException
 import java.io.File
 import javax.swing.JFileChooser
 
@@ -39,28 +41,40 @@ class DirectoryManager {
 
         @JvmStatic
         fun getDirectoryEnvironmentVar(): String {
-            println("getDirectoryEnvironmentVar: ${System.getenv("CDiscordRPConfigDir")}")
-            if (System.getProperty("CDiscordRPConfigDir") == null) {
+            println("getDirectoryEnvironmentVar: ${System.getenv("CDRPCDir")}")
+            if (System.getProperty("CDRPCDir") == null) {
                 writeDirectoryEnvironmentVar(defaultDir)
             }
-            return System.getProperty("CDiscordRPConfigDir")
+            return System.getProperty("CDRPCDir")?:defaultDir
         }
         @JvmStatic
         fun writeDirectoryEnvironmentVar(dir: String) {
             //write the directory to the environment variable
-            try {
-                System.setProperty("CDiscordRPConfigDir", dir)
-            } catch (e: SecurityException) {
-                println("SecurityException: ${e.message}")
+
+            //check if the user is on Windows
+            if(StartLaunch.isOnWindows()){
+                ProcessBuilder("setx", "CDRPCDir", dir).start().waitFor()
+            } else if(StartLaunch.isOnMac()){
+                ProcessBuilder("launchctl", "setenv", "CDRPCDir", dir).start().waitFor()
+            } else if(StartLaunch.isOnLinux()){
+                ProcessBuilder("export", "CDRPCDir", dir).start().waitFor()
+            } else {
+                throw UnsupportedOSException("invalid os")
             }
+
+
 
         }
         @JvmStatic
         fun deleteDirectoryEnvironmentVar() {
-            try {
-                System.clearProperty("CDiscordRPConfigDir")
-            } catch (e: SecurityException) {
-                println("SecurityException: ${e.message}")
+            if(StartLaunch.isOnWindows()){
+                ProcessBuilder("setx", "/m", "CDRPCDir").start().waitFor()
+            } else if(StartLaunch.isOnMac()){
+                ProcessBuilder("launchctl", "unsetenv", "CDRPCDir").start().waitFor()
+            } else if(StartLaunch.isOnLinux()){
+                ProcessBuilder("unset", "CDRPCDir").start().waitFor()
+            } else {
+                throw UnsupportedOSException("invalid os")
             }
         }
         @JvmStatic

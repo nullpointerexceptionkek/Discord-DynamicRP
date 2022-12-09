@@ -66,6 +66,14 @@ public class StartLaunch {
         String osName = System.getProperty("os.name").toLowerCase();
         return osName.contains("win");
     }
+    public static boolean isOnLinux() {
+        String osName = System.getProperty("os.name").toLowerCase();
+        return osName.contains("nix") || osName.contains("nux") || osName.contains("aix");
+    }
+    public static boolean isOnMac() {
+        String osName = System.getProperty("os.name").toLowerCase();
+        return osName.contains("mac");
+    }
 
     public static boolean isBatCreated() {
         return CDRP.exists();
