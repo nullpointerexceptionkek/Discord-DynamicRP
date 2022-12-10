@@ -124,8 +124,8 @@ class DirectoryManager {
 
                     val result: Optional<String> = dialog.showAndWait()
 
-                    if (result.isPresent && result.get().isNotEmpty()) {
-                        val directoryPath = result.get()
+                    if (directoryPathField.text.isNotEmpty() && directoryPathField.text.isNotBlank()) {
+                        val directoryPath = directoryPathField.text
                         if(!File(directoryPath).exists()){
                             //open a dialog to tell the user that the directory doesn't exist and ask if they want to create it
                             val createDirectoryDialog = Alert(Alert.AlertType.CONFIRMATION)
