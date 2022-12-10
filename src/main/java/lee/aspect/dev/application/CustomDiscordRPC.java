@@ -37,11 +37,13 @@ import lee.aspect.dev.DirectoryManager;
 import lee.aspect.dev.application.interfaceGui.WarningManager;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.discordrpc.settings.Settings;
+import lee.aspect.dev.sysUtil.RestartApplication;
+import lee.aspect.dev.sysUtil.StartLaunch;
+import lee.aspect.dev.sysUtil.exceptions.FileNotAJarException;
 
-import javax.swing.*;
 import java.awt.*;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -49,6 +51,8 @@ import java.util.Objects;
  * This class manages the default interface option and System Tray
  */
 public class CustomDiscordRPC extends Application {
+
+    private static boolean setup = false;
     public static Stage primaryStage;
 
     public static boolean isOnSystemTray = false;
@@ -68,6 +72,12 @@ public class CustomDiscordRPC extends Application {
         launch(args);
     }
 
+    public static void LaunchSetUpDialog(String[] args){
+        setup = true;
+        Platform.setImplicitExit(true);
+        launch(args);
+    }
+
     public static void LaunchSilently() {
         ApplicationTray.initTray();
         RunLoopManager.runFromStartLunch();
@@ -81,6 +91,26 @@ public class CustomDiscordRPC extends Application {
      */
     @Override
     public void start(Stage pStage) {
+        if(setup){
+            DirectoryManager.askForDirectory();
+            //create a dialog says you need to restart the program
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Restart");
+            alert.setHeaderText("Restart the program");
+            alert.setContentText("You need to restart the program to set up the directory");
+            alert.showAndWait();
+            try {
+                RestartApplication.FullRestart();
+            } catch (URISyntaxException | IOException | FileNotAJarException e) {
+                Alert alert1 = new Alert(Alert.AlertType.ERROR);
+                alert1.setTitle("Error");
+                alert1.setHeaderText("Error while restarting");
+                alert1.setContentText("Error while restarting the program, please restart it manually");
+                alert1.showAndWait();
+                e.printStackTrace();
+                System.exit(0);
+            }
+        }
         try {
             primaryStage = pStage;
             primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/lee/aspect/dev/icon/SystemTrayIcon.png"))));

@@ -46,11 +46,9 @@ class DirectoryManager {
 
         @JvmStatic
         fun getDirectoryEnvironmentVar(): String {
-            if (System.getenv("CDRPCDir") == null) {
-                writeDirectoryEnvironmentVar(defaultDir)
-            }
             println("CDRPCDir: ${System.getenv("CDRPCDir")}")
-            return System.getenv("CDRPCDir")
+            //this should not be null
+            return System.getenv("CDRPCDir")?: defaultDir
         }
 
         @JvmStatic
@@ -85,22 +83,24 @@ class DirectoryManager {
         }
 
         @JvmStatic
+        fun isSetUp(): Boolean {
+            //check if everything is set up
+            if(System.getenv("CDRPCDir") != null && File(System.getenv("CDRPCDir")).exists())
+                return true
+            return false
+        }
+
+        @JvmStatic
         fun askForDirectory() {
             //make a javaFX dialog
             try {
-                Platform.runLater {
                     val directoryChooser = DirectoryChooser()
                     directoryChooser.title = "Choose a directory"
 
-                    // create a TextField control for the user to input a directory path
-
-                    // create a TextField control for the user to input a directory path
                     val directoryPathField = TextField()
                     directoryPathField.promptText = "Enter a directory path"
+                    directoryPathField.text = defaultDir
 
-                    // create a Button control for the user to open the DirectoryChooser popup
-
-                    // create a Button control for the user to open the DirectoryChooser popup
                     val chooseDirectoryButton = Button("Choose directory")
                     chooseDirectoryButton.setOnAction { event ->
                         val selectedDirectory = directoryChooser.showDialog(null)
@@ -109,49 +109,43 @@ class DirectoryManager {
                         }
                     }
 
-                    // create a Label to show a message to the user
-
-                    // create a Label to show a message to the user
                     val messageLabel = Label("Please choose a directory or enter a directory path:")
 
-                    // create a VBox to hold the controls and layout them vertically
 
-                    // create a VBox to hold the controls and layout them vertically
                     val dialogLayout = VBox(messageLabel, directoryPathField, chooseDirectoryButton)
                     dialogLayout.spacing = 10.0
 
-                    // create a Dialog to show the controls to the user
-
-                    // create a Dialog to show the controls to the user
                     val dialog: Dialog<String> = Dialog()
                     dialog.title = "Select or input a directory"
                     dialog.dialogPane.content = dialogLayout
 
-                    // add a button to the dialog to allow the user to submit their selection
-
-                    // add a button to the dialog to allow the user to submit their selection
                     val submitButtonType = ButtonType("Submit", ButtonData.OK_DONE)
                     dialog.dialogPane.buttonTypes.add(submitButtonType)
 
-                    // show the dialog and wait for the user to either input a directory or select a directory
-
-                    // show the dialog and wait for the user to either input a directory or select a directory
                     val result: Optional<String> = dialog.showAndWait()
 
-                    // check if the user clicked the submit button and selected a directory or input a directory path
-
-                    // check if the user clicked the submit button and selected a directory or input a directory path
                     if (result.isPresent && result.get().isNotEmpty()) {
-                        // the user selected a directory or input a directory path, so you can use the selected directory as needed
                         val directoryPath = result.get()
-                        // ...
-                    } else {
-                        // the user did not select a directory or input a directory path, so you can handle this as needed
+                        if(!File(directoryPath).exists()){
+                            //open a dialog to tell the user that the directory doesn't exist and ask if they want to create it
+                            val createDirectoryDialog = Alert(Alert.AlertType.CONFIRMATION)
+                            createDirectoryDialog.title = "Create directory?"
+                            createDirectoryDialog.headerText = "The directory you entered doesn't exist."
+                            createDirectoryDialog.contentText = "Would you like to create the directory?"
+                            val createDirectoryResult = createDirectoryDialog.showAndWait()
+                            if(createDirectoryResult.isPresent && createDirectoryResult.get() == ButtonType.OK){
+                                //create the directory
+                                File(directoryPath).mkdirs()
+                                writeDirectoryEnvironmentVar(directoryPath)
+                            }
+                        }
+                        else{
+                            writeDirectoryEnvironmentVar(directoryPath)
+                        }
                         // ...
                     }
-                }
             } catch (e: Exception) {
-                throw RuntimeException("JavaFx might not be initialized - $e")
+                e.printStackTrace()
             }
         }
 

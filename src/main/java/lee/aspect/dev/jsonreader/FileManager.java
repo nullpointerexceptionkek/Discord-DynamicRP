@@ -43,7 +43,7 @@ public class FileManager {
 
     public static void init() {
         if (!getRootDir().exists()) {
-            DirectoryManager.askForDirectory();
+            //TODO: DO smth here, not sure rn
         }
 
         GsonBuilder builder = new GsonBuilder();

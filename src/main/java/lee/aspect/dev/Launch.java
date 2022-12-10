@@ -26,7 +26,6 @@
 package lee.aspect.dev;
 
 import lee.aspect.dev.application.CustomDiscordRPC;
-import lee.aspect.dev.jsonreader.FileManager;
 
 import javax.swing.*;
 import java.io.File;
@@ -61,6 +60,14 @@ public abstract class Launch {
      */
     public static void main(String[] args) {
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
+        if(!DirectoryManager.isSetUp()) {
+            CustomDiscordRPC.LaunchSetUpDialog(args);
+
+            return;
+        }
+
+
+
         try {
             f = new File(DirectoryManager.getRootDir(), "runtime");
 
