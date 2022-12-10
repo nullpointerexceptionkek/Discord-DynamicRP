@@ -1,12 +1,12 @@
 # CDiscrodRP
 
-CDiscordRP coded 100% with java 17
-This program allows you to customize your discord rich preference with an awesome interface, 100% java and css
-Branches:
-advance feature -> used for unstable update, commits are merged to master once they are fully decided/stabled
+CDiscordRP is a simple program that allows you to display your current game in your Discord profile.
+This program is written in Java 17 and kotlin 1.7.21 and uses the Discord IPC, JavaFX, and AnimatesFX libraries.
 
-Feature:
---
+This is rather a project for me to learn how to use JavaFX and Kotlin, instead of a serious project.
+although you might see some feature is useless and not needed, but its fun to write these.
 
-- 3 different theme to choose from and a relatively good gui
-- ill add more later
+I build this during my free time, so I can't guarantee that I will update this project frequently.
+
+## How to use
+// TODO: Add how to use
