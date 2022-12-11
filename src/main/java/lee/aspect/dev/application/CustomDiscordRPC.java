@@ -206,7 +206,7 @@ public class CustomDiscordRPC extends Application {
                         "Minimize to System Tray",null,
                         "Do you want to minimize to System Tray?",
                         "Do not show again", param -> SettingManager.SETTINGS.setMinimizeMode(param ? Settings.MinimizeMode.WaitAndSee : Settings.MinimizeMode.Ask),ButtonType.YES,ButtonType.NO,ButtonType.CANCEL);
-                var result = alert.showAndWait();
+                java.util.Optional<ButtonType> result = alert.showAndWait();
                 if (result.filter(buttonType -> buttonType == ButtonType.YES).isPresent()) {
                     if(SettingManager.SETTINGS.getMinimizeMode() == Settings.MinimizeMode.WaitAndSee)
                         SettingManager.SETTINGS.setMinimizeMode(Settings.MinimizeMode.Always);

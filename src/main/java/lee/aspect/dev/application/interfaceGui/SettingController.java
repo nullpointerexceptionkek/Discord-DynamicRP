@@ -84,7 +84,7 @@ public class SettingController implements Initializable {
         Parent root = loader.load();
         root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(SettingManager.SETTINGS.getTheme().getThemepass())).toExternalForm());
         stackPane.getChildren().add(0, root);
-        var animation = new SlideOutLeft(settingsAnchorPane);
+        SlideOutLeft animation = new SlideOutLeft(settingsAnchorPane);
         animation.setOnFinished((actionEvent) -> stackPane.getChildren().remove(settingsAnchorPane));
         animation.play();
 
@@ -138,7 +138,7 @@ public class SettingController implements Initializable {
                 try {
                     StartLaunch.CreateBat();
                 } catch (Exception e) {
-                    var alertException = new Alert(Alert.AlertType.ERROR);
+                    Alert alertException = new Alert(Alert.AlertType.ERROR);
                     alertException.setTitle("Exception");
                     alertException.setHeaderText("We have encounter an exception");
                     alertException.setContentText("Start up Launch cannot be created");
@@ -157,7 +157,7 @@ public class SettingController implements Initializable {
     }
 
     private void applyChange() {
-        var alert = new Alert(Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         ButtonType yesButton = new ButtonType("Yes restart now", ButtonBar.ButtonData.YES);
         ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
         alert.getButtonTypes().setAll(yesButton, noButton);
@@ -169,7 +169,7 @@ public class SettingController implements Initializable {
             try {
                 RestartApplication.FullRestart();
             } catch (URISyntaxException | IOException | FileNotAJarException e) {
-                var alertException = new Alert(Alert.AlertType.ERROR);
+                Alert alertException = new Alert(Alert.AlertType.ERROR);
                 alertException.setTitle("Exception");
                 alertException.setHeaderText("We have encounter an exception");
                 alertException.setContentText("CannotRestartException");
@@ -180,7 +180,7 @@ public class SettingController implements Initializable {
     }
 
     private void mustRestart(){
-        var alert = new Alert(Alert.AlertType.CONFIRMATION);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Apply changes");
         alert.setHeaderText("Some changes need the application \n to restart inorder to apply");
         alert.setContentText("restart now?");
@@ -189,7 +189,7 @@ public class SettingController implements Initializable {
             try {
                 RestartApplication.FullRestart();
             } catch (URISyntaxException | IOException | FileNotAJarException e) {
-                var alertException = new Alert(Alert.AlertType.ERROR);
+                Alert alertException = new Alert(Alert.AlertType.ERROR);
                 alertException.setTitle("Exception");
                 alertException.setHeaderText("Cannot restart");
                 alertException.setContentText("The application will be force closed");

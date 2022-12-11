@@ -137,7 +137,7 @@ public class ConfigController implements Initializable {
             new Shake(anchorRoot).play();
             return;
         }
-        if (DiscordAppID.isEmpty() || DiscordAppID.isBlank()) {
+        if (DiscordAppID.isEmpty()) {
             invalidDiscordAppID("Invalid Application ID");
             return;
         }
@@ -150,10 +150,10 @@ public class ConfigController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/scenes/LoadingScreen.fxml"));
         Parent root = loader.load();
         root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(SettingManager.SETTINGS.getTheme().getThemepass())).toExternalForm());
-        var fadeOut = new FadeOut(anchorRoot);
+        FadeOut fadeOut = new FadeOut(anchorRoot);
         fadeOut.setOnFinished((actionEvent -> {
             stackPane.getChildren().remove(anchorRoot);
-            var fadeIn = new FadeIn(root);
+            FadeIn fadeIn = new FadeIn(root);
             fadeIn.setOnFinished((actionEvent1) -> {
                 LoadingController lc = loader.getController();
                 lc.toNewScene(LoadingController.Load.CallBackScreen);
@@ -173,7 +173,7 @@ public class ConfigController implements Initializable {
         Parent root = loader.load();
         root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(SettingManager.SETTINGS.getTheme().getThemepass())).toExternalForm());
         stackPane.getChildren().add(root);
-        var animation = new SlideInLeft(root);
+        SlideInLeft animation = new SlideInLeft(root);
         animation.setOnFinished((actionEvent) -> stackPane.getChildren().remove(anchorRoot));
         animation.play();
 
@@ -245,7 +245,7 @@ public class ConfigController implements Initializable {
                     String data = (String) Toolkit.getDefaultToolkit()
                             .getSystemClipboard().getData(DataFlavor.stringFlavor);
                     FileManager.readFromJson(data, Updates[].class);
-                    UpdateManager.SCRIPT.getTotalupdates().addAll(selectedIndex, List.of(FileManager.readFromJson(data, Updates[].class)));
+                    UpdateManager.SCRIPT.getTotalupdates().addAll(selectedIndex, Arrays.asList(FileManager.readFromJson(data, Updates[].class)));
                     refreshDisplayUpdates();
 
                 } catch (UnsupportedFlavorException | IOException e) {
@@ -262,7 +262,7 @@ public class ConfigController implements Initializable {
                     UpdateManager.SCRIPT.getTotalupdates().remove(selectedIndices.get(i) - i);
                 }
                 refreshDisplayUpdates();
-                UndoRedoManager.addUndo(new UndoRedoManager.UndoRedo(UndoRedoManager.Type.remove, undoUpdates.toArray(Updates[]::new)));
+                UndoRedoManager.addUndo(new UndoRedoManager.UndoRedo(UndoRedoManager.Type.remove, undoUpdates.toArray(new Updates[0])));
             }
         });
         insertRowBelow.setOnAction((actionEvent) -> {
@@ -403,7 +403,7 @@ public class ConfigController implements Initializable {
     }
 
     private void applyActionUndoRedo(boolean type) {
-        var action = type ? UndoRedoManager.getRedo() : UndoRedoManager.getUndo();
+        UndoRedoManager.UndoRedo action = type ? UndoRedoManager.getRedo() : UndoRedoManager.getUndo();
         if (action == null) return;
         if (action.type.equals(UndoRedoManager.Type.remove)) {
             for (Updates updates : action.updates) {
@@ -444,7 +444,7 @@ public class ConfigController implements Initializable {
             if (undoIndex < 0) {
                 undoIndex = 9;
             }
-            var add = undo[undoIndex];
+            UndoRedo add = undo[undoIndex];
             if (add!=null) {
                 add.type = add.type == Type.add ? Type.remove : Type.add;
                 addRedo(add);
@@ -458,7 +458,7 @@ public class ConfigController implements Initializable {
             if (redoIndex < 0) {
                 redoIndex = 9;
             }
-            var add = undo[undoIndex];
+            UndoRedo add = undo[undoIndex];
             if (add != null) {
                 add.type = add.type == Type.add ? Type.remove : Type.add;
                 addUndo(add);

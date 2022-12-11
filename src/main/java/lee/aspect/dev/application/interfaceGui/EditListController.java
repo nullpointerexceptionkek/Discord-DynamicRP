@@ -105,7 +105,7 @@ public class EditListController extends ConfigController implements Initializabl
         Wait.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*"))
                 Wait.setText(newValue.replaceAll("\\D", ""));
-            if(Wait.getText().isBlank() || Wait.getText().isEmpty()) return;
+            if(Wait.getText().isEmpty()) return;
             if (Long.parseLong(Wait.getText()) < 16000) {
                 if (!anchorPane.getChildren().contains(delayTooSmall)) {
                     delayTooSmall =

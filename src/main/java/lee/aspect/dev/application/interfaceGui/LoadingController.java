@@ -85,13 +85,13 @@ public class LoadingController {
                     try {
                         switch (file) {
                             case CallBackScreen:
-                                var loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/scenes/CallBack.fxml"));
+                                FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/scenes/CallBack.fxml"));
                                 Parent root = loader.load();
                                 stackPane.getChildren().add(0,root);
                                 callBackController = loader.getController();
-                                var animation = new RotateIn(root);
+                                RotateIn animation = new RotateIn(root);
                                 animation.setOnFinished(actionEvent -> {
-                                    var fadeOut = new FadeOut(anchorRoot);
+                                    FadeOut fadeOut = new FadeOut(anchorRoot);
                                     fadeOut.setOnFinished((actionEvent1 -> stackPane.getChildren().remove(anchorRoot)));
                                     fadeOut.play();
                                 });
@@ -100,22 +100,22 @@ public class LoadingController {
                             case ConfigScreen:
                                 Parent root1 = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml")));
                                 stackPane.getChildren().add(0,root1);
-                                var animation1 = new RotateIn(root1);
+                                RotateIn animation1 = new RotateIn(root1);
                                 animation1.setOnFinished(actionEvent -> {
-                                    var fadeOut = new FadeOut(anchorRoot);
+                                    FadeOut fadeOut = new FadeOut(anchorRoot);
                                     fadeOut.setOnFinished((actionEvent1 -> stackPane.getChildren().remove(anchorRoot)));
                                     fadeOut.play();
                                 });
                                 animation1.play();
                                 break;
                             default:
-                                var loader2 = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml")));
+                                FXMLLoader loader2 = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml")));
                                 Parent root2 = loader2.load();
                                 ConfigController controller = loader2.getController();
                                 stackPane.getChildren().add(0,root2);
-                                var animation2 = new RotateIn(root2);
+                                RotateIn animation2 = new RotateIn(root2);
                                 animation2.setOnFinished(actionEvent -> {
-                                    var fadeOut = new FadeOut(anchorRoot);
+                                    FadeOut fadeOut = new FadeOut(anchorRoot);
                                     fadeOut.setOnFinished((actionEvent1 -> {
                                         stackPane.getChildren().remove(anchorRoot);
                                         controller.invalidDiscordAppID("Unable to connect to Discord, please check this field.");

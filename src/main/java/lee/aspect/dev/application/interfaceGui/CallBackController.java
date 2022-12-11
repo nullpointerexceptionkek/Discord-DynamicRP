@@ -65,10 +65,10 @@ public class CallBackController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/scenes/LoadingScreen.fxml"));
         Parent root = loader.load();
 
-        var fadeOut = new FadeOut(anchorRoot);
+        FadeOut fadeOut = new FadeOut(anchorRoot);
         fadeOut.setOnFinished((actionEvent -> {
             stackPane.getChildren().remove(anchorRoot);
-            var fadeIn = new FadeIn(root);
+            FadeIn fadeIn = new FadeIn(root);
             fadeIn.setOnFinished((actionEvent1) -> {
                 LoadingController lc = loader.getController();
                 lc.toNewScene(LoadingController.Load.ConfigScreen);
