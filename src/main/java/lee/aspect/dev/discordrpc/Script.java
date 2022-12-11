@@ -44,7 +44,7 @@ public class Script {
 
         sinceUpdate,
 
-        custom;
+        custom
 
     }
 

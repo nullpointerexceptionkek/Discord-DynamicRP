@@ -35,8 +35,24 @@ import java.util.ArrayList;
 
 public class RestartApplication {
 
+    /**
+     * Restarts the current application.
+     *
+     * <p>This method uses the current jar file to start a new process that runs the application. The
+     * current process is exited after calling the {@link RunLoopManager#onClose()} method to perform
+     * necessary clean-up.
+     * <p>
+     * However, this method does not work if the application is started from an IDE or if the jar file
+     * You should always make a exception handler to catch the exception and show a prompt to the user
+     *
+     * @throws URISyntaxException if the current jar file cannot be found
+     * @throws IOException if an error occurs while starting the new process
+     * @throws FileNotAJarException if the current file is not a jar file
+     */
     public static void FullRestart() throws URISyntaxException, IOException, FileNotAJarException {
+        // gets the java bin so we can access it
         final String javaBin = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java";
+        // gets the current jar file
         final File currentJar = new File(RestartApplication.class.getProtectionDomain().getCodeSource().getLocation().toURI());
 
         /* is it a jar file? */
@@ -50,6 +66,7 @@ public class RestartApplication {
         command.add("-jar");
         command.add(currentJar.getPath());
 
+        //run the builder and close current process
         final ProcessBuilder builder = new ProcessBuilder(command);
         builder.start();
         RunLoopManager.onClose();

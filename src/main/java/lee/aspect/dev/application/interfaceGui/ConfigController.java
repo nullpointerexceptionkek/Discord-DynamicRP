@@ -473,7 +473,7 @@ public class ConfigController implements Initializable {
 
         private static class UndoRedo {
             public Type type;
-            public Updates[] updates;
+            public final Updates[] updates;
 
             public UndoRedo(Type type, Updates[] updates) {
                 this.type = type;

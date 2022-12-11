@@ -25,7 +25,6 @@
 
 package lee.aspect.dev
 
-import javafx.application.Platform
 import javafx.scene.control.*
 import javafx.scene.control.ButtonBar.ButtonData
 import javafx.scene.layout.VBox

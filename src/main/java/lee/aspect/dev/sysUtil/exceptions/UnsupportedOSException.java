@@ -27,6 +27,13 @@ package lee.aspect.dev.sysUtil.exceptions;
 
 public class UnsupportedOSException extends Exception {
 
+    /**
+     * This program have special checks and have system specific code for different OS Windows, Linux and macOS
+     * The program can either be run on Windows, Linux or MacOS
+     * However, some features are not available on all OS
+     * This exception is thrown when the program featured is run on an OS that is not supported or not yet written
+     * @param msg The message to be displayed
+     */
     public UnsupportedOSException(String msg) {
         super(msg);
     }
