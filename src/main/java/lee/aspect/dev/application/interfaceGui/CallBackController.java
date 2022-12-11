@@ -116,13 +116,13 @@ public class CallBackController implements Initializable {
     }
 
     public void updateCurrentDisplay(Updates next) {
-        String nextl = next.getFl() + '\n' + next.getSl();
+        String nextLine = next.getFl() + '\n' + next.getSl();
         if ((display1.getLayoutY() + display1.getTranslateY()) <= 230) {
-            updateDisplayLabel(display1, display2, display3,nextl);
+            updateDisplayLabel(display1, display2, display3,nextLine);
         } else if ((display2.getLayoutY() + display2.getTranslateY()) <= 230) {
-            updateDisplayLabel(display2, display3, display1, nextl);
+            updateDisplayLabel(display2, display3, display1, nextLine);
         } else if ((display3.getLayoutY() + display3.getTranslateY()) <= 230) {
-            updateDisplayLabel(display3, display1, display2,nextl);
+            updateDisplayLabel(display3, display1, display2,nextLine);
         } else {
             System.err.println("Animation have encounter an error, this should not be occur");
         }

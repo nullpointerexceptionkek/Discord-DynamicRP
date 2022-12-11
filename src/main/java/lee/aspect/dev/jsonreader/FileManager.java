@@ -27,7 +27,6 @@ package lee.aspect.dev.jsonreader;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import lee.aspect.dev.DirectoryManager;
 import lee.aspect.dev.discordrpc.Script;
 import lee.aspect.dev.discordrpc.Updates;
 import lee.aspect.dev.discordrpc.settings.Settings;

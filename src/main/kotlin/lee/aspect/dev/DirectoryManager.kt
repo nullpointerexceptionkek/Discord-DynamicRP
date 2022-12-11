@@ -101,7 +101,7 @@ class DirectoryManager {
                     directoryPathField.text = defaultDir
 
                     val chooseDirectoryButton = Button("Choose directory")
-                    chooseDirectoryButton.setOnAction { event ->
+                    chooseDirectoryButton.setOnAction {
                         val selectedDirectory = directoryChooser.showDialog(null)
                         if (selectedDirectory != null) {
                             directoryPathField.text = selectedDirectory.absolutePath
@@ -121,7 +121,7 @@ class DirectoryManager {
                     val submitButtonType = ButtonType("Submit", ButtonData.OK_DONE)
                     dialog.dialogPane.buttonTypes.add(submitButtonType)
 
-                    val result: Optional<String> = dialog.showAndWait()
+                    dialog.showAndWait()
 
                     if (directoryPathField.text.isNotEmpty() && directoryPathField.text.isNotBlank()) {
                         val directoryPath = directoryPathField.text

@@ -30,10 +30,8 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import lee.aspect.dev.discordrpc.Updates;
-import lee.aspect.dev.discordrpc.settings.Settings;
 
 import java.io.IOException;
-import java.util.Objects;
 
 
 public class UpdatesAdapter extends TypeAdapter<Updates> {

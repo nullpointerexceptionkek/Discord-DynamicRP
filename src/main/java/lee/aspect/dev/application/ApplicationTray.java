@@ -161,9 +161,7 @@ public class ApplicationTray {
             }
         });
 
-        showInterface.addActionListener(e -> {
-            LaunchInterface();
-        });
+        showInterface.addActionListener(e -> LaunchInterface());
 
         exitItem.addActionListener(e -> {
             tray.remove(trayIcon);
@@ -189,9 +187,7 @@ public class ApplicationTray {
                     "Application cannot start interface when ShutDownInterface is on, please exit and relaunch the program to see interface", TrayIcon.MessageType.ERROR);
             return;
         }
-        Platform.runLater(()->{
-            CustomDiscordRPC.primaryStage.show();
-        });
+        Platform.runLater(()-> CustomDiscordRPC.primaryStage.show());
         CustomDiscordRPC.isOnSystemTray = false;
         if (SettingManager.SETTINGS.isStartTrayOnlyInterfaceClose()) tray.remove(trayIcon);
     }
