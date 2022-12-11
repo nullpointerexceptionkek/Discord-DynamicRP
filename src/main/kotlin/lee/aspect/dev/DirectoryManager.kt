@@ -25,6 +25,7 @@
 
 package lee.aspect.dev
 
+import javafx.concurrent.Task
 import javafx.scene.control.*
 import javafx.scene.control.ButtonBar.ButtonData
 import javafx.scene.layout.VBox
@@ -32,7 +33,7 @@ import javafx.stage.DirectoryChooser
 import lee.aspect.dev.sysUtil.StartLaunch
 import lee.aspect.dev.sysUtil.exceptions.UnsupportedOSException
 import java.io.File
-import java.util.*
+import java.lang.RuntimeException
 
 
 class DirectoryManager {
@@ -41,28 +42,55 @@ class DirectoryManager {
         @JvmField
         val defaultDir = System.getProperty("user.home") + "\\CustomDiscordRPC"
 
-        private var ROOT_DIR = File(getDirectoryEnvironmentVar())
+        private var ROOT_DIR:File? = getDirectoryEnvironmentVar()?.let { File(it) }
 
         @JvmStatic
-        fun getDirectoryEnvironmentVar(): String {
+        fun getDirectoryEnvironmentVar(): String? {
             println("CDRPCDir: ${System.getenv("CDRPCDir")}")
             //this should not be null
-            return System.getenv("CDRPCDir")?: defaultDir
+            return System.getenv("CDRPCDir")
         }
 
         @JvmStatic
         fun writeDirectoryEnvironmentVar(dir: String) {
-            //write the directory to the environment variable
 
-            //check if the user is on Windows
-            if (StartLaunch.isOnWindows()) {
-                ProcessBuilder("setx", "CDRPCDir", dir).start().waitFor()
-            } else if (StartLaunch.isOnMac()) {
-                ProcessBuilder("launchctl", "setenv", "CDRPCDir", dir).start().waitFor()
-            } else if (StartLaunch.isOnLinux()) {
-                ProcessBuilder("export", "CDRPCDir", dir).start().waitFor()
-            } else {
-                throw UnsupportedOSException("invalid os")
+            val progressIndicator = ProgressIndicator()
+
+            progressIndicator.progress = -1.0
+
+            val dialog: Dialog<Void> = Dialog()
+            dialog.graphic = progressIndicator
+
+            dialog.title = "Setting up config directory"
+            dialog.contentText = "This process is setting the environment variable CDRPCDir to $dir"
+
+            dialog.show()
+
+
+            val task = object : Task<Void>() {
+                override fun call(): Void? {
+                    if (StartLaunch.isOnWindows()) {
+                        ProcessBuilder("setx", "CDRPCDir", dir).start().waitFor()
+                    } else if (StartLaunch.isOnMac()) {
+                        ProcessBuilder("launchctl", "setenv", "CDRPCDir", dir).start().waitFor()
+                    } else if (StartLaunch.isOnLinux()) {
+                        ProcessBuilder("export", "CDRPCDir", dir).start().waitFor()
+                    } else {
+                        throw UnsupportedOSException("invalid os")
+                    }
+                    return null
+                }
+            }
+
+            Thread(task).start()
+
+            task.setOnSucceeded {
+                dialog.close()
+            }
+
+            task.setOnFailed {
+                dialog.close()
+                throw RuntimeException("Failed to set environment variable, this can be caused by not having enough privileges or unsupported OS")
             }
 
 
@@ -84,13 +112,15 @@ class DirectoryManager {
         @JvmStatic
         fun isSetUp(): Boolean {
             //check if everything is set up
-            if(System.getenv("CDRPCDir") != null && File(System.getenv("CDRPCDir")).exists())
-                return true
+            if(System.getenv("CDRPCDir") != null)
+                if(File(System.getenv("CDRPCDir")).exists())
+                    return true
             return false
         }
 
         @JvmStatic
         fun askForDirectory() {
+            println("Opening directory setup wizard")
             //make a javaFX dialog
             try {
                     val directoryChooser = DirectoryChooser()
@@ -136,12 +166,15 @@ class DirectoryManager {
                                 //create the directory
                                 File(directoryPath).mkdirs()
                                 writeDirectoryEnvironmentVar(directoryPath)
+                            } else {
+                                askForDirectory()
                             }
+
                         }
                         else{
                             writeDirectoryEnvironmentVar(directoryPath)
                         }
-                        // ...
+
                     }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -149,8 +182,8 @@ class DirectoryManager {
         }
 
         @JvmStatic
-        fun getRootDir(): File {
-            return System.getenv("CDiscordRPConfigDir")?.let { File(it) } ?: ROOT_DIR
+        fun getRootDir(): File? {
+            return ROOT_DIR
         }
 
     }

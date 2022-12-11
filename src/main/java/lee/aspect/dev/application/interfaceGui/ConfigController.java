@@ -313,7 +313,7 @@ public class ConfigController implements Initializable {
                 CustomTimeInput.setText(newValue.replaceAll("\\D", ""));
             }
         });
-        CustomTimeInput.setText(String.valueOf(UpdateManager.SCRIPT.getCustomTimestamp()));
+        CustomTimeInput.setText(String.valueOf(UpdateManager.SCRIPT.getCustomTimestamp() == 0? "" : UpdateManager.SCRIPT.getCustomTimestamp()));
 
 
         try {

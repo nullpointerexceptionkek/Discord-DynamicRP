@@ -136,19 +136,11 @@ public class CustomDiscordRPC extends Application {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Restart");
             alert.setHeaderText("Restart the program");
-            alert.setContentText("You need to restart the program to set up the directory");
+            alert.setContentText("Please Manually restart the program to apply the changes");
             alert.showAndWait();
-            try {
-                RestartApplication.FullRestart();
-            } catch (URISyntaxException | IOException | FileNotAJarException e) {
-                Alert alert1 = new Alert(Alert.AlertType.ERROR);
-                alert1.setTitle("Error");
-                alert1.setHeaderText("Error while restarting");
-                alert1.setContentText("Error while restarting the program, please restart it manually");
-                alert1.showAndWait();
-                e.printStackTrace();
-                System.exit(0);
-            }
+            //close the program
+            Platform.exit();
+            System.exit(0);
         }
         try {
             primaryStage = pStage;
