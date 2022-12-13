@@ -90,7 +90,7 @@ public abstract class RunLoopManager {
 
         isRunning = true;
 
-        if (runLoop == null) {
+        if (runLoop == null || runLoop.isInterrupted()) {
             Launch.LOGGER.debug("Thread is not created, creating a new thread");
             runLoop = new Thread("RunLoop") {
                 @Override
@@ -150,6 +150,13 @@ public abstract class RunLoopManager {
                 }
             };
             runLoop.start();
+        }
+    }
+
+    public static void terminate() {
+        isRunning = false;
+        if (runLoop != null) {
+            runLoop.interrupt();
         }
     }
 

@@ -63,6 +63,7 @@ public class CallBackController implements Initializable {
 
     public void switchToConfig() throws IOException {
         switchToConfig.setDisable(true);
+        RunLoopManager.terminate();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/scenes/LoadingScreen.fxml"));
         Parent root = loader.load();
 
@@ -80,9 +81,6 @@ public class CallBackController implements Initializable {
         }));
         fadeOut.setSpeed(5);
         fadeOut.play();
-
-
-
     }
 
     @Override
