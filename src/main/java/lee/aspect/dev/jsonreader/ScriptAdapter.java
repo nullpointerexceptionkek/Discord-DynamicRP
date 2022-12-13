@@ -59,7 +59,7 @@ public class ScriptAdapter extends TypeAdapter<Script> {
                         script.setTimestampmode(Script.TimeStampMode.valueOf(reader.nextString()));
                         break;
                     case "CustomTimeStamp":
-                        script.setCustomTimestamp(reader.nextLong());
+                        script.setCustomTimestamp(reader.nextString());
                         break;
                     case "UpdateType":
                         script.setUpdateType(Script.UpdateType.valueOf(reader.nextString()));

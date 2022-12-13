@@ -25,9 +25,12 @@
 
 package lee.aspect.dev;
 
+import jdk.javadoc.internal.tool.Start;
 import lee.aspect.dev.application.CustomDiscordRPC;
+import lee.aspect.dev.sysUtil.StartLaunch;
 
 import javax.swing.*;
+import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -39,6 +42,8 @@ import java.nio.channels.FileLock;
  * @author lee
  */
 public abstract class Launch {
+
+    public static boolean isOnIDE = false;
 
     public final static String VERSION = "v1.0.0";
 
@@ -59,6 +64,14 @@ public abstract class Launch {
      * @author Aspect
      */
     public static void main(String[] args) {
+        isOnIDE = System.console() == null || StartLaunch.isJar(); //simple way to check if the program is running on IDE
+
+        if(isOnIDE){
+            System.out.println("[WARNING]This program is running on IDE, some features might not work properly.");
+            System.out.println("[WARNING]The environment variable might not be updated unless you restart the IDE.");
+            System.out.println("[WARNING]Automatic restart is not supported on IDE");
+        }
+
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
         if(!DirectoryManager.isSetUp()) {
             CustomDiscordRPC.LaunchSetUpDialog(args);

@@ -141,7 +141,7 @@ public class ConfigController implements Initializable {
             invalidDiscordAppID("Invalid Application ID");
             return;
         }
-        UpdateManager.SCRIPT.setCustomTimestamp(Long.parseLong(CustomTimeInput.getText()));
+        UpdateManager.SCRIPT.setCustomTimestamp(CustomTimeInput.getText());
         UpdateManager.SCRIPT.setUpdateType(updateMode.getValue());
         callbackButton.setDisable(true);
         SettingManager.SETTINGS.setDiscordAPIKey(DiscordAppID);
@@ -313,7 +313,7 @@ public class ConfigController implements Initializable {
                 CustomTimeInput.setText(newValue.replaceAll("\\D", ""));
             }
         });
-        CustomTimeInput.setText(String.valueOf(UpdateManager.SCRIPT.getCustomTimestamp() == 0? "" : UpdateManager.SCRIPT.getCustomTimestamp()));
+        CustomTimeInput.setText(UpdateManager.SCRIPT.getCustomTimestamp());
 
 
         try {

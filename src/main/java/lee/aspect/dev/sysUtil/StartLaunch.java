@@ -62,6 +62,16 @@ public class StartLaunch {
 
     }
 
+    public static boolean isJar(){
+        final File currentJar;
+        try {
+            currentJar = new File(RestartApplication.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+        } catch (URISyntaxException e) {
+            return false;
+        }
+        return currentJar.getName().endsWith(".jar");
+    }
+
     public static boolean isOnWindows() {
         String osName = System.getProperty("os.name").toLowerCase();
         return osName.contains("win");

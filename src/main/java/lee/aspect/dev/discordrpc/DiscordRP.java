@@ -130,10 +130,10 @@ public class DiscordRP {
                 case custom:
                     System.out.println("custom" + UpdateManager.SCRIPT.getCustomTimestamp());
                     System.out.println("current" + current);
-                    if (UpdateManager.SCRIPT.getCustomTimestamp() > current) {
-                        builder.setEndTimestamp(UpdateManager.SCRIPT.getCustomTimestamp());
+                    if (UpdateManager.SCRIPT.getCalculatedTimestamp() > current) {
+                        builder.setEndTimestamp(UpdateManager.SCRIPT.getCalculatedTimestamp());
                     } else {
-                        builder.setStartTimestamp(UpdateManager.SCRIPT.getCustomTimestamp());
+                        builder.setStartTimestamp(UpdateManager.SCRIPT.getCalculatedTimestamp());
                     }
                     break;
                 case sinceUpdate:

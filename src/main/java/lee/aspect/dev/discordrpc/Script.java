@@ -50,7 +50,8 @@ public class Script {
 
     private UpdateType updateType = UpdateType.Loop;
 
-    private long customTimestamp;
+    private String customTimestamp;
+    private long calculatedTimestamp;
     private ArrayList<Updates> totalupdates;
 
     private TimeStampMode timestampmode = TimeStampMode.appLaunch;
@@ -103,12 +104,20 @@ public class Script {
 
     }
 
-    public void setCustomTimestamp(long customTimestamp) {
+    public void setCustomTimestamp(String customTimestamp) {
         this.customTimestamp = customTimestamp;
     }
 
-    public long getCustomTimestamp() {
+    public String getCustomTimestamp() {
         return customTimestamp;
+    }
+
+    public long getCalculatedTimestamp() {
+
+
+
+
+        return calculatedTimestamp;
     }
 
     public UpdateType getUpdateType() {
