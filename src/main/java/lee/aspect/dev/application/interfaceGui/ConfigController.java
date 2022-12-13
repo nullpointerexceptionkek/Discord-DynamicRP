@@ -44,6 +44,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import lee.aspect.dev.LanguageManager;
 import lee.aspect.dev.animationengine.animation.FadeIn;
 import lee.aspect.dev.animationengine.animation.FadeOut;
 import lee.aspect.dev.animationengine.animation.Shake;
@@ -75,7 +76,7 @@ public class ConfigController implements Initializable {
     @FXML
     private Label titleLabel;
     @FXML
-    private TextField appID;
+    private TextField appIDTextField;
     @FXML
     private Button callbackButton;
 
@@ -93,6 +94,12 @@ public class ConfigController implements Initializable {
 
     @FXML
     private StackPane stackPane;
+
+    @FXML
+    private Label Application_IDLabel, TimeStampMethodLabel;
+
+    @FXML
+    private Button AddNewItemButton;
 
     private ImageView invalidIndex;
 
@@ -126,7 +133,7 @@ public class ConfigController implements Initializable {
     }
 
     public void switchToCallBack() throws IOException {
-        String DiscordAppID = appID.getText();
+        String DiscordAppID = appIDTextField.getText();
         if (displayUpdates.getItems().size() < 1) {
             displayUpdates.setBackground(new Background(new BackgroundFill(Color.rgb(204, 51, 0, 0.9), new CornerRadii(5), Insets.EMPTY)));
             if (!anchorRoot.getChildren().contains(invalidIndex)) {
@@ -207,6 +214,27 @@ public class ConfigController implements Initializable {
     //it will also set the appid to only accept numbers and if loaded is not null, it will leave it empty
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+        //apply languages
+        Application_IDLabel.setText(LanguageManager.Companion.getLang_en_us().getString("Application_ID"));
+        TimeStampMethodLabel.setText(LanguageManager.Companion.getLang_en_us().getString("TimeStampMethod"));
+        //radio buttons
+        appLaunch.setText(LanguageManager.Companion.getLang_en_us().getString("appLaunch"));
+        local.setText(LanguageManager.Companion.getLang_en_us().getString("local"));
+        cdFomEndDay.setText(LanguageManager.Companion.getLang_en_us().getString("cdFomEndDay"));
+        sinceUpdate.setText(LanguageManager.Companion.getLang_en_us().getString("sinceUpdate"));
+        none.setText(LanguageManager.Companion.getLang_en_us().getString("none"));
+        custom.setText(LanguageManager.Companion.getLang_en_us().getString("custom"));
+        //buttons
+        AddNewItemButton.setText(LanguageManager.Companion.getLang_en_us().getString("addNewItemButton"));
+        callbackButton.setText(LanguageManager.Companion.getLang_en_us().getString("callbackButton"));
+        settingButton.setText(LanguageManager.Companion.getLang_en_us().getString("settingButton"));
+        //textfields
+        appIDTextField.setPromptText(LanguageManager.Companion.getLang_en_us().getString("DiscordAppIDInput"));
+        CustomTimeInput.setPromptText(LanguageManager.Companion.getLang_en_us().getString("CustomTimeInput"));
+
+
+
+
         ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/lee/aspect/dev/icon/settingsImage.png")).toExternalForm());
         imageView.setFitHeight(25);
         imageView.setPreserveRatio(true);
@@ -296,15 +324,15 @@ public class ConfigController implements Initializable {
         displayUpdates.setContextMenu(contextMenu);
 
 
-        appID.textProperty().addListener((observable, oldValue, newValue) -> {
+        appIDTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null) return;
             if (!newValue.matches("\\d*")) {
-                appID.setText(newValue.replaceAll("\\D", ""));
+                appIDTextField.setText(newValue.replaceAll("\\D", ""));
                 return;
             }
             anchorRoot.getChildren().remove(invalidAppID);
         });
-        appID.setText(SettingManager.SETTINGS.getDiscordAPIKey());
+        appIDTextField.setText(SettingManager.SETTINGS.getDiscordAPIKey());
 
         CustomTimeInput.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null) return;
@@ -393,9 +421,9 @@ public class ConfigController implements Initializable {
     }
 
     public void invalidDiscordAppID(String msg) {
-        appID.setBackground(new Background(new BackgroundFill(Color.rgb(204, 51, 0, 0.9), new CornerRadii(5), Insets.EMPTY)));
+        appIDTextField.setBackground(new Background(new BackgroundFill(Color.rgb(204, 51, 0, 0.9), new CornerRadii(5), Insets.EMPTY)));
         if (!anchorRoot.getChildren().contains(invalidAppID)) {
-            invalidAppID = WarningManager.setWarning(appID, 16, msg, WarningManager.Mode.Left);
+            invalidAppID = WarningManager.setWarning(appIDTextField, 16, msg, WarningManager.Mode.Left);
             anchorRoot.getChildren().add(invalidAppID);
         }
         new Shake(anchorRoot).play();
