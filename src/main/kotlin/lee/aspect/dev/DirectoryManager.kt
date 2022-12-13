@@ -25,6 +25,7 @@
 
 package lee.aspect.dev
 
+import javafx.application.Platform
 import javafx.concurrent.Task
 import javafx.scene.control.*
 import javafx.scene.control.ButtonBar.ButtonData
@@ -33,7 +34,8 @@ import javafx.stage.DirectoryChooser
 import lee.aspect.dev.sysUtil.StartLaunch
 import lee.aspect.dev.sysUtil.exceptions.UnsupportedOSException
 import java.io.File
-import java.lang.RuntimeException
+import java.util.*
+import kotlin.system.exitProcess
 
 
 class DirectoryManager {
@@ -85,11 +87,11 @@ class DirectoryManager {
             Thread(task).start()
 
             task.setOnSucceeded {
-                dialog.close()
+                Platform.runLater { dialog.close() }
             }
 
             task.setOnFailed {
-                dialog.close()
+                Platform.runLater { dialog.close() }
                 throw RuntimeException("Failed to set environment variable, this can be caused by not having enough privileges or unsupported OS")
             }
 
@@ -144,16 +146,18 @@ class DirectoryManager {
                     val dialogLayout = VBox(messageLabel, directoryPathField, chooseDirectoryButton)
                     dialogLayout.spacing = 10.0
 
-                    val dialog: Dialog<String> = Dialog()
+                    val dialog: Dialog<ButtonType> = Dialog()
                     dialog.title = "Select or input a directory"
                     dialog.dialogPane.content = dialogLayout
 
                     val submitButtonType = ButtonType("Submit", ButtonData.OK_DONE)
                     dialog.dialogPane.buttonTypes.add(submitButtonType)
 
-                    dialog.showAndWait()
+                    val result: Optional<ButtonType> = dialog.showAndWait()
 
-                    if (directoryPathField.text.isNotEmpty() && directoryPathField.text.isNotBlank()) {
+                    if (directoryPathField.text.isNotEmpty() && directoryPathField.text.isNotBlank() &&
+                        result.filter { buttonType: ButtonType -> buttonType == submitButtonType }.isPresent
+                    ) {
                         val directoryPath = directoryPathField.text
                         if(!File(directoryPath).exists()){
                             //open a dialog to tell the user that the directory doesn't exist and ask if they want to create it
@@ -176,7 +180,9 @@ class DirectoryManager {
                         }
 
                     }
-            } catch (e: Exception) {
+                else exitProcess(0)
+                }
+            catch (e: Exception){
                 e.printStackTrace()
             }
         }
