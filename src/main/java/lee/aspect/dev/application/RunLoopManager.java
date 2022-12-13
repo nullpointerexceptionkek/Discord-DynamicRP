@@ -69,6 +69,7 @@ public abstract class RunLoopManager {
                         // Wait for a notification from another thread before continuing
                         startLock.wait();
                     } catch (InterruptedException e) {
+                        //this should never happen
                         throw new RuntimeException(ex);
                     }
                 }
@@ -189,7 +190,7 @@ public abstract class RunLoopManager {
      */
     public static void closeCallBack() {
         discordRP.shutdown();
-        isRunning = false;
+        terminate();
     }
 
 
@@ -205,7 +206,8 @@ public abstract class RunLoopManager {
                 // Wait for a notification from another thread before continuing
                 updateLock.wait(update.getWait());
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                //this exception is ignored
+                //e.printStackTrace();
             }
         }
         discordRP.update(update);
@@ -217,7 +219,9 @@ public abstract class RunLoopManager {
         try {
             discordRP.shutdown();
         } catch (NullPointerException | IllegalStateException e) {
-            e.printStackTrace();
+            //This exception is ignored, it is thrown when the RP is not running
+            //the RP does not need to be close when its running
+            //e.printStackTrace();
         }
         System.exit(0);
     }
