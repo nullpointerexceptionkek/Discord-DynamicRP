@@ -215,22 +215,22 @@ public class ConfigController implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         //apply languages
-        Application_IDLabel.setText(LanguageManager.Companion.getLang_en_us().getString("Application_ID"));
-        TimeStampMethodLabel.setText(LanguageManager.Companion.getLang_en_us().getString("TimeStampMethod"));
+        Application_IDLabel.setText(LanguageManager.Companion.getLang().getString("Application_ID"));
+        TimeStampMethodLabel.setText(LanguageManager.Companion.getLang().getString("TimeStampMethod"));
         //radio buttons
-        appLaunch.setText(LanguageManager.Companion.getLang_en_us().getString("appLaunch"));
-        local.setText(LanguageManager.Companion.getLang_en_us().getString("local"));
-        cdFomEndDay.setText(LanguageManager.Companion.getLang_en_us().getString("cdFomEndDay"));
-        sinceUpdate.setText(LanguageManager.Companion.getLang_en_us().getString("sinceUpdate"));
-        none.setText(LanguageManager.Companion.getLang_en_us().getString("none"));
-        custom.setText(LanguageManager.Companion.getLang_en_us().getString("custom"));
+        appLaunch.setText(LanguageManager.Companion.getLang().getString("appLaunch"));
+        local.setText(LanguageManager.Companion.getLang().getString("local"));
+        cdFomEndDay.setText(LanguageManager.Companion.getLang().getString("cdFomEndDay"));
+        sinceUpdate.setText(LanguageManager.Companion.getLang().getString("sinceUpdate"));
+        none.setText(LanguageManager.Companion.getLang().getString("none"));
+        custom.setText(LanguageManager.Companion.getLang().getString("custom"));
         //buttons
-        AddNewItemButton.setText(LanguageManager.Companion.getLang_en_us().getString("addNewItemButton"));
-        callbackButton.setText(LanguageManager.Companion.getLang_en_us().getString("callbackButton"));
-        settingButton.setText(LanguageManager.Companion.getLang_en_us().getString("settingButton"));
+        AddNewItemButton.setText(LanguageManager.Companion.getLang().getString("addNewItemButton"));
+        callbackButton.setText(LanguageManager.Companion.getLang().getString("callbackButton"));
+        settingButton.setText(LanguageManager.Companion.getLang().getString("settingButton"));
         //textfields
-        appIDTextField.setPromptText(LanguageManager.Companion.getLang_en_us().getString("DiscordAppIDInput"));
-        CustomTimeInput.setPromptText(LanguageManager.Companion.getLang_en_us().getString("CustomTimeInput"));
+        appIDTextField.setPromptText(LanguageManager.Companion.getLang().getString("DiscordAppIDInput"));
+        CustomTimeInput.setPromptText(LanguageManager.Companion.getLang().getString("CustomTimeInput"));
 
 
 

@@ -29,7 +29,9 @@ import java.util.*
 
 class LanguageManager {
     companion object{
-        val lang_en_us = ResourceBundle.getBundle("lang/en_us", Locale.getDefault())
+        val lang: ResourceBundle = ResourceBundle.getBundle("lee.aspect.dev.lang.en_us", Locale.getDefault())
+
+
     }
 
 }
