@@ -29,6 +29,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
+import lee.aspect.dev.Launch;
 import lee.aspect.dev.discordrpc.Script;
 import lee.aspect.dev.discordrpc.UpdateManager;
 import lee.aspect.dev.discordrpc.Updates;
@@ -123,7 +124,7 @@ public class ScriptAdapter extends TypeAdapter<Script> {
             return script;
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("Invalid File");
+            Launch.LOGGER.error("Invalid File Config File detected");
             return null;
         }
 

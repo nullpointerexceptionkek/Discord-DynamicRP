@@ -25,6 +25,7 @@
 
 package lee.aspect.dev.sysUtil;
 
+import lee.aspect.dev.Launch;
 import lee.aspect.dev.sysUtil.exceptions.FileNotAJarException;
 import lee.aspect.dev.sysUtil.exceptions.UnsupportedOSException;
 
@@ -48,7 +49,7 @@ public class StartLaunch {
 
         if (!isOnWindows()) throw new UnsupportedOSException("Start Launch currently only support windows");
 
-        System.out.println(STARTUPDIR);
+        Launch.LOGGER.debug(STARTUPDIR.toString());
 
         if (!CDRP.exists()) {
             CDRP.createNewFile();

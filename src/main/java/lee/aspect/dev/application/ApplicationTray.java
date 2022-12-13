@@ -69,7 +69,7 @@ public class ApplicationTray {
     private static void createAndShowGUI() {
         //Check the SystemTray support
         if (!SystemTray.isSupported()) {
-            System.out.println("SystemTray is not supported");
+            Launch.LOGGER.error("SystemTray is not supported");
             return;
         }
         final PopupMenu popup = new PopupMenu();
@@ -99,7 +99,7 @@ public class ApplicationTray {
         try {
             tray.add(trayIcon);
         } catch (AWTException e) {
-            System.out.println("TrayIcon could not be added.");
+            Launch.LOGGER.error("TrayIcon could not be added.");
             return;
         }
         trayIcon.addActionListener(e -> LaunchInterface());
@@ -174,7 +174,7 @@ public class ApplicationTray {
         URL imageURL = ApplicationTray.class.getResource(path);
 
         if (imageURL == null) {
-            System.err.println("Resource not found: " + path);
+            Launch.LOGGER.error("Resource not found: " + path);
             return null;
         } else {
             return (new ImageIcon(imageURL, description)).getImage();

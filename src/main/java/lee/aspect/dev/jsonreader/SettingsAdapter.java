@@ -29,6 +29,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
+import lee.aspect.dev.Launch;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.discordrpc.settings.Settings;
 
@@ -84,7 +85,7 @@ public class SettingsAdapter extends TypeAdapter<Settings> {
             return settings;
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("Invalid Settings");
+            Launch.LOGGER.error("Invalid Settings file detected");
             return null;
         }
 

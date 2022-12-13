@@ -35,6 +35,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.TextAlignment;
+import lee.aspect.dev.Launch;
 import lee.aspect.dev.animationengine.animation.*;
 import lee.aspect.dev.application.RunLoopManager;
 import lee.aspect.dev.discordrpc.UpdateManager;
@@ -124,7 +125,7 @@ public class CallBackController implements Initializable {
         } else if ((display3.getLayoutY() + display3.getTranslateY()) <= 230) {
             updateDisplayLabel(display3, display1, display2,nextLine);
         } else {
-            System.err.println("Animation have encounter an error, this should not be occur");
+            Launch.LOGGER.error("Animation have encounter an error, this should not be occur");
         }
 
 

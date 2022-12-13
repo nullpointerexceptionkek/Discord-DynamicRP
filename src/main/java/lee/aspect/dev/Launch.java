@@ -25,12 +25,12 @@
 
 package lee.aspect.dev;
 
-import jdk.javadoc.internal.tool.Start;
 import lee.aspect.dev.application.CustomDiscordRPC;
 import lee.aspect.dev.sysUtil.StartLaunch;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
-import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -54,6 +54,8 @@ public abstract class Launch {
     public static FileChannel channel;
     public static FileLock lock;
 
+    public static final Logger LOGGER = LoggerFactory.getLogger(Launch.class);
+
 
     /**
      * Redirect main Class to {@link CustomDiscordRPC Launch}
@@ -67,9 +69,9 @@ public abstract class Launch {
         isOnIDE = System.console() == null || StartLaunch.isJar(); //simple way to check if the program is running on IDE
 
         if(isOnIDE){
-            System.out.println("[WARNING]This program is running on IDE, some features might not work properly.");
-            System.out.println("[WARNING]The environment variable might not be updated unless you restart the IDE.");
-            System.out.println("[WARNING]Automatic restart is not supported on IDE");
+            LOGGER.info("This program is running on IDE, some features might not work properly.");
+            LOGGER.info("The environment variable might not be updated unless you restart the IDE.");
+            LOGGER.info("Automatic restart is not supported on IDE");
         }
 
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
@@ -84,7 +86,7 @@ public abstract class Launch {
         try {
             f = new File(DirectoryManager.getRootDir(), "runtime");
 
-            if (!DirectoryManager.getRootDir().exists()) DirectoryManager.getRootDir().mkdir();
+            //if (!DirectoryManager.getRootDir().exists()) DirectoryManager.getRootDir().mkdir();
 
             if (f.exists()) f.delete();
             channel = new RandomAccessFile(f, "rw").getChannel();
@@ -123,7 +125,7 @@ public abstract class Launch {
     }
 
     public static boolean unlock() {
-        System.out.println("Author: " + AUTHOR + " Project: " + NAME+ " " +VERSION) ;
+        LOGGER.info("Author: " + AUTHOR + " Project: " + NAME+ " " +VERSION); ;
         try {
             if (lock != null) {
                 lock.release();

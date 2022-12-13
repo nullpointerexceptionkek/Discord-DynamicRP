@@ -26,6 +26,7 @@
 package lee.aspect.dev.application;
 
 import javafx.application.Platform;
+import lee.aspect.dev.Launch;
 import lee.aspect.dev.application.interfaceGui.LoadingController;
 import lee.aspect.dev.discordipc.exceptions.NoDiscordClientException;
 import lee.aspect.dev.discordrpc.DiscordRP;
@@ -90,7 +91,7 @@ public abstract class RunLoopManager {
         isRunning = true;
 
         if (runLoop == null) {
-            System.out.println("Thread is not created, creating a new thread");
+            Launch.LOGGER.debug("Thread is not created, creating a new thread");
             runLoop = new Thread("RunLoop") {
                 @Override
                 public void run() {
@@ -180,7 +181,6 @@ public abstract class RunLoopManager {
      * Shut down DiscordRP, this method must be called to stop displaying the RP
      */
     public static void closeCallBack() {
-        System.out.println();
         discordRP.shutdown();
         isRunning = false;
     }

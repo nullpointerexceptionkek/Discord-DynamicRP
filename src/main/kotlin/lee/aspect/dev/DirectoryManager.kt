@@ -46,7 +46,7 @@ class DirectoryManager {
 
         @JvmStatic
         fun getDirectoryEnvironmentVar(): String? {
-            println("CDRPCDir: ${System.getenv("CDRPCDir")}")
+            Launch.LOGGER.debug("CDRPCDir: ${System.getenv("CDRPCDir")}")
             //this should not be null
             return System.getenv("CDRPCDir")
         }
@@ -120,7 +120,7 @@ class DirectoryManager {
 
         @JvmStatic
         fun askForDirectory() {
-            println("Opening directory setup wizard")
+            Launch.LOGGER.info("Opening directory setup wizard")
             //make a javaFX dialog
             try {
                     val directoryChooser = DirectoryChooser()

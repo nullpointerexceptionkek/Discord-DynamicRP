@@ -34,6 +34,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import lee.aspect.dev.DirectoryManager;
+import lee.aspect.dev.Launch;
 import lee.aspect.dev.application.interfaceGui.WarningManager;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.discordrpc.settings.Settings;
@@ -89,8 +90,8 @@ public class CustomDiscordRPC extends Application {
         RunLoopManager.init();
         if(!SettingManager.SETTINGS.isStartTrayOnlyInterfaceClose())
             ApplicationTray.initTray();
-        System.out.println("LaunchArgs: ");
-        System.out.println(Arrays.toString(args));
+        Launch.LOGGER.debug("LaunchArgs: ");
+        Launch.LOGGER.debug(Arrays.toString(args));
         launch(args);
     }
 

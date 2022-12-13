@@ -25,6 +25,7 @@
 
 package lee.aspect.dev.discordrpc;
 
+import lee.aspect.dev.Launch;
 import lee.aspect.dev.application.RunLoopManager;
 import lee.aspect.dev.discordipc.IPCClient;
 import lee.aspect.dev.discordipc.IPCListener;
@@ -128,8 +129,8 @@ public class DiscordRP {
         if (!(created == -1)) {
             switch(UpdateManager.SCRIPT.getTimestampmode()){
                 case custom:
-                    System.out.println("custom" + UpdateManager.SCRIPT.getCustomTimestamp());
-                    System.out.println("current" + current);
+                    Launch.LOGGER.debug("custom" + UpdateManager.SCRIPT.getCustomTimestamp());
+                    Launch.LOGGER.debug("current" + current);
                     if (UpdateManager.SCRIPT.getCalculatedTimestamp() > current) {
                         builder.setEndTimestamp(UpdateManager.SCRIPT.getCalculatedTimestamp());
                     } else {
