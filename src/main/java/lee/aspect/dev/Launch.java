@@ -66,7 +66,7 @@ public abstract class Launch {
      * @author Aspect
      */
     public static void main(String[] args) {
-        isOnIDE = System.console() == null || StartLaunch.isJar(); //simple way to check if the program is running on IDE
+        isOnIDE = System.console() == null || !StartLaunch.isJar(); //simple way to check if the program is running on IDE
 
         if(isOnIDE){
             LOGGER.info("This program is running on IDE, some features might not work properly.");

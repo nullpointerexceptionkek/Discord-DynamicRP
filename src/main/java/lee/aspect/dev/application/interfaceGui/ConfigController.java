@@ -62,7 +62,6 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.*;
 
 public class ConfigController implements Initializable {
@@ -185,7 +184,7 @@ public class ConfigController implements Initializable {
             displayUpdates.setBackground(null);
         }
         int index = UpdateManager.SCRIPT.getTotalupdates().size() - 1;
-        if (UpdateManager.SCRIPT.getTotalupdates().size() > 0)
+        if (displayUpdates.getItems().size() > 0)
             UpdateManager.SCRIPT.addUpdates(new Updates((UpdateManager.SCRIPT.getTotalupdates().get(index).getWait()),
                     String.valueOf(index),
                     UpdateManager.SCRIPT.getTotalupdates().get(index).getImagetext(),
