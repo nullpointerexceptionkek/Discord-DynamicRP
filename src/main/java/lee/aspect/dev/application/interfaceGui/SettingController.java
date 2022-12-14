@@ -31,9 +31,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import lee.aspect.dev.Launch;
+import lee.aspect.dev.language.LanguageManager;
 import lee.aspect.dev.sysUtil.exceptions.FileNotAJarException;
 import lee.aspect.dev.sysUtil.RestartApplication;
 import lee.aspect.dev.sysUtil.StartLaunch;
@@ -78,6 +81,9 @@ public class SettingController implements Initializable {
     @FXML
     private StackPane stackPane;
 
+    @FXML
+    private Label SettingsLabel, ThemeLabel, titleLabel, ReleaseLabel, MinToTrayLabel, PerformanceLabel;
+
     public void switchBack() throws IOException {
         goBack.setDisable(true);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml"));
@@ -92,6 +98,22 @@ public class SettingController implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+        //set the languages to current languages
+        SettingsLabel.setText(LanguageManager.getLang().getString("Settings"));
+        ThemeLabel.setText(LanguageManager.getLang().getString("Theme"));
+        titleLabel.setText("CDiscordRPC");
+        ReleaseLabel.setText("Release " + Launch.VERSION);
+        MinToTrayLabel.setText(LanguageManager.getLang().getString("MinToTray"));
+        PerformanceLabel.setText(LanguageManager.getLang().getString("Performance"));
+        //checkbox
+        shutDownInterfaceCheckBox.setText(LanguageManager.getLang().getString("ShutDownInterface"));
+        noAnimationCheckBox.setText(LanguageManager.getLang().getString("NoAnimation"));
+        startTrayOnlyCloseCheckBox.setText(LanguageManager.getLang().getString("StartTrayOnlyClose"));
+        startLaunchCheckBox.setText(LanguageManager.getLang().getString("StartLaunch"));
+
+
+
+
         goBack.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
         ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/lee/aspect/dev/icon/back.png")).toExternalForm());
         imageView.setFitHeight(25);

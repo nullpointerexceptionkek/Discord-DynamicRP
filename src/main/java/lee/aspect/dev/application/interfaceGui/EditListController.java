@@ -31,6 +31,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -39,6 +40,7 @@ import lee.aspect.dev.application.CustomDiscordRPC;
 import lee.aspect.dev.discordrpc.UpdateManager;
 import lee.aspect.dev.discordrpc.Updates;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
+import lee.aspect.dev.language.LanguageManager;
 
 import java.io.IOException;
 import java.net.URL;
@@ -79,6 +81,10 @@ public class EditListController extends ConfigController implements Initializabl
     @FXML
     private AnchorPane anchorPane;
 
+    @FXML
+    private Label EditConfiLabel,FirstLineLabel, SecondLineLabel, DelayLabel,LargeImgLabel,SmallImgLabel,
+            SmallImgTxtLabel,LargeImgTxtLabel,Button1Label,Button1LinkLabel,Button2TxtLabel,Button2LinkLabel;
+
     private ImageView delayTooSmall;
 
     private int numberInList = -1;
@@ -102,6 +108,25 @@ public class EditListController extends ConfigController implements Initializabl
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+        //set up the languages
+        EditConfiLabel.setText(LanguageManager.getLang().getString("EditConfig"));
+        FirstLineLabel.setText(LanguageManager.getLang().getString("FirstLine"));
+        SecondLineLabel.setText(LanguageManager.getLang().getString("SecondLine"));
+        DelayLabel.setText(LanguageManager.getLang().getString("Delay"));
+        LargeImgLabel.setText(LanguageManager.getLang().getString("LargeImage"));
+        SmallImgLabel.setText(LanguageManager.getLang().getString("SmallImage"));
+        SmallImgTxtLabel.setText(LanguageManager.getLang().getString("SmallImageText"));
+        LargeImgTxtLabel.setText(LanguageManager.getLang().getString("LargeImageText"));
+        Button1Label.setText(LanguageManager.getLang().getString("Button1Text"));
+        Button1LinkLabel.setText(LanguageManager.getLang().getString("Button1Link"));
+        Button2TxtLabel.setText(LanguageManager.getLang().getString("Button2Text"));
+        Button2LinkLabel.setText(LanguageManager.getLang().getString("Button2Link"));
+        CancelButton.setText(LanguageManager.getLang().getString("Cancel"));
+        SaveButton.setText(LanguageManager.getLang().getString("Save"));
+        DeleteButton.setText(LanguageManager.getLang().getString("Delete"));
+
+
+
         Wait.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*"))
                 Wait.setText(newValue.replaceAll("\\D", ""));
