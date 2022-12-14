@@ -27,5 +27,5 @@ package lee.aspect.dev.language
 
 enum class Languages(val resourceLocation: String) {
     EN_US("lee.aspect.dev.lang.en_us"),
-    ZH_CN("zh_cn")
+    ZH_CN("lee.aspect.dev.lang.zh_cn")
 }
