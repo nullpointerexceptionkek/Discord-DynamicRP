@@ -31,7 +31,7 @@ import java.util.*
 class LanguageManager {
     companion object{
         @JvmStatic
-        var lang: ResourceBundle = ResourceBundle.getBundle(Languages.EN_US.resourceLocation, Locale.getDefault())
+        var lang: ResourceBundle = ResourceBundle.getBundle(Languages.EN_US.resourceLocation, Locale.getDefault(), UTF8Control())
         @JvmStatic
         fun setLang(lang : Languages){
             this.lang = ResourceBundle.getBundle(lang.resourceLocation, Locale.getDefault())
