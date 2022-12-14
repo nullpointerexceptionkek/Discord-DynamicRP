@@ -32,6 +32,7 @@ import com.google.gson.stream.JsonWriter;
 import lee.aspect.dev.Launch;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.discordrpc.settings.Settings;
+import lee.aspect.dev.language.Languages;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -77,6 +78,9 @@ public class SettingsAdapter extends TypeAdapter<Settings> {
                     case "Apikey":
                         settings.setDiscordAPIKey(reader.nextString());
                         break;
+                    case "Lang":
+                        settings.setLang(Languages.valueOf(reader.nextString()));
+                        break;
 
                 }
             }
@@ -113,6 +117,8 @@ public class SettingsAdapter extends TypeAdapter<Settings> {
         writter.value(SettingManager.SETTINGS.isStartLaunch());
         writter.name("Apikey");
         writter.value(SettingManager.SETTINGS.getDiscordAPIKey());
+        writter.name("Lang");
+        writter.value(SettingManager.SETTINGS.getLang().name());
         writter.endObject();
 
     }

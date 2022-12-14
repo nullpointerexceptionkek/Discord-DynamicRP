@@ -44,7 +44,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import lee.aspect.dev.LanguageManager;
+import lee.aspect.dev.language.LanguageManager;
 import lee.aspect.dev.animationengine.animation.FadeIn;
 import lee.aspect.dev.animationengine.animation.FadeOut;
 import lee.aspect.dev.animationengine.animation.Shake;
@@ -215,22 +215,22 @@ public class ConfigController implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         //apply languages
-        Application_IDLabel.setText(LanguageManager.Companion.getLang().getString("Application_ID"));
-        TimeStampMethodLabel.setText(LanguageManager.Companion.getLang().getString("TimeStampMethod"));
+        Application_IDLabel.setText(LanguageManager.getLang().getString("Application_ID"));
+        TimeStampMethodLabel.setText(LanguageManager.getLang().getString("TimeStampMethod"));
         //radio buttons
-        appLaunch.setText(LanguageManager.Companion.getLang().getString("appLaunch"));
-        local.setText(LanguageManager.Companion.getLang().getString("local"));
-        cdFomEndDay.setText(LanguageManager.Companion.getLang().getString("cdFomEndDay"));
-        sinceUpdate.setText(LanguageManager.Companion.getLang().getString("sinceUpdate"));
-        none.setText(LanguageManager.Companion.getLang().getString("none"));
-        custom.setText(LanguageManager.Companion.getLang().getString("custom"));
+        appLaunch.setText(LanguageManager.getLang().getString("appLaunch"));
+        local.setText(LanguageManager.getLang().getString("local"));
+        cdFomEndDay.setText(LanguageManager.getLang().getString("cdFomEndDay"));
+        sinceUpdate.setText(LanguageManager.getLang().getString("sinceUpdate"));
+        none.setText(LanguageManager.getLang().getString("none"));
+        custom.setText(LanguageManager.getLang().getString("custom"));
         //buttons
-        AddNewItemButton.setText(LanguageManager.Companion.getLang().getString("addNewItemButton"));
-        callbackButton.setText(LanguageManager.Companion.getLang().getString("callbackButton"));
-        settingButton.setText(LanguageManager.Companion.getLang().getString("settingButton"));
+        AddNewItemButton.setText(LanguageManager.getLang().getString("addNewItemButton"));
+        callbackButton.setText(LanguageManager.getLang().getString("callbackButton"));
+        settingButton.setText(LanguageManager.getLang().getString("settingButton"));
         //textfields
-        appIDTextField.setPromptText(LanguageManager.Companion.getLang().getString("DiscordAppIDInput"));
-        CustomTimeInput.setPromptText(LanguageManager.Companion.getLang().getString("CustomTimeInput"));
+        appIDTextField.setPromptText(LanguageManager.getLang().getString("DiscordAppIDInput"));
+        CustomTimeInput.setPromptText(LanguageManager.getLang().getString("CustomTimeInput"));
 
 
 

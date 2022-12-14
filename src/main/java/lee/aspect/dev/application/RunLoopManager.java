@@ -34,6 +34,7 @@ import lee.aspect.dev.discordrpc.UpdateManager;
 import lee.aspect.dev.discordrpc.Updates;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.jsonreader.FileManager;
+import lee.aspect.dev.language.LanguageManager;
 import org.jetbrains.annotations.NotNull;
 
 
@@ -53,6 +54,7 @@ public abstract class RunLoopManager {
         FileManager.init();
         SettingManager.init();
         UpdateManager.init();
+        LanguageManager.init();
     }
 
     private static final Object startLock = new Object();

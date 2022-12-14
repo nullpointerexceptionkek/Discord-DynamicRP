@@ -23,15 +23,23 @@
  * SOFTWARE.
  */
 
-package lee.aspect.dev
+package lee.aspect.dev.language
 
+import lee.aspect.dev.discordrpc.settings.SettingManager
 import java.util.*
 
 class LanguageManager {
     companion object{
-        val lang: ResourceBundle = ResourceBundle.getBundle("lee.aspect.dev.lang.en_us", Locale.getDefault())
-
-
+        @JvmStatic
+        var lang: ResourceBundle = ResourceBundle.getBundle(Languages.EN_US.resourceLocation, Locale.getDefault())
+        @JvmStatic
+        fun setLang(lang : Languages){
+            this.lang = ResourceBundle.getBundle(lang.resourceLocation, Locale.getDefault())
+        }
+        @JvmStatic
+        fun init(){
+            this.lang = ResourceBundle.getBundle(SettingManager.SETTINGS.lang.resourceLocation, Locale.getDefault())
+        }
     }
 
 }

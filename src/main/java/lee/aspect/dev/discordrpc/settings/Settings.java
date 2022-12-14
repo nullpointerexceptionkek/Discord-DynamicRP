@@ -26,6 +26,8 @@
 package lee.aspect.dev.discordrpc.settings;
 
 
+import lee.aspect.dev.language.Languages;
+
 public class Settings {
 
     public enum MinimizeMode {
@@ -59,6 +61,10 @@ public class Settings {
             return displayName;
         }
     }
+
+
+    private Languages lang = Languages.EN_US;
+
     private String DiscordAPIKey;
 
     private Theme theme = Theme.dark;
@@ -123,6 +129,14 @@ public class Settings {
 
     public void setDiscordAPIKey(String discordAPIKey) {
         this.DiscordAPIKey = discordAPIKey;
+    }
+
+    public Languages getLang() {
+        return lang;
+    }
+
+    public void setLang(Languages lang) {
+        this.lang = lang;
     }
 
     @Override
