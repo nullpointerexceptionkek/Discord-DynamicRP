@@ -40,6 +40,7 @@ import lee.aspect.dev.animationengine.animation.*;
 import lee.aspect.dev.application.RunLoopManager;
 import lee.aspect.dev.discordrpc.UpdateManager;
 import lee.aspect.dev.discordrpc.Updates;
+import lee.aspect.dev.language.LanguageManager;
 
 import java.io.IOException;
 import java.net.URL;
@@ -50,7 +51,7 @@ public class CallBackController implements Initializable {
     private final Label display2 = new Label();
     private final Label display3 = new Label();
     @FXML
-    Label Playing;
+    private Label playingLabel;
     @FXML
     private StackPane stackPane;
     @FXML
@@ -84,6 +85,10 @@ public class CallBackController implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+        //load languages
+        playingLabel.setText(LanguageManager.lang.getString("playing"));
+        switchToConfig.setText(LanguageManager.lang.getString("CloseCallBackButton"));
+
         switchToConfig.setDisable(false);
         Platform.runLater(() -> {
             setDefault(display1, -45);

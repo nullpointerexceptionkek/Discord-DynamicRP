@@ -14,6 +14,6 @@
             </font>
         </Label>
         <Button fx:id="switchToConfig" layoutX="116.0" layoutY="496.0" mnemonicParsing="false" onAction="#switchToConfig" text="Close call back" />
-        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="106.0" layoutY="46.0" prefHeight="18.0" prefWidth="123.0" text="Current displaying" />
+        <Label fx:id="playingLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="106.0" layoutY="46.0" prefHeight="18.0" prefWidth="123.0" text="Current displaying" />
     </AnchorPane>
 </StackPane>
