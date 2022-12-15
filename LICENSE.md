@@ -19,3 +19,21 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+
+This software includes DiscordIPC licensed under the Apache License, Version 2.0. The original code can be found at [https://github.com/jagrosh/DiscordIPC]. Modifications have been made to the original code, as indicated below.
+The program use this library as a dependency, the modification occurs in 
+RichPresence.java, it is modified to add the "buttons" field to the RichPresence, 
+check is also in the toJson()
+method to allow nullability.
+
+This software includes AnimateFX licensed under the Apache License, Version 2.0. The original code can be found at [https://github.com/Typhon0/AnimateFX]. Modifications have been 
+made to the original code, as indicated below. The program modify the original library to add new animations, change or modify existing animations, and deleting the unused animation.
+
+This program includes gson, licensed under the Apache License, Version 2.0. The original code can be found at [https://github.com/google/gson].
+
+This program includes JavaFX licensed under the GPL license.
+
+This program also includes dependencies that are required by the DiscordIPC library
+
+
