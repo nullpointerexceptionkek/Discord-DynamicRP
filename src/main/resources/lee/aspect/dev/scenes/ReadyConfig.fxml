@@ -32,7 +32,7 @@
       <RadioButton fx:id="sinceUpdate" layoutX="64.0" layoutY="416.0" mnemonicParsing="false" onAction="#getTimeStampMode" prefHeight="17.0" prefWidth="151.0" text="Since each update" toggleGroup="$timeStampMode" />
       <RadioButton fx:id="custom" layoutX="166.0" layoutY="344.0" mnemonicParsing="false" onAction="#getTimeStampMode" prefHeight="17.0" prefWidth="99.0" text="Custom" toggleGroup="$timeStampMode" />
       <ChoiceBox fx:id="updateMode" layoutX="94.0" layoutY="457.0" prefWidth="150.0" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="106.0" layoutY="439.0" prefHeight="18.0" prefWidth="123.0" text="Update mode" />
+      <Label fx:id="UpdateModeLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="106.0" layoutY="439.0" prefHeight="18.0" prefWidth="123.0" text="Update mode" />
       <TextField fx:id="CustomTimeInput" layoutX="164.0" layoutY="364.0" prefHeight="26.0" prefWidth="105.0" promptText="Enter time" />
     </AnchorPane>
 </StackPane>

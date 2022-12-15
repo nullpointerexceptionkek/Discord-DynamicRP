@@ -96,7 +96,7 @@ public class ConfigController implements Initializable {
     private StackPane stackPane;
 
     @FXML
-    private Label Application_IDLabel, TimeStampMethodLabel;
+    private Label Application_IDLabel, TimeStampMethodLabel, UpdateModeLabel;
 
     @FXML
     private Button AddNewItemButton;
@@ -217,6 +217,7 @@ public class ConfigController implements Initializable {
         //apply languages
         Application_IDLabel.setText(LanguageManager.getLang().getString("Application_ID"));
         TimeStampMethodLabel.setText(LanguageManager.getLang().getString("TimeStampMethod"));
+        UpdateModeLabel.setText(LanguageManager.getLang().getString("UpdateMode"));
         //radio buttons
         appLaunch.setText(LanguageManager.getLang().getString("appLaunch"));
         local.setText(LanguageManager.getLang().getString("local"));
