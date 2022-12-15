@@ -55,7 +55,7 @@ import java.util.ResourceBundle;
 public class SettingController implements Initializable {
 
     @FXML
-    private Button goBack;
+    private Button goBack,ChangeLanguageButton;
 
     @FXML
     private ChoiceBox<String> themeChoiceBox;
@@ -82,7 +82,7 @@ public class SettingController implements Initializable {
     private StackPane stackPane;
 
     @FXML
-    private Label SettingsLabel, ThemeLabel, titleLabel, ReleaseLabel, MinToTrayLabel, PerformanceLabel;
+    private Label SettingsLabel, ThemeLabel, titleLabel, ReleaseLabel, MinToTrayLabel, PerformanceLabel,LanguageLabel;
 
     public void switchBack() throws IOException {
         goBack.setDisable(true);
@@ -96,9 +96,14 @@ public class SettingController implements Initializable {
 
     }
 
+    public void changeLanguage(){
+        LanguageManager.showDialog();
+    }
+
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         //set the languages to current languages
+        LanguageLabel.setText(LanguageManager.getLang().getString("Language"));
         SettingsLabel.setText(LanguageManager.getLang().getString("Settings"));
         ThemeLabel.setText(LanguageManager.getLang().getString("Theme"));
         titleLabel.setText("CDiscordRPC");
@@ -110,6 +115,7 @@ public class SettingController implements Initializable {
         noAnimationCheckBox.setText(LanguageManager.getLang().getString("NoAnimation"));
         startTrayOnlyCloseCheckBox.setText(LanguageManager.getLang().getString("StartTrayOnlyClose"));
         startLaunchCheckBox.setText(LanguageManager.getLang().getString("StartLaunch"));
+        ChangeLanguageButton.setText(LanguageManager.getLang().getString("ChangeLanguage"));
 
 
 

@@ -25,11 +25,15 @@
 
 package lee.aspect.dev.language
 
+import javafx.scene.control.ButtonType
+import javafx.scene.control.ChoiceBox
+import javafx.scene.control.Dialog
 import lee.aspect.dev.discordrpc.settings.SettingManager
 import java.util.*
 
 abstract class LanguageManager {
     companion object{
+        //this needs to be initialized after the file manager
         @JvmStatic
         lateinit var lang: ResourceBundle
         @JvmStatic
@@ -39,6 +43,33 @@ abstract class LanguageManager {
         @JvmStatic
         fun init(){
             this.lang = ResourceBundle.getBundle(SettingManager.SETTINGS.lang.resourceLocation, Locale.getDefault())
+        }
+        @JvmStatic
+        fun showDialog(){
+
+            // Create a new Dialog object
+            val dialog = Dialog<ButtonType>()
+            dialog.title = "Change Language"
+
+            // Create a ChoiceBox to display the available languages
+            val choiceBox = ChoiceBox<Languages>()
+            choiceBox.items.addAll(Languages.values())
+
+            // Set the dialog content to the ChoiceBox
+            dialog.dialogPane.content = choiceBox
+
+            // Add a button to confirm the selected language
+            dialog.dialogPane.buttonTypes.add(ButtonType.OK)
+
+            // Show the dialog and wait for the user to confirm their selection
+            val result = dialog.showAndWait()
+
+            // If the user confirmed their selection, change the current language
+            if (result.isPresent && result.get() == ButtonType.OK) {
+                setLang(choiceBox.value)
+                SettingManager.SETTINGS.lang = choiceBox.value
+            }
+
         }
     }
 
