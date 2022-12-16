@@ -45,6 +45,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import lee.aspect.dev.Launch;
+import lee.aspect.dev.UndoRedoManager;
 import lee.aspect.dev.language.LanguageManager;
 import lee.aspect.dev.animationengine.animation.FadeIn;
 import lee.aspect.dev.animationengine.animation.FadeOut;
@@ -105,6 +106,8 @@ public class ConfigController implements Initializable {
     private ImageView invalidIndex;
 
     private ImageView invalidAppID;
+
+    private final UndoRedoManager undoRedoManager = new UndoRedoManager(UpdateManager.SCRIPT.getTotalupdates());
 
     //private int index = -1;
 
@@ -207,6 +210,7 @@ public class ConfigController implements Initializable {
         else
             UpdateManager.SCRIPT.addUpdates(new Updates(16000, String.valueOf(index), "" + index, "", "", "First line ", "Second line " + index));
         refreshList();
+        undoRedoManager.modifyList(UpdateManager.SCRIPT.getTotalupdates());
     }
 
 
@@ -253,6 +257,23 @@ public class ConfigController implements Initializable {
         updateMode.getItems().addAll(EnumSet.allOf(Script.UpdateType.class));
         updateMode.setValue(UpdateManager.SCRIPT.getUpdateType());
 
+        undoItem.setOnAction((actionEvent) -> {
+            System.out.println("Undo");
+            System.out.println(undoRedoManager.getCurrentList());
+            undoRedoManager.undo();
+            System.out.println(undoRedoManager.getCurrentList());
+            UpdateManager.SCRIPT.setTotalupdates((ArrayList<Updates>) undoRedoManager.getCurrentList());
+            refreshList();
+        });
+        redoItem.setOnAction((actionEvent) -> {
+            System.out.println("Redo");
+            System.out.println(undoRedoManager.getCurrentList());
+            undoRedoManager.redo();
+            System.out.println(undoRedoManager.getCurrentList());
+            UpdateManager.SCRIPT.setTotalupdates((ArrayList<Updates>) undoRedoManager.getCurrentList());
+            refreshList();
+        });
+
         copyItem.setOnAction((actionEvent) -> {
             if (displayUpdates.getSelectionModel().getSelectedIndex() != -1) {
                 ObservableList<Integer> selectedIndices = displayUpdates.getSelectionModel().getSelectedIndices();
@@ -275,6 +296,7 @@ public class ConfigController implements Initializable {
                     FileManager.readFromJson(data, Updates[].class);
                     UpdateManager.SCRIPT.getTotalupdates().addAll(selectedIndex, Arrays.asList(FileManager.readFromJson(data, Updates[].class)));
                     refreshList();
+                    undoRedoManager.modifyList(UpdateManager.SCRIPT.getTotalupdates());
                 } catch (UnsupportedFlavorException | IOException e) {
                     e.printStackTrace();
                 }
@@ -288,6 +310,7 @@ public class ConfigController implements Initializable {
                 }
             }
             refreshList();
+            undoRedoManager.modifyList(UpdateManager.SCRIPT.getTotalupdates());
         });
         insertRowBelow.setOnAction((actionEvent) -> {
             if (displayUpdates.getSelectionModel().getSelectedIndex() != -1) {
@@ -295,6 +318,7 @@ public class ConfigController implements Initializable {
                 UpdateManager.SCRIPT.addUpdates(index + 1, new Updates(16000, String.valueOf(index), "" + index, "", "", "First line ", "Second line " + index));
             }
             refreshList();
+            undoRedoManager.modifyList(UpdateManager.SCRIPT.getTotalupdates());
         });
         insertRowAbove.setOnAction((actionEvent) -> {
             if (displayUpdates.getSelectionModel().getSelectedIndex() != -1) {
@@ -302,6 +326,7 @@ public class ConfigController implements Initializable {
                 UpdateManager.SCRIPT.addUpdates(index, new Updates(16000, String.valueOf(index), "" + index, "", "", "First line ", "Second line " + index));
             }
             refreshList();
+            undoRedoManager.modifyList(UpdateManager.SCRIPT.getTotalupdates());
         });
 
 
