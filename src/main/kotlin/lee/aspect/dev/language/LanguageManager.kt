@@ -28,6 +28,9 @@ package lee.aspect.dev.language
 import javafx.scene.control.ButtonType
 import javafx.scene.control.ChoiceBox
 import javafx.scene.control.Dialog
+import javafx.scene.control.Label
+import javafx.scene.layout.VBox
+import lee.aspect.dev.application.interfaceGui.WarningManager
 import lee.aspect.dev.discordrpc.settings.SettingManager
 import java.util.*
 
@@ -44,6 +47,7 @@ abstract class LanguageManager {
         fun init(){
             this.lang = ResourceBundle.getBundle(SettingManager.SETTINGS.lang.resourceLocation, Locale.getDefault())
         }
+
         @JvmStatic
         fun showDialog(){
 
@@ -55,11 +59,15 @@ abstract class LanguageManager {
             val choiceBox = ChoiceBox<Languages>()
             choiceBox.items.addAll(Languages.values())
 
+
             // Set the dialog content to the ChoiceBox
-            dialog.dialogPane.content = choiceBox
+            val textLabel = Label("Please select a language, your current language is ${SettingManager.SETTINGS.lang}")
+            dialog.dialogPane.content = VBox(textLabel, choiceBox)
 
             // Add a button to confirm the selected language
-            dialog.dialogPane.buttonTypes.add(ButtonType.OK)
+            dialog.dialogPane.buttonTypes.addAll(ButtonType.CANCEL,ButtonType.OK)
+
+            dialog.dialogPane.stylesheets.add(SettingManager.SETTINGS.theme.themepass)
 
             // Show the dialog and wait for the user to confirm their selection
             val result = dialog.showAndWait()
@@ -68,6 +76,7 @@ abstract class LanguageManager {
             if (result.isPresent && result.get() == ButtonType.OK) {
                 setLang(choiceBox.value)
                 SettingManager.SETTINGS.lang = choiceBox.value
+                WarningManager.restartToApplyChanges()
             }
 
         }

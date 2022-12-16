@@ -134,7 +134,7 @@ public class SettingController implements Initializable {
                 Parent root = settingsAnchorPane.getParent();
                 root.getStylesheets().removeAll();
                 root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(SettingManager.SETTINGS.getTheme().getThemepass())).toExternalForm());
-                applyChange();
+                WarningManager.restartToApplyChanges();
             }
         }));
         //add min to min choice box
@@ -157,7 +157,7 @@ public class SettingController implements Initializable {
         startTrayOnlyCloseCheckBox.setSelected(SettingManager.SETTINGS.isStartTrayOnlyInterfaceClose());
         startTrayOnlyCloseCheckBox.setOnAction((actionEvent -> {
             SettingManager.SETTINGS.setStartTrayOnlyInterfaceClose(startTrayOnlyCloseCheckBox.isSelected());
-            mustRestart();
+            WarningManager.forceRestart();
         }));
         startLaunchCheckBox.setDisable(!StartLaunch.isOnWindows());
         startLaunchCheckBox.setSelected(SettingManager.SETTINGS.isStartLaunch());
@@ -182,48 +182,5 @@ public class SettingController implements Initializable {
 
         SettingManager.saveSettingToFile();
 
-    }
-
-    private void applyChange() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        ButtonType yesButton = new ButtonType("Yes restart now", ButtonBar.ButtonData.YES);
-        ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
-        alert.getButtonTypes().setAll(yesButton, noButton);
-        alert.setTitle("Apply changes");
-        alert.setHeaderText("Some changes need the application \n to restart inorder to apply");
-        alert.setContentText("would you like to restart now?");
-        ButtonType result = alert.showAndWait().get();
-        if (result.equals(yesButton)) {
-            try {
-                RestartApplication.FullRestart();
-            } catch (URISyntaxException | IOException | FileNotAJarException e) {
-                Alert alertException = new Alert(Alert.AlertType.ERROR);
-                alertException.setTitle("Exception");
-                alertException.setHeaderText("We have encounter an exception");
-                alertException.setContentText("CannotRestartException");
-                alertException.show();
-            }
-        }
-
-    }
-
-    private void mustRestart(){
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Apply changes");
-        alert.setHeaderText("Some changes need the application \n to restart inorder to apply");
-        alert.setContentText("restart now?");
-        ButtonType result = alert.showAndWait().get();
-        if (result.equals(ButtonType.OK)) {
-            try {
-                RestartApplication.FullRestart();
-            } catch (URISyntaxException | IOException | FileNotAJarException e) {
-                Alert alertException = new Alert(Alert.AlertType.ERROR);
-                alertException.setTitle("Exception");
-                alertException.setHeaderText("Cannot restart");
-                alertException.setContentText("The application will be force closed");
-                alertException.showAndWait();
-                System.exit(-1);
-            }
-        }
     }
 }

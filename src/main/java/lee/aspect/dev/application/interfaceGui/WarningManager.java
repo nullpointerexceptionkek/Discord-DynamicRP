@@ -31,7 +31,11 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import lee.aspect.dev.sysUtil.RestartApplication;
+import lee.aspect.dev.sysUtil.exceptions.FileNotAJarException;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -126,5 +130,48 @@ public abstract class WarningManager {
         alert.setHeaderText(headerText);
         return alert;
     }
+
+    public static void restartToApplyChanges(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        ButtonType yesButton = new ButtonType("Yes restart now", ButtonBar.ButtonData.YES);
+        ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
+        alert.getButtonTypes().setAll(yesButton, noButton);
+        alert.setTitle("Apply changes");
+        alert.setHeaderText("Some changes need the application \n to restart inorder to apply");
+        alert.setContentText("would you like to restart now?");
+        ButtonType result = alert.showAndWait().get();
+        if (result.equals(yesButton)) {
+            try {
+                RestartApplication.FullRestart();
+            } catch (URISyntaxException | IOException | FileNotAJarException e) {
+                Alert alertException = new Alert(Alert.AlertType.ERROR);
+                alertException.setTitle("Exception");
+                alertException.setHeaderText("We have encounter an exception");
+                alertException.setContentText("FileNotAJarException, this occurs is because you are using an IDE to run the application");
+                alertException.show();
+            }
+        }
+    }
+
+    public static void forceRestart(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Apply changes");
+        alert.setHeaderText("Some changes need the application \n to restart inorder to apply");
+        alert.setContentText("restart now?");
+        ButtonType result = alert.showAndWait().get();
+        if (result.equals(ButtonType.OK)) {
+            try {
+                RestartApplication.FullRestart();
+            } catch (URISyntaxException | IOException | FileNotAJarException e) {
+                Alert alertException = new Alert(Alert.AlertType.ERROR);
+                alertException.setTitle("Exception");
+                alertException.setHeaderText("Cannot restart");
+                alertException.setContentText("The application will be force closed");
+                alertException.showAndWait();
+                System.exit(-1);
+            }
+        }
+    }
+
 
 }
