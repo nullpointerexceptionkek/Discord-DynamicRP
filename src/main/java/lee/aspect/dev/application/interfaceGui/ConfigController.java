@@ -159,7 +159,7 @@ public class ConfigController implements Initializable {
         RunLoopManager.saveScripToFile();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/scenes/LoadingScreen.fxml"));
         Parent root = loader.load();
-        root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(SettingManager.SETTINGS.getTheme().getThemepass())).toExternalForm());
+        root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(SettingManager.SETTINGS.getTheme().getPath())).toExternalForm());
         FadeOut fadeOut = new FadeOut(anchorRoot);
         fadeOut.setOnFinished((actionEvent -> {
             stackPane.getChildren().remove(anchorRoot);
@@ -181,7 +181,7 @@ public class ConfigController implements Initializable {
         settingButton.setDisable(true);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/scenes/Settings.fxml"));
         Parent root = loader.load();
-        root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(SettingManager.SETTINGS.getTheme().getThemepass())).toExternalForm());
+        root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(SettingManager.SETTINGS.getTheme().getPath())).toExternalForm());
         stackPane.getChildren().add(root);
         SlideInLeft animation = new SlideInLeft(root);
         animation.setOnFinished((actionEvent) -> stackPane.getChildren().remove(anchorRoot));
@@ -409,7 +409,7 @@ public class ConfigController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/scenes/EditListScript.fxml"));
             Parent root = loader.load();
-            root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(SettingManager.SETTINGS.getTheme().getThemepass())).toExternalForm());
+            root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(SettingManager.SETTINGS.getTheme().getPath())).toExternalForm());
             EditListController ec = loader.getController();
             ec.setnumberInList(numberInList);
             Stage stage = new Stage();

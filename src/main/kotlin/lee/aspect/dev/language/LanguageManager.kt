@@ -67,7 +67,7 @@ abstract class LanguageManager {
             // Add a button to confirm the selected language
             dialog.dialogPane.buttonTypes.addAll(ButtonType.CANCEL,ButtonType.OK)
 
-            dialog.dialogPane.stylesheets.add(SettingManager.SETTINGS.theme.themepass)
+            dialog.dialogPane.stylesheets.add(SettingManager.SETTINGS.theme.path)
 
             // Show the dialog and wait for the user to confirm their selection
             val result = dialog.showAndWait()

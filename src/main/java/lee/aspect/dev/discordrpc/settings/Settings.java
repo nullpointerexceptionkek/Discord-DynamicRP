@@ -53,7 +53,7 @@ public class Settings {
             this.displayName = displayName;
         }
 
-        public String getThemepass() {
+        public String getPath() {
             return themePath;
         }
 

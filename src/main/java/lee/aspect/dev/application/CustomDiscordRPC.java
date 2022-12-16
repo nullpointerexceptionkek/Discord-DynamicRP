@@ -38,12 +38,8 @@ import lee.aspect.dev.Launch;
 import lee.aspect.dev.application.interfaceGui.WarningManager;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.discordrpc.settings.Settings;
-import lee.aspect.dev.sysUtil.RestartApplication;
-import lee.aspect.dev.sysUtil.exceptions.FileNotAJarException;
 
 import java.awt.*;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -148,7 +144,7 @@ public class CustomDiscordRPC extends Application {
             primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/lee/aspect/dev/icon/SystemTrayIcon.png"))));
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml")));
             Scene scene = new Scene(root);
-            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(SettingManager.SETTINGS.getTheme().getThemepass())).toExternalForm());
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(SettingManager.SETTINGS.getTheme().getPath())).toExternalForm());
             primaryStage.setTitle("Custom Discord RPC");
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);

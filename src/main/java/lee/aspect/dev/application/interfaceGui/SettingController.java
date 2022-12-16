@@ -37,8 +37,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import lee.aspect.dev.Launch;
 import lee.aspect.dev.language.LanguageManager;
-import lee.aspect.dev.sysUtil.exceptions.FileNotAJarException;
-import lee.aspect.dev.sysUtil.RestartApplication;
 import lee.aspect.dev.sysUtil.StartLaunch;
 import lee.aspect.dev.animationengine.animation.SlideOutLeft;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
@@ -46,7 +44,6 @@ import lee.aspect.dev.discordrpc.settings.Settings;
 
 import java.awt.*;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.EnumSet;
 import java.util.Objects;
@@ -88,7 +85,7 @@ public class SettingController implements Initializable {
         goBack.setDisable(true);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml"));
         Parent root = loader.load();
-        root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(SettingManager.SETTINGS.getTheme().getThemepass())).toExternalForm());
+        root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(SettingManager.SETTINGS.getTheme().getPath())).toExternalForm());
         stackPane.getChildren().add(0, root);
         SlideOutLeft animation = new SlideOutLeft(settingsAnchorPane);
         animation.setOnFinished((actionEvent) -> stackPane.getChildren().remove(settingsAnchorPane));
@@ -133,7 +130,7 @@ public class SettingController implements Initializable {
                 SettingManager.SETTINGS.setTheme(theme);
                 Parent root = settingsAnchorPane.getParent();
                 root.getStylesheets().removeAll();
-                root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(SettingManager.SETTINGS.getTheme().getThemepass())).toExternalForm());
+                root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(SettingManager.SETTINGS.getTheme().getPath())).toExternalForm());
                 WarningManager.restartToApplyChanges();
             }
         }));

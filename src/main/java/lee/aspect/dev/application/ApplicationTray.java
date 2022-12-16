@@ -124,7 +124,7 @@ public class ApplicationTray {
                             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(CustomDiscordRPC.class.getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml")));
                             Parent root = loader.load();
                             Scene scene = new Scene(root);
-                            scene.getStylesheets().add(Objects.requireNonNull(ApplicationTray.class.getResource(SettingManager.SETTINGS.getTheme().getThemepass())).toExternalForm());
+                            scene.getStylesheets().add(Objects.requireNonNull(ApplicationTray.class.getResource(SettingManager.SETTINGS.getTheme().getPath())).toExternalForm());
                             CustomDiscordRPC.primaryStage.setScene(scene);
                             ConfigController controller = loader.getController();
                             controller.switchToCallBack();
@@ -148,7 +148,7 @@ public class ApplicationTray {
                         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(CustomDiscordRPC.class.getResource("/lee/aspect/dev/scenes/CallBack.fxml")));
                         Parent root = loader.load();
                         Scene scene = new Scene(root);
-                        scene.getStylesheets().add(Objects.requireNonNull(ApplicationTray.class.getResource(SettingManager.SETTINGS.getTheme().getThemepass())).toExternalForm());
+                        scene.getStylesheets().add(Objects.requireNonNull(ApplicationTray.class.getResource(SettingManager.SETTINGS.getTheme().getPath())).toExternalForm());
                         CustomDiscordRPC.primaryStage.setScene(scene);
                         CallBackController controller = loader.getController();
                         controller.switchToConfig();

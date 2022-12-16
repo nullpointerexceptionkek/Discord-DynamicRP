@@ -1,13 +1,13 @@
 package lee.aspect.dev.animationengine.animation;
 
 import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.util.Duration;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
-
 
 /**
  * @author Loïc Sculier aka typhon0
@@ -24,6 +24,7 @@ public abstract class AnimationFX {
     private Node node;
     private AnimationFX nextAnimation;
     private boolean hasNextAnimation;
+
 
     /**
      * Create a new animation
@@ -77,8 +78,7 @@ public abstract class AnimationFX {
      * Play the animation
      */
     public void play() {
-        if(!SettingManager.SETTINGS.isNoAnimation())
-            timeline.play();
+        timeline.play();
     }
 
     /**
@@ -108,8 +108,13 @@ public abstract class AnimationFX {
     }
 
     public void setTimeline(Timeline timeline) {
-        if(!SettingManager.SETTINGS.isNoAnimation())
-            this.timeline = timeline;
+        if(SettingManager.SETTINGS.isNoAnimation()){
+            KeyFrame lastFrame = timeline.getKeyFrames().get(timeline.getKeyFrames().size()-1);
+            timeline.getKeyFrames().clear();
+            lastFrame.getTime().add(Duration.millis(0));
+            timeline.getKeyFrames().add(lastFrame);
+        }
+        this.timeline = timeline;
     }
 
     public boolean isResetOnFinished() {
@@ -136,7 +141,6 @@ public abstract class AnimationFX {
     }
 
     public void setNode(Node node) {
-        if(SettingManager.SETTINGS.isNoAnimation()) return;
         this.node = node;
         initTimeline();
         timeline.statusProperty().addListener((observable, oldValue, newValue) -> {
@@ -182,7 +186,6 @@ public abstract class AnimationFX {
      * @return
      */
     public AnimationFX setSpeed(double value) {
-        if(SettingManager.SETTINGS.isNoAnimation()) return null;
         this.timeline.setRate(value);
         return this;
     }
@@ -204,9 +207,7 @@ public abstract class AnimationFX {
      * @param value
      */
     public final void setOnFinished(EventHandler<ActionEvent> value) {
-        if(!SettingManager.SETTINGS.isNoAnimation())
             this.timeline.setOnFinished(value);
-        else value.handle(new ActionEvent(this, null));
     }
 
 }

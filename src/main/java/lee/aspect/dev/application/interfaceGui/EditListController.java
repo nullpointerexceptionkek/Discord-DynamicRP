@@ -164,7 +164,7 @@ public class EditListController extends ConfigController implements Initializabl
         stage.close();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml"));
         Parent root = loader.load();
-        root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(SettingManager.SETTINGS.getTheme().getThemepass())).toExternalForm());
+        root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(SettingManager.SETTINGS.getTheme().getPath())).toExternalForm());
         CustomDiscordRPC.primaryStage.setScene(new Scene(root));
         numberInList = -1;
     }
