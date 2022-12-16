@@ -26,6 +26,8 @@
 package lee.aspect.dev.discordrpc;
 
 
+import lee.aspect.dev.Launch;
+
 public class Updates {
 
     private long wait = 3000;
@@ -151,6 +153,7 @@ public class Updates {
 
     @Override
     public String toString() {
+        if(Launch.isOnIDE) return '{' + fl + ", " + sl + '}';
         return fl + ", " + sl;
     }
 

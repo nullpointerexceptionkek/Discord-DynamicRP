@@ -258,19 +258,12 @@ public class ConfigController implements Initializable {
         updateMode.setValue(UpdateManager.SCRIPT.getUpdateType());
 
         undoItem.setOnAction((actionEvent) -> {
-            System.out.println("Undo");
-            System.out.println(undoRedoManager.getCurrentList());
             undoRedoManager.undo();
-            System.out.println(undoRedoManager.getCurrentList());
-            UpdateManager.SCRIPT.setTotalupdates((ArrayList<Updates>) undoRedoManager.getCurrentList());
             refreshList();
         });
         redoItem.setOnAction((actionEvent) -> {
-            System.out.println("Redo");
-            System.out.println(undoRedoManager.getCurrentList());
+
             undoRedoManager.redo();
-            System.out.println(undoRedoManager.getCurrentList());
-            UpdateManager.SCRIPT.setTotalupdates((ArrayList<Updates>) undoRedoManager.getCurrentList());
             refreshList();
         });
 

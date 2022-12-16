@@ -25,14 +25,16 @@
 
 package lee.aspect.dev
 
+import lee.aspect.dev.discordrpc.UpdateManager
 import lee.aspect.dev.discordrpc.Updates
 import java.util.*
 
 class UndoRedoManager(initialList: List<Updates>) {
     private val undoStack = Stack<List<Updates>>()
     private val redoStack = Stack<List<Updates>>()
-    var currentList: List<Updates> = initialList
-        private set
+    private var currentList: List<Updates> = initialList
+    private var previousList: List<Updates> = initialList
+
 
     init {
         undoStack.push(initialList)
@@ -42,9 +44,9 @@ class UndoRedoManager(initialList: List<Updates>) {
         if (undoStack.size <= 1) {
             return
         }
-        println(undoStack)
         redoStack.push(currentList)
         currentList = undoStack.pop()
+        applyChangesToScript()
     }
 
     fun redo() {
@@ -53,11 +55,18 @@ class UndoRedoManager(initialList: List<Updates>) {
         }
         undoStack.push(currentList)
         currentList = redoStack.pop()
+        applyChangesToScript()
     }
 
     fun modifyList(list: List<Updates>) {
-        undoStack.push(currentList)
-        currentList = list
+        undoStack.push(previousList.toList()) // Make a copy of the previous list
+        previousList = list.toList()
         redoStack.clear()
+    }
+    private fun applyChangesToScript(){
+        UpdateManager.SCRIPT.totalupdates.clear()
+        currentList.toList().toTypedArray().forEach {
+            UpdateManager.SCRIPT.totalupdates.add(it)
+        }
     }
 }
