@@ -151,7 +151,7 @@ public class Updates {
 
     @Override
     public String toString() {
-        return wait + ", " + image + ", " + imagetext + ", " + smallimage + ", " + smalltext + ", " + fl + ", " + sl;
+        return fl + ", " + sl;
     }
 
 }

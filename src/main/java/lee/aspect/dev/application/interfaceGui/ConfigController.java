@@ -44,6 +44,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import lee.aspect.dev.Launch;
 import lee.aspect.dev.language.LanguageManager;
 import lee.aspect.dev.animationengine.animation.FadeIn;
 import lee.aspect.dev.animationengine.animation.FadeOut;
@@ -72,7 +73,7 @@ public class ConfigController implements Initializable {
     @FXML
     private ChoiceBox<Script.UpdateType> updateMode;
     @FXML
-    protected ListView<String> displayUpdates;
+    protected ListView<Updates> displayUpdates;
     @FXML
     private Label titleLabel;
     @FXML
@@ -205,8 +206,7 @@ public class ConfigController implements Initializable {
 
         else
             UpdateManager.SCRIPT.addUpdates(new Updates(16000, String.valueOf(index), "" + index, "", "", "First line ", "Second line " + index));
-        displayUpdates.getItems().add("Fl: \"" + UpdateManager.SCRIPT.getTotalupdates().get(UpdateManager.SCRIPT.getTotalupdates().size() - 1).getFl() + "\" Sl: \"" + UpdateManager.SCRIPT.getTotalupdates().get(UpdateManager.SCRIPT.getTotalupdates().size() - 1).getSl() + "\"");
-        UndoRedoManager.addUndo(new UndoRedoManager.UndoRedo(UndoRedoManager.Type.add, new Updates[]{UpdateManager.SCRIPT.getTotalupdates().get(index)}));
+        refreshList();
     }
 
 
@@ -229,7 +229,7 @@ public class ConfigController implements Initializable {
         AddNewItemButton.setText(LanguageManager.getLang().getString("addNewItemButton"));
         callbackButton.setText(LanguageManager.getLang().getString("callbackButton"));
         settingButton.setText(LanguageManager.getLang().getString("settingButton"));
-        //textfields
+        //text-fields
         appIDTextField.setPromptText(LanguageManager.getLang().getString("DiscordAppIDInput"));
         CustomTimeInput.setPromptText(LanguageManager.getLang().getString("CustomTimeInput"));
 
@@ -274,8 +274,7 @@ public class ConfigController implements Initializable {
                             .getSystemClipboard().getData(DataFlavor.stringFlavor);
                     FileManager.readFromJson(data, Updates[].class);
                     UpdateManager.SCRIPT.getTotalupdates().addAll(selectedIndex, Arrays.asList(FileManager.readFromJson(data, Updates[].class)));
-                    refreshDisplayUpdates();
-
+                    refreshList();
                 } catch (UnsupportedFlavorException | IOException e) {
                     e.printStackTrace();
                 }
@@ -283,35 +282,28 @@ public class ConfigController implements Initializable {
         });
         deleteItem.setOnAction((actionEvent) -> {
             if (displayUpdates.getSelectionModel().getSelectedIndex() != -1) {
-                ArrayList<Updates> undoUpdates = new ArrayList<>();
                 ObservableList<Integer> selectedIndices = displayUpdates.getSelectionModel().getSelectedIndices();
                 for (int i = 0; i < selectedIndices.size(); i++) {
-                    undoUpdates.add(UpdateManager.SCRIPT.getTotalupdates().get(selectedIndices.get(i) - i));
                     UpdateManager.SCRIPT.getTotalupdates().remove(selectedIndices.get(i) - i);
                 }
-                refreshDisplayUpdates();
-                UndoRedoManager.addUndo(new UndoRedoManager.UndoRedo(UndoRedoManager.Type.remove, undoUpdates.toArray(new Updates[0])));
             }
+            refreshList();
         });
         insertRowBelow.setOnAction((actionEvent) -> {
             if (displayUpdates.getSelectionModel().getSelectedIndex() != -1) {
                 int index = displayUpdates.getSelectionModel().getSelectedIndex();
                 UpdateManager.SCRIPT.addUpdates(index + 1, new Updates(16000, String.valueOf(index), "" + index, "", "", "First line ", "Second line " + index));
-                displayUpdates.getItems().add(index + 1, "Fl: \"" + UpdateManager.SCRIPT.getTotalupdates().get(index + 1).getFl() + "\" Sl: \"" + UpdateManager.SCRIPT.getTotalupdates().get(index + 1).getSl() + "\"");
-                UndoRedoManager.addUndo(new UndoRedoManager.UndoRedo(UndoRedoManager.Type.add, new Updates[]{UpdateManager.SCRIPT.getTotalupdates().get(index)}));
             }
+            refreshList();
         });
         insertRowAbove.setOnAction((actionEvent) -> {
             if (displayUpdates.getSelectionModel().getSelectedIndex() != -1) {
                 int index = displayUpdates.getSelectionModel().getSelectedIndex();
                 UpdateManager.SCRIPT.addUpdates(index, new Updates(16000, String.valueOf(index), "" + index, "", "", "First line ", "Second line " + index));
-                displayUpdates.getItems().add(index, "Fl: \"" + UpdateManager.SCRIPT.getTotalupdates().get(index).getFl() + "\" Sl: \"" + UpdateManager.SCRIPT.getTotalupdates().get(index).getSl() + "\"");
-                UndoRedoManager.addUndo(new UndoRedoManager.UndoRedo(UndoRedoManager.Type.add, new Updates[]{UpdateManager.SCRIPT.getTotalupdates().get(index)}));
             }
+            refreshList();
         });
 
-        undoItem.setOnAction((actionEvent) -> applyActionUndoRedo(false));
-        redoItem.setOnAction((actionEvent) -> applyActionUndoRedo(true));
 
 
         contextMenu.getItems().addAll(copyItem, pasteItem, deleteItem);
@@ -375,12 +367,13 @@ public class ConfigController implements Initializable {
                     UpdateManager.SCRIPT.setTimestampmode(Script.TimeStampMode.appLaunch);
 
             }
-            refreshDisplayUpdates();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         displayUpdates.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        Launch.LOGGER.debug(UpdateManager.SCRIPT.getTotalupdates().toString());
+        refreshList();
         //check if the list is double-clicked
         displayUpdates.setOnMouseClicked(event -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
@@ -414,12 +407,11 @@ public class ConfigController implements Initializable {
         }
     }
 
-    private void refreshDisplayUpdates() {
+    private void refreshList() {
         displayUpdates.getItems().clear();
-        for (int i = 0; i < UpdateManager.SCRIPT.getTotalupdates().size(); i++) {
-            displayUpdates.getItems().add("Fl: \"" + UpdateManager.SCRIPT.getTotalupdates().get(i).getFl() + "\" Sl: \"" + UpdateManager.SCRIPT.getTotalupdates().get(i).getSl() + "\"");
-        }
+        displayUpdates.getItems().addAll(UpdateManager.SCRIPT.getTotalupdates());
     }
+
 
     public void invalidDiscordAppID(String msg) {
         appIDTextField.setBackground(new Background(new BackgroundFill(Color.rgb(204, 51, 0, 0.9), new CornerRadii(5), Insets.EMPTY)));
@@ -430,84 +422,4 @@ public class ConfigController implements Initializable {
         new Shake(anchorRoot).play();
     }
 
-    private void applyActionUndoRedo(boolean type) {
-        UndoRedoManager.UndoRedo action = type ? UndoRedoManager.getRedo() : UndoRedoManager.getUndo();
-        if (action == null) return;
-        if (action.type.equals(UndoRedoManager.Type.remove)) {
-            for (Updates updates : action.updates) {
-                UpdateManager.SCRIPT.getTotalupdates().remove(updates);
-            }
-        } else {
-            for (Updates updates : action.updates) {
-                UpdateManager.SCRIPT.getTotalupdates().add(updates);
-            }
-        }
-        refreshDisplayUpdates();
-    }
-
-    private static class UndoRedoManager {
-        private static final UndoRedo[] undo = new UndoRedo[10];
-        private static final UndoRedo[] redo = new UndoRedo[10];
-        private static int undoIndex = 0;
-        private static int redoIndex = 0;
-
-        public static void addUndo(UndoRedo undo) {
-            UndoRedoManager.undo[undoIndex] = undo;
-            undoIndex++;
-            if (undoIndex == 10) {
-                undoIndex = 0;
-            }
-        }
-
-        public static void addRedo(UndoRedo redo) {
-            UndoRedoManager.redo[redoIndex] = redo;
-            redoIndex++;
-            if (redoIndex == 10) {
-                redoIndex = 0;
-            }
-        }
-
-        public static UndoRedo getUndo() {
-            undoIndex--;
-            if (undoIndex < 0) {
-                undoIndex = 9;
-            }
-            UndoRedo add = undo[undoIndex];
-            if (add!=null) {
-                add.type = add.type == Type.add ? Type.remove : Type.add;
-                addRedo(add);
-            }
-            //System.out.println("Undo: " + undo[undoIndex].type + " " + Arrays.toString(undo[undoIndex].updates));
-            return undo[undoIndex];
-        }
-
-        public static UndoRedo getRedo() {
-            redoIndex--;
-            if (redoIndex < 0) {
-                redoIndex = 9;
-            }
-            UndoRedo add = undo[undoIndex];
-            if (add != null) {
-                add.type = add.type == Type.add ? Type.remove : Type.add;
-                addUndo(add);
-            }
-            //System.out.println("Redo: " + redo[redoIndex].type + " " + Arrays.toString(redo[redoIndex].updates));
-            return redo[redoIndex];
-        }
-
-        public enum Type {
-            add, remove
-        }
-
-        private static class UndoRedo {
-            public Type type;
-            public final Updates[] updates;
-
-            public UndoRedo(Type type, Updates[] updates) {
-                this.type = type;
-                this.updates = updates;
-            }
-
-        }
-    }
 }
