@@ -30,6 +30,7 @@ import lee.aspect.dev.Launch;
 import lee.aspect.dev.application.interfaceGui.LoadingController;
 import lee.aspect.dev.discordipc.exceptions.NoDiscordClientException;
 import lee.aspect.dev.discordrpc.DiscordRP;
+import lee.aspect.dev.discordrpc.Script;
 import lee.aspect.dev.discordrpc.UpdateManager;
 import lee.aspect.dev.discordrpc.Updates;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
@@ -85,7 +86,12 @@ public abstract class RunLoopManager {
      */
     public static void startUpdate() throws NoDiscordClientException {
         if (runLoop == null) {
-            discordRP.LaunchReadyCallBack(UpdateManager.SCRIPT.getUpdates(0));
+            if(UpdateManager.SCRIPT.getUpdateType().equals(Script.UpdateType.Random)){
+                int i = (int) (Math.random() * UpdateManager.SCRIPT.getSize());
+                currentDisplay = i;
+                discordRP.LaunchReadyCallBack(UpdateManager.SCRIPT.getUpdates(i));
+            }
+            else discordRP.LaunchReadyCallBack(UpdateManager.SCRIPT.getUpdates(0));
         }
         else {
             discordRP.LaunchReadyCallBack(UpdateManager.SCRIPT.getUpdates(getCurrentDisplay()));
@@ -201,6 +207,7 @@ public abstract class RunLoopManager {
     private static void executeUpdate(@NotNull Updates update) {
         if (update.getWait() == -1) {
             discordRP.update(update);
+            Launch.LOGGER.debug("Executing update: " + update);
             return;
         }
         synchronized (updateLock) {
@@ -213,6 +220,7 @@ public abstract class RunLoopManager {
             }
         }
         discordRP.update(update);
+        Launch.LOGGER.debug("Executing update: " + update);
     }
 
     public static void onClose() {

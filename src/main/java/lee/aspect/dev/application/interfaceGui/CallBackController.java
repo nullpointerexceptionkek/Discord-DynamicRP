@@ -38,8 +38,10 @@ import javafx.scene.text.TextAlignment;
 import lee.aspect.dev.Launch;
 import lee.aspect.dev.animationengine.animation.*;
 import lee.aspect.dev.application.RunLoopManager;
+import lee.aspect.dev.discordrpc.Script;
 import lee.aspect.dev.discordrpc.UpdateManager;
 import lee.aspect.dev.discordrpc.Updates;
+import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.language.LanguageManager;
 
 import java.io.IOException;
@@ -95,22 +97,33 @@ public class CallBackController implements Initializable {
             setDefault(display2, 0);
             setDefault(display3, 45);
 
+
             if (UpdateManager.SCRIPT.getTotalupdates().size() == 1) {
                 display2.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getFl()
                         + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getSl());
             } else {
-                if (RunLoopManager.getCurrentDisplay() > 0)
-                    display1.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay() - 1).getFl()
-                            + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay() - 1).getSl());
-                display1.opacityProperty().set(0.3);
-                display2.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getFl()
-                        + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getSl());
-                display3.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay() >= UpdateManager.SCRIPT.getTotalupdates().size() - 1 ? 0 : RunLoopManager.getCurrentDisplay() + 1).getFl()
-                        + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay() >= UpdateManager.SCRIPT.getTotalupdates().size() - 1 ? 0 : RunLoopManager.getCurrentDisplay() + 1).getSl());
-                display3.opacityProperty().set(0.8);
+                if (UpdateManager.SCRIPT.getUpdateType().equals(Script.UpdateType.Random)||SettingManager.SETTINGS.isNoAnimation()) {
+                    display2.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getFl()
+                            + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getSl());
+                }
+                else {
+                    if (RunLoopManager.getCurrentDisplay() > 0)
+                        display1.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay() - 1).getFl()
+                                + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay() - 1).getSl());
+                    display1.opacityProperty().set(0.3);
+                    display2.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getFl()
+                            + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getSl());
+                    display3.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay() >= UpdateManager.SCRIPT.getTotalupdates().size() - 1 ? 0 : RunLoopManager.getCurrentDisplay() + 1).getFl()
+                            + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay() >= UpdateManager.SCRIPT.getTotalupdates().size() - 1 ? 0 : RunLoopManager.getCurrentDisplay() + 1).getSl());
+                    display3.opacityProperty().set(0.8);
+                }
             }
 
 
+            if(UpdateManager.SCRIPT.getUpdateType().equals(Script.UpdateType.Random)||SettingManager.SETTINGS.isNoAnimation()){
+                anchorRoot.getChildren().add(display2);
+                return;
+            }
             anchorRoot.getChildren().addAll(display1, display2, display3);
             pMoveUp = new BounceOutRight(display1);
             afterIn = new BounceInLeft(display3, 0.8);
@@ -119,6 +132,11 @@ public class CallBackController implements Initializable {
     }
 
     public void updateCurrentDisplay(Updates next) {
+        if(UpdateManager.SCRIPT.getUpdateType().equals(Script.UpdateType.Random)||SettingManager.SETTINGS.isNoAnimation()) {
+            display2.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getFl()
+                    + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getSl());
+            return;
+        }
         String nextLine = next.getFl() + '\n' + next.getSl();
         if ((display1.getLayoutY() + display1.getTranslateY()) <= 230) {
             updateDisplayLabel(display1, display2, display3,nextLine);
