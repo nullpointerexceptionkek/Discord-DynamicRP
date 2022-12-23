@@ -83,6 +83,7 @@ class DirectoryManager {
                             it.write("export CDRPCDir=$dir\n")
                         }
                         ProcessBuilder("/bin/bash","-c","source ~/.bashrc").inheritIO().start().waitFor()
+                        ProcessBuilder("/bin/bash","-c","source ~/.zshrc").inheritIO().start().waitFor()
                     } else {
                         throw UnsupportedOSException("invalid os")
                     }
@@ -123,6 +124,8 @@ class DirectoryManager {
             if(System.getenv("CDRPCDir") != null)
                 if(File(System.getenv("CDRPCDir")).exists())
                     return true
+                else Launch.LOGGER.warn("Dir not exists: ${System.getenv("CDRPCDir")}")
+            else Launch.LOGGER.warn("Env not exists")
             return false
         }
 
