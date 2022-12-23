@@ -33,7 +33,10 @@ import javafx.scene.layout.VBox
 import javafx.stage.DirectoryChooser
 import lee.aspect.dev.sysUtil.StartLaunch
 import lee.aspect.dev.sysUtil.exceptions.UnsupportedOSException
+import java.io.BufferedWriter
 import java.io.File
+import java.nio.file.Files
+import java.nio.file.Paths
 import java.util.*
 import kotlin.system.exitProcess
 
@@ -76,7 +79,10 @@ class DirectoryManager {
                     } else if (StartLaunch.isOnMac()) {
                         ProcessBuilder("launchctl", "setenv", "CDRPCDir", dir).start().waitFor()
                     } else if (StartLaunch.isOnLinux()) {
-                        ProcessBuilder("export", "CDRPCDir", dir).start().waitFor()
+                        BufferedWriter(Files.newBufferedWriter(Paths.get(System.getProperty("user.home"),".bashrc"))).use{
+                            it.write("export CDRPCDir=$dir\n")
+                        }
+                        ProcessBuilder("/bin/bash","-c","source ~/.bashrc").inheritIO().start().waitFor()
                     } else {
                         throw UnsupportedOSException("invalid os")
                     }
