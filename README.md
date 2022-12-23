@@ -9,11 +9,11 @@ although you might see some feature is useless and not needed, but its fun to wr
 I build this during my free time, so I can't guarantee that I will update this project frequently.
 
 ## Support
-| Operating System | Auto Launch On Start up         | General Function | 
-|------------------|---------------------------------|------------------|
-| Windows          | Supported/(tested on 10 and 11) | Supported        |
-| Macos            | Currently not supported         | Supported        |
-| Linux            | Currently not supported         | Supported        |
+| Operating System | Auto Launch On Start up         | General Function  | 
+|------------------|---------------------------------|-------------------|
+| Windows          | Supported/(tested on 10 and 11) | Supported         |
+| Macos            | Not implemented                 | Not tested        |
+| Linux            | Not implemented                 | Not Supported yet |
 
 ## How to use
 ![img.png](DirecotryManager.png)
