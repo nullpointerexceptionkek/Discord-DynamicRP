@@ -28,7 +28,9 @@ package lee.aspect.dev.config
 import javafx.geometry.Insets
 import javafx.scene.Scene
 import javafx.scene.control.Button
-import javafx.scene.control.CheckBox
+import javafx.scene.control.RadioButton
+import javafx.scene.control.ToggleGroup
+import javafx.scene.layout.HBox
 import javafx.scene.layout.VBox
 import javafx.stage.Modality
 import javafx.stage.Stage
@@ -49,46 +51,49 @@ class ConfigManager {
              return DirectoryManager.getRootDir()?.listFiles(filter)
 
         }
+
         @JvmStatic
         fun showDialog(){
-            // Get the list of files from getCurrentConfigFiles
             val files = getCurrentConfigFiles()
-
-            // Create a JavaFX stage for the dialog
             val dialogStage = Stage()
             dialogStage.initModality(Modality.APPLICATION_MODAL)
-
-            // Create a JavaFX VBox to hold the checkboxes and buttons
             val vBox = VBox()
             vBox.padding = Insets(10.0, 10.0, 10.0, 10.0)
             vBox.spacing = 10.0
-
-            // Create a checkbox for each file
-            val checkBoxes = mutableListOf<CheckBox>()
+            val toggleGroup = ToggleGroup()
             for (file in files!!) {
-                // Get the file name without the "_UpdateScript.json" part
                 val fileName = file.name.substring(0, file.name.indexOf("_UpdateScript.json"))
-                val checkBox = CheckBox(fileName)
-                checkBoxes.add(checkBox)
-                vBox.children.add(checkBox)
+                val radioButton = RadioButton(fileName)
+                radioButton.toggleGroup = toggleGroup
+                val hBox = HBox()
+                hBox.spacing = 10.0
+                val deleteButton = Button("Delete")
+                deleteButton.setOnAction {
+                    file.delete()
+                    dialogStage.close()
+                    showDialog()
+                }
+                val duplicateButton = Button("Duplicate")
+                val renameButton = Button("Rename")
+                hBox.children.addAll(radioButton, deleteButton, duplicateButton, renameButton)
+                vBox.children.add(hBox)
             }
 
-            // Create an "OK" button and add an event handler to close the dialog when clicked
             val okButton = Button("OK")
             okButton.setOnAction {
                 dialogStage.close()
             }
 
-            // Create a "Cancel" button and add an event handler to close the dialog when clicked
             val cancelButton = Button("Cancel")
             cancelButton.setOnAction {
                 dialogStage.close()
             }
 
-            // Add the buttons to the VBox
-            vBox.children.addAll(okButton, cancelButton)
+            val hBox = HBox()
+            hBox.spacing = 10.0
+            hBox.children.addAll(okButton, cancelButton)
+            vBox.children.add(hBox)
 
-            // Set the scene and show the dialog
             dialogStage.scene = Scene(vBox)
             dialogStage.showAndWait()
         }
