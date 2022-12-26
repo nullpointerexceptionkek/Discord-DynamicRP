@@ -63,7 +63,7 @@ public class StartLaunch {
 
     }
 
-    public static boolean isJar(){
+    public static boolean isJar() {
         final File currentJar;
         try {
             currentJar = new File(RestartApplication.class.getProtectionDomain().getCodeSource().getLocation().toURI());
@@ -77,10 +77,12 @@ public class StartLaunch {
         String osName = System.getProperty("os.name").toLowerCase();
         return osName.contains("win");
     }
+
     public static boolean isOnLinux() {
         String osName = System.getProperty("os.name").toLowerCase();
         return osName.contains("nix") || osName.contains("nux") || osName.contains("aix");
     }
+
     public static boolean isOnMac() {
         String osName = System.getProperty("os.name").toLowerCase();
         return osName.contains("mac");

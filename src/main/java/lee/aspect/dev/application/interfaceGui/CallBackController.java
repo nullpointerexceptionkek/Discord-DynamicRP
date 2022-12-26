@@ -102,11 +102,10 @@ public class CallBackController implements Initializable {
                 display2.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getFl()
                         + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getSl());
             } else {
-                if (UpdateManager.SCRIPT.getUpdateType().equals(Script.UpdateType.Random)||SettingManager.SETTINGS.isNoAnimation()) {
+                if (UpdateManager.SCRIPT.getUpdateType().equals(Script.UpdateType.Random) || SettingManager.SETTINGS.isNoAnimation()) {
                     display2.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getFl()
                             + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getSl());
-                }
-                else {
+                } else {
                     if (RunLoopManager.getCurrentDisplay() > 0)
                         display1.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay() - 1).getFl()
                                 + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay() - 1).getSl());
@@ -120,7 +119,7 @@ public class CallBackController implements Initializable {
             }
 
 
-            if(UpdateManager.SCRIPT.getUpdateType().equals(Script.UpdateType.Random)||SettingManager.SETTINGS.isNoAnimation()){
+            if (UpdateManager.SCRIPT.getUpdateType().equals(Script.UpdateType.Random) || SettingManager.SETTINGS.isNoAnimation()) {
                 anchorRoot.getChildren().add(display2);
                 return;
             }
@@ -132,18 +131,18 @@ public class CallBackController implements Initializable {
     }
 
     public void updateCurrentDisplay(Updates next) {
-        if(UpdateManager.SCRIPT.getUpdateType().equals(Script.UpdateType.Random)||SettingManager.SETTINGS.isNoAnimation()) {
+        if (UpdateManager.SCRIPT.getUpdateType().equals(Script.UpdateType.Random) || SettingManager.SETTINGS.isNoAnimation()) {
             display2.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getFl()
                     + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getSl());
             return;
         }
         String nextLine = next.getFl() + '\n' + next.getSl();
         if ((display1.getLayoutY() + display1.getTranslateY()) <= 230) {
-            updateDisplayLabel(display1, display2, display3,nextLine);
+            updateDisplayLabel(display1, display2, display3, nextLine);
         } else if ((display2.getLayoutY() + display2.getTranslateY()) <= 230) {
             updateDisplayLabel(display2, display3, display1, nextLine);
         } else if ((display3.getLayoutY() + display3.getTranslateY()) <= 230) {
-            updateDisplayLabel(display3, display1, display2,nextLine);
+            updateDisplayLabel(display3, display1, display2, nextLine);
         } else {
             Launch.LOGGER.error("Animation have encounter an error, this should not be occur");
         }

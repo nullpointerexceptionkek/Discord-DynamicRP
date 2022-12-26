@@ -32,7 +32,6 @@ import lee.aspect.dev.discordipc.IPCListener;
 import lee.aspect.dev.discordipc.entities.Callback;
 import lee.aspect.dev.discordipc.entities.RichPresence;
 import lee.aspect.dev.discordipc.exceptions.NoDiscordClientException;
-import lee.aspect.dev.discordrpc.settings.SettingManager;
 
 import java.util.Calendar;
 
@@ -107,7 +106,7 @@ public class DiscordRP {
                 } catch (NoDiscordClientException ex) {
                     throw new RuntimeException(ex);
                 }
-            } else{
+            } else {
                 currentThread().interrupt();
                 RunLoopManager.setRunLoop(null);
                 RunLoopManager.isRunning = false;
@@ -127,7 +126,7 @@ public class DiscordRP {
                 .setButton2Text(updates.getButton2Text())
                 .setButton2Url(updates.getButton2Url());
         if (!(created == -1)) {
-            switch(UpdateManager.SCRIPT.getTimestampmode()){
+            switch (UpdateManager.SCRIPT.getTimestampmode()) {
                 case custom:
                     Launch.LOGGER.debug("custom" + UpdateManager.SCRIPT.getCustomTimestamp());
                     Launch.LOGGER.debug("current" + current);
@@ -153,7 +152,7 @@ public class DiscordRP {
     }
 
     private void setIPCClient(Updates updates) {
-        client = new IPCClient(Long.parseLong(SettingManager.SETTINGS.getDiscordAPIKey()));
+        client = new IPCClient(Long.parseLong(UpdateManager.SCRIPT.getDiscordAPIKey()));
         client.setListener(new IPCListener() {
             @Override
             public void onReady(IPCClient client) {

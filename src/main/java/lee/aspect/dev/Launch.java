@@ -39,23 +39,19 @@ import java.nio.channels.FileLock;
 
 /**
  * This class checks whether if the application is already launched and add shutdown hook;
+ *
  * @author lee
  */
 public abstract class Launch {
 
-    public static boolean isOnIDE = false;
-
     public final static String VERSION = "v1.0.0";
-
     public final static String AUTHOR = "lee";
-
     public final static String NAME = "CDiscordRP";
+    public static final Logger LOGGER = LoggerFactory.getLogger(Launch.class);
+    public static boolean isOnIDE = false;
     public static File f;
     public static FileChannel channel;
     public static FileLock lock;
-
-    public static final Logger LOGGER = LoggerFactory.getLogger(Launch.class);
-
 
     /**
      * Redirect main Class to {@link CustomDiscordRPC Launch}
@@ -68,19 +64,18 @@ public abstract class Launch {
     public static void main(String[] args) {
         isOnIDE = System.console() == null || !StartLaunch.isJar(); //simple way to check if the program is running on IDE
 
-        if(isOnIDE){
+        if (isOnIDE) {
             LOGGER.info("This program is running on IDE, some features might not work properly.");
             LOGGER.info("The environment variable might not be updated unless you restart the IDE.");
             LOGGER.info("Automatic restart is not supported on IDE");
         }
 
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
-        if(!DirectoryManager.isSetUp()) {
+        if (!DirectoryManager.isSetUp()) {
             CustomDiscordRPC.LaunchSetUpDialog(args);
 
             return;
         }
-
 
 
         try {
@@ -94,14 +89,14 @@ public abstract class Launch {
 
             if (lock == null) {
                 channel.close();
-                Object[] options = { "Yes, I want to start the application", "Quit Application" };
+                Object[] options = {"Yes, I want to start the application", "Quit Application"};
                 String message = "\"Custom Discord RP\"\n"
                         + "It looks like you are trying to create\n"
                         + "multiple instance of the program\n"
                         + "Do you want to start the application anyway?";
-                int result =JOptionPane.showOptionDialog(new JFrame(), message, "Application Running", JOptionPane.YES_NO_OPTION,
-                        JOptionPane.WARNING_MESSAGE, null, options,null);
-                if(result == JOptionPane.YES_OPTION) {
+                int result = JOptionPane.showOptionDialog(new JFrame(), message, "Application Running", JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE, null, options, null);
+                if (result == JOptionPane.YES_OPTION) {
                     CustomDiscordRPC.Launch(args);
                 } else {
                     System.exit(0);
@@ -125,12 +120,13 @@ public abstract class Launch {
     }
 
     public static boolean unlock() {
-        LOGGER.info("Author: " + AUTHOR + " Project: " + NAME+ " " +VERSION); ;
+        LOGGER.info("Author: " + AUTHOR + " Project: " + NAME + " " + VERSION);
+        ;
         try {
             if (lock != null) {
                 lock.release();
                 channel.close();
-               return f.delete();
+                return f.delete();
             }
         } catch (IOException e) {
             e.printStackTrace();

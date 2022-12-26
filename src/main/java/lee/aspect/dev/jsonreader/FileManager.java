@@ -102,12 +102,12 @@ public class FileManager {
 
     }
 
-    public static String toGson(Object o){
+    public static String toGson(Object o) {
         return gson.toJson(o);
 
     }
 
-    public static <T> T readFromJson(String json, Class<T> c){
+    public static <T> T readFromJson(String json, Class<T> c) {
         return gson.fromJson(json, c);
     }
 

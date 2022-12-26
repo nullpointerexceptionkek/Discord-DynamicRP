@@ -33,6 +33,7 @@ import java.io.File;
 
 public abstract class UpdateManager {
     public static Script SCRIPT;
+
     public static void init() {
         SCRIPT = loadScriptFromJson();
     }

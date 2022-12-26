@@ -30,7 +30,8 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import lee.aspect.dev.DirectoryManager;
@@ -71,20 +72,18 @@ import java.util.Objects;
  */
 public class CustomDiscordRPC extends Application {
 
-    private static boolean setup = false;
     public static Stage primaryStage;
-
     public static boolean isOnSystemTray = false;
+    private static boolean setup = false;
 
     /**
      * This is the "main" function of the program, this method is getting called on start up
      * Sets the basic property of JavaFX and calls {@link #start(Stage)} to Launch the application interface
-     *
      */
     public static void Launch(String[] args) {
         Platform.setImplicitExit(false);
         RunLoopManager.init();
-        if(!SettingManager.SETTINGS.isStartTrayOnlyInterfaceClose())
+        if (!SettingManager.SETTINGS.isStartTrayOnlyInterfaceClose())
             ApplicationTray.initTray();
         Launch.LOGGER.debug("LaunchArgs: ");
         Launch.LOGGER.debug(Arrays.toString(args));
@@ -98,7 +97,7 @@ public class CustomDiscordRPC extends Application {
      * the setup is the variable that will be set to true, this will make the program to load the setup dialog
      * once {@link #start(Stage)} is called
      */
-    public static void LaunchSetUpDialog(String[] args){
+    public static void LaunchSetUpDialog(String[] args) {
         setup = true;
         Platform.setImplicitExit(true);
         launch(args);
@@ -126,7 +125,7 @@ public class CustomDiscordRPC extends Application {
      */
     @Override
     public void start(Stage pStage) {
-        if(setup){
+        if (setup) {
             //this sets up the environment variables(to access the file save directory)
             DirectoryManager.askForDirectory();
             //create a dialog says you need to restart the program
@@ -192,20 +191,20 @@ public class CustomDiscordRPC extends Application {
             case Ask:
                 Alert alert = WarningManager.createAlertWithOptOut(
                         Alert.AlertType.CONFIRMATION,
-                        "Minimize to System Tray",null,
+                        "Minimize to System Tray", null,
                         "Do you want to minimize to System Tray?",
-                        "Do not show again", param -> SettingManager.SETTINGS.setMinimizeMode(param ? Settings.MinimizeMode.WaitAndSee : Settings.MinimizeMode.Ask),ButtonType.YES,ButtonType.NO,ButtonType.CANCEL);
+                        "Do not show again", param -> SettingManager.SETTINGS.setMinimizeMode(param ? Settings.MinimizeMode.WaitAndSee : Settings.MinimizeMode.Ask), ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
                 java.util.Optional<ButtonType> result = alert.showAndWait();
                 if (result.filter(buttonType -> buttonType == ButtonType.YES).isPresent()) {
-                    if(SettingManager.SETTINGS.getMinimizeMode() == Settings.MinimizeMode.WaitAndSee)
+                    if (SettingManager.SETTINGS.getMinimizeMode() == Settings.MinimizeMode.WaitAndSee)
                         SettingManager.SETTINGS.setMinimizeMode(Settings.MinimizeMode.Always);
 
                     primaryStage.close();
-                    if(SettingManager.SETTINGS.isStartTrayOnlyInterfaceClose()) ApplicationTray.initTray();
+                    if (SettingManager.SETTINGS.isStartTrayOnlyInterfaceClose()) ApplicationTray.initTray();
                     isOnSystemTray = true;
                     if (SettingManager.SETTINGS.isShutDownInterfaceWhenTray()) Platform.exit();
                 } else if (result.filter(buttonType -> buttonType == ButtonType.NO).isPresent()) {
-                    if(SettingManager.SETTINGS.getMinimizeMode() == Settings.MinimizeMode.WaitAndSee)
+                    if (SettingManager.SETTINGS.getMinimizeMode() == Settings.MinimizeMode.WaitAndSee)
                         SettingManager.SETTINGS.setMinimizeMode(Settings.MinimizeMode.Never);
                     RunLoopManager.onClose();
                     return;
@@ -215,7 +214,7 @@ public class CustomDiscordRPC extends Application {
             case Always:
                 primaryStage.close();
                 isOnSystemTray = true;
-                if(SettingManager.SETTINGS.isStartTrayOnlyInterfaceClose()) ApplicationTray.initTray();
+                if (SettingManager.SETTINGS.isStartTrayOnlyInterfaceClose()) ApplicationTray.initTray();
                 if (SettingManager.SETTINGS.isShutDownInterfaceWhenTray()) Platform.exit();
                 break;
             default:

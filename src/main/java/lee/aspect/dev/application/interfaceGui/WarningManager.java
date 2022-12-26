@@ -41,15 +41,12 @@ import java.util.function.Consumer;
 
 public abstract class WarningManager {
 
-    public enum Mode{
-        Left,Right,Up,Down
-    }
-
     /**
      * Creates a warning icon
+     *
      * @return ImageView
      */
-    public static ImageView setWarning(double x, double y, int size, String message){
+    public static ImageView setWarning(double x, double y, int size, String message) {
         ImageView warning = new ImageView(Objects.requireNonNull(WarningManager.class.getResource("/lee/aspect/dev/icon/Warning.png")).toExternalForm());
         warning.setFitHeight(size);
         warning.setFitWidth(size);
@@ -58,44 +55,52 @@ public abstract class WarningManager {
         Tooltip.install(warning, new Tooltip(message));
         return warning;
     }
+
     /**
      * Creates a warning icon
+     *
      * @return ImageView
      */
-    public static ImageView setWarning(Parent parent, int size, String message, Mode mode, double ofSetX, double ofSetY){
-        switch(mode) {
+    public static ImageView setWarning(Parent parent, int size, String message, Mode mode, double ofSetX, double ofSetY) {
+        switch (mode) {
             case Up:
                 return setWarning(parent.getLayoutX() + parent.getLayoutBounds().getCenterX() + ofSetX,
-                        parent.getLayoutY()-10 - size/2 + ofSetY, size,message);
+                        parent.getLayoutY() - 10 - size / 2 + ofSetY, size, message);
             case Down:
-                return setWarning(parent.getLayoutX() + parent.getLayoutBounds().getCenterX()+ ofSetX,
-                        parent.getLayoutY()+10 + size/2+ ofSetY, size,message);
+                return setWarning(parent.getLayoutX() + parent.getLayoutBounds().getCenterX() + ofSetX,
+                        parent.getLayoutY() + 10 + size / 2 + ofSetY, size, message);
             case Left:
-                return setWarning(parent.getLayoutX()-10 - size/2+ ofSetX,
-                        parent.getLayoutY() + parent.getLayoutBounds().getCenterY() - size/2+ ofSetY, size,message);
+                return setWarning(parent.getLayoutX() - 10 - size / 2 + ofSetX,
+                        parent.getLayoutY() + parent.getLayoutBounds().getCenterY() - size / 2 + ofSetY, size, message);
             case Right:
-                return setWarning(parent.getLayoutX()+10+ size/2+ ofSetX,
-                        parent.getLayoutY() + parent.getLayoutBounds().getCenterY() - size/2+ ofSetY, size,message);
+                return setWarning(parent.getLayoutX() + 10 + size / 2 + ofSetX,
+                        parent.getLayoutY() + parent.getLayoutBounds().getCenterY() - size / 2 + ofSetY, size, message);
             default:
                 return null;
         }
     }
+
     /**
      * Creates a warning icon
+     *
      * @return ImageView
      */
-    public static ImageView setWarning(Parent p){
-        return setWarning(p,16,"",Mode.Left);
+    public static ImageView setWarning(Parent p) {
+        return setWarning(p, 16, "", Mode.Left);
     }
+
     /**
      * Creates a warning icon
+     *
      * @return ImageView
      */
-    public static ImageView setWarning(Parent parent, int size, String message, Mode mode){
-        return setWarning(parent,size,message,mode,0,0);
+    public static ImageView setWarning(Parent parent, int size, String message, Mode mode) {
+        return setWarning(parent, size, message, mode, 0, 0);
     }
+
     /**
      * Creates a alert with a checkbox
+     *
      * @return Alert
      */
     public static Alert createAlertWithOptOut(Alert.AlertType type, String title, String headerText,
@@ -131,7 +136,7 @@ public abstract class WarningManager {
         return alert;
     }
 
-    public static void restartToApplyChanges(){
+    public static void restartToApplyChanges() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         ButtonType yesButton = new ButtonType("Yes restart now", ButtonBar.ButtonData.YES);
         ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
@@ -153,7 +158,7 @@ public abstract class WarningManager {
         }
     }
 
-    public static void forceRestart(){
+    public static void forceRestart() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Apply changes");
         alert.setHeaderText("Some changes need the application \n to restart inorder to apply");
@@ -171,6 +176,10 @@ public abstract class WarningManager {
                 System.exit(-1);
             }
         }
+    }
+
+    public enum Mode {
+        Left, Right, Up, Down
     }
 
 

@@ -25,8 +25,8 @@
 
 package lee.aspect.dev.sysUtil;
 
-import lee.aspect.dev.sysUtil.exceptions.FileNotAJarException;
 import lee.aspect.dev.application.RunLoopManager;
+import lee.aspect.dev.sysUtil.exceptions.FileNotAJarException;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,8 +45,8 @@ public class RestartApplication {
      * However, this method does not work if the application is started from an IDE or if the jar file
      * You should always make a exception handler to catch the exception and show a prompt to the user
      *
-     * @throws URISyntaxException if the current jar file cannot be found
-     * @throws IOException if an error occurs while starting the new process
+     * @throws URISyntaxException   if the current jar file cannot be found
+     * @throws IOException          if an error occurs while starting the new process
      * @throws FileNotAJarException if the current file is not a jar file
      */
     public static void FullRestart() throws URISyntaxException, IOException, FileNotAJarException {

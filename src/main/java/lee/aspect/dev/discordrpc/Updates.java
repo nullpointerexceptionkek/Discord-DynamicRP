@@ -153,7 +153,7 @@ public class Updates {
 
     @Override
     public String toString() {
-        if(Launch.isOnIDE) return '{' + fl + ", " + sl + '}';
+        if (Launch.isOnIDE) return '{' + fl + ", " + sl + '}';
         return fl + ", " + sl;
     }
 

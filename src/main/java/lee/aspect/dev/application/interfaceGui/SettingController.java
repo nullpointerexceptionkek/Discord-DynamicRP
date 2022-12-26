@@ -30,17 +30,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.control.*;
 import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import lee.aspect.dev.Launch;
-import lee.aspect.dev.language.LanguageManager;
-import lee.aspect.dev.sysUtil.StartLaunch;
 import lee.aspect.dev.animationengine.animation.SlideOutLeft;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.discordrpc.settings.Settings;
+import lee.aspect.dev.language.LanguageManager;
+import lee.aspect.dev.sysUtil.StartLaunch;
 
 import java.awt.*;
 import java.io.IOException;
@@ -52,7 +52,7 @@ import java.util.ResourceBundle;
 public class SettingController implements Initializable {
 
     @FXML
-    private Button goBack,ChangeLanguageButton;
+    private Button goBack, ChangeLanguageButton;
 
     @FXML
     private ChoiceBox<String> themeChoiceBox;
@@ -79,7 +79,7 @@ public class SettingController implements Initializable {
     private StackPane stackPane;
 
     @FXML
-    private Label SettingsLabel, ThemeLabel, titleLabel, ReleaseLabel, MinToTrayLabel, PerformanceLabel,LanguageLabel;
+    private Label SettingsLabel, ThemeLabel, titleLabel, ReleaseLabel, MinToTrayLabel, PerformanceLabel, LanguageLabel;
 
     public void switchBack() throws IOException {
         goBack.setDisable(true);
@@ -93,7 +93,7 @@ public class SettingController implements Initializable {
 
     }
 
-    public void changeLanguage(){
+    public void changeLanguage() {
         LanguageManager.showDialog();
     }
 
@@ -115,8 +115,6 @@ public class SettingController implements Initializable {
         ChangeLanguageButton.setText(LanguageManager.getLang().getString("ChangeLanguage"));
 
 
-
-
         goBack.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
         ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/lee/aspect/dev/icon/back.png")).toExternalForm());
         imageView.setFitHeight(25);
@@ -136,8 +134,8 @@ public class SettingController implements Initializable {
         }));
         //add min to min choice box
         minimizeModeChoiceBox.setDisable(!SystemTray.isSupported());
-        for(Settings.MinimizeMode mode : Settings.MinimizeMode.values()){
-            if(mode != Settings.MinimizeMode.WaitAndSee)
+        for (Settings.MinimizeMode mode : Settings.MinimizeMode.values()) {
+            if (mode != Settings.MinimizeMode.WaitAndSee)
                 minimizeModeChoiceBox.getItems().add(mode);
         }
         minimizeModeChoiceBox.setValue((SettingManager.SETTINGS.getMinimizeMode()));

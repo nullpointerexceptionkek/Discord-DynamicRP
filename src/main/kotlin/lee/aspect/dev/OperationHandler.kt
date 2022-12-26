@@ -27,7 +27,7 @@ package lee.aspect.dev
 
 class OperationHandler {
 
-    companion object{
+    companion object {
         @JvmStatic
         fun parseTimeStampOperator(input: String): Long {
             var ct: Long = System.currentTimeMillis()

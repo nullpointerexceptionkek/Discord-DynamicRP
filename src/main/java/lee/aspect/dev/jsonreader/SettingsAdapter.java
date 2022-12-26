@@ -75,9 +75,6 @@ public class SettingsAdapter extends TypeAdapter<Settings> {
                     case "StartLaunch":
                         settings.setStartLaunch(reader.nextBoolean());
                         break;
-                    case "Apikey":
-                        settings.setDiscordAPIKey(reader.nextString());
-                        break;
                     case "Lang":
                         settings.setLang(Languages.valueOf(reader.nextString()));
                         break;
@@ -115,8 +112,6 @@ public class SettingsAdapter extends TypeAdapter<Settings> {
         writter.value(SettingManager.SETTINGS.isNoAnimation());
         writter.name("StartLaunch");
         writter.value(SettingManager.SETTINGS.isStartLaunch());
-        writter.name("Apikey");
-        writter.value(SettingManager.SETTINGS.getDiscordAPIKey());
         writter.name("Lang");
         writter.value(SettingManager.SETTINGS.getLang().name());
         writter.endObject();

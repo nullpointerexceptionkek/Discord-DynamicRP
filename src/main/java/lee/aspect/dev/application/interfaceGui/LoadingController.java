@@ -74,7 +74,7 @@ public class LoadingController {
                 case CallBackScreen:
                     try {
                         RunLoopManager.startUpdate();
-                    } catch (NoDiscordClientException|RuntimeException e) {
+                    } catch (NoDiscordClientException | RuntimeException e) {
                         file = Load.Error;
                     }
                     break;
@@ -87,7 +87,7 @@ public class LoadingController {
                             case CallBackScreen:
                                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/scenes/CallBack.fxml"));
                                 Parent root = loader.load();
-                                stackPane.getChildren().add(0,root);
+                                stackPane.getChildren().add(0, root);
                                 callBackController = loader.getController();
                                 RotateIn animation = new RotateIn(root);
                                 animation.setOnFinished(actionEvent -> {
@@ -99,7 +99,7 @@ public class LoadingController {
                                 break;
                             case ConfigScreen:
                                 Parent root1 = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml")));
-                                stackPane.getChildren().add(0,root1);
+                                stackPane.getChildren().add(0, root1);
                                 RotateIn animation1 = new RotateIn(root1);
                                 animation1.setOnFinished(actionEvent -> {
                                     FadeOut fadeOut = new FadeOut(anchorRoot);
@@ -112,7 +112,7 @@ public class LoadingController {
                                 FXMLLoader loader2 = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml")));
                                 Parent root2 = loader2.load();
                                 ConfigController controller = loader2.getController();
-                                stackPane.getChildren().add(0,root2);
+                                stackPane.getChildren().add(0, root2);
                                 RotateIn animation2 = new RotateIn(root2);
                                 animation2.setOnFinished(actionEvent -> {
                                     FadeOut fadeOut = new FadeOut(anchorRoot);

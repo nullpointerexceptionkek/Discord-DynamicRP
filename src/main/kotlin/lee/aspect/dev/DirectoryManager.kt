@@ -47,7 +47,7 @@ class DirectoryManager {
         @JvmField
         val defaultDir = System.getProperty("user.home") + "\\CustomDiscordRPC"
 
-        private var ROOT_DIR:File? = getDirectoryEnvironmentVar()?.let { File(it) }
+        private var ROOT_DIR: File? = getDirectoryEnvironmentVar()?.let { File(it) }
 
         @JvmStatic
         fun getDirectoryEnvironmentVar(): String? {
@@ -79,11 +79,18 @@ class DirectoryManager {
                     } else if (StartLaunch.isOnMac()) {
                         ProcessBuilder("launchctl", "setenv", "CDRPCDir", dir).start().waitFor()
                     } else if (StartLaunch.isOnLinux()) {
-                        BufferedWriter(Files.newBufferedWriter(Paths.get(System.getProperty("user.home"),".bashrc"))).use{
+                        BufferedWriter(
+                            Files.newBufferedWriter(
+                                Paths.get(
+                                    System.getProperty("user.home"),
+                                    ".bashrc"
+                                )
+                            )
+                        ).use {
                             it.write("export CDRPCDir=$dir\n")
                         }
-                        ProcessBuilder("/bin/bash","-c","source ~/.bashrc").inheritIO().start().waitFor()
-                        ProcessBuilder("/bin/bash","-c","source ~/.zshrc").inheritIO().start().waitFor()
+                        ProcessBuilder("/bin/bash", "-c", "source ~/.bashrc").inheritIO().start().waitFor()
+                        ProcessBuilder("/bin/bash", "-c", "source ~/.zshrc").inheritIO().start().waitFor()
                     } else {
                         throw UnsupportedOSException("invalid os")
                     }
@@ -121,8 +128,8 @@ class DirectoryManager {
         @JvmStatic
         fun isSetUp(): Boolean {
             //check if everything is set up
-            if(System.getenv("CDRPCDir") != null)
-                if(File(System.getenv("CDRPCDir")).exists())
+            if (System.getenv("CDRPCDir") != null)
+                if (File(System.getenv("CDRPCDir")).exists())
                     return true
                 else Launch.LOGGER.warn("Dir not exists: ${System.getenv("CDRPCDir")}")
             else Launch.LOGGER.warn("Env not exists")
@@ -134,64 +141,61 @@ class DirectoryManager {
             Launch.LOGGER.info("Opening directory setup wizard")
             //make a javaFX dialog
             try {
-                    val directoryChooser = DirectoryChooser()
-                    directoryChooser.title = "Choose a directory"
+                val directoryChooser = DirectoryChooser()
+                directoryChooser.title = "Choose a directory"
 
-                    val directoryPathField = TextField()
-                    directoryPathField.promptText = "Enter a directory path"
-                    directoryPathField.text = defaultDir
+                val directoryPathField = TextField()
+                directoryPathField.promptText = "Enter a directory path"
+                directoryPathField.text = defaultDir
 
-                    val chooseDirectoryButton = Button("Choose directory")
-                    chooseDirectoryButton.setOnAction {
-                        val selectedDirectory = directoryChooser.showDialog(null)
-                        if (selectedDirectory != null) {
-                            directoryPathField.text = selectedDirectory.absolutePath
-                        }
+                val chooseDirectoryButton = Button("Choose directory")
+                chooseDirectoryButton.setOnAction {
+                    val selectedDirectory = directoryChooser.showDialog(null)
+                    if (selectedDirectory != null) {
+                        directoryPathField.text = selectedDirectory.absolutePath
                     }
-
-                    val messageLabel = Label("Please choose a directory or enter a directory path:")
-
-
-                    val dialogLayout = VBox(messageLabel, directoryPathField, chooseDirectoryButton)
-                    dialogLayout.spacing = 10.0
-
-                    val dialog: Dialog<ButtonType> = Dialog()
-                    dialog.title = "Select or input a directory"
-                    dialog.dialogPane.content = dialogLayout
-
-                    val submitButtonType = ButtonType("Submit", ButtonData.OK_DONE)
-                    dialog.dialogPane.buttonTypes.add(submitButtonType)
-
-                    val result: Optional<ButtonType> = dialog.showAndWait()
-
-                    if (directoryPathField.text.isNotEmpty() && directoryPathField.text.isNotBlank() &&
-                        result.filter { buttonType: ButtonType -> buttonType == submitButtonType }.isPresent
-                    ) {
-                        val directoryPath = directoryPathField.text
-                        if(!File(directoryPath).exists()){
-                            //open a dialog to tell the user that the directory doesn't exist and ask if they want to create it
-                            val createDirectoryDialog = Alert(Alert.AlertType.CONFIRMATION)
-                            createDirectoryDialog.title = "Create directory?"
-                            createDirectoryDialog.headerText = "The directory you entered doesn't exist."
-                            createDirectoryDialog.contentText = "Would you like to create the directory?"
-                            val createDirectoryResult = createDirectoryDialog.showAndWait()
-                            if(createDirectoryResult.isPresent && createDirectoryResult.get() == ButtonType.OK){
-                                //create the directory
-                                File(directoryPath).mkdirs()
-                                writeDirectoryEnvironmentVar(directoryPath)
-                            } else {
-                                askForDirectory()
-                            }
-
-                        }
-                        else{
-                            writeDirectoryEnvironmentVar(directoryPath)
-                        }
-
-                    }
-                else exitProcess(0)
                 }
-            catch (e: Exception){
+
+                val messageLabel = Label("Please choose a directory or enter a directory path:")
+
+
+                val dialogLayout = VBox(messageLabel, directoryPathField, chooseDirectoryButton)
+                dialogLayout.spacing = 10.0
+
+                val dialog: Dialog<ButtonType> = Dialog()
+                dialog.title = "Select or input a directory"
+                dialog.dialogPane.content = dialogLayout
+
+                val submitButtonType = ButtonType("Submit", ButtonData.OK_DONE)
+                dialog.dialogPane.buttonTypes.add(submitButtonType)
+
+                val result: Optional<ButtonType> = dialog.showAndWait()
+
+                if (directoryPathField.text.isNotEmpty() && directoryPathField.text.isNotBlank() &&
+                    result.filter { buttonType: ButtonType -> buttonType == submitButtonType }.isPresent
+                ) {
+                    val directoryPath = directoryPathField.text
+                    if (!File(directoryPath).exists()) {
+                        //open a dialog to tell the user that the directory doesn't exist and ask if they want to create it
+                        val createDirectoryDialog = Alert(Alert.AlertType.CONFIRMATION)
+                        createDirectoryDialog.title = "Create directory?"
+                        createDirectoryDialog.headerText = "The directory you entered doesn't exist."
+                        createDirectoryDialog.contentText = "Would you like to create the directory?"
+                        val createDirectoryResult = createDirectoryDialog.showAndWait()
+                        if (createDirectoryResult.isPresent && createDirectoryResult.get() == ButtonType.OK) {
+                            //create the directory
+                            File(directoryPath).mkdirs()
+                            writeDirectoryEnvironmentVar(directoryPath)
+                        } else {
+                            askForDirectory()
+                        }
+
+                    } else {
+                        writeDirectoryEnvironmentVar(directoryPath)
+                    }
+
+                } else exitProcess(0)
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
         }

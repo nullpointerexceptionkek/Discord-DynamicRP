@@ -108,8 +108,8 @@ public abstract class AnimationFX {
     }
 
     public void setTimeline(Timeline timeline) {
-        if(SettingManager.SETTINGS.isNoAnimation()){
-            KeyFrame lastFrame = timeline.getKeyFrames().get(timeline.getKeyFrames().size()-1);
+        if (SettingManager.SETTINGS.isNoAnimation()) {
+            KeyFrame lastFrame = timeline.getKeyFrames().get(timeline.getKeyFrames().size() - 1);
             timeline.getKeyFrames().clear();
             lastFrame.getTime().add(Duration.millis(0));
             timeline.getKeyFrames().add(lastFrame);
@@ -207,7 +207,7 @@ public abstract class AnimationFX {
      * @param value
      */
     public final void setOnFinished(EventHandler<ActionEvent> value) {
-            this.timeline.setOnFinished(value);
+        this.timeline.setOnFinished(value);
     }
 
 }

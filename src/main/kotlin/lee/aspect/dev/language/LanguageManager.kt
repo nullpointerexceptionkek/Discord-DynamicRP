@@ -35,21 +35,23 @@ import lee.aspect.dev.discordrpc.settings.SettingManager
 import java.util.*
 
 abstract class LanguageManager {
-    companion object{
+    companion object {
         //this needs to be initialized after the file manager
         @JvmStatic
         lateinit var lang: ResourceBundle
+
         @JvmStatic
-        fun setLang(lang : Languages){
+        fun setLang(lang: Languages) {
             this.lang = ResourceBundle.getBundle(lang.resourceLocation, Locale.getDefault())
         }
+
         @JvmStatic
-        fun init(){
+        fun init() {
             this.lang = ResourceBundle.getBundle(SettingManager.SETTINGS.lang.resourceLocation, Locale.getDefault())
         }
 
         @JvmStatic
-        fun showDialog(){
+        fun showDialog() {
 
             // Create a new Dialog object
             val dialog = Dialog<ButtonType>()
@@ -65,7 +67,7 @@ abstract class LanguageManager {
             dialog.dialogPane.content = VBox(textLabel, choiceBox)
 
             // Add a button to confirm the selected language
-            dialog.dialogPane.buttonTypes.addAll(ButtonType.CANCEL,ButtonType.OK)
+            dialog.dialogPane.buttonTypes.addAll(ButtonType.CANCEL, ButtonType.OK)
 
             dialog.dialogPane.stylesheets.add(SettingManager.SETTINGS.theme.path)
 

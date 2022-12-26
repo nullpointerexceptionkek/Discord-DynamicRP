@@ -82,8 +82,8 @@ public class EditListController extends ConfigController implements Initializabl
     private AnchorPane anchorPane;
 
     @FXML
-    private Label EditConfiLabel,FirstLineLabel, SecondLineLabel, DelayLabel,LargeImgLabel,SmallImgLabel,
-            SmallImgTxtLabel,LargeImgTxtLabel,Button1Label,Button1LinkLabel,Button2TxtLabel,Button2LinkLabel;
+    private Label EditConfiLabel, FirstLineLabel, SecondLineLabel, DelayLabel, LargeImgLabel, SmallImgLabel,
+            SmallImgTxtLabel, LargeImgTxtLabel, Button1Label, Button1LinkLabel, Button2TxtLabel, Button2LinkLabel;
 
     private ImageView delayTooSmall;
 
@@ -126,15 +126,14 @@ public class EditListController extends ConfigController implements Initializabl
         DeleteButton.setText(LanguageManager.getLang().getString("Delete"));
 
 
-
         Wait.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*"))
                 Wait.setText(newValue.replaceAll("\\D", ""));
-            if(Wait.getText().isEmpty()) return;
+            if (Wait.getText().isEmpty()) return;
             if (Long.parseLong(Wait.getText()) < 16000) {
                 if (!anchorPane.getChildren().contains(delayTooSmall)) {
                     delayTooSmall =
-                            WarningManager.setWarning(Wait, 12, "It is recommended to set the delay above 16 second", WarningManager.Mode.Up,60,2);
+                            WarningManager.setWarning(Wait, 12, "It is recommended to set the delay above 16 second", WarningManager.Mode.Up, 60, 2);
                     anchorPane.getChildren().add(delayTooSmall);
                 }
             } else anchorPane.getChildren().remove(delayTooSmall);

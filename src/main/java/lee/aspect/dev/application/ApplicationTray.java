@@ -115,11 +115,11 @@ public class ApplicationTray {
                 JOptionPane.showMessageDialog(null, "Discord RPC is already running", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 try {
-                    if(SettingManager.SETTINGS.isShutDownInterfaceWhenTray()) {
+                    if (SettingManager.SETTINGS.isShutDownInterfaceWhenTray()) {
                         RunLoopManager.startUpdate();
                         return;
                     }
-                    Platform.runLater(()-> {
+                    Platform.runLater(() -> {
                         try {
                             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(CustomDiscordRPC.class.getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml")));
                             Parent root = loader.load();
@@ -139,11 +139,11 @@ public class ApplicationTray {
         });
         closeRPCItem.addActionListener(e -> {
             if (RunLoopManager.isRunning) {
-                if(SettingManager.SETTINGS.isShutDownInterfaceWhenTray()) {
+                if (SettingManager.SETTINGS.isShutDownInterfaceWhenTray()) {
                     RunLoopManager.closeCallBack();
                     return;
                 }
-                Platform.runLater(()-> {
+                Platform.runLater(() -> {
                     try {
                         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(CustomDiscordRPC.class.getResource("/lee/aspect/dev/scenes/CallBack.fxml")));
                         Parent root = loader.load();
@@ -187,7 +187,7 @@ public class ApplicationTray {
                     "Application cannot start interface when ShutDownInterface is on, please exit and relaunch the program to see interface", TrayIcon.MessageType.ERROR);
             return;
         }
-        Platform.runLater(()-> CustomDiscordRPC.primaryStage.show());
+        Platform.runLater(() -> CustomDiscordRPC.primaryStage.show());
         CustomDiscordRPC.isOnSystemTray = false;
         if (SettingManager.SETTINGS.isStartTrayOnlyInterfaceClose()) tray.remove(trayIcon);
     }

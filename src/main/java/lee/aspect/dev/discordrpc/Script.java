@@ -31,31 +31,12 @@ import java.util.Arrays;
 
 public class Script {
 
-    public enum UpdateType {
-        Loop, Reverse, Stop, Random
-    }
-
-    public enum TimeStampMode {
-
-        appLaunch,
-        cdFromDayEnd,
-        localTime,
-        none,
-
-        sinceUpdate,
-
-        custom
-
-    }
-
+    private String DiscordAPIKey;
     private UpdateType updateType = UpdateType.Loop;
-
     private String customTimestamp;
     private long calculatedTimestamp;
     private ArrayList<Updates> totalupdates;
-
     private TimeStampMode timestampmode = TimeStampMode.appLaunch;
-
     public Script() {
         totalupdates = new ArrayList<>();
     }
@@ -72,21 +53,29 @@ public class Script {
         return totalupdates;
     }
 
-
     public void setTotalupdates(ArrayList<Updates> u) {
         totalupdates = u;
+    }
+
+    public String getDiscordAPIKey() {
+        return DiscordAPIKey;
+    }
+
+    public void setDiscordAPIKey(String discordAPIKey) {
+        this.DiscordAPIKey = discordAPIKey;
     }
 
     public void addUpdates(Updates... updates) {
         totalupdates.addAll(Arrays.asList(updates));
 
     }
-    public void addUpdates(int index,Updates... updates) {
-        totalupdates.addAll(index,Arrays.asList(updates));
+
+    public void addUpdates(int index, Updates... updates) {
+        totalupdates.addAll(index, Arrays.asList(updates));
 
     }
 
-    public void setUpdates(int index,Updates u) {
+    public void setUpdates(int index, Updates u) {
         totalupdates.set(index, u);
     }
 
@@ -104,17 +93,15 @@ public class Script {
 
     }
 
-    public void setCustomTimestamp(String customTimestamp) {
-        this.customTimestamp = customTimestamp;
-    }
-
     public String getCustomTimestamp() {
         return customTimestamp;
     }
 
+    public void setCustomTimestamp(String customTimestamp) {
+        this.customTimestamp = customTimestamp;
+    }
+
     public long getCalculatedTimestamp() {
-
-
 
 
         return calculatedTimestamp;
@@ -138,6 +125,23 @@ public class Script {
         }
 
         return ts.toString();
+
+    }
+
+    public enum UpdateType {
+        Loop, Reverse, Stop, Random
+    }
+
+    public enum TimeStampMode {
+
+        appLaunch,
+        cdFromDayEnd,
+        localTime,
+        none,
+
+        sinceUpdate,
+
+        custom
 
     }
 

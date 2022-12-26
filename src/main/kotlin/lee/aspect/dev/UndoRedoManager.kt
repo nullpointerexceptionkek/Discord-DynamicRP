@@ -63,7 +63,8 @@ class UndoRedoManager(initialList: List<Updates>) {
         previousList = list.toList()
         redoStack.clear()
     }
-    private fun applyChangesToScript(){
+
+    private fun applyChangesToScript() {
         UpdateManager.SCRIPT.totalupdates.clear()
         currentList.toList().toTypedArray().forEach {
             UpdateManager.SCRIPT.totalupdates.add(it)

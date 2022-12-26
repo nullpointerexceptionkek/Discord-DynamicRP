@@ -30,45 +30,8 @@ import lee.aspect.dev.language.Languages;
 
 public class Settings {
 
-    public enum MinimizeMode {
-        Ask, Always, Never, WaitAndSee
-    }
-    public enum Theme {
-
-        light("/lee/aspect/dev/theme/Light.css", "Discord light"),
-        dark("/lee/aspect/dev/theme/Dark.css", "Discord dark"),
-
-        lime("/lee/aspect/dev/theme/lime.css", "lime"),
-
-        mikuSnow("/lee/aspect/dev/theme/mikuSnow/MikuSnow.css", "Miku snow"),
-
-        huTao("/lee/aspect/dev/theme/hutao/Hutao.css", "Hutao");
-
-        private final String themePath;
-
-        private final String displayName;
-
-        Theme(String string, String displayName) {
-            this.themePath = string;
-            this.displayName = displayName;
-        }
-
-        public String getPath() {
-            return themePath;
-        }
-
-        public String getDisplayName() {
-            return displayName;
-        }
-    }
-
-
     private Languages lang = Languages.EN_US;
-
-    private String DiscordAPIKey;
-
     private Theme theme = Theme.dark;
-
     private MinimizeMode minimizeMode = MinimizeMode.Ask;
     private boolean NoAnimation = false;
     private boolean StartTrayOnlyInterfaceClose = false;
@@ -123,14 +86,6 @@ public class Settings {
         this.NoAnimation = noAnimation;
     }
 
-    public String getDiscordAPIKey() {
-        return DiscordAPIKey;
-    }
-
-    public void setDiscordAPIKey(String discordAPIKey) {
-        this.DiscordAPIKey = discordAPIKey;
-    }
-
     public Languages getLang() {
         return lang;
     }
@@ -141,7 +96,40 @@ public class Settings {
 
     @Override
     public String toString() {
-        return theme + ", " + DiscordAPIKey;
+        return theme.toString();
+    }
+
+    public enum MinimizeMode {
+        Ask, Always, Never, WaitAndSee
+    }
+
+    public enum Theme {
+
+        light("/lee/aspect/dev/theme/Light.css", "Discord light"),
+        dark("/lee/aspect/dev/theme/Dark.css", "Discord dark"),
+
+        lime("/lee/aspect/dev/theme/lime.css", "lime"),
+
+        mikuSnow("/lee/aspect/dev/theme/mikuSnow/MikuSnow.css", "Miku snow"),
+
+        huTao("/lee/aspect/dev/theme/hutao/Hutao.css", "Hutao");
+
+        private final String themePath;
+
+        private final String displayName;
+
+        Theme(String string, String displayName) {
+            this.themePath = string;
+            this.displayName = displayName;
+        }
+
+        public String getPath() {
+            return themePath;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
     }
 
 }

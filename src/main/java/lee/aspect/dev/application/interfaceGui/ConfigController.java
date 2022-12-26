@@ -46,7 +46,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import lee.aspect.dev.Launch;
 import lee.aspect.dev.UndoRedoManager;
-import lee.aspect.dev.language.LanguageManager;
 import lee.aspect.dev.animationengine.animation.FadeIn;
 import lee.aspect.dev.animationengine.animation.FadeOut;
 import lee.aspect.dev.animationengine.animation.Shake;
@@ -57,6 +56,7 @@ import lee.aspect.dev.discordrpc.UpdateManager;
 import lee.aspect.dev.discordrpc.Updates;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.jsonreader.FileManager;
+import lee.aspect.dev.language.LanguageManager;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -65,56 +65,48 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.Arrays;
+import java.util.EnumSet;
+import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class ConfigController implements Initializable {
-    @FXML
-    private ToggleGroup timeStampMode;
-
-    @FXML
-    private ChoiceBox<Script.UpdateType> updateMode;
+    private final UndoRedoManager undoRedoManager = new UndoRedoManager(UpdateManager.SCRIPT.getTotalupdates());
     @FXML
     protected ListView<Updates> displayUpdates;
+    @FXML
+    private ToggleGroup timeStampMode;
+    @FXML
+    private ChoiceBox<Script.UpdateType> updateMode;
     @FXML
     private Label titleLabel;
     @FXML
     private TextField appIDTextField;
     @FXML
     private Button callbackButton;
-
     @FXML
     private Button settingButton;
-
     @FXML
-    private RadioButton appLaunch,local, cdFomEndDay, sinceUpdate, none, custom;
-
+    private RadioButton appLaunch, local, cdFomEndDay, sinceUpdate, none, custom;
     @FXML
     private TextField CustomTimeInput;
-
     @FXML
     private AnchorPane anchorRoot;
-
     @FXML
     private StackPane stackPane;
-
     @FXML
     private Label Application_IDLabel, TimeStampMethodLabel, UpdateModeLabel;
-
     @FXML
     private Button AddNewItemButton;
-
     private ImageView invalidIndex;
-
     private ImageView invalidAppID;
-
-    private final UndoRedoManager undoRedoManager = new UndoRedoManager(UpdateManager.SCRIPT.getTotalupdates());
 
     //private int index = -1;
 
     public void getTimeStampMode() {
         RadioButton selectedRadioButton = (RadioButton) timeStampMode.getSelectedToggle();
         String toggleGroupValue = selectedRadioButton.getId();
-        switch (toggleGroupValue){
+        switch (toggleGroupValue) {
             case "appLaunch":
                 UpdateManager.SCRIPT.setTimestampmode(Script.TimeStampMode.appLaunch);
                 break;
@@ -154,7 +146,7 @@ public class ConfigController implements Initializable {
         UpdateManager.SCRIPT.setCustomTimestamp(CustomTimeInput.getText());
         UpdateManager.SCRIPT.setUpdateType(updateMode.getValue());
         callbackButton.setDisable(true);
-        SettingManager.SETTINGS.setDiscordAPIKey(DiscordAppID);
+        UpdateManager.SCRIPT.setDiscordAPIKey(DiscordAppID);
         SettingManager.saveSettingToFile();
         RunLoopManager.saveScripToFile();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/scenes/LoadingScreen.fxml"));
@@ -236,8 +228,6 @@ public class ConfigController implements Initializable {
         //text-fields
         appIDTextField.setPromptText(LanguageManager.getLang().getString("DiscordAppIDInput"));
         CustomTimeInput.setPromptText(LanguageManager.getLang().getString("CustomTimeInput"));
-
-
 
 
         ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/lee/aspect/dev/icon/settingsImage.png")).toExternalForm());
@@ -323,7 +313,6 @@ public class ConfigController implements Initializable {
         });
 
 
-
         contextMenu.getItems().addAll(copyItem, pasteItem, deleteItem);
         contextMenu.getItems().add(new SeparatorMenuItem());
         contextMenu.getItems().addAll(insertRowAbove, insertRowBelow);
@@ -343,7 +332,7 @@ public class ConfigController implements Initializable {
             }
             anchorRoot.getChildren().remove(invalidAppID);
         });
-        appIDTextField.setText(SettingManager.SETTINGS.getDiscordAPIKey());
+        appIDTextField.setText(UpdateManager.SCRIPT.getDiscordAPIKey());
 
         CustomTimeInput.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null) return;

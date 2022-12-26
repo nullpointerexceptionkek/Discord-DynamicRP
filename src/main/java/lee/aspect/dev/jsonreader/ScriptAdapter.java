@@ -56,6 +56,9 @@ public class ScriptAdapter extends TypeAdapter<Script> {
                     name = reader.nextName();
                 }
                 switch (Objects.requireNonNull(name)) {
+                    case "APIkey":
+                        script.setDiscordAPIKey(reader.nextString());
+                        break;
                     case "TimeStampMode":
                         script.setTimestampmode(Script.TimeStampMode.valueOf(reader.nextString()));
                         break;
@@ -138,6 +141,7 @@ public class ScriptAdapter extends TypeAdapter<Script> {
             return;
         }
         writter.beginObject();
+        writter.name("APIkey").value(UpdateManager.SCRIPT.getDiscordAPIKey());
         writter.name("TimeStampMode");
         writter.value(UpdateManager.SCRIPT.getTimestampmode().name());
         writter.name("CustomTimeStamp");
