@@ -28,6 +28,8 @@ package lee.aspect.dev.discordrpc.settings;
 
 import lee.aspect.dev.language.Languages;
 
+import java.io.File;
+
 public class Settings {
 
     private Languages lang = Languages.EN_US;
@@ -37,6 +39,8 @@ public class Settings {
     private boolean StartTrayOnlyInterfaceClose = false;
     private boolean StartLaunch = false;
     private boolean ShutDownInterfaceWhenTray = false;
+
+    private File loadedConfig = null;
 
     public boolean isStartTrayOnlyInterfaceClose() {
         return StartTrayOnlyInterfaceClose;
@@ -132,5 +136,12 @@ public class Settings {
         }
     }
 
+    public void setLoadedConfig(File loadedConfig) {
+        this.loadedConfig = loadedConfig;
+    }
+
+    public File getLoadedConfig() {
+        return loadedConfig;
+    }
 }
 

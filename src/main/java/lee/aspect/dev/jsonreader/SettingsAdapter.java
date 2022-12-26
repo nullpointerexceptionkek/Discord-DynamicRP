@@ -34,7 +34,9 @@ import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.discordrpc.settings.Settings;
 import lee.aspect.dev.language.Languages;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.Writer;
 import java.util.Objects;
 
 
@@ -57,6 +59,9 @@ public class SettingsAdapter extends TypeAdapter<Settings> {
                     name = reader.nextName();
                 }
                 switch (Objects.requireNonNull(name)) {
+                    case "loadedCfg":
+                        settings.setLoadedConfig(new File(reader.nextString()));
+                        break;
                     case "theme":
                         settings.setTheme(Settings.Theme.valueOf(reader.nextString()));
                         break;
@@ -100,6 +105,7 @@ public class SettingsAdapter extends TypeAdapter<Settings> {
             return;
         }
         writter.beginObject();
+        writter.name("loadedCfg").value(SettingManager.SETTINGS.getLoadedConfig().getPath());
         writter.name("theme");
         writter.value(SettingManager.SETTINGS.getTheme().name());
         writter.name("MinimizeMode");

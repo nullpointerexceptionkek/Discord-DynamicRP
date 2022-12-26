@@ -29,6 +29,7 @@ import lee.aspect.dev.DirectoryManager;
 import lee.aspect.dev.jsonreader.FileManager;
 
 import java.io.File;
+import java.io.IOException;
 
 
 public abstract class SettingManager {
@@ -44,6 +45,16 @@ public abstract class SettingManager {
         if (loaded == null) {
             loaded = new Settings();
             loaded.setTheme(Settings.Theme.dark);
+            File defaultFile = new File(DirectoryManager.getRootDir(), "default_UpdateScript.json");
+            if(!defaultFile.exists()) {
+                try {
+                    defaultFile.createNewFile();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            loaded.setLoadedConfig(defaultFile);
+            SETTINGS = loaded;
             saveSettingToFile();
         }
         return loaded;

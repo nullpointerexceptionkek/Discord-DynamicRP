@@ -26,6 +26,7 @@
 package lee.aspect.dev.discordrpc;
 
 import lee.aspect.dev.DirectoryManager;
+import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.jsonreader.FileManager;
 
 import java.io.File;
@@ -40,7 +41,7 @@ public abstract class UpdateManager {
 
 
     public static Script loadScriptFromJson() {
-        Script loaded = FileManager.readFromJson(new File(DirectoryManager.getRootDir(), "default_UpdateScript.json"), Script.class);
+        Script loaded = FileManager.readFromJson(SettingManager.SETTINGS.getLoadedConfig(), Script.class);
         SCRIPT = loaded;
 
         if (loaded == null) {
@@ -56,7 +57,7 @@ public abstract class UpdateManager {
     }
 
     public static void saveScriptToFile() {
-        FileManager.writeJsonTofile(new File(DirectoryManager.getRootDir(), "default_UpdateScript.json"), SCRIPT);
+        FileManager.writeJsonTofile(SettingManager.SETTINGS.getLoadedConfig(), SCRIPT);
     }
 
 
