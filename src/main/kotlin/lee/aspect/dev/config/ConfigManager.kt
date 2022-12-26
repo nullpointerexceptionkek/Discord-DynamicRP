@@ -27,10 +27,7 @@ package lee.aspect.dev.config
 
 import javafx.geometry.Insets
 import javafx.scene.Scene
-import javafx.scene.control.Button
-import javafx.scene.control.ContentDisplay
-import javafx.scene.control.RadioButton
-import javafx.scene.control.ToggleGroup
+import javafx.scene.control.*
 import javafx.scene.image.ImageView
 import javafx.scene.layout.HBox
 import javafx.scene.layout.VBox
@@ -68,6 +65,9 @@ class ConfigManager {
                 val fileName = file.name.substring(0, file.name.indexOf("_UpdateScript.json"))
                 val radioButton = RadioButton(fileName)
                 radioButton.toggleGroup = toggleGroup
+                if(file == SettingManager.SETTINGS.loadedConfig){
+                    radioButton.isSelected = true
+                }
                 val hBox = HBox()
                 hBox.spacing = 10.0
 
@@ -77,9 +77,14 @@ class ConfigManager {
                         .toExternalForm())
                 deleteButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
                 deleteButton.setOnAction {
-                    file.delete()
-                    dialogStage.close()
-                    showDialog()
+                    if(radioButton.isSelected){
+                        Alert(Alert.AlertType.WARNING, "You can't delete the currently loaded config!", ButtonType.OK).show()
+
+                    } else {
+                        file.delete()
+                        dialogStage.close()
+                        showDialog()
+                    }
                 }
 
                 val duplicateButton = Button("Duplicate")
