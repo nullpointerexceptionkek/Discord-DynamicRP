@@ -28,17 +28,20 @@ package lee.aspect.dev.config
 import javafx.geometry.Insets
 import javafx.scene.Scene
 import javafx.scene.control.Button
+import javafx.scene.control.ContentDisplay
 import javafx.scene.control.RadioButton
 import javafx.scene.control.ToggleGroup
+import javafx.scene.image.ImageView
 import javafx.scene.layout.HBox
 import javafx.scene.layout.VBox
 import javafx.stage.Modality
 import javafx.stage.Stage
 import lee.aspect.dev.DirectoryManager
+import lee.aspect.dev.application.interfaceGui.WarningManager
+import lee.aspect.dev.discordrpc.settings.SettingManager
 import java.io.File
 import java.io.FilenameFilter
-
-
+import java.util.*
 
 
 class ConfigManager {
@@ -67,14 +70,30 @@ class ConfigManager {
                 radioButton.toggleGroup = toggleGroup
                 val hBox = HBox()
                 hBox.spacing = 10.0
+
                 val deleteButton = Button("Delete")
+                deleteButton.graphic = ImageView(
+                    Objects.requireNonNull(ConfigManager::class.java.getResource("/lee/aspect/dev/icon/editIcons/delete.png"))
+                        .toExternalForm())
+                deleteButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
                 deleteButton.setOnAction {
                     file.delete()
                     dialogStage.close()
                     showDialog()
                 }
+
                 val duplicateButton = Button("Duplicate")
+                duplicateButton.graphic = ImageView(
+                    Objects.requireNonNull(ConfigManager::class.java.getResource("/lee/aspect/dev/icon/editIcons/duplicate.png"))
+                        .toExternalForm())
+                duplicateButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
+
                 val renameButton = Button("Rename")
+                renameButton.graphic = ImageView(
+                    Objects.requireNonNull(ConfigManager::class.java.getResource("/lee/aspect/dev/icon/editIcons/rename.png"))
+                        .toExternalForm())
+                renameButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
+
                 hBox.children.addAll(radioButton, deleteButton, duplicateButton, renameButton)
                 vBox.children.add(hBox)
             }
@@ -95,6 +114,7 @@ class ConfigManager {
             vBox.children.add(hBox)
 
             dialogStage.scene = Scene(vBox)
+            dialogStage.scene.stylesheets.add(SettingManager.SETTINGS.theme.path)
             dialogStage.showAndWait()
         }
     }
