@@ -40,7 +40,7 @@ public abstract class UpdateManager {
 
 
     public static Script loadScriptFromJson() {
-        Script loaded = FileManager.readFromJson(new File(DirectoryManager.getRootDir(), "UpdateScript.json"), Script.class);
+        Script loaded = FileManager.readFromJson(new File(DirectoryManager.getRootDir(), "default_UpdateScript.json"), Script.class);
         SCRIPT = loaded;
 
         if (loaded == null) {
@@ -56,7 +56,7 @@ public abstract class UpdateManager {
     }
 
     public static void saveScriptToFile() {
-        FileManager.writeJsonTofile(new File(DirectoryManager.getRootDir(), "UpdateScript.json"), SCRIPT);
+        FileManager.writeJsonTofile(new File(DirectoryManager.getRootDir(), "default_UpdateScript.json"), SCRIPT);
     }
 
 

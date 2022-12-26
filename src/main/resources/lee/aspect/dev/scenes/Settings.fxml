@@ -46,6 +46,6 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="ManageScriptButton" layoutX="92.0" layoutY="395.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="173.0" text="Manage Config" textAlignment="CENTER" />
+      <Button fx:id="ManageScriptButton" layoutX="92.0" layoutY="395.0" mnemonicParsing="false" onAction="#openConfigManager" prefHeight="25.0" prefWidth="173.0" text="Manage Config" textAlignment="CENTER" />
     </AnchorPane>
 </StackPane>

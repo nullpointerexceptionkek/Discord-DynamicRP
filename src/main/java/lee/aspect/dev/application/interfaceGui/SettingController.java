@@ -37,6 +37,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import lee.aspect.dev.Launch;
 import lee.aspect.dev.animationengine.animation.SlideOutLeft;
+import lee.aspect.dev.config.ConfigManager;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.discordrpc.settings.Settings;
 import lee.aspect.dev.language.LanguageManager;
@@ -52,7 +53,7 @@ import java.util.ResourceBundle;
 public class SettingController implements Initializable {
 
     @FXML
-    private Button goBack, ChangeLanguageButton;
+    private Button goBack, ChangeLanguageButton, ManageScriptButton;
 
     @FXML
     private ChoiceBox<String> themeChoiceBox;
@@ -79,7 +80,7 @@ public class SettingController implements Initializable {
     private StackPane stackPane;
 
     @FXML
-    private Label SettingsLabel, ThemeLabel, titleLabel, ReleaseLabel, MinToTrayLabel, PerformanceLabel, LanguageLabel;
+    private Label SettingsLabel, ThemeLabel, titleLabel, ReleaseLabel, MinToTrayLabel, PerformanceLabel, LanguageLabel, AdvanceConfigLabel;
 
     public void switchBack() throws IOException {
         goBack.setDisable(true);
@@ -95,6 +96,10 @@ public class SettingController implements Initializable {
 
     public void changeLanguage() {
         LanguageManager.showDialog();
+    }
+
+    public void openConfigManager(){
+        ConfigManager.showDialog();
     }
 
     @Override

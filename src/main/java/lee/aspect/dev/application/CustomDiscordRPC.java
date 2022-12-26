@@ -37,6 +37,7 @@ import javafx.stage.Stage;
 import lee.aspect.dev.DirectoryManager;
 import lee.aspect.dev.Launch;
 import lee.aspect.dev.application.interfaceGui.WarningManager;
+import lee.aspect.dev.config.ConfigManager;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.discordrpc.settings.Settings;
 
@@ -83,6 +84,7 @@ public class CustomDiscordRPC extends Application {
     public static void Launch(String[] args) {
         Platform.setImplicitExit(false);
         RunLoopManager.init();
+        System.out.println(Arrays.toString(ConfigManager.getCurrentConfigFiles()));
         if (!SettingManager.SETTINGS.isStartTrayOnlyInterfaceClose())
             ApplicationTray.initTray();
         Launch.LOGGER.debug("LaunchArgs: ");
