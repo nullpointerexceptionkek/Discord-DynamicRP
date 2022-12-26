@@ -35,6 +35,7 @@ import javafx.stage.Modality
 import javafx.stage.Stage
 import lee.aspect.dev.DirectoryManager
 import lee.aspect.dev.application.interfaceGui.WarningManager
+import lee.aspect.dev.discordrpc.UpdateManager
 import lee.aspect.dev.discordrpc.settings.SettingManager
 import java.io.File
 import java.io.FilenameFilter
@@ -121,6 +122,8 @@ class ConfigManager {
                             //just let the default error handler to display the error and quit
                             throw RuntimeException("Failed to rename file!", e)
                         }
+                        dialogStage.close()
+                        showDialog()
                     }
                 }
 
@@ -130,6 +133,10 @@ class ConfigManager {
 
             val okButton = Button("OK")
             okButton.setOnAction {
+                val selectedRadioButton = toggleGroup.selectedToggle as RadioButton
+                val selectedFile = File(DirectoryManager.getRootDir(), selectedRadioButton.text+"_UpdateScript.json")
+                SettingManager.SETTINGS.loadedConfig = selectedFile
+                UpdateManager.SCRIPT = UpdateManager.loadScriptFromJson()
                 dialogStage.close()
             }
 
