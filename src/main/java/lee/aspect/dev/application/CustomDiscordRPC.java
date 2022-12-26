@@ -84,7 +84,7 @@ public class CustomDiscordRPC extends Application {
     public static void Launch(String[] args) {
         Platform.setImplicitExit(false);
         RunLoopManager.init();
-        System.out.println(Arrays.toString(ConfigManager.getCurrentConfigFiles()));
+        Launch.LOGGER.debug(Arrays.toString(ConfigManager.getCurrentConfigFiles()));
         if (!SettingManager.SETTINGS.isStartTrayOnlyInterfaceClose())
             ApplicationTray.initTray();
         Launch.LOGGER.debug("LaunchArgs: ");
