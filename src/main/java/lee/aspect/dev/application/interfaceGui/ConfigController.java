@@ -139,7 +139,7 @@ public class ConfigController implements Initializable {
             new Shake(anchorRoot).play();
             return;
         }
-        if (DiscordAppID.isEmpty()) {
+        if (DiscordAppID == null || DiscordAppID.isEmpty()) {
             invalidDiscordAppID("Invalid Application ID");
             return;
         }

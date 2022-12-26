@@ -38,6 +38,7 @@ import lee.aspect.dev.application.interfaceGui.WarningManager
 import lee.aspect.dev.discordrpc.settings.SettingManager
 import java.io.File
 import java.io.FilenameFilter
+import java.lang.RuntimeException
 import java.util.*
 
 
@@ -92,12 +93,36 @@ class ConfigManager {
                     Objects.requireNonNull(ConfigManager::class.java.getResource("/lee/aspect/dev/icon/editIcons/duplicate.png"))
                         .toExternalForm())
                 duplicateButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
+                duplicateButton.setOnAction {
+                    val newFile = File(file.parent, "copy-" + file.name)
+                    file.copyTo(newFile, overwrite = true)
+                    dialogStage.close()
+                    showDialog()
+                }
 
                 val renameButton = Button("Rename")
                 renameButton.graphic = ImageView(
                     Objects.requireNonNull(ConfigManager::class.java.getResource("/lee/aspect/dev/icon/editIcons/rename.png"))
                         .toExternalForm())
                 renameButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
+                renameButton.setOnAction {
+                    val textInputDialog = TextInputDialog(file.name.substring(0, file.name.indexOf("_UpdateScript.json")))
+                    textInputDialog.title = "Rename File"
+                    textInputDialog.headerText = "Enter the new name for the file:"
+                    textInputDialog.contentText = "New name:"
+                    val result = textInputDialog.showAndWait()
+                    if (result.isPresent) {
+                        val newName = result.get()
+                        val newFile = File(file.parent, newName+"_UpdateScript.json")
+                        try {
+                            file.renameTo(newFile)
+                            SettingManager.SETTINGS.loadedConfig = newFile
+                        } catch (e: Exception) {
+                            //just let the default error handler to display the error and quit
+                            throw RuntimeException("Failed to rename file!", e)
+                        }
+                    }
+                }
 
                 hBox.children.addAll(radioButton, deleteButton, duplicateButton, renameButton)
                 vBox.children.add(hBox)
@@ -120,7 +145,7 @@ class ConfigManager {
 
             dialogStage.scene = Scene(vBox)
             dialogStage.scene.stylesheets.add(SettingManager.SETTINGS.theme.path)
-            dialogStage.showAndWait()
+            dialogStage.show()
         }
     }
 
