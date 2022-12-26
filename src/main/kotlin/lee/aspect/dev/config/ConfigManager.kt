@@ -58,6 +58,7 @@ class ConfigManager {
         fun showDialog(){
             val files = getCurrentConfigFiles()
             val dialogStage = Stage()
+            dialogStage.title = "Config Manager"
             dialogStage.initModality(Modality.APPLICATION_MODAL)
             val vBox = VBox()
             vBox.padding = Insets(10.0, 10.0, 10.0, 10.0)
@@ -84,6 +85,10 @@ class ConfigManager {
 
                     } else {
                         file.delete()
+                        val selectedRadioButton = toggleGroup.selectedToggle as RadioButton
+                        val selectedFile = File(DirectoryManager.getRootDir(), selectedRadioButton.text+"_UpdateScript.json")
+                        SettingManager.SETTINGS.loadedConfig = selectedFile
+                        UpdateManager.SCRIPT = UpdateManager.loadScriptFromJson()
                         dialogStage.close()
                         showDialog()
                     }
