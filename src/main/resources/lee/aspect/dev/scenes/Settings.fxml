@@ -47,5 +47,6 @@
          </font>
       </Label>
       <Button fx:id="ManageScriptButton" layoutX="92.0" layoutY="395.0" mnemonicParsing="false" onAction="#openConfigManager" prefHeight="25.0" prefWidth="173.0" text="Manage Config" textAlignment="CENTER" />
+      <CheckBox fx:id="EnableAutoSwitchCheckBox" layoutX="89.0" layoutY="439.0" mnemonicParsing="false" text="Enable auto config switch" textAlignment="CENTER" />
     </AnchorPane>
 </StackPane>
