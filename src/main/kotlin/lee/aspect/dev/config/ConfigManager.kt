@@ -34,12 +34,10 @@ import javafx.scene.layout.VBox
 import javafx.stage.Modality
 import javafx.stage.Stage
 import lee.aspect.dev.DirectoryManager
-import lee.aspect.dev.application.interfaceGui.WarningManager
 import lee.aspect.dev.discordrpc.UpdateManager
 import lee.aspect.dev.discordrpc.settings.SettingManager
 import java.io.File
 import java.io.FilenameFilter
-import java.lang.RuntimeException
 import java.util.*
 
 
@@ -56,13 +54,14 @@ class ConfigManager {
 
         @JvmStatic
         fun showDialog(){
+            UpdateManager.saveScriptToFile()
             val files = getCurrentConfigFiles()
             val dialogStage = Stage()
             dialogStage.title = "Config Manager"
             dialogStage.initModality(Modality.APPLICATION_MODAL)
             val vBox = VBox()
             vBox.padding = Insets(10.0, 10.0, 10.0, 10.0)
-            vBox.spacing = 10.0
+            vBox.spacing = 30.0
             val toggleGroup = ToggleGroup()
             for (file in files!!) {
                 val fileName = file.name.substring(0, file.name.indexOf("_UpdateScript.json"))
@@ -135,6 +134,27 @@ class ConfigManager {
                 hBox.children.addAll(radioButton, deleteButton, duplicateButton, renameButton)
                 vBox.children.add(hBox)
             }
+            val newConfigButton = Button("New Config")
+            newConfigButton.setOnAction {
+                val newConfigDialog = TextInputDialog()
+                newConfigDialog.title = "File set up wizard"
+                newConfigDialog.headerText = "Enter the name for the config:"
+                newConfigDialog.contentText = "name:"
+                val result = newConfigDialog.showAndWait()
+                if (result.isPresent) {
+                    try {
+                        val newFile = File(DirectoryManager.getRootDir(), result.get() + "_UpdateScript.json")
+                        newFile.createNewFile()
+                        SettingManager.SETTINGS.loadedConfig = newFile
+                    } catch (e: Exception) {
+                        //just let the default error handler to display the error and quit
+                        throw RuntimeException("Failed to rename file!", e)
+                    }
+                    dialogStage.close()
+                    showDialog()
+                }
+            }
+
 
             val okButton = Button("OK")
             okButton.setOnAction {
@@ -153,10 +173,11 @@ class ConfigManager {
             val hBox = HBox()
             hBox.spacing = 10.0
             hBox.children.addAll(okButton, cancelButton)
-            vBox.children.add(hBox)
+            vBox.children.addAll(newConfigButton,hBox)
 
             dialogStage.scene = Scene(vBox)
             dialogStage.scene.stylesheets.add(SettingManager.SETTINGS.theme.path)
+            dialogStage.isResizable = false
             dialogStage.show()
         }
     }
