@@ -62,16 +62,11 @@ public class SettingController implements Initializable {
     private ChoiceBox<Settings.MinimizeMode> minimizeModeChoiceBox;
 
     @FXML
-    private CheckBox shutDownInterfaceCheckBox;
-
-    @FXML
-    private CheckBox noAnimationCheckBox;
-
-    @FXML
-    private CheckBox startTrayOnlyCloseCheckBox;
-
-    @FXML
-    private CheckBox startLaunchCheckBox;
+    private CheckBox shutDownInterfaceCheckBox,
+            noAnimationCheckBox,
+            startTrayOnlyCloseCheckBox,
+            startLaunchCheckBox,
+            AutoSwitchCheckBox;
 
     @FXML
     private AnchorPane settingsAnchorPane;
@@ -178,6 +173,9 @@ public class SettingController implements Initializable {
             }
             SettingManager.SETTINGS.setStartLaunch(startLaunchCheckBox.isSelected());
         }));
+
+        AutoSwitchCheckBox.setSelected(SettingManager.SETTINGS.isAutoSwitch());
+        AutoSwitchCheckBox.setOnAction((actionEvent -> SettingManager.SETTINGS.setAutoSwitch(AutoSwitchCheckBox.isSelected())));
 
 
         SettingManager.saveSettingToFile();

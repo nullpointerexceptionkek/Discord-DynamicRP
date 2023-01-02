@@ -142,15 +142,10 @@ public class ScriptAdapter extends TypeAdapter<Script> {
         }
         writter.beginObject();
         writter.name("APIkey").value(UpdateManager.SCRIPT.getDiscordAPIKey());
-        writter.name("TimeStampMode");
-        writter.value(UpdateManager.SCRIPT.getTimestampmode().name());
-        writter.name("CustomTimeStamp");
-        writter.value(UpdateManager.SCRIPT.getCustomTimestamp());
-        writter.name("UpdateType");
-        writter.value(UpdateManager.SCRIPT.getUpdateType().name());
-        writter.name("Updates");
-        writter.beginArray();
-        //time, String image, String imagetext, String smallimage, String smalltext, String f1, String sl
+        writter.name("TimeStampMode").value(UpdateManager.SCRIPT.getTimestampmode().name());
+        writter.name("CustomTimeStamp").value(UpdateManager.SCRIPT.getCustomTimestamp());
+        writter.name("UpdateType").value(UpdateManager.SCRIPT.getUpdateType().name());
+        writter.name("Updates").beginArray();
         for (int i = 0; i < tu.getSize(); i++) {
             writter.beginObject();
             writter.name("Delay");

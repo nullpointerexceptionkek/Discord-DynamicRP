@@ -62,6 +62,9 @@ public class SettingsAdapter extends TypeAdapter<Settings> {
                     case "loadedCfg":
                         settings.setLoadedConfig(new File(reader.nextString()));
                         break;
+                    case "AutoSwitch":
+                        settings.setAutoSwitch(reader.nextBoolean());
+                        break;
                     case "theme":
                         settings.setTheme(Settings.Theme.valueOf(reader.nextString()));
                         break;
@@ -106,20 +109,14 @@ public class SettingsAdapter extends TypeAdapter<Settings> {
         }
         writter.beginObject();
         writter.name("loadedCfg").value(SettingManager.SETTINGS.getLoadedConfig().getPath());
-        writter.name("theme");
-        writter.value(SettingManager.SETTINGS.getTheme().name());
-        writter.name("MinimizeMode");
-        writter.value(SettingManager.SETTINGS.getMinimizeMode().name());
-        writter.name("ShutDownInterfaceWhenTray");
-        writter.value(SettingManager.SETTINGS.isShutDownInterfaceWhenTray());
-        writter.name("StartTrayOnlyInterfaceClose");
-        writter.value(SettingManager.SETTINGS.isStartTrayOnlyInterfaceClose());
-        writter.name("NoAnimation");
-        writter.value(SettingManager.SETTINGS.isNoAnimation());
-        writter.name("StartLaunch");
-        writter.value(SettingManager.SETTINGS.isStartLaunch());
-        writter.name("Lang");
-        writter.value(SettingManager.SETTINGS.getLang().name());
+        writter.name("AutoSwitch").value(SettingManager.SETTINGS.isAutoSwitch());
+        writter.name("theme").value(SettingManager.SETTINGS.getTheme().name());
+        writter.name("MinimizeMode").value(SettingManager.SETTINGS.getMinimizeMode().name());
+        writter.name("ShutDownInterfaceWhenTray").value(SettingManager.SETTINGS.isShutDownInterfaceWhenTray());
+        writter.name("StartTrayOnlyInterfaceClose").value(SettingManager.SETTINGS.isStartTrayOnlyInterfaceClose());
+        writter.name("NoAnimation").value(SettingManager.SETTINGS.isNoAnimation());
+        writter.name("StartLaunch").value(SettingManager.SETTINGS.isStartLaunch());
+        writter.name("Lang").value(SettingManager.SETTINGS.getLang().name());
         writter.endObject();
 
     }

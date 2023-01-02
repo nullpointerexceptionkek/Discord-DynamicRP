@@ -40,6 +40,8 @@ public class Settings {
     private boolean StartLaunch = false;
     private boolean ShutDownInterfaceWhenTray = false;
 
+    private boolean AutoSwitch = false;
+
     private File loadedConfig = null;
 
     public boolean isStartTrayOnlyInterfaceClose() {
@@ -96,6 +98,14 @@ public class Settings {
 
     public void setLang(Languages lang) {
         this.lang = lang;
+    }
+
+    public boolean isAutoSwitch() {
+        return AutoSwitch;
+    }
+
+    public void setAutoSwitch(boolean autoSwitch) {
+        AutoSwitch = autoSwitch;
     }
 
     @Override
