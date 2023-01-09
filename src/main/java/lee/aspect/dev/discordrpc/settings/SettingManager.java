@@ -46,7 +46,7 @@ public abstract class SettingManager {
             loaded = new Settings();
             loaded.setTheme(Settings.Theme.dark);
             File defaultFile = new File(DirectoryManager.getRootDir(), "default_UpdateScript.json");
-            if(!defaultFile.exists()) {
+            if (!defaultFile.exists()) {
                 try {
                     defaultFile.createNewFile();
                 } catch (IOException e) {

@@ -2,7 +2,7 @@
  *
  * MIT License
  *
- * Copyright (c) 2022 lee
+ * Copyright (c) 2023 lee
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,22 +23,38 @@
  * SOFTWARE.
  */
 
-package lee.aspect.dev.autoswitch
+package lee.aspect.dev
 
-import javafx.scene.layout.AnchorPane
-import javafx.scene.layout.StackPane
+import javafx.fxml.FXMLLoader
+import javafx.scene.Parent
+import lee.aspect.dev.application.CustomDiscordRPC
+import lee.aspect.dev.autoswitch.SwitchManager.Companion.initMenu
+import lee.aspect.dev.discordrpc.settings.SettingManager
+import java.io.IOException
+import java.util.*
 
-abstract class Core {
-
-    companion object{
+class ConfigSceneManager {
+    companion object {
+        /**
+         * returns different config screen according to the settings.
+         */
         @JvmStatic
-        fun initMenu(){
-            val stackPane = StackPane()
-            val anchorRoot = AnchorPane()
-            anchorRoot.setPrefSize(540.0, 334.0)
-            stackPane.children.add(anchorRoot)
+        @Throws(IOException::class)
+        fun getConfigParent(): Parent? {
+            if (SettingManager.SETTINGS.isAutoSwitch) {
+                return initMenu()
+            }
+            //default
+            val root = FXMLLoader.load<Parent>(
+                Objects.requireNonNull(
+                    CustomDiscordRPC::class.java.getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml")
+                )
+            )
+            root.stylesheets.add(
+                Objects.requireNonNull(CustomDiscordRPC::class.java.getResource(SettingManager.SETTINGS.theme.path))
+                    .toExternalForm()
+            )
+            return root
         }
     }
-
-
 }

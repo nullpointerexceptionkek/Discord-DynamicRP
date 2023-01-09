@@ -26,9 +26,7 @@
 package lee.aspect.dev.application.interfaceGui;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -36,15 +34,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lee.aspect.dev.ConfigSceneManager;
 import lee.aspect.dev.application.CustomDiscordRPC;
 import lee.aspect.dev.discordrpc.UpdateManager;
 import lee.aspect.dev.discordrpc.Updates;
-import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.language.LanguageManager;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class EditListController extends ConfigController implements Initializable {
@@ -161,10 +158,7 @@ public class EditListController extends ConfigController implements Initializabl
     private void gobacktoConfig() throws IOException {
         stage = (Stage) anchorPane.getScene().getWindow();
         stage.close();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml"));
-        Parent root = loader.load();
-        root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(SettingManager.SETTINGS.getTheme().getPath())).toExternalForm());
-        CustomDiscordRPC.primaryStage.setScene(new Scene(root));
+        CustomDiscordRPC.primaryStage.setScene(new Scene(ConfigSceneManager.getConfigParent()));
         numberInList = -1;
     }
 

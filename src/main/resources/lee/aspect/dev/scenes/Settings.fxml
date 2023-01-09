@@ -1,52 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.text.Font?>
-
-<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lee.aspect.dev.application.interfaceGui.SettingController">
-    <AnchorPane fx:id="settingsAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="334.0">
-        <Label fx:id="SettingsLabel" alignment="CENTER" layoutX="50.0" layoutY="59.0" prefHeight="32.0" prefWidth="234.0" text="Settings">
+<?import javafx.scene.text.*?>
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="stackPane" xmlns="http://javafx.com/javafx/18"
+           fx:controller="lee.aspect.dev.application.interfaceGui.SettingController">
+    <AnchorPane fx:id="settingsAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+                minWidth="-Infinity" prefHeight="540.0" prefWidth="334.0">
+        <Label fx:id="SettingsLabel" alignment="CENTER" layoutX="50.0" layoutY="59.0" prefHeight="32.0"
+               prefWidth="234.0" text="Settings">
             <font>
-                <Font size="20.0" />
+                <Font size="20.0"/>
             </font>
         </Label>
-        <Button fx:id="goBack" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchBack" text="Back" />
-        <Label fx:id="ThemeLabel" alignment="CENTER" layoutX="50.0" layoutY="75.0" prefHeight="32.0" prefWidth="234.0" text="Theme" />
-        <ChoiceBox fx:id="themeChoiceBox" layoutX="84.0" layoutY="107.0" prefHeight="25.0" prefWidth="173.0" />
-        <Label fx:id="titleLabel" alignment="CENTER" layoutX="84.0" layoutY="11.0" prefHeight="32.0" prefWidth="173.0" text="CDiscordRP v1.0.0">
+        <Button fx:id="goBack" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchBack"
+                text="Back"/>
+        <Label fx:id="ThemeLabel" alignment="CENTER" layoutX="50.0" layoutY="75.0" prefHeight="32.0" prefWidth="234.0"
+               text="Theme"/>
+        <ChoiceBox fx:id="themeChoiceBox" layoutX="84.0" layoutY="107.0" prefHeight="25.0" prefWidth="173.0"/>
+        <Label fx:id="titleLabel" alignment="CENTER" layoutX="84.0" layoutY="11.0" prefHeight="32.0" prefWidth="173.0"
+               text="CDiscordRP v1.0.0">
             <font>
-                <Font size="20.0" />
+                <Font size="20.0"/>
             </font>
         </Label>
-        <Label fx:id="ReleaseLabel" alignment="CENTER" layoutX="198.0" layoutY="27.0" prefHeight="32.0" prefWidth="99.0" text="Release" />
-        <Label fx:id="MinToTrayLabel" alignment="CENTER" layoutX="54.0" layoutY="160.0" prefHeight="32.0" prefWidth="234.0" text="Minimize to system tray" />
-        <ChoiceBox fx:id="minimizeModeChoiceBox" layoutX="85.0" layoutY="186.0" prefHeight="25.0" prefWidth="173.0" />
-        <CheckBox fx:id="shutDownInterfaceCheckBox" layoutX="46.0" layoutY="218.0" mnemonicParsing="false" text="Shutdown Interface when minimize to tray" textAlignment="CENTER" />
-        <CheckBox fx:id="noAnimationCheckBox" layoutX="46.0" layoutY="241.0" mnemonicParsing="false" text="Disable unnecessary animation" textAlignment="CENTER" />
-        <CheckBox fx:id="startTrayOnlyCloseCheckBox" layoutX="46.0" layoutY="265.0" mnemonicParsing="false" text="Start system tray only when interface is closed" textAlignment="CENTER" />
-        <CheckBox fx:id="startLaunchCheckBox" layoutX="46.0" layoutY="289.0" mnemonicParsing="false" text="Launch Callback when System start" textAlignment="CENTER" />
-        <Label fx:id="PerformanceLabel" alignment="CENTER" layoutX="54.0" layoutY="136.0" prefHeight="32.0" prefWidth="234.0" text="Performance">
+        <Label fx:id="ReleaseLabel" alignment="CENTER" layoutX="198.0" layoutY="27.0" prefHeight="32.0" prefWidth="99.0"
+               text="Release"/>
+        <Label fx:id="MinToTrayLabel" alignment="CENTER" layoutX="54.0" layoutY="160.0" prefHeight="32.0"
+               prefWidth="234.0" text="Minimize to system tray"/>
+        <ChoiceBox fx:id="minimizeModeChoiceBox" layoutX="85.0" layoutY="186.0" prefHeight="25.0" prefWidth="173.0"/>
+        <CheckBox fx:id="shutDownInterfaceCheckBox" layoutX="46.0" layoutY="218.0" mnemonicParsing="false"
+                  text="Shutdown Interface when minimize to tray" textAlignment="CENTER"/>
+        <CheckBox fx:id="noAnimationCheckBox" layoutX="46.0" layoutY="241.0" mnemonicParsing="false"
+                  text="Disable unnecessary animation" textAlignment="CENTER"/>
+        <CheckBox fx:id="startTrayOnlyCloseCheckBox" layoutX="46.0" layoutY="265.0" mnemonicParsing="false"
+                  text="Start system tray only when interface is closed" textAlignment="CENTER"/>
+        <CheckBox fx:id="startLaunchCheckBox" layoutX="46.0" layoutY="289.0" mnemonicParsing="false"
+                  text="Launch Callback when System start" textAlignment="CENTER"/>
+        <Label fx:id="PerformanceLabel" alignment="CENTER" layoutX="54.0" layoutY="136.0" prefHeight="32.0"
+               prefWidth="234.0" text="Performance">
             <font>
-                <Font size="20.0" />
+                <Font size="20.0"/>
             </font>
         </Label>
-        <Label fx:id="LanguageLabel" alignment="CENTER" layoutX="55.0" layoutY="306.0" prefHeight="32.0" prefWidth="234.0" text="Languages">
+        <Label fx:id="LanguageLabel" alignment="CENTER" layoutX="55.0" layoutY="306.0" prefHeight="32.0"
+               prefWidth="234.0" text="Languages">
             <font>
-                <Font size="20.0" />
+                <Font size="20.0"/>
             </font>
         </Label>
-        <Button fx:id="ChangeLanguageButton" layoutX="92.0" layoutY="338.0" mnemonicParsing="false" onAction="#changeLanguage" prefHeight="25.0" prefWidth="173.0" text="Change Language" textAlignment="CENTER" />
-      <Label fx:id="AdvanceConfigLabel" alignment="CENTER" layoutX="62.0" layoutY="363.0" prefHeight="32.0" prefWidth="234.0" text="Advance Config">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Button fx:id="ManageScriptButton" layoutX="92.0" layoutY="395.0" mnemonicParsing="false" onAction="#openConfigManager" prefHeight="25.0" prefWidth="173.0" text="Manage Config" textAlignment="CENTER" />
-      <CheckBox fx:id="AutoSwitchCheckBox" layoutX="89.0" layoutY="439.0" mnemonicParsing="false" text="Enable auto config switch" textAlignment="CENTER" />
+        <Button fx:id="ChangeLanguageButton" layoutX="92.0" layoutY="338.0" mnemonicParsing="false"
+                onAction="#changeLanguage" prefHeight="25.0" prefWidth="173.0" text="Change Language"
+                textAlignment="CENTER"/>
+        <Label fx:id="AdvanceConfigLabel" alignment="CENTER" layoutX="62.0" layoutY="363.0" prefHeight="32.0"
+               prefWidth="234.0" text="Advance Config">
+            <font>
+                <Font size="20.0"/>
+            </font>
+        </Label>
+        <Button fx:id="ManageScriptButton" layoutX="92.0" layoutY="395.0" mnemonicParsing="false"
+                onAction="#openConfigManager" prefHeight="25.0" prefWidth="173.0" text="Manage Config"
+                textAlignment="CENTER"/>
+        <CheckBox fx:id="AutoSwitchCheckBox" layoutX="89.0" layoutY="439.0" mnemonicParsing="false"
+                  text="Enable auto config switch" textAlignment="CENTER"/>
     </AnchorPane>
 </StackPane>

@@ -23,38 +23,23 @@
  * SOFTWARE.
  */
 
-package lee.aspect.dev.discordrpc;
+package lee.aspect.dev.autoswitch
 
-import lee.aspect.dev.discordrpc.settings.SettingManager;
-import lee.aspect.dev.jsonreader.FileManager;
+import javafx.scene.Parent
+import javafx.scene.layout.AnchorPane
+import javafx.scene.layout.StackPane
 
+abstract class SwitchManager {
 
-public abstract class UpdateManager {
-    public static Script SCRIPT;
-
-    public static void init() {
-        SCRIPT = loadScriptFromJson();
-    }
-
-
-    public static Script loadScriptFromJson() {
-        Script loaded = FileManager.readFromJson(SettingManager.SETTINGS.getLoadedConfig(), Script.class);
-        SCRIPT = loaded;
-
-        if (loaded == null) {
-            loaded = new Script();
-            SCRIPT = loaded;
-            SCRIPT.addUpdates(new Updates(16000, "1", "", "", "", "First line 1", "Second line 1"));
-            saveScriptToFile();
+    companion object {
+        @JvmStatic
+        fun initMenu(): Parent? {
+            val stackPane = StackPane()
+            val anchorRoot = AnchorPane()
+            anchorRoot.setPrefSize(540.0, 334.0)
+            stackPane.children.add(anchorRoot)
+            return null;
         }
-
-
-        return loaded;
-
-    }
-
-    public static void saveScriptToFile() {
-        FileManager.writeJsonTofile(SettingManager.SETTINGS.getLoadedConfig(), SCRIPT);
     }
 
 

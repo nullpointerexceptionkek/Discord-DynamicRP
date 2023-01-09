@@ -28,12 +28,12 @@ package lee.aspect.dev.application;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import lee.aspect.dev.ConfigSceneManager;
 import lee.aspect.dev.DirectoryManager;
 import lee.aspect.dev.Launch;
 import lee.aspect.dev.application.interfaceGui.WarningManager;
@@ -110,6 +110,7 @@ public class CustomDiscordRPC extends Application {
         RunLoopManager.runFromStartLunch();
     }
 
+
     /**
      * Launches the configuration interface for the application.
      *
@@ -143,11 +144,8 @@ public class CustomDiscordRPC extends Application {
         try {
             primaryStage = pStage;
             primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/lee/aspect/dev/icon/SystemTrayIcon.png"))));
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml")));
-            Scene scene = new Scene(root);
-            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(SettingManager.SETTINGS.getTheme().getPath())).toExternalForm());
             primaryStage.setTitle("Custom Discord RPC");
-            primaryStage.setScene(scene);
+            primaryStage.setScene(new Scene(ConfigSceneManager.getConfigParent()));
             primaryStage.setResizable(false);
             primaryStage.setOnCloseRequest((event) -> {
                 event.consume();

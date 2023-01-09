@@ -32,6 +32,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import lee.aspect.dev.ConfigSceneManager;
 import lee.aspect.dev.animationengine.animation.FadeOut;
 import lee.aspect.dev.animationengine.animation.RotateIn;
 import lee.aspect.dev.application.RunLoopManager;
@@ -98,9 +99,9 @@ public class LoadingController {
                                 animation.play();
                                 break;
                             case ConfigScreen:
-                                Parent root1 = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml")));
-                                stackPane.getChildren().add(0, root1);
-                                RotateIn animation1 = new RotateIn(root1);
+                                Parent cfgRoot = ConfigSceneManager.getConfigParent();
+                                stackPane.getChildren().add(0, cfgRoot);
+                                RotateIn animation1 = new RotateIn(cfgRoot);
                                 animation1.setOnFinished(actionEvent -> {
                                     FadeOut fadeOut = new FadeOut(anchorRoot);
                                     fadeOut.setOnFinished((actionEvent1 -> stackPane.getChildren().remove(anchorRoot)));

@@ -26,7 +26,6 @@
 package lee.aspect.dev.application.interfaceGui;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -35,6 +34,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import lee.aspect.dev.ConfigSceneManager;
 import lee.aspect.dev.Launch;
 import lee.aspect.dev.animationengine.animation.SlideOutLeft;
 import lee.aspect.dev.config.ConfigManager;
@@ -79,10 +79,7 @@ public class SettingController implements Initializable {
 
     public void switchBack() throws IOException {
         goBack.setDisable(true);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml"));
-        Parent root = loader.load();
-        root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(SettingManager.SETTINGS.getTheme().getPath())).toExternalForm());
-        stackPane.getChildren().add(0, root);
+        stackPane.getChildren().add(0, ConfigSceneManager.getConfigParent());
         SlideOutLeft animation = new SlideOutLeft(settingsAnchorPane);
         animation.setOnFinished((actionEvent) -> stackPane.getChildren().remove(settingsAnchorPane));
         animation.play();
@@ -93,7 +90,7 @@ public class SettingController implements Initializable {
         LanguageManager.showDialog();
     }
 
-    public void openConfigManager(){
+    public void openConfigManager() {
         ConfigManager.showDialog();
     }
 

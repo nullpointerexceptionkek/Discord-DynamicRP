@@ -43,17 +43,17 @@ import java.util.*
 
 class ConfigManager {
 
-    companion object{
+    companion object {
         @JvmStatic
         fun getCurrentConfigFiles(): Array<out File>? {
             val filter = FilenameFilter { _, name -> name.contains("UpdateScript.json") }
 
-             return DirectoryManager.getRootDir()?.listFiles(filter)
+            return DirectoryManager.getRootDir()?.listFiles(filter)
 
         }
 
         @JvmStatic
-        fun showDialog(){
+        fun showDialog() {
             UpdateManager.saveScriptToFile()
             val files = getCurrentConfigFiles()
             val dialogStage = Stage()
@@ -67,7 +67,7 @@ class ConfigManager {
                 val fileName = file.name.substring(0, file.name.indexOf("_UpdateScript.json"))
                 val radioButton = RadioButton(fileName)
                 radioButton.toggleGroup = toggleGroup
-                if(file == SettingManager.SETTINGS.loadedConfig){
+                if (file == SettingManager.SETTINGS.loadedConfig) {
                     radioButton.isSelected = true
                 }
                 val hBox = HBox()
@@ -76,16 +76,22 @@ class ConfigManager {
                 val deleteButton = Button("Delete")
                 deleteButton.graphic = ImageView(
                     Objects.requireNonNull(ConfigManager::class.java.getResource("/lee/aspect/dev/icon/editIcons/delete.png"))
-                        .toExternalForm())
+                        .toExternalForm()
+                )
                 deleteButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
                 deleteButton.setOnAction {
-                    if(radioButton.isSelected){
-                        Alert(Alert.AlertType.WARNING, "You can't delete the currently loaded config!", ButtonType.OK).show()
+                    if (radioButton.isSelected) {
+                        Alert(
+                            Alert.AlertType.WARNING,
+                            "You can't delete the currently loaded config!",
+                            ButtonType.OK
+                        ).show()
 
                     } else {
                         file.delete()
                         val selectedRadioButton = toggleGroup.selectedToggle as RadioButton
-                        val selectedFile = File(DirectoryManager.getRootDir(), selectedRadioButton.text+"_UpdateScript.json")
+                        val selectedFile =
+                            File(DirectoryManager.getRootDir(), selectedRadioButton.text + "_UpdateScript.json")
                         SettingManager.SETTINGS.loadedConfig = selectedFile
                         UpdateManager.SCRIPT = UpdateManager.loadScriptFromJson()
                         dialogStage.close()
@@ -96,7 +102,8 @@ class ConfigManager {
                 val duplicateButton = Button("Duplicate")
                 duplicateButton.graphic = ImageView(
                     Objects.requireNonNull(ConfigManager::class.java.getResource("/lee/aspect/dev/icon/editIcons/duplicate.png"))
-                        .toExternalForm())
+                        .toExternalForm()
+                )
                 duplicateButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
                 duplicateButton.setOnAction {
                     val newFile = File(file.parent, "copy-" + file.name)
@@ -108,17 +115,19 @@ class ConfigManager {
                 val renameButton = Button("Rename")
                 renameButton.graphic = ImageView(
                     Objects.requireNonNull(ConfigManager::class.java.getResource("/lee/aspect/dev/icon/editIcons/rename.png"))
-                        .toExternalForm())
+                        .toExternalForm()
+                )
                 renameButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
                 renameButton.setOnAction {
-                    val textInputDialog = TextInputDialog(file.name.substring(0, file.name.indexOf("_UpdateScript.json")))
+                    val textInputDialog =
+                        TextInputDialog(file.name.substring(0, file.name.indexOf("_UpdateScript.json")))
                     textInputDialog.title = "Rename File"
                     textInputDialog.headerText = "Enter the new name for the file:"
                     textInputDialog.contentText = "New name:"
                     val result = textInputDialog.showAndWait()
                     if (result.isPresent) {
                         val newName = result.get()
-                        val newFile = File(file.parent, newName+"_UpdateScript.json")
+                        val newFile = File(file.parent, newName + "_UpdateScript.json")
                         try {
                             file.renameTo(newFile)
                             SettingManager.SETTINGS.loadedConfig = newFile
@@ -159,7 +168,7 @@ class ConfigManager {
             val okButton = Button("OK")
             okButton.setOnAction {
                 val selectedRadioButton = toggleGroup.selectedToggle as RadioButton
-                val selectedFile = File(DirectoryManager.getRootDir(), selectedRadioButton.text+"_UpdateScript.json")
+                val selectedFile = File(DirectoryManager.getRootDir(), selectedRadioButton.text + "_UpdateScript.json")
                 SettingManager.SETTINGS.loadedConfig = selectedFile
                 UpdateManager.SCRIPT = UpdateManager.loadScriptFromJson()
                 dialogStage.close()
@@ -173,7 +182,7 @@ class ConfigManager {
             val hBox = HBox()
             hBox.spacing = 10.0
             hBox.children.addAll(okButton, cancelButton)
-            vBox.children.addAll(newConfigButton,hBox)
+            vBox.children.addAll(newConfigButton, hBox)
 
             dialogStage.scene = Scene(vBox)
             dialogStage.scene.stylesheets.add(SettingManager.SETTINGS.theme.path)

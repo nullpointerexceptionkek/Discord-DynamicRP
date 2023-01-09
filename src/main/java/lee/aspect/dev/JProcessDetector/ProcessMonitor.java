@@ -47,6 +47,7 @@ public class ProcessMonitor {
      * the program was closed before the `startMonitoring` method was called.
      * if `processCloseCalled` is false, the `onProcessClose` method of the listener will be called if
      * the program was closed before the `startMonitoring` method was called.
+     *
      * @param processCloseCalled a boolean indicating whether the `onProcessClose` callback should be called
      *                           if the process is already closed when the `startMonitoring` method is called.
      */
@@ -65,6 +66,7 @@ public class ProcessMonitor {
     /**
      * Determines whether a process with the given name is open.
      * The method will use isContains() to check if the process name match on Windows
+     *
      * @param processName the name of the process to check
      * @return true if the process is open, false otherwise
      * @throws UnsupportedOperationException if the current operating system is not supported
@@ -92,7 +94,7 @@ public class ProcessMonitor {
                 //Process process = Runtime.getRuntime().exec("ps -e");
                 Process process = Runtime.getRuntime().exec("pgrep " + processName);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-                if(reader.readLine() != null) {
+                if (reader.readLine() != null) {
                     reader.close();
                     return true;
                 }
@@ -119,13 +121,13 @@ public class ProcessMonitor {
     /**
      * Starts monitoring the process with the given name.
      *
-     * @param processName the name of the process to monitor
-     * @param listener the listener to be notified of open/close events
-     * @param waitDuration the duration to wait between checks for the process status
+     * @param processName      the name of the process to monitor
+     * @param listener         the listener to be notified of open/close events
+     * @param waitDuration     the duration to wait between checks for the process status
      * @param waitDurationUnit the unit of time for the waitDuration parameter
      */
     public void startMonitoring(String processName, OpenCloseListener listener, long waitDuration, TimeUnit waitDurationUnit) {
-        if(listener == null) {
+        if (listener == null) {
             throw new IllegalArgumentException("listener cannot be null");
         }
         this.isProcessOpen = isProcessOpen(processName);
@@ -159,11 +161,12 @@ public class ProcessMonitor {
         });
         thread.start();
     }
+
     /**
      * Stops monitoring the process.
      */
     public void stopMonitoring() {
-        if(thread != null) {
+        if (thread != null) {
             thread.interrupt();
         }
     }

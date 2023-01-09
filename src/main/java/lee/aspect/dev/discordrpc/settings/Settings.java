@@ -113,6 +113,14 @@ public class Settings {
         return theme.toString();
     }
 
+    public File getLoadedConfig() {
+        return loadedConfig;
+    }
+
+    public void setLoadedConfig(File loadedConfig) {
+        this.loadedConfig = loadedConfig;
+    }
+
     public enum MinimizeMode {
         Ask, Always, Never, WaitAndSee
     }
@@ -144,14 +152,6 @@ public class Settings {
         public String getDisplayName() {
             return displayName;
         }
-    }
-
-    public void setLoadedConfig(File loadedConfig) {
-        this.loadedConfig = loadedConfig;
-    }
-
-    public File getLoadedConfig() {
-        return loadedConfig;
     }
 }
 

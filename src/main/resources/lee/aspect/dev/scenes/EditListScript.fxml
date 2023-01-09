@@ -2,7 +2,8 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity"
+            minHeight="-Infinity"
             minWidth="-Infinity" prefHeight="440.0" prefWidth="334.0" xmlns="http://javafx.com/javafx/18"
             fx:controller="lee.aspect.dev.application.interfaceGui.EditListController">
     <Label fx:id="EditConfiLabel" layoutX="114.0" layoutY="2.0" text="Edit configurations "/>

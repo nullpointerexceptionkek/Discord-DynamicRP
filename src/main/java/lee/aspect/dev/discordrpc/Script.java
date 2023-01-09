@@ -37,6 +37,7 @@ public class Script {
     private long calculatedTimestamp;
     private ArrayList<Updates> totalupdates;
     private TimeStampMode timestampmode = TimeStampMode.appLaunch;
+
     public Script() {
         totalupdates = new ArrayList<>();
     }
