@@ -33,12 +33,12 @@ abstract class SwitchManager {
 
     companion object {
         @JvmStatic
-        fun initMenu(): Parent? {
+        fun initMenu(): Parent {
             val stackPane = StackPane()
             val anchorRoot = AnchorPane()
             anchorRoot.setPrefSize(540.0, 334.0)
             stackPane.children.add(anchorRoot)
-            return null;
+            return stackPane
         }
     }
 

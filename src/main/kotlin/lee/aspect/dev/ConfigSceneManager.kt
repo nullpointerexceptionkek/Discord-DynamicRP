@@ -28,7 +28,7 @@ package lee.aspect.dev
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
 import lee.aspect.dev.application.CustomDiscordRPC
-import lee.aspect.dev.autoswitch.SwitchManager.Companion.initMenu
+import lee.aspect.dev.autoswitch.SwitchManager
 import lee.aspect.dev.discordrpc.settings.SettingManager
 import java.io.IOException
 import java.util.*
@@ -42,7 +42,7 @@ class ConfigSceneManager {
         @Throws(IOException::class)
         fun getConfigParent(): Parent? {
             if (SettingManager.SETTINGS.isAutoSwitch) {
-                return initMenu()
+                return SwitchManager.initMenu()
             }
             //default
             val root = FXMLLoader.load<Parent>(
