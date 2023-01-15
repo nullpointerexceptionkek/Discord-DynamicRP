@@ -2,9 +2,14 @@
     -fx-background-color: #2C2F33;
 }
 
+#defaultPane {
+    -fx-background-color: #2C2F33;
+}
+
 #settingsAnchorPane {
     -fx-background-color: #2C2F33;
 }
+
 
 .label {
     -fx-font-size: 12;

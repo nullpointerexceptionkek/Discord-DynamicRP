@@ -25,18 +25,20 @@
 
 package lee.aspect.dev.autoswitch
 
+import javafx.fxml.FXMLLoader
 import javafx.geometry.Insets
 import javafx.geometry.Pos
 import javafx.scene.Parent
 import javafx.scene.control.Button
+import javafx.scene.control.Label
 import javafx.scene.control.ScrollPane
 import javafx.scene.control.TextField
 import javafx.scene.layout.*
-import javafx.scene.paint.Color
 import javafx.scene.text.Font
-import javafx.scene.text.Text
+import lee.aspect.dev.application.CustomDiscordRPC
 import lee.aspect.dev.config.ConfigManager
 import lee.aspect.dev.discordrpc.settings.SettingManager
+import java.util.*
 
 
 abstract class SwitchManager {
@@ -44,38 +46,32 @@ abstract class SwitchManager {
     companion object {
         @JvmStatic
         fun initMenu(): Parent {
+
+            val anchorRoot = AnchorPane()
+            anchorRoot.id = "defaultPane"
+            val switchStackPane = StackPane()
+            //switchStackPane.id = "defaultPane"
+            switchStackPane.padding = Insets(30.0)
+            switchStackPane.setPrefSize(334.0,540.0)
+
+            val scrollPane = ScrollPane()
+
             val fileNames = ConfigManager.getCurrentConfigFiles()
 
             val vboxtext = VBox()
             vboxtext.spacing = 10.0
             vboxtext.alignment = Pos.CENTER_LEFT
-            vboxtext.border =
-                Border(
-                    BorderStroke(
-                        Color.RED,
-                        BorderStrokeStyle.SOLID,
-                        CornerRadii.EMPTY,
-                        BorderWidths(2.0)
-                    )
-                )
+
 
             val vboxtextbox = VBox()
             vboxtextbox.spacing = 10.0
             vboxtextbox.alignment = Pos.CENTER_RIGHT
-            vboxtextbox.border =
-                Border(
-                    BorderStroke(
-                        Color.YELLOW,
-                        BorderStrokeStyle.SOLID,
-                        CornerRadii.EMPTY,
-                        BorderWidths(2.0)
-                    )
-                )
+
 
             if (fileNames != null) {
                 for (file in fileNames) {
                     val fileName = file.name.substring(0, file.name.indexOf("_UpdateScript.json"))
-                    val text = Text(fileName)
+                    val text = Label(fileName)
                     text.maxWidth(180.0)
                     text.font = Font.font(16.0)
                     vboxtext.children.add(text)
@@ -85,6 +81,31 @@ abstract class SwitchManager {
 
                     val editCfgButton = Button("Edit")
 
+                    editCfgButton.setOnAction {
+                        SettingManager.SETTINGS.loadedConfig= file
+
+                        val root = FXMLLoader.load<Parent>(
+                            Objects.requireNonNull(
+                                CustomDiscordRPC::class.java.getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml")
+                            )
+                        )
+                        root.stylesheets.add(
+                            Objects.requireNonNull(CustomDiscordRPC::class.java.getResource(SettingManager.SETTINGS.theme.path))
+                                .toExternalForm()
+                        )
+
+                        println(anchorRoot.children)
+
+                        if(anchorRoot.children.contains(switchStackPane)){
+                            anchorRoot.children.remove(switchStackPane)
+                        }
+                        if(anchorRoot.children.contains(scrollPane)){
+                            anchorRoot.children.remove(scrollPane)
+                        }
+                        anchorRoot.children.add(root)
+
+                    }
+
                     val hbox = HBox(editCfgButton,textField)
                     hbox.spacing = 10.0
                     hbox.alignment = Pos.CENTER_RIGHT
@@ -92,31 +113,18 @@ abstract class SwitchManager {
                 }
             }
 
-
-
-            val switchStackPane = StackPane()
-            switchStackPane.padding = Insets(30.0)
-            switchStackPane.setPrefSize(334.0,540.0)
             switchStackPane.children.addAll(vboxtext, vboxtextbox)
-            switchStackPane.border =
-                Border(
-                    BorderStroke(
-                        Color.GREEN,
-                        BorderStrokeStyle.SOLID,
-                        CornerRadii.EMPTY,
-                        BorderWidths(2.0)
-                    )
-                )
-            switchStackPane.stylesheets.add(SettingManager.SETTINGS.theme.path)
 
-            if (fileNames!!.size > switchStackPane.height / 30) {
-                // Show the scrollbar
-                val scrollPane = ScrollPane()
+            anchorRoot.stylesheets.add(SettingManager.SETTINGS.theme.path)
+
+            if (fileNames!!.size > switchStackPane.prefHeight / 12) {
                 scrollPane.content = switchStackPane
                 scrollPane.isFitToWidth = true
-                return scrollPane
+                anchorRoot.children.add(scrollPane)
+            } else{
+                anchorRoot.children.add(switchStackPane)
             }
-            return switchStackPane
+            return anchorRoot
 
         }
     }
