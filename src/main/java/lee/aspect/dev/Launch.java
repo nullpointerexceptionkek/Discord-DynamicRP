@@ -44,7 +44,7 @@ import java.nio.channels.FileLock;
  */
 public abstract class Launch {
 
-    public final static String VERSION = "v1.0.0";
+    public final static String VERSION = "v0.5.0";
     public final static String AUTHOR = "lee";
     public final static String NAME = "CDiscordRP";
     public static final Logger LOGGER = LoggerFactory.getLogger(Launch.class);

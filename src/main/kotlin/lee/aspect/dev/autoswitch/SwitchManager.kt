@@ -26,14 +26,17 @@
 package lee.aspect.dev.autoswitch
 
 import javafx.geometry.Insets
+import javafx.geometry.Pos
 import javafx.scene.Parent
+import javafx.scene.control.Button
 import javafx.scene.control.ScrollPane
 import javafx.scene.control.TextField
-import javafx.scene.layout.HBox
-import javafx.scene.layout.StackPane
-import javafx.scene.layout.VBox
+import javafx.scene.layout.*
+import javafx.scene.paint.Color
+import javafx.scene.text.Font
 import javafx.scene.text.Text
 import lee.aspect.dev.config.ConfigManager
+import lee.aspect.dev.discordrpc.settings.SettingManager
 
 
 abstract class SwitchManager {
@@ -42,38 +45,79 @@ abstract class SwitchManager {
         @JvmStatic
         fun initMenu(): Parent {
             val fileNames = ConfigManager.getCurrentConfigFiles()
-            val vbox = VBox()
+
+            val vboxtext = VBox()
+            vboxtext.spacing = 10.0
+            vboxtext.alignment = Pos.CENTER_LEFT
+            vboxtext.border =
+                Border(
+                    BorderStroke(
+                        Color.RED,
+                        BorderStrokeStyle.SOLID,
+                        CornerRadii.EMPTY,
+                        BorderWidths(2.0)
+                    )
+                )
+
+            val vboxtextbox = VBox()
+            vboxtextbox.spacing = 10.0
+            vboxtextbox.alignment = Pos.CENTER_RIGHT
+            vboxtextbox.border =
+                Border(
+                    BorderStroke(
+                        Color.YELLOW,
+                        BorderStrokeStyle.SOLID,
+                        CornerRadii.EMPTY,
+                        BorderWidths(2.0)
+                    )
+                )
 
             if (fileNames != null) {
                 for (file in fileNames) {
-                    val hbox = HBox()
-                    val text = Text(file.name)
+                    val fileName = file.name.substring(0, file.name.indexOf("_UpdateScript.json"))
+                    val text = Text(fileName)
+                    text.maxWidth(180.0)
+                    text.font = Font.font(16.0)
+                    vboxtext.children.add(text)
+
                     val textField = TextField()
-                    hbox.children.addAll(text, textField)
-                    vbox.children.add(hbox)
+                    textField.maxWidth = 140.0
+
+                    val editCfgButton = Button("Edit")
+
+                    val hbox = HBox(editCfgButton,textField)
+                    hbox.spacing = 10.0
+                    hbox.alignment = Pos.CENTER_RIGHT
+                    vboxtextbox.children.addAll(hbox)
                 }
             }
 
-            val scrollPane = ScrollPane()
-            scrollPane.content = vbox
 
-            val stackPane = StackPane()
-            stackPane.padding = Insets(10.0)
-            stackPane.setPrefSize(334.0,540.0)
 
-            if (fileNames!!.size > stackPane.height / 30) {
+            val switchStackPane = StackPane()
+            switchStackPane.padding = Insets(30.0)
+            switchStackPane.setPrefSize(334.0,540.0)
+            switchStackPane.children.addAll(vboxtext, vboxtextbox)
+            switchStackPane.border =
+                Border(
+                    BorderStroke(
+                        Color.GREEN,
+                        BorderStrokeStyle.SOLID,
+                        CornerRadii.EMPTY,
+                        BorderWidths(2.0)
+                    )
+                )
+            switchStackPane.stylesheets.add(SettingManager.SETTINGS.theme.path)
+
+            if (fileNames!!.size > switchStackPane.height / 30) {
                 // Show the scrollbar
+                val scrollPane = ScrollPane()
+                scrollPane.content = switchStackPane
                 scrollPane.isFitToWidth = true
-                stackPane.children.add(scrollPane)
-            } else {
-                // Don't show the scrollbar
-                stackPane.children.add(vbox)
+                return scrollPane
             }
+            return switchStackPane
 
-
-            println(stackPane.prefHeight)
-
-            return stackPane
         }
     }
 

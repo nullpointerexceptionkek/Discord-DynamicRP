@@ -58,6 +58,9 @@ public class SettingsAdapter extends TypeAdapter<Settings> {
                     name = reader.nextName();
                 }
                 switch (Objects.requireNonNull(name)) {
+                    case "CDiscordRP":
+                        reader.nextString();
+                        break;
                     case "loadedCfg":
                         settings.setLoadedConfig(new File(reader.nextString()));
                         break;
@@ -107,6 +110,7 @@ public class SettingsAdapter extends TypeAdapter<Settings> {
             return;
         }
         writter.beginObject();
+        writter.name("CDiscordRP").value(Launch.VERSION);
         writter.name("loadedCfg").value(SettingManager.SETTINGS.getLoadedConfig().getPath());
         writter.name("AutoSwitch").value(SettingManager.SETTINGS.isAutoSwitch());
         writter.name("theme").value(SettingManager.SETTINGS.getTheme().name());
