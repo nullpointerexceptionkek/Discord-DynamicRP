@@ -40,7 +40,9 @@ import javafx.scene.text.TextAlignment
 import lee.aspect.dev.JProcessDetector.OpenCloseListener
 import lee.aspect.dev.JProcessDetector.ProcessMonitor
 import lee.aspect.dev.application.CustomDiscordRPC
+import lee.aspect.dev.application.RunLoopManager
 import lee.aspect.dev.config.ConfigManager
+import lee.aspect.dev.discordrpc.UpdateManager
 import lee.aspect.dev.discordrpc.settings.SettingManager
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -96,6 +98,7 @@ abstract class SwitchManager {
 
                 editCfgButton.setOnAction {
                     SettingManager.SETTINGS.loadedConfig= fileNames[i]
+                    UpdateManager.SCRIPT = UpdateManager.loadScriptFromJson()
 
                     val root = FXMLLoader.load<Parent>(
                         Objects.requireNonNull(
@@ -137,6 +140,7 @@ abstract class SwitchManager {
             controlHBbox.isPickOnBounds = false
 
             startButton.setOnAction {
+                startButton.isDisable = true
                 if(!isStarted) {
                     println(input.contentToString())
                     startButton.text = "Stop Operation"
@@ -146,12 +150,23 @@ abstract class SwitchManager {
                         if(input[i].isNotEmpty())
                             ProcessMonitor().startMonitoring(input[i], object : OpenCloseListener {
                                 override fun onProcessOpen() {
+                                    try {
+                                        RunLoopManager.closeCallBack()
+                                    } catch (_: Exception) {
+                                    }
+                                    SettingManager.SETTINGS.loadedConfig = fileNames[i]
+                                    UpdateManager.SCRIPT = UpdateManager.loadScriptFromJson()
+                                    RunLoopManager.startUpdate()
                                     Platform.runLater{
                                         statusLabel.text = "${input[i]} Process Opened"
                                     }
                                 }
 
                                 override fun onProcessClose() {
+                                    try {
+                                        RunLoopManager.closeCallBack()
+                                    }catch (_: Exception) {
+                                    }
                                     Platform.runLater{
                                         statusLabel.text = "${input[i]} Process Closed"
                                     }
@@ -161,9 +176,17 @@ abstract class SwitchManager {
 
 
                 } else{
+                    statusLabel.text = "Disconnecting..."
+                    try {
+                        RunLoopManager.closeCallBack()
+                    }catch (_: Exception) {
+                    }
+                    statusLabel.text = "Not Connected"
                     startButton.text = "Start Operation"
                     isStarted = false
                 }
+
+                startButton.isDisable = false
 
             }
 
