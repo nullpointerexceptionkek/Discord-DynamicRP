@@ -34,6 +34,7 @@ import javafx.scene.control.Label
 import javafx.scene.control.ScrollPane
 import javafx.scene.control.TextField
 import javafx.scene.layout.*
+import javafx.scene.paint.Color
 import javafx.scene.text.Font
 import lee.aspect.dev.application.CustomDiscordRPC
 import lee.aspect.dev.config.ConfigManager
@@ -42,6 +43,7 @@ import java.util.*
 
 
 abstract class SwitchManager {
+
 
     companion object {
         @JvmStatic
@@ -57,6 +59,7 @@ abstract class SwitchManager {
             val scrollPane = ScrollPane()
 
             val fileNames = ConfigManager.getCurrentConfigFiles()
+            fileNames!!
 
             val vboxtext = VBox()
             vboxtext.spacing = 10.0
@@ -66,58 +69,82 @@ abstract class SwitchManager {
             val vboxtextbox = VBox()
             vboxtextbox.spacing = 10.0
             vboxtextbox.alignment = Pos.CENTER_RIGHT
+            val input = Array(fileNames.size) { "" }
 
+            for (i in fileNames.indices) {
+                val fileName = fileNames[i].name.substring(0, fileNames[i].name.indexOf("_UpdateScript.json"))
+                val text = Label(fileName)
+                text.maxWidth(180.0)
+                text.font = Font.font(16.0)
+                vboxtext.children.add(text)
 
-            if (fileNames != null) {
-                for (file in fileNames) {
-                    val fileName = file.name.substring(0, file.name.indexOf("_UpdateScript.json"))
-                    val text = Label(fileName)
-                    text.maxWidth(180.0)
-                    text.font = Font.font(16.0)
-                    vboxtext.children.add(text)
-
-                    val textField = TextField()
-                    textField.maxWidth = 140.0
-
-                    val editCfgButton = Button("Edit")
-
-                    editCfgButton.setOnAction {
-                        SettingManager.SETTINGS.loadedConfig= file
-
-                        val root = FXMLLoader.load<Parent>(
-                            Objects.requireNonNull(
-                                CustomDiscordRPC::class.java.getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml")
-                            )
-                        )
-                        root.stylesheets.add(
-                            Objects.requireNonNull(CustomDiscordRPC::class.java.getResource(SettingManager.SETTINGS.theme.path))
-                                .toExternalForm()
-                        )
-
-                        println(anchorRoot.children)
-
-                        if(anchorRoot.children.contains(switchStackPane)){
-                            anchorRoot.children.remove(switchStackPane)
-                        }
-                        if(anchorRoot.children.contains(scrollPane)){
-                            anchorRoot.children.remove(scrollPane)
-                        }
-                        anchorRoot.children.add(root)
-
-                    }
-
-                    val hbox = HBox(editCfgButton,textField)
-                    hbox.spacing = 10.0
-                    hbox.alignment = Pos.CENTER_RIGHT
-                    vboxtextbox.children.addAll(hbox)
+                val textField = TextField()
+                input[i] = textField.text
+                textField.textProperty().addListener { _, _, newValue ->
+                    input[i] = newValue
                 }
+
+
+                textField.maxWidth = 140.0
+
+                val editCfgButton = Button("Edit")
+
+                editCfgButton.setOnAction {
+                    SettingManager.SETTINGS.loadedConfig= fileNames[i]
+
+                    val root = FXMLLoader.load<Parent>(
+                        Objects.requireNonNull(
+                            CustomDiscordRPC::class.java.getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml")
+                        )
+                    )
+                    root.stylesheets.add(
+                        Objects.requireNonNull(CustomDiscordRPC::class.java.getResource(SettingManager.SETTINGS.theme.path))
+                            .toExternalForm()
+                    )
+
+                    println(anchorRoot.children)
+
+                    if(anchorRoot.children.contains(switchStackPane)){
+                        anchorRoot.children.remove(switchStackPane)
+                    }
+                    if(anchorRoot.children.contains(scrollPane)){
+                        anchorRoot.children.remove(scrollPane)
+                    }
+                    anchorRoot.children.add(root)
+
+                }
+
+                val hbox = HBox(editCfgButton,textField)
+                hbox.spacing = 10.0
+                hbox.alignment = Pos.CENTER_RIGHT
+                vboxtextbox.children.addAll(hbox)
             }
 
-            switchStackPane.children.addAll(vboxtext, vboxtextbox)
+
+            val startButton = Button("Start Operation")
+            var isStarted = false
+            startButton.setOnAction {
+                if(!isStarted) {
+                    println(input.contentToString())
+                    startButton.text = "Stop Operation"
+                    isStarted = true
+
+                } else{
+                    startButton.text = "Start Operation"
+                    isStarted = false
+                }
+
+            }
+            val controlHBbox = HBox(startButton)
+            controlHBbox.alignment = Pos.BOTTOM_CENTER
+            controlHBbox.isPickOnBounds = false
+
+            switchStackPane.children.addAll(vboxtext, vboxtextbox,controlHBbox)
+
 
             anchorRoot.stylesheets.add(SettingManager.SETTINGS.theme.path)
 
-            if (fileNames!!.size > switchStackPane.prefHeight / 12) {
+            if (fileNames.size > switchStackPane.prefHeight / 12) {
                 scrollPane.content = switchStackPane
                 scrollPane.isFitToWidth = true
                 anchorRoot.children.add(scrollPane)
