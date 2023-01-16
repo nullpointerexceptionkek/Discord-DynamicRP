@@ -158,7 +158,7 @@ public class EditListController extends ConfigController implements Initializabl
     private void gobacktoConfig() throws IOException {
         stage = (Stage) anchorPane.getScene().getWindow();
         stage.close();
-        CustomDiscordRPC.primaryStage.setScene(new Scene(ConfigSceneManager.getConfigParent()));
+        CustomDiscordRPC.primaryStage.setScene(new Scene(ConfigSceneManager.getDefaultConfigParent()));
         numberInList = -1;
     }
 

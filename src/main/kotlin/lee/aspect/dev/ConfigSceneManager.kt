@@ -44,7 +44,11 @@ class ConfigSceneManager {
             if (SettingManager.SETTINGS.isAutoSwitch) {
                 return SwitchManager.initMenu()
             }
-            //default
+            return getDefaultConfigParent()
+        }
+
+        @JvmStatic
+        fun getDefaultConfigParent(): Parent? {
             val root = FXMLLoader.load<Parent>(
                 Objects.requireNonNull(
                     CustomDiscordRPC::class.java.getResource("/lee/aspect/dev/scenes/ReadyConfig.fxml")
