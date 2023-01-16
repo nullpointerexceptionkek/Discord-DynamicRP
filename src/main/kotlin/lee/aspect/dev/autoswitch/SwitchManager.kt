@@ -25,6 +25,7 @@
 
 package lee.aspect.dev.autoswitch
 
+import javafx.application.Platform
 import javafx.fxml.FXMLLoader
 import javafx.geometry.Insets
 import javafx.geometry.Pos
@@ -34,12 +35,15 @@ import javafx.scene.control.Label
 import javafx.scene.control.ScrollPane
 import javafx.scene.control.TextField
 import javafx.scene.layout.*
-import javafx.scene.paint.Color
 import javafx.scene.text.Font
+import javafx.scene.text.TextAlignment
+import lee.aspect.dev.JProcessDetector.OpenCloseListener
+import lee.aspect.dev.JProcessDetector.ProcessMonitor
 import lee.aspect.dev.application.CustomDiscordRPC
 import lee.aspect.dev.config.ConfigManager
 import lee.aspect.dev.discordrpc.settings.SettingManager
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 abstract class SwitchManager {
@@ -48,6 +52,7 @@ abstract class SwitchManager {
     companion object {
         @JvmStatic
         fun initMenu(): Parent {
+
 
             val anchorRoot = AnchorPane()
             anchorRoot.id = "defaultPane"
@@ -117,17 +122,43 @@ abstract class SwitchManager {
                 val hbox = HBox(editCfgButton,textField)
                 hbox.spacing = 10.0
                 hbox.alignment = Pos.CENTER_RIGHT
+
                 vboxtextbox.children.addAll(hbox)
             }
 
+            val statusLabel = Label("Not Connected")
+            statusLabel.textAlignment = TextAlignment.CENTER
 
             val startButton = Button("Start Operation")
             var isStarted = false
+
+            val controlHBbox = HBox(startButton)
+            controlHBbox.alignment = Pos.BOTTOM_CENTER
+            controlHBbox.isPickOnBounds = false
+
             startButton.setOnAction {
                 if(!isStarted) {
                     println(input.contentToString())
                     startButton.text = "Stop Operation"
                     isStarted = true
+                    statusLabel.text = "Initializing..."
+                    for(i in fileNames.indices){
+                        if(input[i].isNotEmpty())
+                            ProcessMonitor().startMonitoring(input[i], object : OpenCloseListener {
+                                override fun onProcessOpen() {
+                                    Platform.runLater{
+                                        statusLabel.text = "${input[i]} Process Opened"
+                                    }
+                                }
+
+                                override fun onProcessClose() {
+                                    Platform.runLater{
+                                        statusLabel.text = "${input[i]} Process Closed"
+                                    }
+                                }
+                            }, 3, TimeUnit.SECONDS)
+                    }
+
 
                 } else{
                     startButton.text = "Start Operation"
@@ -135,11 +166,16 @@ abstract class SwitchManager {
                 }
 
             }
-            val controlHBbox = HBox(startButton)
-            controlHBbox.alignment = Pos.BOTTOM_CENTER
-            controlHBbox.isPickOnBounds = false
 
-            switchStackPane.children.addAll(vboxtext, vboxtextbox,controlHBbox)
+            val controlVbox = VBox(controlHBbox,statusLabel)
+
+            controlVbox.spacing = 5.0
+
+            controlVbox.alignment = Pos.BOTTOM_CENTER
+
+            controlVbox.isPickOnBounds = false
+
+            switchStackPane.children.addAll(vboxtext, vboxtextbox,controlVbox)
 
 
             anchorRoot.stylesheets.add(SettingManager.SETTINGS.theme.path)
