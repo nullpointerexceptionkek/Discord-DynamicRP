@@ -30,10 +30,8 @@ import javafx.fxml.FXMLLoader
 import javafx.geometry.Insets
 import javafx.geometry.Pos
 import javafx.scene.Parent
-import javafx.scene.control.Button
-import javafx.scene.control.Label
-import javafx.scene.control.ScrollPane
-import javafx.scene.control.TextField
+import javafx.scene.control.*
+import javafx.scene.image.ImageView
 import javafx.scene.layout.*
 import javafx.scene.text.Font
 import javafx.scene.text.TextAlignment
@@ -135,7 +133,23 @@ abstract class SwitchManager {
             val startButton = Button("Start Operation")
             var isStarted = false
 
-            val controlHBbox = HBox(startButton)
+            val configManagerButton = Button()
+            configManagerButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
+            val jsonIcon = ImageView(Objects.requireNonNull(CustomDiscordRPC::class.java.getResource("/lee/aspect/dev/icon/json-file.png")).toExternalForm())
+            jsonIcon.fitHeight = 17.0
+            jsonIcon.fitWidth = 17.0
+            configManagerButton.graphic = jsonIcon
+
+            val settingsButton = Button()
+            configManagerButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
+            val settingsIcon = ImageView(Objects.requireNonNull(CustomDiscordRPC::class.java.getResource("/lee/aspect/dev/icon/settingsImage.png")).toExternalForm())
+
+            settingsIcon.fitHeight = 17.0
+            settingsIcon.fitWidth = 17.0
+            settingsButton.graphic = settingsIcon
+
+            val controlHBbox = HBox(settingsButton,startButton,configManagerButton)
+            controlHBbox.spacing = 10.0
             controlHBbox.alignment = Pos.BOTTOM_CENTER
             controlHBbox.isPickOnBounds = false
 
