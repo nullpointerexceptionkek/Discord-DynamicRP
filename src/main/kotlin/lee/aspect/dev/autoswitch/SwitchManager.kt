@@ -57,24 +57,29 @@ abstract class SwitchManager {
 
     companion object {
         class LoadSwitchFromFile {
-            lateinit var switch: ArrayList<Switch>
+            lateinit var switch: Array<Switch>
         }
 
         private lateinit var loaded:LoadSwitchFromFile
 
         @JvmStatic
         fun loadFromFile(){
-
+            if(!File(getRootDir(), "Switch.json").exists())
+                File(getRootDir(), "Switch.json").createNewFile()
             var loaded = FileManager.readFromJson(
                 File(getRootDir(), "Switch.json"),
                 LoadSwitchFromFile::class.java
             )
             if(loaded == null){
                 loaded = LoadSwitchFromFile()
+                loaded.switch = Array(ConfigManager.getCurrentConfigFiles()?.size ?:1) { Switch() }
+                for(i in loaded.switch.indices){
+                    loaded.switch[i].config = ConfigManager.getCurrentConfigFiles()!![i]
+                }
+
+                this.loaded = loaded
                 saveToFile()
             }
-
-            this.loaded = loaded
 
         }
         @JvmStatic
@@ -119,7 +124,7 @@ abstract class SwitchManager {
 
                 val textField = TextField()
 
-                if(loaded.switch[i].checkName.isNotBlank())
+                if(loaded.switch.size > i && loaded.switch[i].checkName.isNotBlank())
                     textField.text = loaded.switch[i].checkName
 
                 //input[i] = textField.text

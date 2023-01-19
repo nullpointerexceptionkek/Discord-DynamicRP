@@ -27,6 +27,7 @@ package lee.aspect.dev.jsonreader;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import lee.aspect.dev.autoswitch.SwitchManager;
 import lee.aspect.dev.discordrpc.Script;
 import lee.aspect.dev.discordrpc.Updates;
 import lee.aspect.dev.discordrpc.settings.Settings;
@@ -49,6 +50,7 @@ public class FileManager {
         builder.registerTypeAdapter(Script.class, new ScriptAdapter());
         builder.registerTypeAdapter(Settings.class, new SettingsAdapter());
         builder.registerTypeAdapter(Updates.class, new UpdatesAdapter());
+        builder.registerTypeAdapter(SwitchManager.Companion.LoadSwitchFromFile.class,new SwitchAdapter());
         gson = builder.setPrettyPrinting().create();
     }
 

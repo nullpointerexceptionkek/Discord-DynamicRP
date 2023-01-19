@@ -31,6 +31,6 @@ class Switch {
 
     lateinit var config: File
 
-    lateinit var checkName: String
+    var checkName: String = ""
 
 }
