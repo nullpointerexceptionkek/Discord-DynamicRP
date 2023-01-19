@@ -63,26 +63,29 @@ public class SwitchAdapter extends TypeAdapter<SwitchManager.Companion.LoadSwitc
                     name = reader.nextName();
                 }
                 if (Objects.requireNonNull(name).equals("SwitchScript")) {
-                    reader.beginObject();
-                    JsonToken token1 = reader.peek();
-                    String updateid = null;
-                    while (reader.hasNext()) {
-                        if (token1 == JsonToken.NAME) {
-                            updateid = reader.nextName();
+                    reader.beginArray();
+                    while (reader.peek() != JsonToken.END_ARRAY) {
+                        reader.beginObject();
+                        JsonToken token1 = reader.peek();
+                        String name1 = null;
+                        Switch switchInfo = new Switch();
+                        while (reader.hasNext()) {
+                            if (token1 == JsonToken.NAME) {
+                                name1 = reader.nextName();
+                            }
+                            switch (Objects.requireNonNull(name1)) {
+                                case "file":
+                                    switchInfo.setConfig(new File(reader.nextString()));
+                                    break;
+                                case "process":
+                                    switchInfo.setCheckName(reader.nextString());
+                                    break;
+                            }
                         }
-                        Switch switchinfo = new Switch();
-
-                        switch (Objects.requireNonNull(updateid)) {
-                            case "file":
-                                switchinfo.setConfig(new File(reader.nextString()));
-                                break;
-                            case "process":
-                                switchinfo.setCheckName(reader.nextString());
-                                break;
-                        }
-                        switches.add(switchinfo);
+                        switches.add(switchInfo);
+                        reader.endObject();
                     }
-                    reader.endObject();
+                    reader.endArray();
                 }
             }
             reader.endObject();

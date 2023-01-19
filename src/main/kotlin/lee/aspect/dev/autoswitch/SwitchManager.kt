@@ -79,7 +79,9 @@ abstract class SwitchManager {
 
                 this.loaded = loaded
                 saveToFile()
+                return
             }
+            this.loaded = loaded
 
         }
         @JvmStatic
@@ -114,6 +116,7 @@ abstract class SwitchManager {
             val vboxtextbox = VBox()
             vboxtextbox.spacing = 10.0
             vboxtextbox.alignment = Pos.CENTER_RIGHT
+
 
             for (i in files.indices) {
                 val fileName = files[i].name.substring(0, files[i].name.indexOf("_UpdateScript.json"))
@@ -151,7 +154,7 @@ abstract class SwitchManager {
                             .toExternalForm()
                     )
 
-                    println(anchorRoot.children)
+                    //println(anchorRoot.children)
 
                     if(anchorRoot.children.contains(switchStackPane)){
                         anchorRoot.children.remove(switchStackPane)
