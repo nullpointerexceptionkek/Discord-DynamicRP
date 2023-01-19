@@ -26,6 +26,7 @@
 package lee.aspect.dev.autoswitch
 
 import javafx.application.Platform
+import javafx.event.ActionEvent
 import javafx.fxml.FXMLLoader
 import javafx.geometry.Insets
 import javafx.geometry.Pos
@@ -41,6 +42,7 @@ import javafx.scene.text.TextAlignment
 import lee.aspect.dev.DirectoryManager.Companion.getRootDir
 import lee.aspect.dev.JProcessDetector.OpenCloseListener
 import lee.aspect.dev.JProcessDetector.ProcessMonitor
+import lee.aspect.dev.animationengine.animation.SlideInLeft
 import lee.aspect.dev.application.CustomDiscordRPC
 import lee.aspect.dev.application.RunLoopManager
 import lee.aspect.dev.config.ConfigManager
@@ -185,9 +187,25 @@ abstract class SwitchManager {
             jsonIcon.fitHeight = 17.0
             jsonIcon.fitWidth = 17.0
             configManagerButton.graphic = jsonIcon
+            configManagerButton.setOnAction {
+                ConfigManager.showDialog()
+            }
 
             val settingsButton = Button()
-            configManagerButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
+            settingsButton.setOnAction {
+                val loader = FXMLLoader(CustomDiscordRPC::class.java.getResource("/lee/aspect/dev/scenes/Settings.fxml"))
+                val root = loader.load<Parent>()
+                root.stylesheets.add(
+                    Objects.requireNonNull(CustomDiscordRPC::class.java.getResource(SettingManager.SETTINGS.theme.path)).toExternalForm()
+                )
+                anchorRoot.children.add(root)
+                val animation = SlideInLeft(root)
+                animation.setOnFinished {
+                    anchorRoot.children.remove(anchorRoot)
+                }
+                animation.play()
+            }
+            settingsButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
             val settingsIcon = ImageView(Objects.requireNonNull(CustomDiscordRPC::class.java.getResource("/lee/aspect/dev/icon/settingsImage.png")).toExternalForm())
 
             settingsIcon.fitHeight = 17.0
