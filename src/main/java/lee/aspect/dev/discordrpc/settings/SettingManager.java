@@ -36,11 +36,7 @@ public abstract class SettingManager {
 
     public static Settings SETTINGS;
 
-    public static void init() {
-        SETTINGS = loadKeyFromJson();
-    }
-
-    private static Settings loadKeyFromJson() {
+    public static void loadKeyFromJson() {
         Settings loaded = FileManager.readFromJson(new File(DirectoryManager.getRootDir(), "Settings.json"), Settings.class);
         if (loaded == null) {
             loaded = new Settings();
@@ -57,7 +53,7 @@ public abstract class SettingManager {
             SETTINGS = loaded;
             saveSettingToFile();
         }
-        return loaded;
+        SETTINGS = loaded;
 
     }
 

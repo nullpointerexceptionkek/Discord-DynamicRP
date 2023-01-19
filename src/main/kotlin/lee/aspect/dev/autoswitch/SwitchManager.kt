@@ -32,9 +32,13 @@ import javafx.geometry.Pos
 import javafx.scene.Parent
 import javafx.scene.control.*
 import javafx.scene.image.ImageView
-import javafx.scene.layout.*
+import javafx.scene.layout.AnchorPane
+import javafx.scene.layout.HBox
+import javafx.scene.layout.StackPane
+import javafx.scene.layout.VBox
 import javafx.scene.text.Font
 import javafx.scene.text.TextAlignment
+import lee.aspect.dev.DirectoryManager.Companion.getRootDir
 import lee.aspect.dev.JProcessDetector.OpenCloseListener
 import lee.aspect.dev.JProcessDetector.ProcessMonitor
 import lee.aspect.dev.application.CustomDiscordRPC
@@ -42,6 +46,8 @@ import lee.aspect.dev.application.RunLoopManager
 import lee.aspect.dev.config.ConfigManager
 import lee.aspect.dev.discordrpc.UpdateManager
 import lee.aspect.dev.discordrpc.settings.SettingManager
+import lee.aspect.dev.jsonreader.FileManager
+import java.io.File
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -50,6 +56,35 @@ abstract class SwitchManager {
 
 
     companion object {
+        class LoadSwitchFromFile {
+            lateinit var switch: ArrayList<Switch>
+        }
+
+        private lateinit var loaded:LoadSwitchFromFile
+
+        @JvmStatic
+        fun loadFromFile(){
+
+            var loaded = FileManager.readFromJson(
+                File(getRootDir(), "Switch.json"),
+                LoadSwitchFromFile::class.java
+            )
+            if(loaded == null){
+                loaded = LoadSwitchFromFile()
+                saveToFile()
+            }
+
+            this.loaded = loaded
+
+        }
+        @JvmStatic
+        fun saveToFile(){
+            FileManager.writeJsonTofile(
+                File(getRootDir(), "Switch.json"),
+                loaded
+            )
+        }
+
         @JvmStatic
         fun initMenu(): Parent {
 
@@ -63,8 +98,8 @@ abstract class SwitchManager {
 
             val scrollPane = ScrollPane()
 
-            val fileNames = ConfigManager.getCurrentConfigFiles()
-            fileNames!!
+            val files = ConfigManager.getCurrentConfigFiles()
+            files!!
 
             val vboxtext = VBox()
             vboxtext.spacing = 10.0
@@ -74,19 +109,22 @@ abstract class SwitchManager {
             val vboxtextbox = VBox()
             vboxtextbox.spacing = 10.0
             vboxtextbox.alignment = Pos.CENTER_RIGHT
-            val input = Array(fileNames.size) { "" }
 
-            for (i in fileNames.indices) {
-                val fileName = fileNames[i].name.substring(0, fileNames[i].name.indexOf("_UpdateScript.json"))
+            for (i in files.indices) {
+                val fileName = files[i].name.substring(0, files[i].name.indexOf("_UpdateScript.json"))
                 val text = Label(fileName)
                 text.maxWidth(180.0)
                 text.font = Font.font(16.0)
                 vboxtext.children.add(text)
 
                 val textField = TextField()
-                input[i] = textField.text
+
+                if(loaded.switch[i].checkName.isNotBlank())
+                    textField.text = loaded.switch[i].checkName
+
+                //input[i] = textField.text
                 textField.textProperty().addListener { _, _, newValue ->
-                    input[i] = newValue
+                    loaded.switch[i].checkName = newValue
                 }
 
 
@@ -95,8 +133,8 @@ abstract class SwitchManager {
                 val editCfgButton = Button("Edit")
 
                 editCfgButton.setOnAction {
-                    SettingManager.SETTINGS.loadedConfig= fileNames[i]
-                    UpdateManager.SCRIPT = UpdateManager.loadScriptFromJson()
+                    SettingManager.SETTINGS.loadedConfig= files[i]
+                    UpdateManager.loadScriptFromJson()
 
                     val root = FXMLLoader.load<Parent>(
                         Objects.requireNonNull(
@@ -156,23 +194,22 @@ abstract class SwitchManager {
             startButton.setOnAction {
                 startButton.isDisable = true
                 if(!isStarted) {
-                    println(input.contentToString())
                     startButton.text = "Stop Operation"
                     isStarted = true
                     statusLabel.text = "Initializing..."
-                    for(i in fileNames.indices){
-                        if(input[i].isNotEmpty())
-                            ProcessMonitor().startMonitoring(input[i], object : OpenCloseListener {
+                    for(i in files.indices){
+                        if(loaded.switch[i].checkName.isNotEmpty())
+                            ProcessMonitor().startMonitoring(loaded.switch[i].checkName, object : OpenCloseListener {
                                 override fun onProcessOpen() {
                                     try {
                                         RunLoopManager.closeCallBack()
                                     } catch (_: Exception) {
                                     }
-                                    SettingManager.SETTINGS.loadedConfig = fileNames[i]
-                                    UpdateManager.SCRIPT = UpdateManager.loadScriptFromJson()
+                                    SettingManager.SETTINGS.loadedConfig = files[i]
+                                    UpdateManager.loadScriptFromJson()
                                     RunLoopManager.startUpdate()
                                     Platform.runLater{
-                                        statusLabel.text = "${input[i]} Process Opened"
+                                        statusLabel.text = "${loaded.switch[i].checkName} Process Opened"
                                     }
                                 }
 
@@ -182,7 +219,7 @@ abstract class SwitchManager {
                                     }catch (_: Exception) {
                                     }
                                     Platform.runLater{
-                                        statusLabel.text = "${input[i]} Process Closed"
+                                        statusLabel.text = "${loaded.switch[i].checkName} Process Closed"
                                     }
                                 }
                             }, 3, TimeUnit.SECONDS)
@@ -217,7 +254,7 @@ abstract class SwitchManager {
 
             anchorRoot.stylesheets.add(SettingManager.SETTINGS.theme.path)
 
-            if (fileNames.size > switchStackPane.prefHeight / 12) {
+            if (files.size > switchStackPane.prefHeight / 12) {
                 scrollPane.content = switchStackPane
                 scrollPane.isFitToWidth = true
                 anchorRoot.children.add(scrollPane)

@@ -93,7 +93,7 @@ class ConfigManager {
                         val selectedFile =
                             File(DirectoryManager.getRootDir(), selectedRadioButton.text + "_UpdateScript.json")
                         SettingManager.SETTINGS.loadedConfig = selectedFile
-                        UpdateManager.SCRIPT = UpdateManager.loadScriptFromJson()
+                        UpdateManager.loadScriptFromJson()
                         dialogStage.close()
                         showDialog()
                     }
@@ -170,7 +170,7 @@ class ConfigManager {
                 val selectedRadioButton = toggleGroup.selectedToggle as RadioButton
                 val selectedFile = File(DirectoryManager.getRootDir(), selectedRadioButton.text + "_UpdateScript.json")
                 SettingManager.SETTINGS.loadedConfig = selectedFile
-                UpdateManager.SCRIPT = UpdateManager.loadScriptFromJson()
+                UpdateManager.loadScriptFromJson()
                 dialogStage.close()
             }
 

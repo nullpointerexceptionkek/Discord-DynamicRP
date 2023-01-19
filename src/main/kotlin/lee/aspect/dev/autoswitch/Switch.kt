@@ -29,8 +29,8 @@ import java.io.File
 
 class Switch {
 
-    lateinit var config: File;
+    lateinit var config: File
 
-    lateinit var checkName: String;
+    lateinit var checkName: String
 
 }

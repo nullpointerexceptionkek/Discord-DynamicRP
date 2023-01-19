@@ -28,6 +28,7 @@ package lee.aspect.dev.application;
 import javafx.application.Platform;
 import lee.aspect.dev.Launch;
 import lee.aspect.dev.application.interfaceGui.LoadingController;
+import lee.aspect.dev.autoswitch.SwitchManager;
 import lee.aspect.dev.discordipc.exceptions.NoDiscordClientException;
 import lee.aspect.dev.discordrpc.DiscordRP;
 import lee.aspect.dev.discordrpc.Script;
@@ -53,9 +54,10 @@ public abstract class RunLoopManager {
      */
     public static void init() {
         FileManager.init();
-        SettingManager.init();
-        UpdateManager.init();
+        SettingManager.loadKeyFromJson();
+        UpdateManager.loadScriptFromJson();
         LanguageManager.init();
+        SwitchManager.loadFromFile();
     }
 
     public static void runFromStartLunch() {
@@ -218,6 +220,7 @@ public abstract class RunLoopManager {
     public static void onClose() {
         SettingManager.saveSettingToFile();
         UpdateManager.saveScriptToFile();
+        SwitchManager.saveToFile();
         try {
             discordRP.shutdown();
         } catch (NullPointerException | IllegalStateException e) {

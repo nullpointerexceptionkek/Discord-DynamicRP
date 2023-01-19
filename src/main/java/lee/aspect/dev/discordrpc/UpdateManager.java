@@ -32,12 +32,8 @@ import lee.aspect.dev.jsonreader.FileManager;
 public abstract class UpdateManager {
     public static Script SCRIPT;
 
-    public static void init() {
-        SCRIPT = loadScriptFromJson();
-    }
 
-
-    public static Script loadScriptFromJson() {
+    public static void loadScriptFromJson() {
         Script loaded = FileManager.readFromJson(SettingManager.SETTINGS.getLoadedConfig(), Script.class);
         SCRIPT = loaded;
 
@@ -47,10 +43,6 @@ public abstract class UpdateManager {
             SCRIPT.addUpdates(new Updates(16000, "1", "", "", "", "First line 1", "Second line 1"));
             saveScriptToFile();
         }
-
-
-        return loaded;
-
     }
 
     public static void saveScriptToFile() {
