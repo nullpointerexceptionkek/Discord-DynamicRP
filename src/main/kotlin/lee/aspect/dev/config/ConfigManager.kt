@@ -26,6 +26,7 @@
 package lee.aspect.dev.config
 
 import javafx.geometry.Insets
+import javafx.geometry.Pos
 import javafx.scene.Scene
 import javafx.scene.control.*
 import javafx.scene.image.ImageView
@@ -189,6 +190,121 @@ class ConfigManager {
             dialogStage.isResizable = false
             dialogStage.show()
         }
-    }
+        @JvmStatic
+        fun showDialogWithNoRadioButton(){
+            UpdateManager.saveScriptToFile()
+            val files = getCurrentConfigFiles()
+            val dialogStage = Stage()
+            dialogStage.title = "Config Manager"
+            val vBox = VBox()
+            val vBoxToolBox = VBox()
+            vBox.padding = Insets(10.0, 10.0, 10.0, 10.0)
+            vBox.spacing = 30.0
+            vBox.alignment = Pos.CENTER_LEFT
+            vBox.prefWidth = 80.0
+            vBoxToolBox.padding = Insets(10.0, 10.0, 10.0, 10.0)
+            vBoxToolBox.spacing = 30.0
+            vBoxToolBox.alignment = Pos.CENTER_RIGHT
+            for (file in files!!) {
+                val fileName = file.name.substring(0, file.name.indexOf("_UpdateScript.json"))
+                val fileDisplay = Label(fileName)
 
+                val hBox = HBox()
+                hBox.spacing = 10.0
+
+                val deleteButton = Button("Delete")
+                deleteButton.graphic = ImageView(
+                    Objects.requireNonNull(ConfigManager::class.java.getResource("/lee/aspect/dev/icon/editIcons/delete.png"))
+                        .toExternalForm()
+                )
+                deleteButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
+                deleteButton.setOnAction {
+                    dialogStage.close()
+                    showDialog()
+
+                }
+
+                val duplicateButton = Button("Duplicate")
+                duplicateButton.graphic = ImageView(
+                    Objects.requireNonNull(ConfigManager::class.java.getResource("/lee/aspect/dev/icon/editIcons/duplicate.png"))
+                        .toExternalForm()
+                )
+                duplicateButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
+                duplicateButton.setOnAction {
+                    val newFile = File(file.parent, "copy-" + file.name)
+                    file.copyTo(newFile, overwrite = true)
+                    dialogStage.close()
+                    showDialog()
+                }
+
+                val renameButton = Button("Rename")
+                renameButton.graphic = ImageView(
+                    Objects.requireNonNull(ConfigManager::class.java.getResource("/lee/aspect/dev/icon/editIcons/rename.png"))
+                        .toExternalForm()
+                )
+                renameButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
+                renameButton.setOnAction {
+                    val textInputDialog =
+                        TextInputDialog(file.name.substring(0, file.name.indexOf("_UpdateScript.json")))
+                    textInputDialog.title = "Rename File"
+                    textInputDialog.headerText = "Enter the new name for the file:"
+                    textInputDialog.contentText = "New name:"
+                    val result = textInputDialog.showAndWait()
+                    if (result.isPresent) {
+                        val newName = result.get()
+                        val newFile = File(file.parent, newName + "_UpdateScript.json")
+                        try {
+                            file.renameTo(newFile)
+                            SettingManager.SETTINGS.loadedConfig = newFile
+                        } catch (e: Exception) {
+                            //just let the default error handler to display the error and quit
+                            throw RuntimeException("Failed to rename file!", e)
+                        }
+                        dialogStage.close()
+                        showDialog()
+                    }
+                }
+
+                hBox.children.addAll(deleteButton, duplicateButton, renameButton)
+                vBox.children.add(fileDisplay)
+                vBoxToolBox.children.add(hBox)
+            }
+            val newConfigButton = Button("New Config")
+            newConfigButton.setOnAction {
+                val newConfigDialog = TextInputDialog()
+                newConfigDialog.title = "File set up wizard"
+                newConfigDialog.headerText = "Enter the name for the config:"
+                newConfigDialog.contentText = "name:"
+                val result = newConfigDialog.showAndWait()
+                if (result.isPresent) {
+                    try {
+                        val newFile = File(DirectoryManager.getRootDir(), result.get() + "_UpdateScript.json")
+                        newFile.createNewFile()
+                        SettingManager.SETTINGS.loadedConfig = newFile
+                    } catch (e: Exception) {
+                        //just let the default error handler to display the error and quit
+                        throw RuntimeException("Failed to rename file!", e)
+                    }
+                    dialogStage.close()
+                    showDialog()
+                }
+            }
+
+
+            val okButton = Button("OK")
+            okButton.setOnAction {
+                dialogStage.close()
+            }
+            val okHbox = HBox(okButton,newConfigButton)
+            okHbox.padding = Insets(10.0, 10.0, 10.0, 10.0)
+            okHbox.spacing = 30.0
+            okHbox.alignment = Pos.CENTER
+
+
+            dialogStage.scene = Scene(VBox(HBox(vBox,vBoxToolBox),okHbox))
+            dialogStage.scene.stylesheets.add(SettingManager.SETTINGS.theme.path)
+            dialogStage.isResizable = false
+            dialogStage.show()
+        }
+    }
 }
