@@ -195,6 +195,7 @@ class ConfigManager {
             UpdateManager.saveScriptToFile()
             val files = getCurrentConfigFiles()
             val dialogStage = Stage()
+            dialogStage.initModality(Modality.APPLICATION_MODAL)
             dialogStage.title = "Config Manager"
             val vBox = VBox()
             val vBoxToolBox = VBox()
@@ -219,8 +220,9 @@ class ConfigManager {
                 )
                 deleteButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
                 deleteButton.setOnAction {
+                    file.delete()
                     dialogStage.close()
-                    showDialog()
+                    showDialogWithNoRadioButton()
 
                 }
 
@@ -234,7 +236,7 @@ class ConfigManager {
                     val newFile = File(file.parent, "copy-" + file.name)
                     file.copyTo(newFile, overwrite = true)
                     dialogStage.close()
-                    showDialog()
+                    showDialogWithNoRadioButton()
                 }
 
                 val renameButton = Button("Rename")
@@ -261,7 +263,7 @@ class ConfigManager {
                             throw RuntimeException("Failed to rename file!", e)
                         }
                         dialogStage.close()
-                        showDialog()
+                        showDialogWithNoRadioButton()
                     }
                 }
 
@@ -286,7 +288,7 @@ class ConfigManager {
                         throw RuntimeException("Failed to rename file!", e)
                     }
                     dialogStage.close()
-                    showDialog()
+                    showDialogWithNoRadioButton()
                 }
             }
 
