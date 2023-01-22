@@ -48,34 +48,34 @@ import lee.aspect.dev.application.CustomDiscordRPC
 import lee.aspect.dev.application.RunLoopManager
 import lee.aspect.dev.config.ConfigManager
 import lee.aspect.dev.discordrpc.Script
-import lee.aspect.dev.discordrpc.settings.SettingManager
+import lee.aspect.dev.discordrpc.Settings
 import lee.aspect.dev.jsonreader.FileManager
 import java.io.File
 import java.util.*
 import java.util.concurrent.TimeUnit
 
 
-class SwitchManager private constructor(){
+class SwitchManager private constructor() {
 
     companion object {
         class LoadSwitchFromFile {
             lateinit var switch: Array<Switch>
         }
 
-        private lateinit var loaded:LoadSwitchFromFile
+        private lateinit var loaded: LoadSwitchFromFile
 
         @JvmStatic
-        fun loadFromFile(){
-            if(!File(getRootDir(), "Switch.json").exists())
+        fun loadFromFile() {
+            if (!File(getRootDir(), "Switch.json").exists())
                 File(getRootDir(), "Switch.json").createNewFile()
             var loaded = FileManager.readFromJson(
                 File(getRootDir(), "Switch.json"),
                 LoadSwitchFromFile::class.java
             )
-            if(loaded == null){
+            if (loaded == null) {
                 loaded = LoadSwitchFromFile()
-                loaded.switch = Array(ConfigManager.getCurrentConfigFiles()?.size ?:1) { Switch() }
-                for(i in loaded.switch.indices){
+                loaded.switch = Array(ConfigManager.getCurrentConfigFiles()?.size ?: 1) { Switch() }
+                for (i in loaded.switch.indices) {
                     loaded.switch[i].config = ConfigManager.getCurrentConfigFiles()!![i]
                 }
 
@@ -86,8 +86,9 @@ class SwitchManager private constructor(){
             this.loaded = loaded
 
         }
+
         @JvmStatic
-        fun saveToFile(){
+        fun saveToFile() {
             FileManager.writeJsonTofile(
                 File(getRootDir(), "Switch.json"),
                 loaded
@@ -103,7 +104,7 @@ class SwitchManager private constructor(){
             val switchStackPane = StackPane()
             //switchStackPane.id = "defaultPane"
             switchStackPane.padding = Insets(30.0)
-            switchStackPane.setPrefSize(334.0,540.0)
+            switchStackPane.setPrefSize(334.0, 540.0)
 
             val scrollPane = ScrollPane()
 
@@ -129,7 +130,7 @@ class SwitchManager private constructor(){
 
                 val textField = TextField()
 
-                if(loaded.switch.size > i && loaded.switch[i].checkName.isNotBlank())
+                if (loaded.switch.size > i && loaded.switch[i].checkName.isNotBlank())
                     textField.text = loaded.switch[i].checkName
 
                 //input[i] = textField.text
@@ -143,7 +144,7 @@ class SwitchManager private constructor(){
                 val editCfgButton = Button("Edit")
 
                 editCfgButton.setOnAction {
-                    SettingManager.SETTINGS.loadedConfig= files[i]
+                    Settings.getINSTANCE().loadedConfig = files[i]
                     Script.loadScriptFromJson()
 
                     val root = FXMLLoader.load<Parent>(
@@ -152,23 +153,23 @@ class SwitchManager private constructor(){
                         )
                     )
                     root.stylesheets.add(
-                        Objects.requireNonNull(CustomDiscordRPC::class.java.getResource(SettingManager.SETTINGS.theme.path))
+                        Objects.requireNonNull(CustomDiscordRPC::class.java.getResource(Settings.getINSTANCE().theme.path))
                             .toExternalForm()
                     )
 
                     //println(anchorRoot.children)
 
-                    if(anchorRoot.children.contains(switchStackPane)){
+                    if (anchorRoot.children.contains(switchStackPane)) {
                         anchorRoot.children.remove(switchStackPane)
                     }
-                    if(anchorRoot.children.contains(scrollPane)){
+                    if (anchorRoot.children.contains(scrollPane)) {
                         anchorRoot.children.remove(scrollPane)
                     }
                     anchorRoot.children.add(root)
 
                 }
 
-                val hbox = HBox(editCfgButton,textField)
+                val hbox = HBox(editCfgButton, textField)
                 hbox.spacing = 10.0
                 hbox.alignment = Pos.CENTER_RIGHT
 
@@ -183,7 +184,10 @@ class SwitchManager private constructor(){
 
             val configManagerButton = Button()
             configManagerButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
-            val jsonIcon = ImageView(Objects.requireNonNull(CustomDiscordRPC::class.java.getResource("/lee/aspect/dev/icon/json-file.png")).toExternalForm())
+            val jsonIcon = ImageView(
+                Objects.requireNonNull(CustomDiscordRPC::class.java.getResource("/lee/aspect/dev/icon/json-file.png"))
+                    .toExternalForm()
+            )
             jsonIcon.fitHeight = 17.0
             jsonIcon.fitWidth = 17.0
             configManagerButton.graphic = jsonIcon
@@ -193,10 +197,12 @@ class SwitchManager private constructor(){
 
             val settingsButton = Button()
             settingsButton.setOnAction {
-                val loader = FXMLLoader(CustomDiscordRPC::class.java.getResource("/lee/aspect/dev/scenes/Settings.fxml"))
+                val loader =
+                    FXMLLoader(CustomDiscordRPC::class.java.getResource("/lee/aspect/dev/scenes/Settings.fxml"))
                 val root = loader.load<Parent>()
                 root.stylesheets.add(
-                    Objects.requireNonNull(CustomDiscordRPC::class.java.getResource(SettingManager.SETTINGS.theme.path)).toExternalForm()
+                    Objects.requireNonNull(CustomDiscordRPC::class.java.getResource(Settings.getINSTANCE().theme.path))
+                        .toExternalForm()
                 )
                 anchorRoot.children.add(root)
                 val animation = SlideInLeft(root)
@@ -206,35 +212,38 @@ class SwitchManager private constructor(){
                 animation.play()
             }
             settingsButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
-            val settingsIcon = ImageView(Objects.requireNonNull(CustomDiscordRPC::class.java.getResource("/lee/aspect/dev/icon/settingsImage.png")).toExternalForm())
+            val settingsIcon = ImageView(
+                Objects.requireNonNull(CustomDiscordRPC::class.java.getResource("/lee/aspect/dev/icon/settingsImage.png"))
+                    .toExternalForm()
+            )
 
             settingsIcon.fitHeight = 17.0
             settingsIcon.fitWidth = 17.0
             settingsButton.graphic = settingsIcon
 
-            val controlHBbox = HBox(settingsButton,startButton,configManagerButton)
+            val controlHBbox = HBox(settingsButton, startButton, configManagerButton)
             controlHBbox.spacing = 10.0
             controlHBbox.alignment = Pos.BOTTOM_CENTER
             controlHBbox.isPickOnBounds = false
 
             startButton.setOnAction {
                 startButton.isDisable = true
-                if(!isStarted) {
+                if (!isStarted) {
                     startButton.text = "Stop Operation"
                     isStarted = true
                     statusLabel.text = "Initializing..."
-                    for(i in files.indices){
-                        if(loaded.switch[i].checkName.isNotEmpty())
+                    for (i in files.indices) {
+                        if (loaded.switch[i].checkName.isNotEmpty())
                             ProcessMonitor().startMonitoring(loaded.switch[i].checkName, object : OpenCloseListener {
                                 override fun onProcessOpen() {
                                     try {
                                         RunLoopManager.closeCallBack()
                                     } catch (_: Exception) {
                                     }
-                                    SettingManager.SETTINGS.loadedConfig = files[i]
+                                    Settings.getINSTANCE().loadedConfig = files[i]
                                     Script.loadScriptFromJson()
                                     RunLoopManager.startUpdate()
-                                    Platform.runLater{
+                                    Platform.runLater {
                                         statusLabel.text = "${loaded.switch[i].checkName} Process Opened"
                                     }
                                 }
@@ -242,9 +251,9 @@ class SwitchManager private constructor(){
                                 override fun onProcessClose() {
                                     try {
                                         RunLoopManager.closeCallBack()
-                                    }catch (_: Exception) {
+                                    } catch (_: Exception) {
                                     }
-                                    Platform.runLater{
+                                    Platform.runLater {
                                         statusLabel.text = "${loaded.switch[i].checkName} Process Closed"
                                     }
                                 }
@@ -252,11 +261,11 @@ class SwitchManager private constructor(){
                     }
 
 
-                } else{
+                } else {
                     statusLabel.text = "Disconnecting..."
                     try {
                         RunLoopManager.closeCallBack()
-                    }catch (_: Exception) {
+                    } catch (_: Exception) {
                     }
                     statusLabel.text = "Not Connected"
                     startButton.text = "Start Operation"
@@ -267,7 +276,7 @@ class SwitchManager private constructor(){
 
             }
 
-            val controlVbox = VBox(controlHBbox,statusLabel)
+            val controlVbox = VBox(controlHBbox, statusLabel)
 
             controlVbox.spacing = 5.0
 
@@ -283,16 +292,16 @@ class SwitchManager private constructor(){
             CDiscordRPHBox.alignment = Pos.TOP_CENTER
 
             switchStackPane.children.add(CDiscordRPHBox)
-            switchStackPane.children.addAll(vboxtext, vboxtextbox,controlVbox)
+            switchStackPane.children.addAll(vboxtext, vboxtextbox, controlVbox)
 
 
-            anchorRoot.stylesheets.add(SettingManager.SETTINGS.theme.path)
+            anchorRoot.stylesheets.add(Settings.getINSTANCE().theme.path)
 
             if (files.size > switchStackPane.prefHeight / 12) {
                 scrollPane.content = switchStackPane
                 scrollPane.isFitToWidth = true
                 anchorRoot.children.add(scrollPane)
-            } else{
+            } else {
                 anchorRoot.children.add(switchStackPane)
             }
             return anchorRoot

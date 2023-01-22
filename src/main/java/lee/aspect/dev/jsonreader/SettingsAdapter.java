@@ -30,8 +30,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import lee.aspect.dev.Launch;
-import lee.aspect.dev.discordrpc.settings.SettingManager;
-import lee.aspect.dev.discordrpc.settings.Settings;
+import lee.aspect.dev.discordrpc.Settings;
 import lee.aspect.dev.language.Languages;
 
 import java.io.File;
@@ -95,8 +94,8 @@ public class SettingsAdapter extends TypeAdapter<Settings> {
 
             return settings;
         } catch (Exception e) {
-            e.printStackTrace();
             Launch.LOGGER.error("Invalid Settings file detected");
+            Settings.setup();
             return null;
         }
 
@@ -111,15 +110,15 @@ public class SettingsAdapter extends TypeAdapter<Settings> {
         }
         writter.beginObject();
         writter.name("CDiscordRP").value(Launch.VERSION);
-        writter.name("loadedCfg").value(SettingManager.SETTINGS.getLoadedConfig().getPath());
-        writter.name("AutoSwitch").value(SettingManager.SETTINGS.isAutoSwitch());
-        writter.name("theme").value(SettingManager.SETTINGS.getTheme().name());
-        writter.name("MinimizeMode").value(SettingManager.SETTINGS.getMinimizeMode().name());
-        writter.name("ShutDownInterfaceWhenTray").value(SettingManager.SETTINGS.isShutDownInterfaceWhenTray());
-        writter.name("StartTrayOnlyInterfaceClose").value(SettingManager.SETTINGS.isStartTrayOnlyInterfaceClose());
-        writter.name("NoAnimation").value(SettingManager.SETTINGS.isNoAnimation());
-        writter.name("StartLaunch").value(SettingManager.SETTINGS.isStartLaunch());
-        writter.name("Lang").value(SettingManager.SETTINGS.getLang().name());
+        writter.name("loadedCfg").value(Settings.getINSTANCE().getLoadedConfig().getPath());
+        writter.name("AutoSwitch").value(Settings.getINSTANCE().isAutoSwitch());
+        writter.name("theme").value(Settings.getINSTANCE().getTheme().name());
+        writter.name("MinimizeMode").value(Settings.getINSTANCE().getMinimizeMode().name());
+        writter.name("ShutDownInterfaceWhenTray").value(Settings.getINSTANCE().isShutDownInterfaceWhenTray());
+        writter.name("StartTrayOnlyInterfaceClose").value(Settings.getINSTANCE().isStartTrayOnlyInterfaceClose());
+        writter.name("NoAnimation").value(Settings.getINSTANCE().isNoAnimation());
+        writter.name("StartLaunch").value(Settings.getINSTANCE().isStartLaunch());
+        writter.name("Lang").value(Settings.getINSTANCE().getLang().name());
         writter.endObject();
 
     }

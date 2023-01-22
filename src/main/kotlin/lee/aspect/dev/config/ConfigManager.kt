@@ -36,7 +36,7 @@ import javafx.stage.Modality
 import javafx.stage.Stage
 import lee.aspect.dev.DirectoryManager
 import lee.aspect.dev.discordrpc.Script
-import lee.aspect.dev.discordrpc.settings.SettingManager
+import lee.aspect.dev.discordrpc.Settings
 import java.io.File
 import java.io.FilenameFilter
 import java.util.*
@@ -47,7 +47,7 @@ class ConfigManager {
     companion object {
         @JvmStatic
         fun getCurrentConfigFiles(): Array<out File>? {
-            val filter = FilenameFilter { _, name -> name.contains("UpdateScript.json") }
+            val filter = FilenameFilter { _, name -> name.contains("_UpdateScript.json") }
 
             return DirectoryManager.getRootDir()?.listFiles(filter)
 
@@ -68,7 +68,7 @@ class ConfigManager {
                 val fileName = file.name.substring(0, file.name.indexOf("_UpdateScript.json"))
                 val radioButton = RadioButton(fileName)
                 radioButton.toggleGroup = toggleGroup
-                if (file == SettingManager.SETTINGS.loadedConfig) {
+                if (file == Settings.getINSTANCE().loadedConfig) {
                     radioButton.isSelected = true
                 }
                 val hBox = HBox()
@@ -93,7 +93,7 @@ class ConfigManager {
                         val selectedRadioButton = toggleGroup.selectedToggle as RadioButton
                         val selectedFile =
                             File(DirectoryManager.getRootDir(), selectedRadioButton.text + "_UpdateScript.json")
-                        SettingManager.SETTINGS.loadedConfig = selectedFile
+                        Settings.getINSTANCE().loadedConfig = selectedFile
                         Script.loadScriptFromJson()
                         dialogStage.close()
                         showDialog()
@@ -131,7 +131,7 @@ class ConfigManager {
                         val newFile = File(file.parent, newName + "_UpdateScript.json")
                         try {
                             file.renameTo(newFile)
-                            SettingManager.SETTINGS.loadedConfig = newFile
+                            Settings.getINSTANCE().loadedConfig = newFile
                         } catch (e: Exception) {
                             //just let the default error handler to display the error and quit
                             throw RuntimeException("Failed to rename file!", e)
@@ -155,7 +155,7 @@ class ConfigManager {
                     try {
                         val newFile = File(DirectoryManager.getRootDir(), result.get() + "_UpdateScript.json")
                         newFile.createNewFile()
-                        SettingManager.SETTINGS.loadedConfig = newFile
+                        Settings.getINSTANCE().loadedConfig = newFile
                     } catch (e: Exception) {
                         //just let the default error handler to display the error and quit
                         throw RuntimeException("Failed to rename file!", e)
@@ -170,7 +170,7 @@ class ConfigManager {
             okButton.setOnAction {
                 val selectedRadioButton = toggleGroup.selectedToggle as RadioButton
                 val selectedFile = File(DirectoryManager.getRootDir(), selectedRadioButton.text + "_UpdateScript.json")
-                SettingManager.SETTINGS.loadedConfig = selectedFile
+                Settings.getINSTANCE().loadedConfig = selectedFile
                 Script.loadScriptFromJson()
                 dialogStage.close()
             }
@@ -186,12 +186,13 @@ class ConfigManager {
             vBox.children.addAll(newConfigButton, hBox)
 
             dialogStage.scene = Scene(vBox)
-            dialogStage.scene.stylesheets.add(SettingManager.SETTINGS.theme.path)
+            dialogStage.scene.stylesheets.add(Settings.getINSTANCE().theme.path)
             dialogStage.isResizable = false
             dialogStage.show()
         }
+
         @JvmStatic
-        fun showDialogWithNoRadioButton(){
+        fun showDialogWithNoRadioButton() {
             Script.saveScriptToFile()
             val files = getCurrentConfigFiles()
             val dialogStage = Stage()
@@ -257,7 +258,7 @@ class ConfigManager {
                         val newFile = File(file.parent, newName + "_UpdateScript.json")
                         try {
                             file.renameTo(newFile)
-                            SettingManager.SETTINGS.loadedConfig = newFile
+                            Settings.getINSTANCE().loadedConfig = newFile
                         } catch (e: Exception) {
                             //just let the default error handler to display the error and quit
                             throw RuntimeException("Failed to rename file!", e)
@@ -282,7 +283,7 @@ class ConfigManager {
                     try {
                         val newFile = File(DirectoryManager.getRootDir(), result.get() + "_UpdateScript.json")
                         newFile.createNewFile()
-                        SettingManager.SETTINGS.loadedConfig = newFile
+                        Settings.getINSTANCE().loadedConfig = newFile
                     } catch (e: Exception) {
                         //just let the default error handler to display the error and quit
                         throw RuntimeException("Failed to rename file!", e)
@@ -297,14 +298,14 @@ class ConfigManager {
             okButton.setOnAction {
                 dialogStage.close()
             }
-            val okHbox = HBox(okButton,newConfigButton)
+            val okHbox = HBox(okButton, newConfigButton)
             okHbox.padding = Insets(10.0, 10.0, 10.0, 10.0)
             okHbox.spacing = 30.0
             okHbox.alignment = Pos.CENTER
 
 
-            dialogStage.scene = Scene(VBox(HBox(vBox,vBoxToolBox),okHbox))
-            dialogStage.scene.stylesheets.add(SettingManager.SETTINGS.theme.path)
+            dialogStage.scene = Scene(VBox(HBox(vBox, vBoxToolBox), okHbox))
+            dialogStage.scene.stylesheets.add(Settings.getINSTANCE().theme.path)
             dialogStage.isResizable = false
             dialogStage.show()
         }

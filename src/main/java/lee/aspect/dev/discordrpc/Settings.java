@@ -1,8 +1,8 @@
 /*
- *
+ * 2022-
  * MIT License
  *
- * Copyright (c) 2022 lee
+ * Copyright (c) 2023 lee
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,23 +23,19 @@
  * SOFTWARE.
  */
 
-package lee.aspect.dev.discordrpc.settings;
+package lee.aspect.dev.discordrpc;
 
 
+import lee.aspect.dev.DirectoryManager;
+import lee.aspect.dev.jsonreader.FileManager;
 import lee.aspect.dev.language.Languages;
 
 import java.io.File;
+import java.io.IOException;
 
 public class Settings {
 
     private static final Settings INSTANCE = new Settings();
-
-    public static Settings getINSTANCE() {
-        return INSTANCE;
-    }
-
-    private Settings(){}
-
     private Languages lang = Languages.EN_US;
     private Theme theme = Theme.dark;
     private MinimizeMode minimizeMode = MinimizeMode.Ask;
@@ -47,10 +43,33 @@ public class Settings {
     private boolean StartTrayOnlyInterfaceClose = false;
     private boolean StartLaunch = false;
     private boolean ShutDownInterfaceWhenTray = false;
-
     private boolean AutoSwitch = false;
-
     private File loadedConfig = null;
+    private Settings() {
+    }
+
+    public static Settings getINSTANCE() {
+        return INSTANCE;
+    }
+
+    public static void loadKeyFromJson() {
+        try {
+            FileManager.readFromJson(new File(DirectoryManager.getRootDir(), "Settings.json"), Settings.class);
+        } catch (RuntimeException e) {
+            setup();
+        }
+    }
+
+    public static void saveSettingToFile() {
+        FileManager.writeJsonTofile(new File(DirectoryManager.getRootDir(), "Settings.json"), INSTANCE);
+    }
+
+    public static void setup() {
+        File defaultFile = new File(DirectoryManager.getRootDir(), "default_UpdateScript.json");
+        getINSTANCE().setLoadedConfig(defaultFile);
+        saveSettingToFile();
+        loadKeyFromJson();
+    }
 
     public boolean isStartTrayOnlyInterfaceClose() {
         return StartTrayOnlyInterfaceClose;

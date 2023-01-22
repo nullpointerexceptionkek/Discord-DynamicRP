@@ -47,7 +47,7 @@ public class ScriptAdapter extends TypeAdapter<Script> {
         }
         try {
             reader.beginObject();
-            Script script = Script.getScript();
+            Script script = Script.getINSTANCE();
             while (reader.hasNext()) {
                 String name = null;
                 JsonToken token = reader.peek();
@@ -125,8 +125,8 @@ public class ScriptAdapter extends TypeAdapter<Script> {
             reader.endObject();
             return script;
         } catch (Exception e) {
-            e.printStackTrace();
             Launch.LOGGER.error("Invalid File Config File detected");
+            Script.setUp();
             return null;
         }
 
@@ -140,10 +140,10 @@ public class ScriptAdapter extends TypeAdapter<Script> {
             return;
         }
         writter.beginObject();
-        writter.name("APIkey").value(Script.getScript().getDiscordAPIKey());
-        writter.name("TimeStampMode").value(Script.getScript().getTimestampmode().name());
-        writter.name("CustomTimeStamp").value(Script.getScript().getCustomTimestamp());
-        writter.name("UpdateType").value(Script.getScript().getUpdateType().name());
+        writter.name("APIkey").value(Script.getINSTANCE().getDiscordAPIKey());
+        writter.name("TimeStampMode").value(Script.getINSTANCE().getTimestampmode().name());
+        writter.name("CustomTimeStamp").value(Script.getINSTANCE().getCustomTimestamp());
+        writter.name("UpdateType").value(Script.getINSTANCE().getUpdateType().name());
         writter.name("Updates").beginArray();
         for (int i = 0; i < tu.getSize(); i++) {
             writter.beginObject();

@@ -65,9 +65,9 @@ class UndoRedoManager(initialList: List<Updates>) {
     }
 
     private fun applyChangesToScript() {
-        Script.getScript().totalupdates.clear()
+        Script.getINSTANCE().totalupdates.clear()
         currentList.toList().toTypedArray().forEach {
-            Script.getScript().totalupdates.add(it)
+            Script.getINSTANCE().totalupdates.add(it)
         }
     }
 }

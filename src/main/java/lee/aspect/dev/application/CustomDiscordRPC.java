@@ -38,8 +38,7 @@ import lee.aspect.dev.DirectoryManager;
 import lee.aspect.dev.Launch;
 import lee.aspect.dev.application.interfaceGui.WarningManager;
 import lee.aspect.dev.config.ConfigManager;
-import lee.aspect.dev.discordrpc.settings.SettingManager;
-import lee.aspect.dev.discordrpc.settings.Settings;
+import lee.aspect.dev.discordrpc.Settings;
 
 import java.awt.*;
 import java.util.Arrays;
@@ -83,9 +82,8 @@ public class CustomDiscordRPC extends Application {
      */
     public static void Launch(String[] args) {
         Platform.setImplicitExit(false);
-        RunLoopManager.init();
         Launch.LOGGER.debug(Arrays.toString(ConfigManager.getCurrentConfigFiles()));
-        if (!SettingManager.SETTINGS.isStartTrayOnlyInterfaceClose())
+        if (!Settings.getINSTANCE().isStartTrayOnlyInterfaceClose())
             ApplicationTray.initTray();
         Launch.LOGGER.debug("LaunchArgs: ");
         Launch.LOGGER.debug(Arrays.toString(args));
@@ -175,11 +173,11 @@ public class CustomDiscordRPC extends Application {
      * application is exited.
      *
      * <p>The user's preference for minimizing to the system tray is determined by the value of the
-     * {@link Settings.MinimizeMode} enum, which is stored in the {@link SettingManager} class. If the
+     * {@link Settings.MinimizeMode} enum, which is stored in the {@link Settings} class. If the
      * user's preference is not set, the method will prompt the user to choose whether to minimize to the
      * system tray or exit the application.
      *
-     * <p>The application's settings are saved to a file using the {@link SettingManager} class before
+     * <p>The application's settings are saved to a file using the {@link Settings} class before
      * the application is exited.
      */
     public void onclose() {
@@ -187,35 +185,35 @@ public class CustomDiscordRPC extends Application {
             RunLoopManager.onClose();
             return;
         }
-        switch (SettingManager.SETTINGS.getMinimizeMode()) {
+        switch (Settings.getINSTANCE().getMinimizeMode()) {
             case Ask:
                 Alert alert = WarningManager.createAlertWithOptOut(
                         Alert.AlertType.CONFIRMATION,
                         "Minimize to System Tray", null,
                         "Do you want to minimize to System Tray?",
-                        "Do not show again", param -> SettingManager.SETTINGS.setMinimizeMode(param ? Settings.MinimizeMode.WaitAndSee : Settings.MinimizeMode.Ask), ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+                        "Do not show again", param -> Settings.getINSTANCE().setMinimizeMode(param ? Settings.MinimizeMode.WaitAndSee : Settings.MinimizeMode.Ask), ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
                 java.util.Optional<ButtonType> result = alert.showAndWait();
                 if (result.filter(buttonType -> buttonType == ButtonType.YES).isPresent()) {
-                    if (SettingManager.SETTINGS.getMinimizeMode() == Settings.MinimizeMode.WaitAndSee)
-                        SettingManager.SETTINGS.setMinimizeMode(Settings.MinimizeMode.Always);
+                    if (Settings.getINSTANCE().getMinimizeMode() == Settings.MinimizeMode.WaitAndSee)
+                        Settings.getINSTANCE().setMinimizeMode(Settings.MinimizeMode.Always);
 
                     primaryStage.close();
-                    if (SettingManager.SETTINGS.isStartTrayOnlyInterfaceClose()) ApplicationTray.initTray();
+                    if (Settings.getINSTANCE().isStartTrayOnlyInterfaceClose()) ApplicationTray.initTray();
                     isOnSystemTray = true;
-                    if (SettingManager.SETTINGS.isShutDownInterfaceWhenTray()) Platform.exit();
+                    if (Settings.getINSTANCE().isShutDownInterfaceWhenTray()) Platform.exit();
                 } else if (result.filter(buttonType -> buttonType == ButtonType.NO).isPresent()) {
-                    if (SettingManager.SETTINGS.getMinimizeMode() == Settings.MinimizeMode.WaitAndSee)
-                        SettingManager.SETTINGS.setMinimizeMode(Settings.MinimizeMode.Never);
+                    if (Settings.getINSTANCE().getMinimizeMode() == Settings.MinimizeMode.WaitAndSee)
+                        Settings.getINSTANCE().setMinimizeMode(Settings.MinimizeMode.Never);
                     RunLoopManager.onClose();
                     return;
                 }
-                SettingManager.saveSettingToFile();
+                Settings.saveSettingToFile();
                 break;
             case Always:
                 primaryStage.close();
                 isOnSystemTray = true;
-                if (SettingManager.SETTINGS.isStartTrayOnlyInterfaceClose()) ApplicationTray.initTray();
-                if (SettingManager.SETTINGS.isShutDownInterfaceWhenTray()) Platform.exit();
+                if (Settings.getINSTANCE().isStartTrayOnlyInterfaceClose()) ApplicationTray.initTray();
+                if (Settings.getINSTANCE().isShutDownInterfaceWhenTray()) Platform.exit();
                 break;
             default:
                 RunLoopManager.onClose();

@@ -32,15 +32,10 @@ import com.google.gson.stream.JsonWriter;
 import lee.aspect.dev.Launch;
 import lee.aspect.dev.autoswitch.Switch;
 import lee.aspect.dev.autoswitch.SwitchManager;
-import lee.aspect.dev.discordrpc.Updates;
-import lee.aspect.dev.discordrpc.settings.SettingManager;
-import lee.aspect.dev.discordrpc.settings.Settings;
-import lee.aspect.dev.language.Languages;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 
 

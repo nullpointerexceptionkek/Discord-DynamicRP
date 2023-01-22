@@ -29,8 +29,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lee.aspect.dev.autoswitch.SwitchManager;
 import lee.aspect.dev.discordrpc.Script;
+import lee.aspect.dev.discordrpc.Settings;
 import lee.aspect.dev.discordrpc.Updates;
-import lee.aspect.dev.discordrpc.settings.Settings;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -50,7 +50,7 @@ public class FileManager {
         builder.registerTypeAdapter(Script.class, new ScriptAdapter());
         builder.registerTypeAdapter(Settings.class, new SettingsAdapter());
         builder.registerTypeAdapter(Updates.class, new UpdatesAdapter());
-        builder.registerTypeAdapter(SwitchManager.Companion.LoadSwitchFromFile.class,new SwitchAdapter());
+        builder.registerTypeAdapter(SwitchManager.Companion.LoadSwitchFromFile.class, new SwitchAdapter());
         gson = builder.setPrettyPrinting().create();
     }
 
@@ -79,7 +79,6 @@ public class FileManager {
     public static <T> T readFromJson(File file, Class<T> c) {
 
         try {
-
             FileInputStream fileInputStream = new FileInputStream(file);
             InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, StandardCharsets.UTF_8);
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
@@ -98,8 +97,7 @@ public class FileManager {
             return gson.fromJson(builder.toString(), c);
 
         } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException(e);
         }
 
     }

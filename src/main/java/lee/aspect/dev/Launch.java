@@ -26,6 +26,11 @@
 package lee.aspect.dev;
 
 import lee.aspect.dev.application.CustomDiscordRPC;
+import lee.aspect.dev.autoswitch.SwitchManager;
+import lee.aspect.dev.discordrpc.Script;
+import lee.aspect.dev.discordrpc.Settings;
+import lee.aspect.dev.jsonreader.FileManager;
+import lee.aspect.dev.language.LanguageManager;
 import lee.aspect.dev.sysUtil.StartLaunch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,9 +48,6 @@ import java.nio.channels.FileLock;
  * @author lee
  */
 public class Launch {
-
-    private Launch() {}
-
     public final static String VERSION = "Pre 0.5.0";
     public final static String AUTHOR = "lee";
     public final static String NAME = "CDiscordRP";
@@ -54,6 +56,8 @@ public class Launch {
     public static File f;
     public static FileChannel channel;
     public static FileLock lock;
+    private Launch() {
+    }
 
     /**
      * Redirect main Class to {@link CustomDiscordRPC Launch}
@@ -77,8 +81,7 @@ public class Launch {
 
             return;
         }
-
-
+        init();
         try {
             f = new File(DirectoryManager.getRootDir(), "runtime");
 
@@ -134,4 +137,13 @@ public class Launch {
         }
         return false;
     }
+
+    private static void init() {
+        FileManager.init();
+        Settings.loadKeyFromJson();
+        Script.loadScriptFromJson();
+        LanguageManager.init();
+        SwitchManager.loadFromFile();
+    }
+
 }

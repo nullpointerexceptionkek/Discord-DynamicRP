@@ -29,7 +29,7 @@ import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
 import lee.aspect.dev.application.CustomDiscordRPC
 import lee.aspect.dev.autoswitch.SwitchManager
-import lee.aspect.dev.discordrpc.settings.SettingManager
+import lee.aspect.dev.discordrpc.Settings
 import java.io.IOException
 import java.util.*
 
@@ -41,7 +41,7 @@ class ConfigSceneManager {
         @JvmStatic
         @Throws(IOException::class)
         fun getConfigParent(): Parent? {
-            if (SettingManager.SETTINGS.isAutoSwitch) {
+            if (Settings.getINSTANCE().isAutoSwitch) {
                 return SwitchManager.initMenu()
             }
             return getDefaultConfigParent()
@@ -55,7 +55,7 @@ class ConfigSceneManager {
                 )
             )
             root.stylesheets.add(
-                Objects.requireNonNull(CustomDiscordRPC::class.java.getResource(SettingManager.SETTINGS.theme.path))
+                Objects.requireNonNull(CustomDiscordRPC::class.java.getResource(Settings.getINSTANCE().theme.path))
                     .toExternalForm()
             )
             return root

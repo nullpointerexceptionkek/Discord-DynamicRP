@@ -31,10 +31,10 @@ import javafx.scene.control.Dialog
 import javafx.scene.control.Label
 import javafx.scene.layout.VBox
 import lee.aspect.dev.application.interfaceGui.WarningManager
-import lee.aspect.dev.discordrpc.settings.SettingManager
+import lee.aspect.dev.discordrpc.Settings
 import java.util.*
 
-class LanguageManager private constructor(){
+class LanguageManager private constructor() {
     companion object {
         //this needs to be initialized after the file manager
         @JvmStatic
@@ -47,7 +47,7 @@ class LanguageManager private constructor(){
 
         @JvmStatic
         fun init() {
-            this.lang = ResourceBundle.getBundle(SettingManager.SETTINGS.lang.resourceLocation, Locale.getDefault())
+            this.lang = ResourceBundle.getBundle(Settings.getINSTANCE().lang.resourceLocation, Locale.getDefault())
         }
 
         @JvmStatic
@@ -63,13 +63,13 @@ class LanguageManager private constructor(){
 
 
             // Set the dialog content to the ChoiceBox
-            val textLabel = Label("Please select a language, your current language is ${SettingManager.SETTINGS.lang}")
+            val textLabel = Label("Please select a language, your current language is ${Settings.getINSTANCE().lang}")
             dialog.dialogPane.content = VBox(textLabel, choiceBox)
 
             // Add a button to confirm the selected language
             dialog.dialogPane.buttonTypes.addAll(ButtonType.CANCEL, ButtonType.OK)
 
-            dialog.dialogPane.stylesheets.add(SettingManager.SETTINGS.theme.path)
+            dialog.dialogPane.stylesheets.add(Settings.getINSTANCE().theme.path)
 
             // Show the dialog and wait for the user to confirm their selection
             val result = dialog.showAndWait()
@@ -77,7 +77,7 @@ class LanguageManager private constructor(){
             // If the user confirmed their selection, change the current language
             if (result.isPresent && result.get() == ButtonType.OK) {
                 setLang(choiceBox.value)
-                SettingManager.SETTINGS.lang = choiceBox.value
+                Settings.getINSTANCE().lang = choiceBox.value
                 WarningManager.restartToApplyChanges()
             }
 

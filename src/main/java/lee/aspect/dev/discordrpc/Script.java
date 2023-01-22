@@ -26,7 +26,7 @@
 package lee.aspect.dev.discordrpc;
 
 
-import lee.aspect.dev.discordrpc.settings.SettingManager;
+import lee.aspect.dev.Launch;
 import lee.aspect.dev.jsonreader.FileManager;
 
 import java.util.ArrayList;
@@ -35,7 +35,16 @@ import java.util.Arrays;
 public class Script {
 
     private static Script INSTANCE = new Script();
-    public static Script getScript() {
+    private String DiscordAPIKey;
+    private UpdateType updateType = UpdateType.Loop;
+    private String customTimestamp;
+    private long calculatedTimestamp;
+    private ArrayList<Updates> totalupdates = new ArrayList<>();
+    private TimeStampMode timestampmode = TimeStampMode.appLaunch;
+    private Script() {
+    }
+
+    public static Script getINSTANCE() {
         return INSTANCE;
     }
 
@@ -45,21 +54,26 @@ public class Script {
 
     public static void loadScriptFromJson() {
         resetScript();
-        FileManager.readFromJson(SettingManager.SETTINGS.getLoadedConfig(), Script.class);
+        try {
+            FileManager.readFromJson(Settings.getINSTANCE().getLoadedConfig(), Script.class);
+        } catch (RuntimeException e) {
+            setUp();
+        }
     }
 
     public static void saveScriptToFile() {
-        FileManager.writeJsonTofile(SettingManager.SETTINGS.getLoadedConfig(), Script.getScript());
+        if(Settings.getINSTANCE().getLoadedConfig() == null) {
+            Launch.LOGGER.warn("Cannot save script to file because setting is not loaded");
+            return;
+        }
+        FileManager.writeJsonTofile(Settings.getINSTANCE().getLoadedConfig(), Script.getINSTANCE());
     }
 
-    private Script(){}
-
-    private String DiscordAPIKey;
-    private UpdateType updateType = UpdateType.Loop;
-    private String customTimestamp;
-    private long calculatedTimestamp;
-    private ArrayList<Updates> totalupdates = new ArrayList<>();
-    private TimeStampMode timestampmode = TimeStampMode.appLaunch;
+    public static void setUp() {
+        INSTANCE.totalupdates.add(new Updates(16000,"","","","","Welcome to CDiscordRP","You can find more information about this program in the README.md file"));
+        saveScriptToFile();
+        loadScriptFromJson();
+    }
 
     public TimeStampMode getTimestampmode() {
         return timestampmode;

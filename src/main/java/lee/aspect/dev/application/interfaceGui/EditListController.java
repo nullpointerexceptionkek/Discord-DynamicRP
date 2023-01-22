@@ -92,14 +92,14 @@ public class EditListController extends ConfigController implements Initializabl
     }
 
     public void saveChanges() throws IOException {
-        Script.getScript().setUpdates(numberInList, new Updates(Long.parseLong(Wait.getText()), image.getText(), imagetext.getText(), smallimage.getText(),
+        Script.getINSTANCE().setUpdates(numberInList, new Updates(Long.parseLong(Wait.getText()), image.getText(), imagetext.getText(), smallimage.getText(),
                 smalltext.getText(), firstline.getText(), secondline.getText(), button1Text.getText(),
                 button1Url.getText(), button2Text.getText(), button2Url.getText()));
         gobacktoConfig();
     }
 
     public void deleteThisItem() throws IOException {
-        Script.getScript().getTotalupdates().remove(numberInList);
+        Script.getINSTANCE().getTotalupdates().remove(numberInList);
         gobacktoConfig();
     }
 
@@ -141,17 +141,17 @@ public class EditListController extends ConfigController implements Initializabl
 
     public void setnumberInList(int numberInList) {
         this.numberInList = numberInList;
-        Wait.setText(String.valueOf(Script.getScript().getTotalupdates().get(numberInList).getWait()));
-        image.setText(Script.getScript().getTotalupdates().get(numberInList).getImage());
-        imagetext.setText(Script.getScript().getTotalupdates().get(numberInList).getImagetext());
-        smallimage.setText(Script.getScript().getTotalupdates().get(numberInList).getSmallimage());
-        smalltext.setText(Script.getScript().getTotalupdates().get(numberInList).getSmalltext());
-        firstline.setText(Script.getScript().getTotalupdates().get(numberInList).getFl());
-        secondline.setText(Script.getScript().getTotalupdates().get(numberInList).getSl());
-        button1Text.setText(Script.getScript().getTotalupdates().get(numberInList).getButton1Text());
-        button1Url.setText(Script.getScript().getTotalupdates().get(numberInList).getButton1Url());
-        button2Text.setText(Script.getScript().getTotalupdates().get(numberInList).getButton2Text());
-        button2Url.setText(Script.getScript().getTotalupdates().get(numberInList).getButton2Url());
+        Wait.setText(String.valueOf(Script.getINSTANCE().getTotalupdates().get(numberInList).getWait()));
+        image.setText(Script.getINSTANCE().getTotalupdates().get(numberInList).getImage());
+        imagetext.setText(Script.getINSTANCE().getTotalupdates().get(numberInList).getImagetext());
+        smallimage.setText(Script.getINSTANCE().getTotalupdates().get(numberInList).getSmallimage());
+        smalltext.setText(Script.getINSTANCE().getTotalupdates().get(numberInList).getSmalltext());
+        firstline.setText(Script.getINSTANCE().getTotalupdates().get(numberInList).getFl());
+        secondline.setText(Script.getINSTANCE().getTotalupdates().get(numberInList).getSl());
+        button1Text.setText(Script.getINSTANCE().getTotalupdates().get(numberInList).getButton1Text());
+        button1Url.setText(Script.getINSTANCE().getTotalupdates().get(numberInList).getButton1Url());
+        button2Text.setText(Script.getINSTANCE().getTotalupdates().get(numberInList).getButton2Text());
+        button2Url.setText(Script.getINSTANCE().getTotalupdates().get(numberInList).getButton2Url());
 
     }
 

@@ -7,7 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.util.Duration;
-import lee.aspect.dev.discordrpc.settings.SettingManager;
+import lee.aspect.dev.discordrpc.Settings;
 
 /**
  * @author Loïc Sculier aka typhon0
@@ -108,7 +108,7 @@ public abstract class AnimationFX {
     }
 
     public void setTimeline(Timeline timeline) {
-        if (SettingManager.SETTINGS.isNoAnimation()) {
+        if (Settings.getINSTANCE().isNoAnimation()) {
             KeyFrame lastFrame = timeline.getKeyFrames().get(timeline.getKeyFrames().size() - 1);
             timeline.getKeyFrames().clear();
             lastFrame.getTime().add(Duration.millis(0));

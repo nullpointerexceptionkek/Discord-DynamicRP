@@ -41,7 +41,8 @@ import java.util.function.Consumer;
 
 public class WarningManager {
 
-    private WarningManager(){}
+    private WarningManager() {
+    }
 
     /**
      * Creates a warning icon
