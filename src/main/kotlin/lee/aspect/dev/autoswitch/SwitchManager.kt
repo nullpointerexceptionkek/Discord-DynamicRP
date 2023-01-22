@@ -38,10 +38,12 @@ import javafx.scene.layout.HBox
 import javafx.scene.layout.StackPane
 import javafx.scene.layout.VBox
 import javafx.scene.text.Font
+import javafx.scene.text.Text
 import javafx.scene.text.TextAlignment
 import lee.aspect.dev.DirectoryManager.Companion.getRootDir
 import lee.aspect.dev.JProcessDetector.OpenCloseListener
 import lee.aspect.dev.JProcessDetector.ProcessMonitor
+import lee.aspect.dev.Launch
 import lee.aspect.dev.animationengine.animation.SlideInLeft
 import lee.aspect.dev.application.CustomDiscordRPC
 import lee.aspect.dev.application.RunLoopManager
@@ -275,6 +277,14 @@ abstract class SwitchManager {
 
             controlVbox.isPickOnBounds = false
 
+
+            val CDiscordRP = Text("CDiscordRP" + Launch.VERSION)
+            CDiscordRP.font = Font.font(30.0)
+            CDiscordRP.textAlignment = TextAlignment.CENTER
+            val CDiscordRPHBox = HBox(CDiscordRP)
+            CDiscordRPHBox.alignment = Pos.TOP_CENTER
+
+            switchStackPane.children.add(CDiscordRPHBox)
             switchStackPane.children.addAll(vboxtext, vboxtextbox,controlVbox)
 
 

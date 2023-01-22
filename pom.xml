@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>lee.aspect.dev</groupId>
     <artifactId>CDiscordRP</artifactId>
-    <version>0.5.0</version>
+    <version>Pre 0.5.0</version>
     <properties>
         <main.class>lee.aspect.dev.Launch</main.class>
         <kotlin.version>1.7.22</kotlin.version>
