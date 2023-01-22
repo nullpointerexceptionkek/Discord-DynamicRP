@@ -42,7 +42,9 @@ import java.nio.channels.FileLock;
  *
  * @author lee
  */
-public abstract class Launch {
+public class Launch {
+
+    private Launch() {}
 
     public final static String VERSION = "Pre 0.5.0";
     public final static String AUTHOR = "lee";

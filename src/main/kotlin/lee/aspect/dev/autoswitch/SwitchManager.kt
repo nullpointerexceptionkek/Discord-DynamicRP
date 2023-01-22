@@ -26,7 +26,6 @@
 package lee.aspect.dev.autoswitch
 
 import javafx.application.Platform
-import javafx.event.ActionEvent
 import javafx.fxml.FXMLLoader
 import javafx.geometry.Insets
 import javafx.geometry.Pos
@@ -48,7 +47,7 @@ import lee.aspect.dev.animationengine.animation.SlideInLeft
 import lee.aspect.dev.application.CustomDiscordRPC
 import lee.aspect.dev.application.RunLoopManager
 import lee.aspect.dev.config.ConfigManager
-import lee.aspect.dev.discordrpc.UpdateManager
+import lee.aspect.dev.discordrpc.Script
 import lee.aspect.dev.discordrpc.settings.SettingManager
 import lee.aspect.dev.jsonreader.FileManager
 import java.io.File
@@ -56,8 +55,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 
-abstract class SwitchManager {
-
+class SwitchManager private constructor(){
 
     companion object {
         class LoadSwitchFromFile {
@@ -146,7 +144,7 @@ abstract class SwitchManager {
 
                 editCfgButton.setOnAction {
                     SettingManager.SETTINGS.loadedConfig= files[i]
-                    UpdateManager.loadScriptFromJson()
+                    Script.loadScriptFromJson()
 
                     val root = FXMLLoader.load<Parent>(
                         Objects.requireNonNull(
@@ -234,7 +232,7 @@ abstract class SwitchManager {
                                     } catch (_: Exception) {
                                     }
                                     SettingManager.SETTINGS.loadedConfig = files[i]
-                                    UpdateManager.loadScriptFromJson()
+                                    Script.loadScriptFromJson()
                                     RunLoopManager.startUpdate()
                                     Platform.runLater{
                                         statusLabel.text = "${loaded.switch[i].checkName} Process Opened"

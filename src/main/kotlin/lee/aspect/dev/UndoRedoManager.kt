@@ -25,7 +25,7 @@
 
 package lee.aspect.dev
 
-import lee.aspect.dev.discordrpc.UpdateManager
+import lee.aspect.dev.discordrpc.Script
 import lee.aspect.dev.discordrpc.Updates
 import java.util.*
 
@@ -65,9 +65,9 @@ class UndoRedoManager(initialList: List<Updates>) {
     }
 
     private fun applyChangesToScript() {
-        UpdateManager.SCRIPT.totalupdates.clear()
+        Script.getScript().totalupdates.clear()
         currentList.toList().toTypedArray().forEach {
-            UpdateManager.SCRIPT.totalupdates.add(it)
+            Script.getScript().totalupdates.add(it)
         }
     }
 }

@@ -34,7 +34,7 @@ import lee.aspect.dev.application.interfaceGui.WarningManager
 import lee.aspect.dev.discordrpc.settings.SettingManager
 import java.util.*
 
-abstract class LanguageManager {
+class LanguageManager private constructor(){
     companion object {
         //this needs to be initialized after the file manager
         @JvmStatic

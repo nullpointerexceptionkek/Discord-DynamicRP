@@ -50,7 +50,7 @@ public class SettingsAdapter extends TypeAdapter<Settings> {
 
         try {
             reader.beginObject();
-            Settings settings = new Settings();
+            Settings settings = Settings.getINSTANCE();
             while (reader.hasNext()) {
                 String name = null;
                 JsonToken token = reader.peek();

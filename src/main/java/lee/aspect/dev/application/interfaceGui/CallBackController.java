@@ -39,7 +39,6 @@ import lee.aspect.dev.Launch;
 import lee.aspect.dev.animationengine.animation.*;
 import lee.aspect.dev.application.RunLoopManager;
 import lee.aspect.dev.discordrpc.Script;
-import lee.aspect.dev.discordrpc.UpdateManager;
 import lee.aspect.dev.discordrpc.Updates;
 import lee.aspect.dev.discordrpc.settings.SettingManager;
 import lee.aspect.dev.language.LanguageManager;
@@ -98,28 +97,28 @@ public class CallBackController implements Initializable {
             setDefault(display3, 45);
 
 
-            if (UpdateManager.SCRIPT.getTotalupdates().size() == 1) {
-                display2.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getFl()
-                        + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getSl());
+            if (Script.getScript().getTotalupdates().size() == 1) {
+                display2.setText(Script.getScript().getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getFl()
+                        + '\n' + Script.getScript().getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getSl());
             } else {
-                if (UpdateManager.SCRIPT.getUpdateType().equals(Script.UpdateType.Random) || SettingManager.SETTINGS.isNoAnimation()) {
-                    display2.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getFl()
-                            + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getSl());
+                if (Script.getScript().getUpdateType().equals(Script.UpdateType.Random) || SettingManager.SETTINGS.isNoAnimation()) {
+                    display2.setText(Script.getScript().getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getFl()
+                            + '\n' + Script.getScript().getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getSl());
                 } else {
                     if (RunLoopManager.getCurrentDisplay() > 0)
-                        display1.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay() - 1).getFl()
-                                + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay() - 1).getSl());
+                        display1.setText(Script.getScript().getTotalupdates().get(RunLoopManager.getCurrentDisplay() - 1).getFl()
+                                + '\n' + Script.getScript().getTotalupdates().get(RunLoopManager.getCurrentDisplay() - 1).getSl());
                     display1.opacityProperty().set(0.3);
-                    display2.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getFl()
-                            + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getSl());
-                    display3.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay() >= UpdateManager.SCRIPT.getTotalupdates().size() - 1 ? 0 : RunLoopManager.getCurrentDisplay() + 1).getFl()
-                            + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay() >= UpdateManager.SCRIPT.getTotalupdates().size() - 1 ? 0 : RunLoopManager.getCurrentDisplay() + 1).getSl());
+                    display2.setText(Script.getScript().getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getFl()
+                            + '\n' + Script.getScript().getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getSl());
+                    display3.setText(Script.getScript().getTotalupdates().get(RunLoopManager.getCurrentDisplay() >= Script.getScript().getTotalupdates().size() - 1 ? 0 : RunLoopManager.getCurrentDisplay() + 1).getFl()
+                            + '\n' + Script.getScript().getTotalupdates().get(RunLoopManager.getCurrentDisplay() >= Script.getScript().getTotalupdates().size() - 1 ? 0 : RunLoopManager.getCurrentDisplay() + 1).getSl());
                     display3.opacityProperty().set(0.8);
                 }
             }
 
 
-            if (UpdateManager.SCRIPT.getUpdateType().equals(Script.UpdateType.Random) || SettingManager.SETTINGS.isNoAnimation()) {
+            if (Script.getScript().getUpdateType().equals(Script.UpdateType.Random) || SettingManager.SETTINGS.isNoAnimation()) {
                 anchorRoot.getChildren().add(display2);
                 return;
             }
@@ -131,9 +130,9 @@ public class CallBackController implements Initializable {
     }
 
     public void updateCurrentDisplay(Updates next) {
-        if (UpdateManager.SCRIPT.getUpdateType().equals(Script.UpdateType.Random) || SettingManager.SETTINGS.isNoAnimation()) {
-            display2.setText(UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getFl()
-                    + '\n' + UpdateManager.SCRIPT.getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getSl());
+        if (Script.getScript().getUpdateType().equals(Script.UpdateType.Random) || SettingManager.SETTINGS.isNoAnimation()) {
+            display2.setText(Script.getScript().getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getFl()
+                    + '\n' + Script.getScript().getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getSl());
             return;
         }
         String nextLine = next.getFl() + '\n' + next.getSl();

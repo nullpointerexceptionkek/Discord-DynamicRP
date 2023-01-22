@@ -39,7 +39,9 @@ import java.net.URISyntaxException;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-public abstract class WarningManager {
+public class WarningManager {
+
+    private WarningManager(){}
 
     /**
      * Creates a warning icon

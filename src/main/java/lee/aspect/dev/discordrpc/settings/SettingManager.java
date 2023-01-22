@@ -32,14 +32,16 @@ import java.io.File;
 import java.io.IOException;
 
 
-public abstract class SettingManager {
+public class SettingManager {
+
+    private SettingManager(){}
 
     public static Settings SETTINGS;
 
     public static void loadKeyFromJson() {
         Settings loaded = FileManager.readFromJson(new File(DirectoryManager.getRootDir(), "Settings.json"), Settings.class);
         if (loaded == null) {
-            loaded = new Settings();
+            loaded = Settings.getINSTANCE();
             loaded.setTheme(Settings.Theme.dark);
             File defaultFile = new File(DirectoryManager.getRootDir(), "default_UpdateScript.json");
             if (!defaultFile.exists()) {

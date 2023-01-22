@@ -32,6 +32,14 @@ import java.io.File;
 
 public class Settings {
 
+    private static final Settings INSTANCE = new Settings();
+
+    public static Settings getINSTANCE() {
+        return INSTANCE;
+    }
+
+    private Settings(){}
+
     private Languages lang = Languages.EN_US;
     private Theme theme = Theme.dark;
     private MinimizeMode minimizeMode = MinimizeMode.Ask;

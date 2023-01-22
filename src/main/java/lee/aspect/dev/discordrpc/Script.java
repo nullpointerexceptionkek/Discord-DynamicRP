@@ -26,21 +26,40 @@
 package lee.aspect.dev.discordrpc;
 
 
+import lee.aspect.dev.discordrpc.settings.SettingManager;
+import lee.aspect.dev.jsonreader.FileManager;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Script {
 
+    private static Script INSTANCE = new Script();
+    public static Script getScript() {
+        return INSTANCE;
+    }
+
+    private static void resetScript() {
+        INSTANCE = new Script();
+    }
+
+    public static void loadScriptFromJson() {
+        resetScript();
+        FileManager.readFromJson(SettingManager.SETTINGS.getLoadedConfig(), Script.class);
+    }
+
+    public static void saveScriptToFile() {
+        FileManager.writeJsonTofile(SettingManager.SETTINGS.getLoadedConfig(), Script.getScript());
+    }
+
+    private Script(){}
+
     private String DiscordAPIKey;
     private UpdateType updateType = UpdateType.Loop;
     private String customTimestamp;
     private long calculatedTimestamp;
-    private ArrayList<Updates> totalupdates;
+    private ArrayList<Updates> totalupdates = new ArrayList<>();
     private TimeStampMode timestampmode = TimeStampMode.appLaunch;
-
-    public Script() {
-        totalupdates = new ArrayList<>();
-    }
 
     public TimeStampMode getTimestampmode() {
         return timestampmode;

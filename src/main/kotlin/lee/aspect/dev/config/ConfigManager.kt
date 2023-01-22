@@ -35,7 +35,7 @@ import javafx.scene.layout.VBox
 import javafx.stage.Modality
 import javafx.stage.Stage
 import lee.aspect.dev.DirectoryManager
-import lee.aspect.dev.discordrpc.UpdateManager
+import lee.aspect.dev.discordrpc.Script
 import lee.aspect.dev.discordrpc.settings.SettingManager
 import java.io.File
 import java.io.FilenameFilter
@@ -55,7 +55,7 @@ class ConfigManager {
 
         @JvmStatic
         fun showDialog() {
-            UpdateManager.saveScriptToFile()
+            Script.saveScriptToFile()
             val files = getCurrentConfigFiles()
             val dialogStage = Stage()
             dialogStage.title = "Config Manager"
@@ -94,7 +94,7 @@ class ConfigManager {
                         val selectedFile =
                             File(DirectoryManager.getRootDir(), selectedRadioButton.text + "_UpdateScript.json")
                         SettingManager.SETTINGS.loadedConfig = selectedFile
-                        UpdateManager.loadScriptFromJson()
+                        Script.loadScriptFromJson()
                         dialogStage.close()
                         showDialog()
                     }
@@ -171,7 +171,7 @@ class ConfigManager {
                 val selectedRadioButton = toggleGroup.selectedToggle as RadioButton
                 val selectedFile = File(DirectoryManager.getRootDir(), selectedRadioButton.text + "_UpdateScript.json")
                 SettingManager.SETTINGS.loadedConfig = selectedFile
-                UpdateManager.loadScriptFromJson()
+                Script.loadScriptFromJson()
                 dialogStage.close()
             }
 
@@ -192,7 +192,7 @@ class ConfigManager {
         }
         @JvmStatic
         fun showDialogWithNoRadioButton(){
-            UpdateManager.saveScriptToFile()
+            Script.saveScriptToFile()
             val files = getCurrentConfigFiles()
             val dialogStage = Stage()
             dialogStage.initModality(Modality.APPLICATION_MODAL)

@@ -48,7 +48,7 @@ public class DiscordRP {
 
     public void LaunchReadyCallBack(Updates updates) throws NoDiscordClientException {
         Calendar calendar = Calendar.getInstance();
-        switch (UpdateManager.SCRIPT.getTimestampmode()) {
+        switch (Script.getScript().getTimestampmode()) {
             case appLaunch:
                 this.created = (long) Math.ceil(System.currentTimeMillis());
                 break;
@@ -126,14 +126,14 @@ public class DiscordRP {
                 .setButton2Text(updates.getButton2Text())
                 .setButton2Url(updates.getButton2Url());
         if (!(created == -1)) {
-            switch (UpdateManager.SCRIPT.getTimestampmode()) {
+            switch (Script.getScript().getTimestampmode()) {
                 case custom:
-                    Launch.LOGGER.debug("custom" + UpdateManager.SCRIPT.getCustomTimestamp());
+                    Launch.LOGGER.debug("custom" + Script.getScript().getCustomTimestamp());
                     Launch.LOGGER.debug("current" + current);
-                    if (UpdateManager.SCRIPT.getCalculatedTimestamp() > current) {
-                        builder.setEndTimestamp(UpdateManager.SCRIPT.getCalculatedTimestamp());
+                    if (Script.getScript().getCalculatedTimestamp() > current) {
+                        builder.setEndTimestamp(Script.getScript().getCalculatedTimestamp());
                     } else {
-                        builder.setStartTimestamp(UpdateManager.SCRIPT.getCalculatedTimestamp());
+                        builder.setStartTimestamp(Script.getScript().getCalculatedTimestamp());
                     }
                     break;
                 case sinceUpdate:
@@ -152,7 +152,7 @@ public class DiscordRP {
     }
 
     private void setIPCClient(Updates updates) {
-        client = new IPCClient(Long.parseLong(UpdateManager.SCRIPT.getDiscordAPIKey()));
+        client = new IPCClient(Long.parseLong(Script.getScript().getDiscordAPIKey()));
         client.setListener(new IPCListener() {
             @Override
             public void onReady(IPCClient client) {
