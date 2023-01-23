@@ -50,7 +50,6 @@ public abstract class Pipe {
 
     public static Pipe openPipe(IPCClient ipcClient, long clientId, HashMap<String, Callback> callbacks,
                                 DiscordBuild... preferredOrder) throws NoDiscordClientException {
-
         if (preferredOrder == null || preferredOrder.length == 0)
             preferredOrder = new DiscordBuild[]{DiscordBuild.ANY};
 
@@ -69,7 +68,7 @@ public abstract class Pipe {
                 Packet p = pipe.read(); // this is a valid client at this point
 
                 pipe.build = DiscordBuild.from(p.getJson().getJSONObject("data")
-                        .getJSONObject("manager")
+                        .getJSONObject("config")
                         .getString("api_endpoint"));
 
                 //LOGGER.debug(String.format("Found a valid client (%s) with packet: %s", pipe.build.name(), p.toString()));
