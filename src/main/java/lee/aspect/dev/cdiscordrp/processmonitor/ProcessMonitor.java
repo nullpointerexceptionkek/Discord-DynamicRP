@@ -98,16 +98,6 @@ public class ProcessMonitor {
                     reader.close();
                     return true;
                 }
-                /*
-                String line;
-                while ((line = reader.readLine()) != null) {
-
-                    if (line.contains(processName)) {
-                        return true;
-                    }
-                }
-
-                 */
                 reader.close();
                 return false;
             } catch (Exception e) {

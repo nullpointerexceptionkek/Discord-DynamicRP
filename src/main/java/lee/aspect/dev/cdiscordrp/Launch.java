@@ -65,7 +65,7 @@ public class Launch {
     /**
      * Redirect main Class to {@link CustomDiscordRPC Launch}
      * This program is used to customize Discord rich preference via interface by JavaFX
-     * It connects to Discord via IPC by the library {@link lee.aspect.dev.discordipc}
+     * It connects to Discord via IPC by the library {@link lee.aspect.dev.cdiscordrp.discordipc}
      *
      * @author Aspect
      */
@@ -127,7 +127,6 @@ public class Launch {
 
     public static boolean unlock() {
         LOGGER.info("Author: " + AUTHOR + " Project: " + NAME + " " + VERSION);
-        ;
         try {
             if (lock != null) {
                 lock.release();
