@@ -5,7 +5,7 @@
     <artifactId>CDiscordRP</artifactId>
     <version>Pre 0.5.0</version>
     <properties>
-        <main.class>lee.aspect.dev.Launch</main.class>
+        <main.class>lee.aspect.dev.cdiscordrp.Launch</main.class>
         <kotlin.version>1.7.22</kotlin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>8</maven.compiler.source>
@@ -168,7 +168,7 @@
                         <!-- Usage: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>lee.aspect.dev.Launch</mainClass>
+                            <mainClass>${main.class}</mainClass>
                         </configuration>
                     </execution>
                 </executions>
@@ -212,7 +212,7 @@
                             <transformers>
                                 <transformer implementation=
                                                      "org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>lee.aspect.dev.Launch</mainClass>
+                                    <mainClass>lee.aspect.dev.cdiscordrp.Launch</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>

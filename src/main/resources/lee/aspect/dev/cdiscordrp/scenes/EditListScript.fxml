@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<!--
+  ~
+  ~ MIT License
+  ~
+  ~ Copyright (c) 2023 lee
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~ of this software and associated documentation files (the "Software"), to deal
+  ~ in the Software without restriction, including without limitation the rights
+  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~ copies of the Software, and to permit persons to whom the Software is
+  ~ furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all
+  ~ copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  ~ SOFTWARE.
+  -->
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity"
+            minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="440.0" prefWidth="334.0" xmlns="http://javafx.com/javafx/18"
+            fx:controller="lee.aspect.dev.cdiscordrp.application.controller.EditListController">
+    <Label fx:id="EditConfiLabel" layoutX="114.0" layoutY="2.0" text="Edit configurations "/>
+    <TextField fx:id="firstline" layoutX="116.0" layoutY="37.0" prefHeight="25.0" prefWidth="203.0"/>
+    <TextField fx:id="secondline" layoutX="116.0" layoutY="81.0" prefHeight="25.0" prefWidth="203.0"/>
+    <TextField fx:id="image" layoutX="14.0" layoutY="123.0" prefHeight="25.0" prefWidth="89.0"/>
+    <Button fx:id="SaveButton" layoutX="14.0" layoutY="392.0" mnemonicParsing="false" onAction="#saveChanges"
+            prefHeight="25.0" prefWidth="89.0" text="Save"/>
+    <Button fx:id="CancelButton" layoutX="122.0" layoutY="392.0" mnemonicParsing="false" onAction="#cancelSaves"
+            prefHeight="25.0" prefWidth="89.0" text="Cancel"/>
+    <Label fx:id="DelayLabel" layoutX="14.0" layoutY="43.0" text="Delay (ms)"/>
+    <Label fx:id="FirstLineLabel" layoutX="116.0" layoutY="18.0" text="First Line"/>
+    <Button fx:id="DeleteButton" layoutX="227.0" layoutY="392.0" mnemonicParsing="false" onAction="#deleteThisItem"
+            prefHeight="25.0" prefWidth="89.0" text="Delete"/>
+    <Label fx:id="SecondLineLabel" layoutX="121.0" layoutY="64.0" text="Second line"/>
+    <Label fx:id="LargeImgLabel" layoutX="14.0" layoutY="107.0" text="large Image"/>
+    <TextField fx:id="Wait" layoutX="14.0" layoutY="60.0" prefHeight="25.0" prefWidth="89.0"/>
+    <Label fx:id="SmallImgLabel" layoutX="14.0" layoutY="154.0" text="Small Image"/>
+    <TextField fx:id="smallimage" layoutX="14.0" layoutY="172.0" prefHeight="25.0" prefWidth="89.0"/>
+    <TextField fx:id="smalltext" layoutX="116.0" layoutY="172.0" prefHeight="25.0" prefWidth="203.0"/>
+    <Label fx:id="SmallImgTxtLabel" layoutX="117.0" layoutY="155.0" text="Small image text"/>
+    <Label fx:id="LargeImgTxtLabel" layoutX="117.0" layoutY="107.0" text="Large image text"/>
+    <TextField fx:id="imagetext" layoutX="116.0" layoutY="123.0" prefHeight="25.0" prefWidth="203.0"/>
+    <Label fx:id="Button1Label" contentDisplay="CENTER" layoutX="19.0" layoutY="203.0" prefHeight="17.0"
+           prefWidth="80.0" text="Button 1 text"/>
+    <TextField fx:id="button1Text" layoutX="14.0" layoutY="220.0" prefHeight="25.0" prefWidth="304.0"/>
+    <TextField fx:id="button1Url" layoutX="14.0" layoutY="262.0" prefHeight="25.0" prefWidth="304.0"/>
+    <Label fx:id="Button1LinkLabel" contentDisplay="CENTER" layoutX="22.0" layoutY="245.0" prefHeight="17.0"
+           prefWidth="74.0" text="Button 1 link"/>
+    <Label fx:id="Button2TxtLabel" contentDisplay="CENTER" layoutX="19.0" layoutY="287.0" prefHeight="17.0"
+           prefWidth="80.0" text="Button 2 text"/>
+    <TextField fx:id="button2Text" layoutX="14.0" layoutY="304.0" prefHeight="25.0" prefWidth="304.0"/>
+    <Label fx:id="Button2LinkLabel" contentDisplay="CENTER" layoutX="19.0" layoutY="329.0" prefHeight="17.0"
+           prefWidth="80.0" text="Button 2 link"/>
+    <TextField fx:id="button2Url" layoutX="14.0" layoutY="346.0" prefHeight="25.0" prefWidth="304.0"/>
+</AnchorPane>

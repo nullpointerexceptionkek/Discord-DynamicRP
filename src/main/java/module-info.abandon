@@ -12,9 +12,9 @@ module lee.aspect.dev.launch {
     requires kotlin.stdlib;
 
     opens lee.aspect.dev.application to javafx.controls, javafx.fxml, javafx.graphics;
-    opens lee.aspect.dev.application.interfaceGui to javafx.controls, javafx.fxml, javafx.graphics;
+    opens lee.aspect.dev.application.controller to javafx.controls, javafx.fxml, javafx.graphics;
 
     exports lee.aspect.dev.application to javafx.controls, javafx.fxml, javafx.graphics;
-    exports lee.aspect.dev.application.interfaceGui to javafx.controls, javafx.fxml, javafx.graphics;
+    exports lee.aspect.dev.application.controller to javafx.controls, javafx.fxml, javafx.graphics;
     exports lee.aspect.dev.discordipc.exceptions;
 }
