@@ -233,7 +233,15 @@ class ConfigManager {
                 )
                 duplicateButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
                 duplicateButton.setOnAction {
-                    val newFile = File(file.parent, "copy-" + file.name)
+                    var copyNumber = 1
+                    lateinit var newFile:File
+                    try {
+                        println(file.name.substring(file.name.indexOf("_(")+2,file.name.indexOf("_UpdateScript.json")-1))
+                        copyNumber = file.name.substring(file.name.indexOf("_(") + 2,file.name.indexOf("_UpdateScript.json") - 1).toInt() + 1
+                        newFile = File(file.parent, fileName.substring(0,file.name.indexOf("_(")) + "_($copyNumber)_UpdateScript.json")
+                    } catch (e:Exception) {
+                        newFile = File(file.parent, fileName + "_($copyNumber)_UpdateScript.json")
+                    }
                     file.copyTo(newFile, overwrite = true)
                     dialogStage.close()
                     showDialogWithNoRadioButton()
