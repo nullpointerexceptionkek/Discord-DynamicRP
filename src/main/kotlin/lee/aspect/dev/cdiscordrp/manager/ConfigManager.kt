@@ -233,16 +233,19 @@ class ConfigManager {
                 )
                 duplicateButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
                 duplicateButton.setOnAction {
-                    var copyNumber = 1
-                    lateinit var newFile:File
-                    try {
-                        println(file.name.substring(file.name.indexOf("_(")+2,file.name.indexOf("_UpdateScript.json")-1))
-                        copyNumber = file.name.substring(file.name.indexOf("_(") + 2,file.name.indexOf("_UpdateScript.json") - 1).toInt() + 1
-                        newFile = File(file.parent, fileName.substring(0,file.name.indexOf("_(")) + "_($copyNumber)_UpdateScript.json")
-                    } catch (e:Exception) {
-                        newFile = File(file.parent, fileName + "_($copyNumber)_UpdateScript.json")
+                    var newFileName = if (!fileName.contains("_(")) fileName + "_(1)_UpdateScript.json" else fileName + "_UpdateScript.json"
+                    if(!File(file.parent,newFileName).exists()){
+                        file.copyTo(File(file.parent,newFileName), overwrite = false)
+                    } else{
+                        for(i in 1..15){
+                            newFileName = newFileName.substring(0,newFileName.indexOf("_(")) + "_($i)_UpdateScript.json"
+                            println(newFileName)
+                            if(!File(file.parent,newFileName).exists()){
+                                file.copyTo(File(file.parent,newFileName), overwrite = false)
+                                break
+                            }
+                        }
                     }
-                    file.copyTo(newFile, overwrite = true)
                     dialogStage.close()
                     showDialogWithNoRadioButton()
                 }
