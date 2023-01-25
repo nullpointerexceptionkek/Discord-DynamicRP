@@ -232,6 +232,14 @@ class SwitchManager private constructor() {
                     startButton.text = "Stop Operation"
                     isStarted = true
                     statusLabel.text = "Initializing..."
+                    vboxtext.children.forEach{
+                        it.isDisable = true
+                    }
+                    vboxtextbox.children.forEach{
+                        it.isDisable = true
+                    }
+                    settingsButton.isDisable = true
+                    configManagerButton.isDisable = true
                     for (i in files.indices) {
                         if (loaded.switch[i].checkName.isNotEmpty())
                             ProcessMonitor().startMonitoring(loaded.switch[i].checkName, object : OpenCloseListener {
@@ -267,6 +275,14 @@ class SwitchManager private constructor() {
                         RunLoopManager.closeCallBack()
                     } catch (_: Exception) {
                     }
+                    vboxtext.children.forEach{
+                        it.isDisable = false
+                    }
+                    vboxtextbox.children.forEach{
+                        it.isDisable = false
+                    }
+                    settingsButton.isDisable = false
+                    configManagerButton.isDisable = false
                     statusLabel.text = "Not Connected"
                     startButton.text = "Start Operation"
                     isStarted = false
