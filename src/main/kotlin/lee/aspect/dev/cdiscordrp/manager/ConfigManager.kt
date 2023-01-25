@@ -202,7 +202,7 @@ class ConfigManager {
             vBox.padding = Insets(10.0, 10.0, 10.0, 10.0)
             vBox.spacing = 30.0
             vBox.alignment = Pos.CENTER_LEFT
-            vBox.prefWidth = 80.0
+            vBox.prefWidth = 150.0
             vBoxToolBox.padding = Insets(10.0, 10.0, 10.0, 10.0)
             vBoxToolBox.spacing = 30.0
             vBoxToolBox.alignment = Pos.CENTER_RIGHT
@@ -233,13 +233,13 @@ class ConfigManager {
                 )
                 duplicateButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
                 duplicateButton.setOnAction {
-                    var newFileName = if (!fileName.contains("_(")) fileName + "_(1)_UpdateScript.json" else fileName + "_UpdateScript.json"
+                    var newFileName = fileName + "_(1)_UpdateScript.json"
+                    val newFileIndex = fileName.length +1
                     if(!File(file.parent,newFileName).exists()){
                         file.copyTo(File(file.parent,newFileName), overwrite = false)
                     } else{
                         for(i in 1..15){
-                            newFileName = newFileName.substring(0,newFileName.indexOf("_(")) + "_($i)_UpdateScript.json"
-                            println(newFileName)
+                            newFileName = newFileName.substring(0,newFileIndex) + "($i)_UpdateScript.json"
                             if(!File(file.parent,newFileName).exists()){
                                 file.copyTo(File(file.parent,newFileName), overwrite = false)
                                 break
