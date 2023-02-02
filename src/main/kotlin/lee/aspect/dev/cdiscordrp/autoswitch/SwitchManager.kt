@@ -250,9 +250,18 @@ class SwitchManager private constructor() {
                                     }
                                     Settings.getINSTANCE().loadedConfig = files[i]
                                     Script.loadScriptFromJson()
-                                    RunLoopManager.startUpdate()
                                     Platform.runLater {
                                         statusLabel.text = "${loaded.switch[i].checkName} Process Opened"
+                                    }
+                                    try {
+                                        RunLoopManager.startUpdate()
+                                        Platform.runLater {
+                                            statusLabel.text = "Connected"
+                                        }
+                                    } catch (e: Exception) {
+                                        Platform.runLater {
+                                            statusLabel.text = "Error: ${e.message}"
+                                        }
                                     }
                                 }
 
@@ -263,6 +272,9 @@ class SwitchManager private constructor() {
                                     }
                                     Platform.runLater {
                                         statusLabel.text = "${loaded.switch[i].checkName} Process Closed"
+                                    }
+                                    Platform.runLater {
+                                        statusLabel.text = "Not Connected - Waiting for Process"
                                     }
                                 }
                             }, 3, TimeUnit.SECONDS)
@@ -284,7 +296,7 @@ class SwitchManager private constructor() {
                     settingsButton.isDisable = false
                     configManagerButton.isDisable = false
                     statusLabel.text = "Not Connected"
-                    startButton.text = "Start Operation"
+                    startButton.text = "Launch Callback"
                     isStarted = false
                 }
 
