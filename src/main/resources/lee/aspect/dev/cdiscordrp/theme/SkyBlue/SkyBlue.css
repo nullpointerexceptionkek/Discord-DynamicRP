@@ -1,11 +1,10 @@
-/* for anime lovers */
 .root {
-    -fx-background-image: url('MikuSnow.png');
+    -fx-background-image: url('BackgroundMain.jpg');
 
 }
 
 #settingsAnchorPane {
-    -fx-background-image: url('MSSettings.png');
+    -fx-background-image: url('BackgroundMain.jpg');
 }
 
 .label {

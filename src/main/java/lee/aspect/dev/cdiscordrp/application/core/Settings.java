@@ -158,9 +158,8 @@ public class Settings {
 
         lime("/lee/aspect/dev/cdiscordrp/theme/lime.css", "lime"),
 
-        mikuSnow("/lee/aspect/dev/cdiscordrp/theme/mikuSnow/MikuSnow.css", "Miku snow"),
+        skyblue("/lee/aspect/dev/cdiscordrp/theme/SkyBlue/SkyBlue.css", "Sky Blue");
 
-        huTao("/lee/aspect/dev/cdiscordrp/theme/hutao/Hutao.css", "Hutao");
 
         private final String themePath;
 
