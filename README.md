@@ -6,13 +6,25 @@ This program is written in Java 8 and kotlin 1.7.21 and uses the Discord IPC, Ja
 
 >I build this during my free time, so I can't guarantee that I will update this project frequently.
 
+## Features
+- Save mutiple Rich Presence config
+- Auto launch on start up
+- Allowing different method of setting the Rich Presence
+    - Callback: Sents Rich Presence data every x seconds according to your config
+    - Auto Switch: this will automatically switch between the Rich Presence you have set, based on the application you are running
+- Easy to use JavaFX GUI
+- No need for installation, just run the .jar file
+- Configs are automatically saved
+- System tray support
+
 ## Support
 
->| Operating System | Auto Launch On Start up         | General Function  | 
->|------------------|---------------------------------|-------------------|
->| Windows          | Supported/(tested on 10 and 11) | Supported         |
->| Macos            | Not implemented                 | Not tested        |
->| Linux            | Not implemented                 | Not Supported yet |
+>| Operating System | Auto Launch On Start up         | Rich Presence             | Auto Switch |
+>|------------------|---------------------------------|---------------------------|-------------|
+>| Windows          | Supported/(tested on 10 and 11) | Supported                 | Beta        |
+>| Macos            | Not implemented                 | Not tested                | Not tested  |
+>| Linux            | Not implemented                 | Might be bugged sometimes | Not tested  |
+
 
 ## How to use
 
@@ -54,6 +66,9 @@ There is a lot more to explore!!! Have fun!
 > You can delete the enviroment variable on Windows by running the following command in cmd:
 >``` set CDRPCDir ""```
 
+## Learn
+What to learn how it works?
+Check out the [LEARN.md](LEARN.md) file
 
 ## How to build
 
