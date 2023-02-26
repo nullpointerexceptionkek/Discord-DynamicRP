@@ -26,8 +26,8 @@
 package lee.aspect.dev.cdiscordrp.language
 
 enum class Languages(val resourceLocation: String, val displayName: String) {
-    EN_US("lee.aspect.dev.lang.en_us", "English (US)"),
-    ZH_CN("lee.aspect.dev.lang.zh_cn", "简体中文");
+    EN_US("lee.aspect.dev.cdiscordrp.lang.en_us", "English (US)"),
+    ZH_CN("lee.aspect.dev.cdiscordrp.lang.zh_cn", "简体中文");
 
     override fun toString(): String {
         return displayName
