@@ -226,6 +226,10 @@ class SwitchManager private constructor() {
             controlHBbox.alignment = Pos.BOTTOM_CENTER
             controlHBbox.isPickOnBounds = false
 
+            //declear an arraylist that holds object(reference) in kotlin
+
+            val reference = ArrayList<ProcessMonitor>()
+
             startButton.setOnAction {
                 startButton.isDisable = true
                 if (!isStarted) {
@@ -241,43 +245,50 @@ class SwitchManager private constructor() {
                     settingsButton.isDisable = true
                     configManagerButton.isDisable = true
                     for (i in files.indices) {
-                        if (loaded.switch[i].checkName.isNotEmpty())
-                            ProcessMonitor().startMonitoring(loaded.switch[i].checkName, object : OpenCloseListener {
-                                override fun onProcessOpen() {
-                                    try {
-                                        RunLoopManager.closeCallBack()
-                                    } catch (_: Exception) {
-                                    }
-                                    Settings.getINSTANCE().loadedConfig = files[i]
-                                    Script.loadScriptFromJson()
-                                    Platform.runLater {
-                                        statusLabel.text = "${loaded.switch[i].checkName} Process Opened"
-                                    }
-                                    try {
-                                        RunLoopManager.startUpdate()
-                                        Platform.runLater {
-                                            statusLabel.text = "Connected"
+                        if (loaded.switch[i].checkName.isNotEmpty()) {
+                            val monitor = ProcessMonitor()
+                                monitor.startMonitoring(
+                                loaded.switch[i].checkName,
+                                object : OpenCloseListener {
+                                    override fun onProcessOpen() {
+                                        try {
+                                            RunLoopManager.closeCallBack()
+                                        } catch (_: Exception) {
                                         }
-                                    } catch (e: Exception) {
+                                        Settings.getINSTANCE().loadedConfig = files[i]
+                                        Script.loadScriptFromJson()
                                         Platform.runLater {
-                                            statusLabel.text = "Error: ${e.message}"
+                                            statusLabel.text = "${loaded.switch[i].checkName} Process Opened"
+                                        }
+                                        try {
+                                            RunLoopManager.startUpdate()
+                                            Platform.runLater {
+                                                statusLabel.text = "Connected"
+                                            }
+                                        } catch (e: Exception) {
+                                            Platform.runLater {
+                                                statusLabel.text = "Error: ${e.message}"
+                                            }
                                         }
                                     }
-                                }
-
-                                override fun onProcessClose() {
-                                    try {
-                                        RunLoopManager.closeCallBack()
-                                    } catch (_: Exception) {
+                                    override fun onProcessClose() {
+                                        try {
+                                            RunLoopManager.closeCallBack()
+                                        } catch (_: Exception) {
+                                        }
+                                        Platform.runLater {
+                                            statusLabel.text = "${loaded.switch[i].checkName} Process Closed"
+                                        }
+                                        Platform.runLater {
+                                            statusLabel.text = "Not Connected - Waiting for Process"
+                                        }
                                     }
-                                    Platform.runLater {
-                                        statusLabel.text = "${loaded.switch[i].checkName} Process Closed"
-                                    }
-                                    Platform.runLater {
-                                        statusLabel.text = "Not Connected - Waiting for Process"
-                                    }
-                                }
-                            }, 3, TimeUnit.SECONDS)
+                                },
+                                3,
+                                TimeUnit.SECONDS
+                            )
+                            reference.add(monitor)
+                        }
                     }
 
 
@@ -287,6 +298,11 @@ class SwitchManager private constructor() {
                         RunLoopManager.closeCallBack()
                     } catch (_: Exception) {
                     }
+
+                    for(i in reference.indices){
+                        reference[i].stopMonitoring()
+                    }
+
                     vboxtext.children.forEach{
                         it.isDisable = false
                     }
