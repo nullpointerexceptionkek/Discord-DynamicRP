@@ -36,6 +36,7 @@ import javafx.scene.layout.AnchorPane
 import javafx.scene.layout.HBox
 import javafx.scene.layout.StackPane
 import javafx.scene.layout.VBox
+import javafx.scene.paint.Color
 import javafx.scene.text.Font
 import javafx.scene.text.Text
 import javafx.scene.text.TextAlignment
@@ -123,9 +124,10 @@ class SwitchManager private constructor() {
 
             for (i in files.indices) {
                 val fileName = files[i].name.substring(0, files[i].name.indexOf("_UpdateScript.json"))
-                val text = Label(fileName)
+                val text = Text(fileName)
                 text.maxWidth(180.0)
                 text.font = Font.font(16.0)
+                text.fill = Color.WHITE
                 vboxtext.children.add(text)
 
                 val textField = TextField()
@@ -329,8 +331,8 @@ class SwitchManager private constructor() {
             controlVbox.isPickOnBounds = false
 
 
-            val CDiscordRP = Text("CDiscordRP" + Launch.VERSION)
-            CDiscordRP.font = Font.font(30.0)
+            val CDiscordRP = Label("CDiscordRP" + Launch.VERSION)
+            CDiscordRP.id = "titleLabel"
             CDiscordRP.textAlignment = TextAlignment.CENTER
             val CDiscordRPHBox = HBox(CDiscordRP)
             CDiscordRPHBox.alignment = Pos.TOP_CENTER

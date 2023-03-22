@@ -289,7 +289,7 @@ class ConfigManager {
                 newConfigDialog.headerText = "Enter the name for the manager:"
                 newConfigDialog.contentText = "name:"
                 val result = newConfigDialog.showAndWait()
-                if (result.isPresent) {
+                if (result.isPresent && result.get().isNotEmpty())
                     try {
                         val newFile = File(DirectoryManager.getRootDir(), result.get() + "_UpdateScript.json")
                         newFile.createNewFile()
@@ -301,7 +301,7 @@ class ConfigManager {
                     dialogStage.close()
                     showDialogWithNoRadioButton()
                 }
-            }
+
 
 
             val okButton = Button("OK")
@@ -318,6 +318,7 @@ class ConfigManager {
             dialogStage.scene.stylesheets.add(Settings.getINSTANCE().theme.path)
             dialogStage.isResizable = false
             dialogStage.show()
+
         }
     }
 }

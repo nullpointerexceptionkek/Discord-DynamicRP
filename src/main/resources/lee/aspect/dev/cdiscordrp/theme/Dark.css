@@ -10,7 +10,6 @@
     -fx-background-color: #2C2F33;
 }
 
-
 .label {
     -fx-font-size: 12;
     -fx-font-family: "Uni Sans";
@@ -79,6 +78,7 @@
 
 #titleLabel {
     -fx-font-size: 20;
+    -fx-text-fill: #ffffff;
 }
 
 .radio-button {
