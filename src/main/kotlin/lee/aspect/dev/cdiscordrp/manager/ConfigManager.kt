@@ -190,10 +190,9 @@ class ConfigManager {
             dialogStage.show()
         }
 
-        @JvmStatic
+
         fun showDialogWithNoRadioButton() {
             Script.saveScriptToFile()
-            val files = getCurrentConfigFiles()
             val dialogStage = Stage()
             dialogStage.initModality(Modality.APPLICATION_MODAL)
             dialogStage.title = "Config Manager"
@@ -206,7 +205,51 @@ class ConfigManager {
             vBoxToolBox.padding = Insets(10.0, 10.0, 10.0, 10.0)
             vBoxToolBox.spacing = 30.0
             vBoxToolBox.alignment = Pos.CENTER_RIGHT
+
+            // Call the updateDialogContent function to initially populate the content of the dialog
+            updateDialogContent(vBox, vBoxToolBox)
+
+            val newConfigButton = Button("New Config")
+            newConfigButton.setOnAction {
+                val newConfigDialog = TextInputDialog()
+                newConfigDialog.title = "File set up wizard"
+                newConfigDialog.headerText = "Enter the name for the manager:"
+                newConfigDialog.contentText = "name:"
+                val result = newConfigDialog.showAndWait()
+                if (result.isPresent && result.get().isNotEmpty())
+                    try {
+                        val newFile = File(DirectoryManager.getRootDir(), result.get() + "_UpdateScript.json")
+                        newFile.createNewFile()
+                        Settings.getINSTANCE().loadedConfig = newFile
+                    } catch (e: Exception) {
+                        //just let the default error handler to display the error and quit
+                        throw RuntimeException("Failed to rename file!", e)
+                    }
+                updateDialogContent(vBox, vBoxToolBox)
+            }
+            val okButton = Button("OK")
+            okButton.setOnAction {
+                dialogStage.close()
+            }
+            val okHbox = HBox(okButton, newConfigButton)
+            okHbox.padding = Insets(10.0, 10.0, 10.0, 10.0)
+            okHbox.spacing = 30.0
+            okHbox.alignment = Pos.CENTER
+
+
+            dialogStage.scene = Scene(VBox(HBox(vBox, vBoxToolBox), okHbox))
+            dialogStage.scene.stylesheets.add(Settings.getINSTANCE().theme.path)
+            dialogStage.isResizable = false
+            dialogStage.show()
+        }
+
+        fun updateDialogContent(vBox: VBox, vBoxToolBox: VBox) {
+            vBox.children.clear()
+            vBoxToolBox.children.clear()
+            val files = getCurrentConfigFiles()
+
             for (file in files!!) {
+
                 val fileName = file.name.substring(0, file.name.indexOf("_UpdateScript.json"))
                 val fileDisplay = Label(fileName)
 
@@ -219,11 +262,10 @@ class ConfigManager {
                         .toExternalForm()
                 )
                 deleteButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
+
                 deleteButton.setOnAction {
                     file.delete()
-                    dialogStage.close()
-                    showDialogWithNoRadioButton()
-
+                    updateDialogContent(vBox, vBoxToolBox)
                 }
 
                 val duplicateButton = Button("Duplicate")
@@ -246,8 +288,7 @@ class ConfigManager {
                             }
                         }
                     }
-                    dialogStage.close()
-                    showDialogWithNoRadioButton()
+                    updateDialogContent(vBox, vBoxToolBox)
                 }
 
                 val renameButton = Button("Rename")
@@ -256,6 +297,7 @@ class ConfigManager {
                         .toExternalForm()
                 )
                 renameButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
+
                 renameButton.setOnAction {
                     val textInputDialog =
                         TextInputDialog(file.name.substring(0, file.name.indexOf("_UpdateScript.json")))
@@ -273,52 +315,15 @@ class ConfigManager {
                             //just let the default error handler to display the error and quit
                             throw RuntimeException("Failed to rename file!", e)
                         }
-                        dialogStage.close()
-                        showDialogWithNoRadioButton()
+                        updateDialogContent(vBox, vBoxToolBox)
                     }
                 }
 
                 hBox.children.addAll(deleteButton, duplicateButton, renameButton)
-                vBox.children.add(fileDisplay)
-                vBoxToolBox.children.add(hBox)
+                    vBox.children.add(fileDisplay)
+                    vBoxToolBox.children.add(hBox)
             }
-            val newConfigButton = Button("New Config")
-            newConfigButton.setOnAction {
-                val newConfigDialog = TextInputDialog()
-                newConfigDialog.title = "File set up wizard"
-                newConfigDialog.headerText = "Enter the name for the manager:"
-                newConfigDialog.contentText = "name:"
-                val result = newConfigDialog.showAndWait()
-                if (result.isPresent && result.get().isNotEmpty())
-                    try {
-                        val newFile = File(DirectoryManager.getRootDir(), result.get() + "_UpdateScript.json")
-                        newFile.createNewFile()
-                        Settings.getINSTANCE().loadedConfig = newFile
-                    } catch (e: Exception) {
-                        //just let the default error handler to display the error and quit
-                        throw RuntimeException("Failed to rename file!", e)
-                    }
-                    dialogStage.close()
-                    showDialogWithNoRadioButton()
-                }
-
-
-
-            val okButton = Button("OK")
-            okButton.setOnAction {
-                dialogStage.close()
-            }
-            val okHbox = HBox(okButton, newConfigButton)
-            okHbox.padding = Insets(10.0, 10.0, 10.0, 10.0)
-            okHbox.spacing = 30.0
-            okHbox.alignment = Pos.CENTER
-
-
-            dialogStage.scene = Scene(VBox(HBox(vBox, vBoxToolBox), okHbox))
-            dialogStage.scene.stylesheets.add(Settings.getINSTANCE().theme.path)
-            dialogStage.isResizable = false
-            dialogStage.show()
-
         }
+
     }
 }
