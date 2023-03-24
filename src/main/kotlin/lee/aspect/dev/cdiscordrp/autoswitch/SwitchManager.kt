@@ -194,7 +194,9 @@ class SwitchManager private constructor() {
             jsonIcon.fitWidth = 17.0
             configManagerButton.graphic = jsonIcon
             configManagerButton.setOnAction {
-                ConfigManager.showDialog(false)
+                ConfigManager.showDialog(false) {
+                    refreshUI(anchorRoot)
+                }
             }
 
             val settingsButton = Button()
@@ -352,6 +354,11 @@ class SwitchManager private constructor() {
             }
             return anchorRoot
 
+        }
+        private fun refreshUI(anchorRoot: AnchorPane) {
+            anchorRoot.children.clear()
+            val newRoot = initMenu()
+            anchorRoot.children.add(newRoot)
         }
     }
 

@@ -53,7 +53,7 @@ class ConfigManager {
         }
 
         @JvmStatic
-        fun showDialog(showRadioButton: Boolean) {
+        fun showDialog(showRadioButton: Boolean, onCloseCallback: () -> Unit = {}) {
             Script.saveScriptToFile()
             val dialogStage = Stage()
             dialogStage.title = "Config Manager"
@@ -106,10 +106,11 @@ class ConfigManager {
             dialogStage.scene = Scene(VBox(scrollPane, okHbox))
             dialogStage.scene.stylesheets.add(Settings.getINSTANCE().theme.path)
             dialogStage.isResizable = true
+            dialogStage.setOnHiding { onCloseCallback() }
             dialogStage.show()
         }
 
-        fun updateDialogContent(vBox: VBox, vBoxToolBox: VBox, showRadioButton: Boolean) {
+        private fun updateDialogContent(vBox: VBox, vBoxToolBox: VBox, showRadioButton: Boolean) {
             vBox.children.clear()
             vBoxToolBox.children.clear()
             val files = getCurrentConfigFiles()
