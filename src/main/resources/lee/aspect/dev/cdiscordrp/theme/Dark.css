@@ -85,3 +85,38 @@
     -fx-font-family: "Uni Sans";
     -fx-text-fill: #ffffff;
 }
+
+/* scroll pane */
+.scroll-pane {
+    -fx-background-color: #2C2F33;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar {
+    -fx-background-color: #40444b;
+    -fx-pref-width: 10px;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-min-height: 0;
+    -fx-pref-height: 0;
+    -fx-max-height: 0;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #7289da;
+    -fx-background-insets: 0;
+    -fx-background-radius: 4;
+}
+
+.scroll-bar:vertical {
+    -fx-pref-width: 12;
+}
+
+.scroll-bar:horizontal {
+    -fx-pref-height: 12;
+}

@@ -194,7 +194,7 @@ class SwitchManager private constructor() {
             jsonIcon.fitWidth = 17.0
             configManagerButton.graphic = jsonIcon
             configManagerButton.setOnAction {
-                ConfigManager.showDialogWithNoRadioButton()
+                ConfigManager.showDialog(false)
             }
 
             val settingsButton = Button()

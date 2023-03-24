@@ -91,7 +91,7 @@ public class SettingController implements Initializable {
     }
 
     public void openConfigManager() {
-        ConfigManager.showDialog();
+        ConfigManager.showDialog(true);
     }
 
     @Override

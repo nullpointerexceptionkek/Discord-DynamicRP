@@ -53,149 +53,11 @@ class ConfigManager {
         }
 
         @JvmStatic
-        fun showDialog() {
+        fun showDialog(showRadioButton: Boolean) {
             Script.saveScriptToFile()
-            val files = getCurrentConfigFiles()
             val dialogStage = Stage()
             dialogStage.title = "Config Manager"
             dialogStage.initModality(Modality.APPLICATION_MODAL)
-            val vBox = VBox()
-            vBox.padding = Insets(10.0, 10.0, 10.0, 10.0)
-            vBox.spacing = 30.0
-            val toggleGroup = ToggleGroup()
-            for (file in files!!) {
-                val fileName = file.name.substring(0, file.name.indexOf("_UpdateScript.json"))
-                val radioButton = RadioButton(fileName)
-                radioButton.toggleGroup = toggleGroup
-                if (file == Settings.getINSTANCE().loadedConfig) {
-                    radioButton.isSelected = true
-                }
-                val hBox = HBox()
-                hBox.spacing = 10.0
-
-                val deleteButton = Button("Delete")
-                deleteButton.graphic = ImageView(
-                    Objects.requireNonNull(ConfigManager::class.java.getResource("/lee/aspect/dev/cdiscordrp/icon/editIcons/delete.png"))
-                        .toExternalForm()
-                )
-                deleteButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
-                deleteButton.setOnAction {
-                    if (radioButton.isSelected) {
-                        Alert(
-                            Alert.AlertType.WARNING,
-                            "You can't delete the currently loaded manager!",
-                            ButtonType.OK
-                        ).show()
-
-                    } else {
-                        file.delete()
-                        val selectedRadioButton = toggleGroup.selectedToggle as RadioButton
-                        val selectedFile =
-                            File(DirectoryManager.getRootDir(), selectedRadioButton.text + "_UpdateScript.json")
-                        Settings.getINSTANCE().loadedConfig = selectedFile
-                        Script.loadScriptFromJson()
-                        dialogStage.close()
-                        showDialog()
-                    }
-                }
-
-                val duplicateButton = Button("Duplicate")
-                duplicateButton.graphic = ImageView(
-                    Objects.requireNonNull(ConfigManager::class.java.getResource("/lee/aspect/dev/cdiscordrp/icon/editIcons/duplicate.png"))
-                        .toExternalForm()
-                )
-                duplicateButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
-                duplicateButton.setOnAction {
-                    val newFile = File(file.parent, "copy-" + file.name)
-                    file.copyTo(newFile, overwrite = true)
-                    dialogStage.close()
-                    showDialog()
-                }
-
-                val renameButton = Button("Rename")
-                renameButton.graphic = ImageView(
-                    Objects.requireNonNull(ConfigManager::class.java.getResource("/lee/aspect/dev/cdiscordrp/icon/editIcons/rename.png"))
-                        .toExternalForm()
-                )
-                renameButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
-                renameButton.setOnAction {
-                    val textInputDialog =
-                        TextInputDialog(file.name.substring(0, file.name.indexOf("_UpdateScript.json")))
-                    textInputDialog.title = "Rename File"
-                    textInputDialog.headerText = "Enter the new name for the file:"
-                    textInputDialog.contentText = "New name:"
-                    val result = textInputDialog.showAndWait()
-                    if (result.isPresent) {
-                        val newName = result.get()
-                        val newFile = File(file.parent, newName + "_UpdateScript.json")
-                        try {
-                            file.renameTo(newFile)
-                            Settings.getINSTANCE().loadedConfig = newFile
-                        } catch (e: Exception) {
-                            //just let the default error handler to display the error and quit
-                            throw RuntimeException("Failed to rename file!", e)
-                        }
-                        dialogStage.close()
-                        showDialog()
-                    }
-                }
-
-                hBox.children.addAll(radioButton, deleteButton, duplicateButton, renameButton)
-                vBox.children.add(hBox)
-            }
-            val newConfigButton = Button("New Config")
-            newConfigButton.setOnAction {
-                val newConfigDialog = TextInputDialog()
-                newConfigDialog.title = "File set up wizard"
-                newConfigDialog.headerText = "Enter the name for the manager:"
-                newConfigDialog.contentText = "name:"
-                val result = newConfigDialog.showAndWait()
-                if (result.isPresent) {
-                    try {
-                        val newFile = File(DirectoryManager.getRootDir(), result.get() + "_UpdateScript.json")
-                        newFile.createNewFile()
-                        Settings.getINSTANCE().loadedConfig = newFile
-                    } catch (e: Exception) {
-                        //just let the default error handler to display the error and quit
-                        throw RuntimeException("Failed to rename file!", e)
-                    }
-                    dialogStage.close()
-                    showDialog()
-                }
-            }
-
-
-            val okButton = Button("OK")
-            okButton.setOnAction {
-                val selectedRadioButton = toggleGroup.selectedToggle as RadioButton
-                val selectedFile = File(DirectoryManager.getRootDir(), selectedRadioButton.text + "_UpdateScript.json")
-                Settings.getINSTANCE().loadedConfig = selectedFile
-                Script.loadScriptFromJson()
-                dialogStage.close()
-            }
-
-            val cancelButton = Button("Cancel")
-            cancelButton.setOnAction {
-                dialogStage.close()
-            }
-
-            val hBox = HBox()
-            hBox.spacing = 10.0
-            hBox.children.addAll(okButton, cancelButton)
-            vBox.children.addAll(newConfigButton, hBox)
-
-            dialogStage.scene = Scene(vBox)
-            dialogStage.scene.stylesheets.add(Settings.getINSTANCE().theme.path)
-            dialogStage.isResizable = false
-            dialogStage.show()
-        }
-
-
-        fun showDialogWithNoRadioButton() {
-            Script.saveScriptToFile()
-            val dialogStage = Stage()
-            dialogStage.initModality(Modality.APPLICATION_MODAL)
-            dialogStage.title = "Config Manager"
             val vBox = VBox()
             val vBoxToolBox = VBox()
             vBox.padding = Insets(10.0, 10.0, 10.0, 10.0)
@@ -206,8 +68,13 @@ class ConfigManager {
             vBoxToolBox.spacing = 30.0
             vBoxToolBox.alignment = Pos.CENTER_RIGHT
 
-            // Call the updateDialogContent function to initially populate the content of the dialog
-            updateDialogContent(vBox, vBoxToolBox)
+            val scrollPane = ScrollPane(HBox(vBox, vBoxToolBox))
+            scrollPane.prefHeight = 150.0
+            scrollPane.prefWidth = 220.0
+            scrollPane.isFitToWidth = true
+            scrollPane.vbarPolicy = ScrollPane.ScrollBarPolicy.AS_NEEDED
+
+            updateDialogContent(vBox, vBoxToolBox, showRadioButton)
 
             val newConfigButton = Button("New Config")
             newConfigButton.setOnAction {
@@ -225,7 +92,7 @@ class ConfigManager {
                         //just let the default error handler to display the error and quit
                         throw RuntimeException("Failed to rename file!", e)
                     }
-                updateDialogContent(vBox, vBoxToolBox)
+                updateDialogContent(vBox, vBoxToolBox, showRadioButton)
             }
             val okButton = Button("OK")
             okButton.setOnAction {
@@ -236,25 +103,38 @@ class ConfigManager {
             okHbox.spacing = 30.0
             okHbox.alignment = Pos.CENTER
 
-
-            dialogStage.scene = Scene(VBox(HBox(vBox, vBoxToolBox), okHbox))
+            dialogStage.scene = Scene(VBox(scrollPane, okHbox))
             dialogStage.scene.stylesheets.add(Settings.getINSTANCE().theme.path)
-            dialogStage.isResizable = false
+            dialogStage.isResizable = true
             dialogStage.show()
         }
 
-        fun updateDialogContent(vBox: VBox, vBoxToolBox: VBox) {
+        fun updateDialogContent(vBox: VBox, vBoxToolBox: VBox, showRadioButton: Boolean) {
             vBox.children.clear()
             vBoxToolBox.children.clear()
             val files = getCurrentConfigFiles()
+            val toggleGroup = if (showRadioButton) ToggleGroup() else null
 
             for (file in files!!) {
 
                 val fileName = file.name.substring(0, file.name.indexOf("_UpdateScript.json"))
-                val fileDisplay = Label(fileName)
 
-                val hBox = HBox()
-                hBox.spacing = 10.0
+                if (showRadioButton) {
+                    val radioButton = RadioButton(fileName)
+                    radioButton.toggleGroup = toggleGroup
+                    if (file == Settings.getINSTANCE().loadedConfig) {
+                        radioButton.isSelected = true
+                    }
+                    radioButton.setOnAction {
+                        val selectedFile = File(DirectoryManager.getRootDir(), radioButton.text + "_UpdateScript.json")
+                        Settings.getINSTANCE().loadedConfig = selectedFile
+                        Script.loadScriptFromJson()
+                    }
+                    vBox.children.add(radioButton)
+                } else {
+                    val fileDisplay = Label(fileName)
+                    vBox.children.add(fileDisplay)
+                }
 
                 val deleteButton = Button("Delete")
                 deleteButton.graphic = ImageView(
@@ -263,9 +143,10 @@ class ConfigManager {
                 )
                 deleteButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
 
+
                 deleteButton.setOnAction {
                     file.delete()
-                    updateDialogContent(vBox, vBoxToolBox)
+                    updateDialogContent(vBox, vBoxToolBox, showRadioButton)
                 }
 
                 val duplicateButton = Button("Duplicate")
@@ -288,7 +169,7 @@ class ConfigManager {
                             }
                         }
                     }
-                    updateDialogContent(vBox, vBoxToolBox)
+                    updateDialogContent(vBox, vBoxToolBox, showRadioButton)
                 }
 
                 val renameButton = Button("Rename")
@@ -315,13 +196,14 @@ class ConfigManager {
                             //just let the default error handler to display the error and quit
                             throw RuntimeException("Failed to rename file!", e)
                         }
-                        updateDialogContent(vBox, vBoxToolBox)
+                        updateDialogContent(vBox, vBoxToolBox, showRadioButton)
                     }
                 }
 
+                val hBox = HBox()
+                hBox.spacing = 10.0
                 hBox.children.addAll(deleteButton, duplicateButton, renameButton)
-                    vBox.children.add(fileDisplay)
-                    vBoxToolBox.children.add(hBox)
+                vBoxToolBox.children.add(hBox)
             }
         }
 
