@@ -83,8 +83,25 @@ public abstract class AnimationFX {
      * Play the animatefx
      */
     public void play() {
-        timeline.play();
+        if (Settings.getINSTANCE().isNoAnimation()) {
+            // Disable animation and set node to final value
+            timeline.stop();
+            timeline.jumpTo(timeline.getCycleDuration());
+            resetNode();
+            if (this.nextAnimation != null) {
+                this.nextAnimation.play();
+            }
+            if (timeline.getOnFinished() != null) {
+                timeline.getOnFinished().handle(null);
+            }
+        } else {
+            // Play animation
+            timeline.play();
+        }
     }
+
+
+
 
     /**
      * Stop the animatefx
@@ -113,12 +130,6 @@ public abstract class AnimationFX {
     }
 
     public void setTimeline(Timeline timeline) {
-        if (Settings.getINSTANCE().isNoAnimation()) {
-            KeyFrame lastFrame = timeline.getKeyFrames().get(timeline.getKeyFrames().size() - 1);
-            timeline.getKeyFrames().clear();
-            lastFrame.getTime().add(Duration.millis(0));
-            timeline.getKeyFrames().add(lastFrame);
-        }
         this.timeline = timeline;
     }
 

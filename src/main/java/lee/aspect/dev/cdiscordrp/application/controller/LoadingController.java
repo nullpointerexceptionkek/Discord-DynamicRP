@@ -25,6 +25,9 @@
 
 package lee.aspect.dev.cdiscordrp.application.controller;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,6 +35,8 @@ import javafx.scene.Parent;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import lee.aspect.dev.cdiscordrp.manager.ConfigSceneManager;
 import lee.aspect.dev.cdiscordrp.animatefx.FadeOut;
 import lee.aspect.dev.cdiscordrp.animatefx.RotateIn;
@@ -46,10 +51,10 @@ public class LoadingController {
     private ProgressIndicator progress;
 
     @FXML
-    private StackPane stackPane;
+    private VBox vRoot;
 
     @FXML
-    private AnchorPane anchorRoot;
+    private StackPane stackPane;
 
     private Load file = Load.Error;
 
@@ -93,8 +98,8 @@ public class LoadingController {
                                 callBackController = loader.getController();
                                 RotateIn animation = new RotateIn(root);
                                 animation.setOnFinished(actionEvent -> {
-                                    FadeOut fadeOut = new FadeOut(anchorRoot);
-                                    fadeOut.setOnFinished((actionEvent1 -> stackPane.getChildren().remove(anchorRoot)));
+                                    FadeOut fadeOut = new FadeOut(vRoot);
+                                    fadeOut.setOnFinished((actionEvent1 -> stackPane.getChildren().remove(vRoot)));
                                     fadeOut.play();
                                 });
                                 animation.play();
@@ -104,8 +109,8 @@ public class LoadingController {
                                 stackPane.getChildren().add(0, cfgRoot);
                                 RotateIn animation1 = new RotateIn(cfgRoot);
                                 animation1.setOnFinished(actionEvent -> {
-                                    FadeOut fadeOut = new FadeOut(anchorRoot);
-                                    fadeOut.setOnFinished((actionEvent1 -> stackPane.getChildren().remove(anchorRoot)));
+                                    FadeOut fadeOut = new FadeOut(vRoot);
+                                    fadeOut.setOnFinished((actionEvent1 -> stackPane.getChildren().remove(vRoot)));
                                     fadeOut.play();
                                 });
                                 animation1.play();
@@ -117,9 +122,9 @@ public class LoadingController {
                                 stackPane.getChildren().add(0, root2);
                                 RotateIn animation2 = new RotateIn(root2);
                                 animation2.setOnFinished(actionEvent -> {
-                                    FadeOut fadeOut = new FadeOut(anchorRoot);
+                                    FadeOut fadeOut = new FadeOut(vRoot);
                                     fadeOut.setOnFinished((actionEvent1 -> {
-                                        stackPane.getChildren().remove(anchorRoot);
+                                        stackPane.getChildren().remove(vRoot);
                                         controller.invalidDiscordAppID("Unable to connect to Discord, please check this field.");
                                     }));
                                     fadeOut.play();

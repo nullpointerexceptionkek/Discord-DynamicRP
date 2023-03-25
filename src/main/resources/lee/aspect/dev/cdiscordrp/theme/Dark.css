@@ -120,3 +120,54 @@
 .scroll-bar:horizontal {
     -fx-pref-height: 12;
 }
+
+.check-box {
+    -fx-text-fill: #ffffff;
+}
+
+.check-box .box {
+    -fx-background-color: #40444b;
+    -fx-border-color: #7289da;
+    -fx-border-width: 2px;
+    -fx-shape: "M 0 8 C 0 3.58 3.58 0 8 0 H 12 C 16.42 0 20 3.58 20 8 V 12 C 20 16.42 16.42 20 12 20 H 8 C 3.58 20 0 16.42 0 12 Z";
+    -fx-background-radius: 5;
+}
+
+.check-box:selected .box {
+    -fx-background-color: #7289da;
+    -fx-border-color: #7289da;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: #ffffff;
+}
+
+.radio-button {
+    -fx-text-fill: #ffffff;
+}
+
+.radio-button .radio {
+    -fx-background-color: #40444b;
+    -fx-border-color: #7289da;
+    -fx-border-width: 2px;
+    -fx-shape: "M 10 1 A 9 9 0 1 0 10 19 A 9 9 0 1 0 10 1 Z";
+    -fx-background-radius: 5;
+}
+
+.radio-button:selected .radio {
+    -fx-background-color: #7289da;
+    -fx-border-color: #7289da;
+}
+
+.radio-button:selected .radio .dot {
+    -fx-background-color: #ffffff;
+}
+
+.radio-button:hover .radio {
+    -fx-background-color: #4752c4;
+    -fx-border-color: #4752c4;
+}
+
+.progress-indicator {
+    -fx-progress-color: #7289da;
+}

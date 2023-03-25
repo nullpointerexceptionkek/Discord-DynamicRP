@@ -56,13 +56,7 @@ class ConfigSceneManager {
             loader.resources = LanguageManager.lang
 
             val root = loader.load<Parent>()
-
-                CustomDiscordRPC::class.java.getResource(
-                    Objects.requireNonNull(
-                        CustomDiscordRPC::class.java.getResource(
-                            Settings.getINSTANCE().theme.path))
-                        .toExternalForm()
-            )
+            root.stylesheets.add(Settings.getINSTANCE().theme.path)
 
             return root
 
