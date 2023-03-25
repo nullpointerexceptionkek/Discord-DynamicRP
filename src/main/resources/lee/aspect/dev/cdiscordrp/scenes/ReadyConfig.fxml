@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.StackPane?>
 <!--
   ~
   ~ MIT License
@@ -28,49 +25,69 @@
   ~ SOFTWARE.
   -->
 
-<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="stackPane" xmlns="http://javafx.com/javafx/18"
-           fx:controller="lee.aspect.dev.cdiscordrp.application.controller.ConfigController">
-    <AnchorPane fx:id="anchorRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-                prefHeight="540.0" prefWidth="334.0">
-        <Label fx:id="titleLabel" alignment="CENTER" layoutX="50.0" layoutY="14.0" prefHeight="32.0" prefWidth="234.0"
-               text="Custom Discord RP" textFill="WHITE">
-        </Label>
-        <Button fx:id="callbackButton" layoutX="116.0" layoutY="501.0" mnemonicParsing="false"
-                onAction="#switchToCallBack" text="Launch Call Back"/>
-        <Label fx:id="Application_IDLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="106.0" layoutY="46.0"
-               prefHeight="18.0" prefWidth="123.0" text="Application ID"/>
-        <TextField fx:id="appIDTextField" layoutX="68.0" layoutY="64.0" prefHeight="26.0" prefWidth="202.0"
-                   promptText="Enter Discord Application ID"/>
-        <ListView fx:id="displayUpdates" editable="true" layoutX="69.0" layoutY="100.0" prefHeight="190.0"
-                  prefWidth="200.0"/>
-        <Button fx:id="AddNewItemButton" layoutX="115.0" layoutY="296.0" mnemonicParsing="false" onAction="#addNewItem"
-                prefHeight="25.0" prefWidth="105.0" text="Add new item"/>
-        <RadioButton fx:id="appLaunch" layoutX="64.0" layoutY="344.0" mnemonicParsing="false"
-                     onAction="#getTimeStampMode" prefHeight="17.0" prefWidth="99.0" text="Since Launch">
-            <toggleGroup>
-                <ToggleGroup fx:id="timeStampMode"/>
-            </toggleGroup>
-        </RadioButton>
-        <Label fx:id="TimeStampMethodLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="108.0" layoutY="326.0"
-               prefHeight="18.0" prefWidth="123.0" text="Time stamp method" textFill="WHITE"/>
-        <RadioButton fx:id="cdFomEndDay" layoutX="64.0" layoutY="392.0" mnemonicParsing="false"
-                     onAction="#getTimeStampMode" prefHeight="17.0" prefWidth="211.0" text="Countdown from day end"
-                     toggleGroup="$timeStampMode"/>
-        <RadioButton fx:id="local" layoutX="64.0" layoutY="368.0" mnemonicParsing="false" onAction="#getTimeStampMode"
-                     prefHeight="17.0" prefWidth="82.0" text="Local time" toggleGroup="$timeStampMode"/>
-        <RadioButton fx:id="none" layoutX="195.0" layoutY="416.0" mnemonicParsing="false" onAction="#getTimeStampMode"
-                     prefHeight="17.0" prefWidth="99.0" text="None" toggleGroup="$timeStampMode"/>
-        <Button fx:id="settingButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchToSetting"
-                prefHeight="25.0" prefWidth="27.0" text="S"/>
-        <RadioButton fx:id="sinceUpdate" layoutX="64.0" layoutY="416.0" mnemonicParsing="false"
-                     onAction="#getTimeStampMode" prefHeight="17.0" prefWidth="151.0" text="Since each update"
-                     toggleGroup="$timeStampMode"/>
-        <RadioButton fx:id="custom" layoutX="166.0" layoutY="344.0" mnemonicParsing="false" onAction="#getTimeStampMode"
-                     prefHeight="17.0" prefWidth="99.0" text="Custom" toggleGroup="$timeStampMode"/>
-        <ChoiceBox fx:id="updateMode" layoutX="94.0" layoutY="457.0" prefWidth="150.0"/>
-        <Label fx:id="UpdateModeLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="106.0" layoutY="439.0"
-               prefHeight="18.0" prefWidth="123.0" text="Update mode"/>
-        <TextField fx:id="CustomTimeInput" layoutX="164.0" layoutY="364.0" prefHeight="26.0" prefWidth="105.0"
-                   promptText="Enter time"/>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lee.aspect.dev.cdiscordrp.application.controller.ConfigController">
+    <AnchorPane fx:id="anchorRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="334.0">
+        <VBox alignment="CENTER" layoutX="0" layoutY="0" prefHeight="540.0" prefWidth="334.0" spacing="10">
+            <padding>
+                <Insets bottom="20" left="20" right="20" top="20" />
+            </padding>
+            <AnchorPane>
+                <Label fx:id="titleLabel" text="Custom Discord RP" textFill="WHITE" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" />
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Button fx:id="settingButton" mnemonicParsing="false" onAction="#switchToSetting" prefHeight="25.0" prefWidth="27.0" text="%settingButton" />
+                </HBox>
+            </AnchorPane>
+            <TextField fx:id="appIDTextField" prefHeight="26.0" prefWidth="202.0" promptText="%DiscordAppIDInput" />
+            <Label fx:id="Application_IDLabel" text="%Application_ID" />
+            <ListView fx:id="displayUpdates" editable="true" prefHeight="190.0" prefWidth="200.0" />
+            <Button fx:id="AddNewItemButton" mnemonicParsing="false" onAction="#addNewItem" prefHeight="25.0" prefWidth="105.0" text="%addNewItemButton" />
+            <Label fx:id="TimeStampMethodLabel" text="%TimeStampMethod" textFill="WHITE" />
+            <GridPane alignment="CENTER" hgap="0" vgap="10">
+                <RadioButton fx:id="appLaunch" mnemonicParsing="false" onAction="#getTimeStampMode" prefHeight="17.0" prefWidth="99.0" text="%appLaunch">
+                    <toggleGroup>
+                        <ToggleGroup fx:id="timeStampMode" />
+                    </toggleGroup>
+                </RadioButton>
+                <RadioButton fx:id="local" mnemonicParsing="false" onAction="#getTimeStampMode" prefHeight="17.0" prefWidth="82.0" text="%local" toggleGroup="$timeStampMode" GridPane.columnIndex="1" />
+                <RadioButton fx:id="cdFomEndDay" mnemonicParsing="false" onAction="#getTimeStampMode" prefHeight="17.0" prefWidth="128.0" text="%cdFomEndDay" toggleGroup="$timeStampMode" GridPane.rowIndex="1" />
+                <RadioButton fx:id="custom" mnemonicParsing="false" onAction="#getTimeStampMode" prefHeight="17.0" prefWidth="99.0" text="%custom" toggleGroup="$timeStampMode" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <TextField fx:id="CustomTimeInput" prefHeight="26.0" prefWidth="105.0" promptText="%CustomTimeInput" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <RadioButton fx:id="sinceUpdate" mnemonicParsing="false" onAction="#getTimeStampMode" prefHeight="17.0" prefWidth="151.0" text="%sinceUpdate" toggleGroup="$timeStampMode" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <columnConstraints>
+               <ColumnConstraints />
+               <ColumnConstraints />
+            </columnConstraints>
+            <rowConstraints>
+               <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
+            </rowConstraints>
+            </GridPane>
+            <HBox spacing="10">
+                <Label fx:id="UpdateModeLabel" text="%UpdateMode" />
+                <ChoiceBox fx:id="updateMode" prefWidth="150.0" />
+            </HBox>
+            <Region VBox.vgrow="ALWAYS" />
+            <HBox alignment="CENTER" spacing="10">
+                <Button fx:id="callbackButton" mnemonicParsing="false" onAction="#switchToCallBack" text="%callbackButton" />
+            </HBox>
+        </VBox>
     </AnchorPane>
 </StackPane>

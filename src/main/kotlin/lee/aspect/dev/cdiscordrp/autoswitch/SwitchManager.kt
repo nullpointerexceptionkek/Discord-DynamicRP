@@ -51,6 +51,7 @@ import lee.aspect.dev.cdiscordrp.manager.ConfigManager
 import lee.aspect.dev.cdiscordrp.application.core.Script
 import lee.aspect.dev.cdiscordrp.application.core.Settings
 import lee.aspect.dev.cdiscordrp.json.loader.FileManager
+import lee.aspect.dev.cdiscordrp.manager.ConfigSceneManager
 import java.io.File
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -149,16 +150,7 @@ class SwitchManager private constructor() {
                     Settings.getINSTANCE().loadedConfig = files[i]
                     Script.loadScriptFromJson()
 
-                    val root = FXMLLoader.load<Parent>(
-                        Objects.requireNonNull(
-                            CustomDiscordRPC::class.java.getResource("/lee/aspect/dev/cdiscordrp/scenes/ReadyConfig.fxml")
-                        )
-                    )
-                    root.stylesheets.add(
-                        Objects.requireNonNull(CustomDiscordRPC::class.java.getResource(Settings.getINSTANCE().theme.path))
-                            .toExternalForm()
-                    )
-
+                    val root = ConfigSceneManager.getDefaultConfigParent()
                     //println(anchorRoot.children)
 
                     if (anchorRoot.children.contains(switchStackPane)) {

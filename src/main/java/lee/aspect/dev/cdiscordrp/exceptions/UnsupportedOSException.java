@@ -23,7 +23,7 @@
  * SOFTWARE.
  */
 
-package lee.aspect.dev.cdiscordrp.util.system;
+package lee.aspect.dev.cdiscordrp.exceptions;
 
 public class UnsupportedOSException extends Exception {
 

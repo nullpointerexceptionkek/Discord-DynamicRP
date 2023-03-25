@@ -27,6 +27,7 @@ package lee.aspect.dev.cdiscordrp.util.system;
 
 import lee.aspect.dev.cdiscordrp.Launch;
 import lee.aspect.dev.cdiscordrp.exceptions.FileNotAJarException;
+import lee.aspect.dev.cdiscordrp.exceptions.UnsupportedOSException;
 
 import java.io.File;
 import java.io.FileOutputStream;

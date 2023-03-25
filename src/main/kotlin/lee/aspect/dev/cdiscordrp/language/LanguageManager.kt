@@ -42,12 +42,12 @@ class LanguageManager private constructor() {
 
         @JvmStatic
         fun setLang(lang: Languages) {
-            Companion.lang = ResourceBundle.getBundle(lang.resourceLocation, Locale.getDefault())
+            Companion.lang = ResourceBundle.getBundle(lang.resourceLocation, Locale.getDefault(),UTF8Control())
         }
 
         @JvmStatic
         fun init() {
-            lang = ResourceBundle.getBundle(Settings.getINSTANCE().lang.resourceLocation, Locale.getDefault())
+            lang = ResourceBundle.getBundle(Settings.getINSTANCE().lang.resourceLocation, Locale.getDefault(), UTF8Control())
         }
 
         @JvmStatic

@@ -210,26 +210,6 @@ public class ConfigController implements Initializable {
     //it will also set the appid to only accept numbers and if loaded is not null, it will leave it empty
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        //apply languages
-        Application_IDLabel.setText(LanguageManager.getLang().getString("Application_ID"));
-        TimeStampMethodLabel.setText(LanguageManager.getLang().getString("TimeStampMethod"));
-        UpdateModeLabel.setText(LanguageManager.getLang().getString("UpdateMode"));
-        //radio buttons
-        appLaunch.setText(LanguageManager.getLang().getString("appLaunch"));
-        local.setText(LanguageManager.getLang().getString("local"));
-        cdFomEndDay.setText(LanguageManager.getLang().getString("cdFomEndDay"));
-        sinceUpdate.setText(LanguageManager.getLang().getString("sinceUpdate"));
-        none.setText(LanguageManager.getLang().getString("none"));
-        custom.setText(LanguageManager.getLang().getString("custom"));
-        //buttons
-        AddNewItemButton.setText(LanguageManager.getLang().getString("addNewItemButton"));
-        callbackButton.setText(LanguageManager.getLang().getString("callbackButton"));
-        settingButton.setText(LanguageManager.getLang().getString("settingButton"));
-        //text-fields
-        appIDTextField.setPromptText(LanguageManager.getLang().getString("DiscordAppIDInput"));
-        CustomTimeInput.setPromptText(LanguageManager.getLang().getString("CustomTimeInput"));
-
-
         ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/lee/aspect/dev/cdiscordrp/icon/settingsImage.png")).toExternalForm());
         imageView.setFitHeight(25);
         imageView.setPreserveRatio(true);

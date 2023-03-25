@@ -33,7 +33,7 @@ import javafx.scene.layout.VBox
 import javafx.stage.DirectoryChooser
 import lee.aspect.dev.cdiscordrp.Launch
 import lee.aspect.dev.cdiscordrp.util.system.StartLaunch
-import lee.aspect.dev.cdiscordrp.util.system.UnsupportedOSException
+import lee.aspect.dev.cdiscordrp.exceptions.UnsupportedOSException
 import java.io.BufferedWriter
 import java.io.File
 import java.nio.file.Files

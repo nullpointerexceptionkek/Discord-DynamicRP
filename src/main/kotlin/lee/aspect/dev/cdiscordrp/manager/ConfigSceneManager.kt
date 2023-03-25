@@ -30,6 +30,7 @@ import javafx.scene.Parent
 import lee.aspect.dev.cdiscordrp.application.core.CustomDiscordRPC
 import lee.aspect.dev.cdiscordrp.autoswitch.SwitchManager
 import lee.aspect.dev.cdiscordrp.application.core.Settings
+import lee.aspect.dev.cdiscordrp.language.LanguageManager
 import java.io.IOException
 import java.util.*
 
@@ -49,18 +50,22 @@ class ConfigSceneManager {
 
         @JvmStatic
         fun getDefaultConfigParent(): Parent? {
-            val root = FXMLLoader.load<Parent>(
-                Objects.requireNonNull(
-                    CustomDiscordRPC::class.java.getResource("/lee/aspect/dev/cdiscordrp/scenes/ReadyConfig.fxml")
-                )
+            val loader = FXMLLoader()
+            loader.location = CustomDiscordRPC::class.java.getResource("/lee/aspect/dev/cdiscordrp/scenes/ReadyConfig.fxml")
+
+            loader.resources = LanguageManager.lang
+
+            val root = loader.load<Parent>()
+
+                CustomDiscordRPC::class.java.getResource(
+                    Objects.requireNonNull(
+                        CustomDiscordRPC::class.java.getResource(
+                            Settings.getINSTANCE().theme.path))
+                        .toExternalForm()
             )
-            root.stylesheets.add(
-                Objects.requireNonNull(
-                    CustomDiscordRPC::class.java.getResource(
-                        Settings.getINSTANCE().theme.path))
-                    .toExternalForm()
-            )
+
             return root
+
         }
     }
 }
