@@ -66,6 +66,8 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.EnumSet;
@@ -142,7 +144,19 @@ public class ConfigController implements Initializable {
             return;
         }
         if (DiscordAppID == null || DiscordAppID.isEmpty()) {
-            invalidDiscordAppID("Invalid Application ID");
+            invalidDiscordAppID("Application ID is empty");
+            return;
+        }
+        if(!(DiscordAppID.length() >= 16 && DiscordAppID.length() <= 32)){
+            //;)
+            if(DiscordAppID.equals("123456789")){
+                try {
+                    Desktop.getDesktop().browse(new URI("https://www.youtube.com/watch?v=dQw4w9WgXcQ"));
+                } catch (URISyntaxException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            invalidDiscordAppID("Application ID is invalid");
             return;
         }
         Script.getINSTANCE().setCustomTimestamp(CustomTimeInput.getText());

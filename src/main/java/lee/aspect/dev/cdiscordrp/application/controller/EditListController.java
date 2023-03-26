@@ -131,7 +131,7 @@ public class EditListController extends ConfigController implements Initializabl
             if (Long.parseLong(Wait.getText()) < 16000) {
                 if (!anchorPane.getChildren().contains(delayTooSmall)) {
                     delayTooSmall =
-                            WarningManager.setWarning(Wait, 12, "It is recommended to set the delay above 16 second", WarningManager.Mode.Up, 60, 2);
+                            WarningManager.setWarning(DelayLabel, 12, "It is recommended to set the delay above 16 second", WarningManager.Mode.Right);
                     anchorPane.getChildren().add(delayTooSmall);
                 }
             } else anchorPane.getChildren().remove(delayTooSmall);

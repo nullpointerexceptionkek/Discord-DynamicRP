@@ -26,6 +26,7 @@
 package lee.aspect.dev.cdiscordrp.util;
 
 
+import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -49,57 +50,44 @@ public class WarningManager {
      *
      * @return ImageView
      */
-    public static ImageView setWarning(double x, double y, int size, String message) {
+    public static ImageView setWarning(Parent parent, int size, String message, Mode mode) {
+        double x, y;
+        Bounds bounds = parent.getLayoutBounds();
+        switch (mode) {
+            case Up:
+                x = parent.getLayoutX() + bounds.getMinX() + (bounds.getWidth() / 2);
+                y = parent.getLayoutY() - 10 - size / 2;
+                break;
+            case Down:
+                x = parent.getLayoutX() + bounds.getMinX() + (bounds.getWidth() / 2);
+                y = parent.getLayoutY() + bounds.getHeight() + 10 + size / 2;
+                break;
+            case Left:
+                x = parent.getLayoutX() - 10 - size / 2;
+                y = parent.getLayoutY() + bounds.getMinY() + bounds.getHeight() / 2 - size / 2;
+                break;
+            case Right:
+                x = parent.getLayoutX() + bounds.getWidth() + 10 + size / 2;
+                y = parent.getLayoutY() + bounds.getMinY() + bounds.getHeight() / 2 - size / 2;
+                break;
+            default:
+                return null;
+        }
         ImageView warning = new ImageView(Objects.requireNonNull(WarningManager.class.getResource("/lee/aspect/dev/cdiscordrp/icon/Warning.png")).toExternalForm());
+        warning.setPickOnBounds(true);
         warning.setFitHeight(size);
         warning.setFitWidth(size);
         warning.setLayoutX(x);
         warning.setLayoutY(y);
-        Tooltip.install(warning, new Tooltip(message));
+        Tooltip tooltip = new Tooltip(message);
+        tooltip.setShowDelay(javafx.util.Duration.millis(0));
+        Tooltip.install(warning, tooltip);
         return warning;
     }
 
-    /**
-     * Creates a warning icon
-     *
-     * @return ImageView
-     */
-    public static ImageView setWarning(Parent parent, int size, String message, Mode mode, double ofSetX, double ofSetY) {
-        switch (mode) {
-            case Up:
-                return setWarning(parent.getLayoutX() + parent.getLayoutBounds().getCenterX() + ofSetX,
-                        parent.getLayoutY() - 10 - size / 2 + ofSetY, size, message);
-            case Down:
-                return setWarning(parent.getLayoutX() + parent.getLayoutBounds().getCenterX() + ofSetX,
-                        parent.getLayoutY() + 10 + size / 2 + ofSetY, size, message);
-            case Left:
-                return setWarning(parent.getLayoutX() - 10 - size / 2 + ofSetX,
-                        parent.getLayoutY() + parent.getLayoutBounds().getCenterY() - size / 2 + ofSetY, size, message);
-            case Right:
-                return setWarning(parent.getLayoutX() + 10 + size / 2 + ofSetX,
-                        parent.getLayoutY() + parent.getLayoutBounds().getCenterY() - size / 2 + ofSetY, size, message);
-            default:
-                return null;
-        }
-    }
 
-    /**
-     * Creates a warning icon
-     *
-     * @return ImageView
-     */
-    public static ImageView setWarning(Parent p) {
-        return setWarning(p, 16, "", Mode.Left);
-    }
 
-    /**
-     * Creates a warning icon
-     *
-     * @return ImageView
-     */
-    public static ImageView setWarning(Parent parent, int size, String message, Mode mode) {
-        return setWarning(parent, size, message, mode, 0, 0);
-    }
+
 
     /**
      * Creates a alert with a checkbox

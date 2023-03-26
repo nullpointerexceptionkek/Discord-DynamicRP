@@ -29,7 +29,7 @@
   ~ SOFTWARE.
   -->
 
-<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="stackPane" xmlns="http://javafx.com/javafx/18"
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="stackPane" xmlns="http://javafx.com/javafx/8"
            fx:controller="lee.aspect.dev.cdiscordrp.application.controller.SettingController">
     <AnchorPane fx:id="settingsAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
                 minWidth="-Infinity" prefHeight="540.0" prefWidth="334.0">

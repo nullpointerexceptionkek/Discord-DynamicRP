@@ -42,7 +42,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lee.aspect.dev.cdiscordrp.application.controller.ConfigController">
+<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lee.aspect.dev.cdiscordrp.application.controller.ConfigController">
     <AnchorPane fx:id="anchorRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="334.0">
         <VBox alignment="CENTER" layoutX="0" layoutY="0" prefHeight="540.0" prefWidth="334.0" spacing="10">
             <padding>

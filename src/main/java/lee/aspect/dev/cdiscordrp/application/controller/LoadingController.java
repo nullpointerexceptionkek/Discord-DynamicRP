@@ -109,7 +109,7 @@ public class LoadingController {
                                 animation1.play();
                                 break;
                             default:
-                                SceneManager.SceneData sceneData = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/CallBack.fxml");
+                                SceneManager.SceneData sceneData = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/ReadyConfig.fxml");
                                 stackPane.getChildren().add(0, sceneData.getRoot());
                                 RotateIn animation2 = new RotateIn(sceneData.getRoot());
                                 animation2.setOnFinished(actionEvent -> {

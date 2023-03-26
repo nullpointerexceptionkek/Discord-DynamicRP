@@ -30,7 +30,7 @@
   -->
 
 <?import javafx.scene.layout.VBox?>
-<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lee.aspect.dev.cdiscordrp.application.controller.LoadingController">
+<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lee.aspect.dev.cdiscordrp.application.controller.LoadingController">
     <VBox fx:id="vRoot" alignment="CENTER">
         <ProgressIndicator fx:id="progress" prefWidth="70.0" prefHeight="70.0">
             <effect>
