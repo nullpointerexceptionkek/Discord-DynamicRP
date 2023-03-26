@@ -28,13 +28,16 @@ package lee.aspect.dev.cdiscordrp.application.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import lee.aspect.dev.cdiscordrp.manager.ConfigSceneManager;
+import lee.aspect.dev.cdiscordrp.application.core.CustomDiscordRPC;
+import lee.aspect.dev.cdiscordrp.exceptions.Debug;
+import lee.aspect.dev.cdiscordrp.manager.SceneManager;
 import lee.aspect.dev.cdiscordrp.Launch;
 import lee.aspect.dev.cdiscordrp.animatefx.SlideOutLeft;
 import lee.aspect.dev.cdiscordrp.application.core.Settings;
@@ -79,7 +82,7 @@ public class SettingController implements Initializable {
 
     public void switchBack() throws IOException {
         goBack.setDisable(true);
-        stackPane.getChildren().add(0, ConfigSceneManager.getConfigParent());
+        stackPane.getChildren().add(0, SceneManager.getConfigParent());
         SlideOutLeft animation = new SlideOutLeft(settingsAnchorPane);
         animation.setOnFinished((actionEvent) -> stackPane.getChildren().remove(settingsAnchorPane));
         animation.play();
@@ -123,10 +126,7 @@ public class SettingController implements Initializable {
         themeChoiceBox.setOnAction((event) -> EnumSet.allOf(Settings.Theme.class).forEach((theme) -> {
             if (themeChoiceBox.getValue().equals(theme.getDisplayName())) {
                 Settings.getINSTANCE().setTheme(theme);
-                Parent root = settingsAnchorPane.getParent();
-                root.getStylesheets().removeAll();
-                root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(Settings.getINSTANCE().getTheme().getPath())).toExternalForm());
-                WarningManager.restartToApplyChanges();
+                CustomDiscordRPC.primaryStage.setScene(new Scene(SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/Settings.fxml").getRoot()));
             }
         }));
         //add min to min choice box

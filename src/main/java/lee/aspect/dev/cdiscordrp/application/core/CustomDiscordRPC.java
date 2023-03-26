@@ -33,7 +33,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import lee.aspect.dev.cdiscordrp.manager.ConfigSceneManager;
+import lee.aspect.dev.cdiscordrp.manager.SceneManager;
 import lee.aspect.dev.cdiscordrp.manager.DirectoryManager;
 import lee.aspect.dev.cdiscordrp.Launch;
 import lee.aspect.dev.cdiscordrp.util.WarningManager;
@@ -142,7 +142,7 @@ public class CustomDiscordRPC extends Application {
             primaryStage = pStage;
             primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/lee/aspect/dev/cdiscordrp/icon/SystemTrayIcon.png"))));
             primaryStage.setTitle("Custom Discord RPC");
-            primaryStage.setScene(new Scene(ConfigSceneManager.getConfigParent()));
+            primaryStage.setScene(new Scene(SceneManager.getConfigParent()));
             primaryStage.setResizable(false);
             primaryStage.setOnCloseRequest((event) -> {
                 event.consume();

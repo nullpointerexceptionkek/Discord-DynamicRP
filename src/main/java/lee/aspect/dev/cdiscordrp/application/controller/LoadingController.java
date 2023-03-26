@@ -25,19 +25,14 @@
 
 package lee.aspect.dev.cdiscordrp.application.controller;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.ProgressIndicator;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.util.Duration;
-import lee.aspect.dev.cdiscordrp.manager.ConfigSceneManager;
+import lee.aspect.dev.cdiscordrp.manager.SceneManager;
 import lee.aspect.dev.cdiscordrp.animatefx.FadeOut;
 import lee.aspect.dev.cdiscordrp.animatefx.RotateIn;
 import lee.aspect.dev.cdiscordrp.application.core.RunLoopManager;
@@ -92,10 +87,8 @@ public class LoadingController {
                     try {
                         switch (file) {
                             case CallBackScreen:
-                                FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/cdiscordrp/scenes/CallBack.fxml"));
-                                Parent root = loader.load();
+                                Parent root = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/CallBack.fxml").getRoot();
                                 stackPane.getChildren().add(0, root);
-                                callBackController = loader.getController();
                                 RotateIn animation = new RotateIn(root);
                                 animation.setOnFinished(actionEvent -> {
                                     FadeOut fadeOut = new FadeOut(vRoot);
@@ -105,7 +98,7 @@ public class LoadingController {
                                 animation.play();
                                 break;
                             case ConfigScreen:
-                                Parent cfgRoot = ConfigSceneManager.getConfigParent();
+                                Parent cfgRoot = SceneManager.getConfigParent();
                                 stackPane.getChildren().add(0, cfgRoot);
                                 RotateIn animation1 = new RotateIn(cfgRoot);
                                 animation1.setOnFinished(actionEvent -> {
@@ -116,16 +109,14 @@ public class LoadingController {
                                 animation1.play();
                                 break;
                             default:
-                                FXMLLoader loader2 = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/lee/aspect/dev/cdiscordrp/scenes/ReadyConfig.fxml")));
-                                Parent root2 = loader2.load();
-                                ConfigController controller = loader2.getController();
-                                stackPane.getChildren().add(0, root2);
-                                RotateIn animation2 = new RotateIn(root2);
+                                SceneManager.SceneData sceneData = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/CallBack.fxml");
+                                stackPane.getChildren().add(0, sceneData.getRoot());
+                                RotateIn animation2 = new RotateIn(sceneData.getRoot());
                                 animation2.setOnFinished(actionEvent -> {
                                     FadeOut fadeOut = new FadeOut(vRoot);
                                     fadeOut.setOnFinished((actionEvent1 -> {
                                         stackPane.getChildren().remove(vRoot);
-                                        controller.invalidDiscordAppID("Unable to connect to Discord, please check this field.");
+                                        ((ConfigController)sceneData.getController()).invalidDiscordAppID("Unable to connect to Discord, please check this field.");
                                     }));
                                     fadeOut.play();
                                 });

@@ -28,13 +28,14 @@ package lee.aspect.dev.cdiscordrp.manager
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
 import lee.aspect.dev.cdiscordrp.application.core.CustomDiscordRPC
-import lee.aspect.dev.cdiscordrp.autoswitch.SwitchManager
 import lee.aspect.dev.cdiscordrp.application.core.Settings
+import lee.aspect.dev.cdiscordrp.autoswitch.SwitchManager
+import lee.aspect.dev.cdiscordrp.exceptions.Debug
 import lee.aspect.dev.cdiscordrp.language.LanguageManager
 import java.io.IOException
 import java.util.*
 
-class ConfigSceneManager {
+class SceneManager {
     companion object {
         /**
          * returns different manager screen according to the settings.
@@ -49,17 +50,22 @@ class ConfigSceneManager {
         }
 
         @JvmStatic
-        fun getDefaultConfigParent(): Parent? {
+        fun getDefaultConfigParent(): Parent {
+            return loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/ReadyConfig.fxml").root
+        }
+
+        @JvmStatic
+        fun loadSceneWithStyleSheet(location:String): SceneData {
             val loader = FXMLLoader()
-            loader.location = CustomDiscordRPC::class.java.getResource("/lee/aspect/dev/cdiscordrp/scenes/ReadyConfig.fxml")
+            loader.location = CustomDiscordRPC::class.java.getResource(location)
 
             loader.resources = LanguageManager.lang
 
             val root = loader.load<Parent>()
+            root.stylesheets.clear()
             root.stylesheets.add(Settings.getINSTANCE().theme.path)
-
-            return root
-
+            return SceneData(root, loader.getController())
         }
     }
+    data class SceneData(val root: Parent, val controller: Any)
 }

@@ -51,7 +51,7 @@ import lee.aspect.dev.cdiscordrp.manager.ConfigManager
 import lee.aspect.dev.cdiscordrp.application.core.Script
 import lee.aspect.dev.cdiscordrp.application.core.Settings
 import lee.aspect.dev.cdiscordrp.json.loader.FileManager
-import lee.aspect.dev.cdiscordrp.manager.ConfigSceneManager
+import lee.aspect.dev.cdiscordrp.manager.SceneManager
 import java.io.File
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -125,10 +125,7 @@ class SwitchManager private constructor() {
 
             for (i in files.indices) {
                 val fileName = files[i].name.substring(0, files[i].name.indexOf("_UpdateScript.json"))
-                val text = Text(fileName)
-                text.maxWidth(180.0)
-                text.font = Font.font(16.0)
-                text.fill = Color.WHITE
+                val text = Label(fileName)
                 vboxtext.children.add(text)
 
                 val textField = TextField()
@@ -150,7 +147,7 @@ class SwitchManager private constructor() {
                     Settings.getINSTANCE().loadedConfig = files[i]
                     Script.loadScriptFromJson()
 
-                    val root = ConfigSceneManager.getDefaultConfigParent()
+                    val root = SceneManager.getDefaultConfigParent()
                     //println(anchorRoot.children)
 
                     if (anchorRoot.children.contains(switchStackPane)) {
@@ -193,13 +190,7 @@ class SwitchManager private constructor() {
 
             val settingsButton = Button()
             settingsButton.setOnAction {
-                val loader =
-                    FXMLLoader(CustomDiscordRPC::class.java.getResource("/lee/aspect/dev/cdiscordrp/scenes/Settings.fxml"))
-                val root = loader.load<Parent>()
-                root.stylesheets.add(
-                    Objects.requireNonNull(CustomDiscordRPC::class.java.getResource(Settings.getINSTANCE().theme.path))
-                        .toExternalForm()
-                )
+                val root = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/Settings.fxml").root
                 anchorRoot.children.add(root)
                 val animation = SlideInLeft(root)
                 animation.setOnFinished {

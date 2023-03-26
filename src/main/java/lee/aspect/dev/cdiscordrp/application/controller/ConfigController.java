@@ -45,6 +45,8 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import lee.aspect.dev.cdiscordrp.Launch;
+import lee.aspect.dev.cdiscordrp.exceptions.Debug;
+import lee.aspect.dev.cdiscordrp.manager.SceneManager;
 import lee.aspect.dev.cdiscordrp.manager.UndoRedoManager;
 import lee.aspect.dev.cdiscordrp.animatefx.FadeIn;
 import lee.aspect.dev.cdiscordrp.animatefx.FadeOut;
@@ -149,19 +151,15 @@ public class ConfigController implements Initializable {
         Script.getINSTANCE().setDiscordAPIKey(DiscordAppID);
         Settings.saveSettingToFile();
         RunLoopManager.saveScripToFile();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/cdiscordrp/scenes/LoadingScreen.fxml"));
-        Parent root = loader.load();
-        root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(Settings.getINSTANCE().getTheme().getPath())).toExternalForm());
+        SceneManager.SceneData sceneData = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/LoadingScreen.fxml");
+
         FadeOut fadeOut = new FadeOut(anchorRoot);
         fadeOut.setOnFinished((actionEvent -> {
             stackPane.getChildren().remove(anchorRoot);
-            FadeIn fadeIn = new FadeIn(root);
-            fadeIn.setOnFinished((actionEvent1) -> {
-                LoadingController lc = loader.getController();
-                lc.toNewScene(LoadingController.Load.CallBackScreen);
-            });
-            root.setOpacity(0);
-            stackPane.getChildren().add(root);
+            FadeIn fadeIn = new FadeIn(sceneData.getRoot());
+            fadeIn.setOnFinished((actionEvent1) -> ((LoadingController) sceneData.getController()).toNewScene(LoadingController.Load.CallBackScreen));
+            sceneData.getRoot().setOpacity(0);
+            stackPane.getChildren().add(sceneData.getRoot());
             fadeIn.play();
         }));
         fadeOut.setSpeed(5);
@@ -171,13 +169,12 @@ public class ConfigController implements Initializable {
 
     public void switchToSetting() throws IOException {
         settingButton.setDisable(true);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/cdiscordrp/scenes/Settings.fxml"));
-        Parent root = loader.load();
-        root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(Settings.getINSTANCE().getTheme().getPath())).toExternalForm());
+        Parent root = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/Settings.fxml").getRoot();
         stackPane.getChildren().add(root);
         SlideInLeft animation = new SlideInLeft(root);
         animation.setOnFinished((actionEvent) -> stackPane.getChildren().remove(anchorRoot));
         animation.play();
+
 
     }
 
@@ -375,23 +372,17 @@ public class ConfigController implements Initializable {
 
     //this will open up a new window and edit the arraylist
     private void showListConfig(int numberInList, double x, double y) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/cdiscordrp/scenes/EditListScript.fxml"));
-            Parent root = loader.load();
-            root.getStylesheets().add(Objects.requireNonNull(getClass().getResource(Settings.getINSTANCE().getTheme().getPath())).toExternalForm());
-            EditListController ec = loader.getController();
-            ec.setnumberInList(numberInList);
-            Stage stage = new Stage();
-            stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/lee/aspect/dev/cdiscordrp/icon/settingsImage.png"))));
-            stage.setTitle("Config Editor - index: " + (numberInList + 1));
-            stage.setScene(new Scene(root));
-            stage.setX(x);
-            stage.setY(y);
-            stage.setResizable(false);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        SceneManager.SceneData sceneData = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/EditListScript.fxml");
+        EditListController ec = (EditListController) sceneData.getController();
+        ec.setnumberInList(numberInList);
+        Stage stage = new Stage();
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/lee/aspect/dev/cdiscordrp/icon/settingsImage.png"))));
+        stage.setTitle("Config Editor - index: " + (numberInList + 1));
+        stage.setScene(new Scene(sceneData.getRoot()));
+        stage.setX(x);
+        stage.setY(y);
+        stage.setResizable(false);
+        stage.show();
     }
 
     private void refreshList() {

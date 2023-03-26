@@ -42,6 +42,7 @@ import lee.aspect.dev.cdiscordrp.application.core.Settings;
 import lee.aspect.dev.cdiscordrp.application.core.Updates;
 import lee.aspect.dev.cdiscordrp.animatefx.*;
 import lee.aspect.dev.cdiscordrp.language.LanguageManager;
+import lee.aspect.dev.cdiscordrp.manager.SceneManager;
 
 import java.io.IOException;
 import java.net.URL;
@@ -65,19 +66,18 @@ public class CallBackController implements Initializable {
 
     public void switchToConfig() throws IOException {
         switchToConfig.setDisable(true);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/lee/aspect/dev/cdiscordrp/scenes/LoadingScreen.fxml"));
-        Parent root = loader.load();
+        SceneManager.SceneData sceneData = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/LoadingScreen.fxml");
 
         FadeOut fadeOut = new FadeOut(anchorRoot);
         fadeOut.setOnFinished((actionEvent -> {
             stackPane.getChildren().remove(anchorRoot);
-            FadeIn fadeIn = new FadeIn(root);
+            FadeIn fadeIn = new FadeIn(sceneData.getRoot());
             fadeIn.setOnFinished((actionEvent1) -> {
-                LoadingController lc = loader.getController();
+                LoadingController lc = (LoadingController) sceneData.getController();
                 lc.toNewScene(LoadingController.Load.ConfigScreen);
             });
-            root.setOpacity(0);
-            stackPane.getChildren().add(root);
+            sceneData.getRoot().setOpacity(0);
+            stackPane.getChildren().add(sceneData.getRoot());
             fadeIn.play();
         }));
         fadeOut.setSpeed(5);

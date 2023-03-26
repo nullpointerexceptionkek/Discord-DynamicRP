@@ -1,0 +1,171 @@
+/*
+ *
+ * MIT License
+ *
+ * Copyright (c) 2023 lee
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+.root, #defaultPane, #settingsAnchorPane, .list-view {
+    -fx-background-color: #2C2F33;
+}
+
+.label, .check-box, .radio-button, .list-cell:even, .list-cell:odd {
+    -fx-font-family: "Roboto";
+    -fx-text-fill: #ffffff;
+}
+
+.label {
+    -fx-font-size: 14;
+    -fx-alignment: center;
+}
+
+.text-field {
+    -fx-background-color: #40444b;
+    -fx-text-fill: #ffffff;
+    -fx-prompt-text-fill: #687275;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+.text-field:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 5, 0, 0, 1);
+}
+
+.text-field:focused {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 8, 0, 0, 1);
+}
+
+.button, .check-box:selected .box, .radio-button:selected .radio, .scroll-bar .thumb, .progress-indicator {
+    -fx-background-color: #7289da;
+}
+
+.button {
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+.button:hover, .list-cell:filled:selected:focused, .list-cell:filled:selected, .radio-button:hover .radio {
+    -fx-background-color: #4752c4;
+}
+
+.list-cell {
+    -fx-background-color: transparent;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #32353b;
+}
+
+.list-cell:filled:selected, .list-cell:filled:selected:focused {
+    -fx-background-color: #4752c4;
+}
+
+.choice-box {
+    -fx-background-color: #40444b;
+    -fx-background-fills: #ffffff;
+    -fx-background-radius: 5px;
+}
+
+.context-menu {
+    -fx-background-color: #18191c;
+    -fx-text-fill: #a3a4a8;
+}
+
+#titleLabel {
+    -fx-font-size: 20;
+}
+
+/* scroll pane */
+.scroll-pane {
+    -fx-background-color: #2C2F33;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar {
+    -fx-background-color: #40444b;
+    -fx-pref-width: 10px;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-min-height: 0;
+    -fx-pref-height: 0;
+    -fx-max-height: 0;
+}
+
+.scroll-bar .thumb {
+    -fx-background-insets: 0;
+    -fx-background-radius: 4;
+}
+
+.scroll-bar:vertical {
+    -fx-pref-width: 12;
+}
+
+.scroll-bar:horizontal {
+    -fx-pref-height: 12;
+}
+.check-box .box {
+    -fx-background-color: #40444b;
+    -fx-border-color: #7289da;
+    -fx-border-width: 2px;
+    -fx-shape: "M 0 8 C 0 3.58 3.58 0 8 0 H 12 C 16.42 0 20 3.58 20 8 V 12 C 20 16.42 16.42 20 12 20 H 8 C 3.58 20 0 16.42 0 12 Z";
+    -fx-background-radius: 5;
+}
+
+.check-box:selected .box {
+    -fx-border-color: #7289da;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: #ffffff;
+}
+
+.radio-button .radio {
+    -fx-background-color: #40444b;
+    -fx-border-color: #7289da;
+    -fx-border-width: 2px;
+    -fx-shape: "M 10 1 A 9 9 0 1 0 10 19 A 9 9 0 1 0 10 1 Z";
+    -fx-background-radius: 5;
+}
+
+.radio-button:selected .radio {
+    -fx-border-color: #7289da;
+}
+
+.radio-button:selected .radio .dot {
+    -fx-background-color: #ffffff;
+}
+
+.radio-button:hover .radio {
+    -fx-background-color: #4752c4;
+    -fx-border-color: #4752c4;
+}
+
+.progress-indicator {
+    -fx-progress-color: #7289da;
+    -fx-background-color: transparent;
+}

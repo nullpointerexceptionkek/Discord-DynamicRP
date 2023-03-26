@@ -153,12 +153,22 @@ public class Settings {
 
     public enum Theme {
 
-        light("/lee/aspect/dev/cdiscordrp/theme/Light.css", "Discord light"),
-        dark("/lee/aspect/dev/cdiscordrp/theme/Dark.css", "Discord dark"),
+        light("/lee/aspect/dev/cdiscordrp/theme/DefaultLight.css", "Default Light"),
+        dark("/lee/aspect/dev/cdiscordrp/theme/DefaultDark.css", "Default Dark"),
 
-        lime("/lee/aspect/dev/cdiscordrp/theme/lime.css", "lime"),
+        lime("/lee/aspect/dev/cdiscordrp/theme/KeyLime.css", "Key Lime"),
 
-        skyblue("/lee/aspect/dev/cdiscordrp/theme/SkyBlue/SkyBlue.css", "Sky Blue");
+        purple("/lee/aspect/dev/cdiscordrp/theme/MidnightPurple.css", "Midnight Purple"),
+
+        retroLight("/lee/aspect/dev/cdiscordrp/theme/RetroLight.css", "Retro Light"),
+
+        minimalistWhite("/lee/aspect/dev/cdiscordrp/theme/MinimalistWhite.css", "Minimalist White"),
+
+        materialWhite("/lee/aspect/dev/cdiscordrp/theme/MaterialWhite.css", "Material White"),
+
+        materialDark("/lee/aspect/dev/cdiscordrp/theme/MaterialDark.css", "Material Dark");
+
+        //skyblue("/lee/aspect/dev/cdiscordrp/theme/SkyBlue/SkyBlue.css", "Sky Blue");
 
 
         private final String themePath;
