@@ -102,12 +102,28 @@ public class ApplicationTray {
             return;
         }
         trayIcon.addActionListener(e -> LaunchInterface());
-        aboutItem.addActionListener(e -> JOptionPane.showMessageDialog(null,
-                "Author: " + Launch.AUTHOR + '\n' +
-                        Launch.NAME + '\n' +
-                        "Version: " + Launch.VERSION,
-                "About", JOptionPane.INFORMATION_MESSAGE
-        ));
+        aboutItem.addActionListener(e -> {
+            String version = Launch.VERSION;
+            String author = Launch.AUTHOR;
+            String name = Launch.NAME;
+            String license = "MIT License";
+
+            JPanel panel = new JPanel(new BorderLayout());
+            panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+            JLabel titleLabel = new JLabel(name + " " + version, SwingConstants.CENTER);
+            titleLabel.setFont(new Font("Dialog", Font.BOLD, 16));
+
+            JTextArea textArea = new JTextArea();
+            textArea.setText("Author: " + author + "\nLicense: " + license);
+            textArea.setEditable(false);
+            textArea.setBackground(panel.getBackground());
+
+            panel.add(titleLabel, BorderLayout.NORTH);
+            panel.add(textArea, BorderLayout.CENTER);
+
+            JOptionPane.showMessageDialog(null, panel, "About", JOptionPane.PLAIN_MESSAGE);
+        });
 
         startRPCItem.addActionListener(e -> {
             if (RunLoopManager.isRunning) {
