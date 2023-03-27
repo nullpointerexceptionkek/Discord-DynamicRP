@@ -143,7 +143,7 @@ public class CustomDiscordRPC extends Application {
             primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/lee/aspect/dev/cdiscordrp/icon/SystemTrayIcon.png"))));
             primaryStage.setTitle("Custom Discord RPC");
             primaryStage.setScene(new Scene(SceneManager.getConfigParent()));
-            primaryStage.setResizable(false);
+            //primaryStage.setResizable(false);
             primaryStage.setOnCloseRequest((event) -> {
                 event.consume();
                 onclose();

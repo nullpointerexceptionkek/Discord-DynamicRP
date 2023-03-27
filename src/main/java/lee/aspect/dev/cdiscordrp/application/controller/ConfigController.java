@@ -181,7 +181,7 @@ public class ConfigController implements Initializable {
 
     }
 
-    public void switchToSetting() throws IOException {
+    public void switchToSetting() throws IOException{
         settingButton.setDisable(true);
         Parent root = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/Settings.fxml").getRoot();
         stackPane.getChildren().add(root);

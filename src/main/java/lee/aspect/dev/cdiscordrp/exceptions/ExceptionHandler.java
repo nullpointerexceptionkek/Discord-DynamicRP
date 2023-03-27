@@ -64,6 +64,7 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
 
         //there is no need to every touch this code again unless for gui improvements
         //the code below is for grabbing the uncaught exception and displaying it in a gui
+        e.printStackTrace();
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
         e.printStackTrace(pw);

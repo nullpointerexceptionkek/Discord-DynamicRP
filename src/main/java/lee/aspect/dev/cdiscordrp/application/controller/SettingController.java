@@ -72,7 +72,7 @@ public class SettingController implements Initializable {
             AutoSwitchCheckBox;
 
     @FXML
-    private AnchorPane settingsAnchorPane;
+    private AnchorPane RootPane;
 
     @FXML
     private StackPane stackPane;
@@ -83,8 +83,8 @@ public class SettingController implements Initializable {
     public void switchBack() throws IOException {
         goBack.setDisable(true);
         stackPane.getChildren().add(0, SceneManager.getConfigParent());
-        SlideOutLeft animation = new SlideOutLeft(settingsAnchorPane);
-        animation.setOnFinished((actionEvent) -> stackPane.getChildren().remove(settingsAnchorPane));
+        SlideOutLeft animation = new SlideOutLeft(RootPane);
+        animation.setOnFinished((actionEvent) -> stackPane.getChildren().remove(RootPane));
         animation.play();
 
     }
@@ -99,20 +99,6 @@ public class SettingController implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        //set the languages to current languages
-        LanguageLabel.setText(LanguageManager.getLang().getString("Language"));
-        SettingsLabel.setText(LanguageManager.getLang().getString("Settings"));
-        ThemeLabel.setText(LanguageManager.getLang().getString("Theme"));
-        titleLabel.setText("CDiscordRPC");
-        ReleaseLabel.setText("Release " + Launch.VERSION);
-        MinToTrayLabel.setText(LanguageManager.getLang().getString("MinToTray"));
-        PerformanceLabel.setText(LanguageManager.getLang().getString("Performance"));
-        //checkbox
-        shutDownInterfaceCheckBox.setText(LanguageManager.getLang().getString("ShutDownInterface"));
-        noAnimationCheckBox.setText(LanguageManager.getLang().getString("NoAnimation"));
-        startTrayOnlyCloseCheckBox.setText(LanguageManager.getLang().getString("StartTrayOnlyClose"));
-        startLaunchCheckBox.setText(LanguageManager.getLang().getString("StartLaunch"));
-        ChangeLanguageButton.setText(LanguageManager.getLang().getString("ChangeLanguage"));
 
 
         goBack.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
