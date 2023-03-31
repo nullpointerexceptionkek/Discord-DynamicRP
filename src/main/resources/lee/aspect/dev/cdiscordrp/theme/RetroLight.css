@@ -23,7 +23,7 @@
  * SOFTWARE.
  */
 
-.root, #defaultPane, #RootPane, .list-view {
+.root, #stackPane, #anchorRoot, .list-view {
     -fx-background-color: #FDCD8A;
 }
 

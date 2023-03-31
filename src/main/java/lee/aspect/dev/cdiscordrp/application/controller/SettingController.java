@@ -35,6 +35,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import lee.aspect.dev.cdiscordrp.application.core.CustomDiscordRPC;
 import lee.aspect.dev.cdiscordrp.exceptions.Debug;
 import lee.aspect.dev.cdiscordrp.manager.SceneManager;
@@ -72,10 +73,14 @@ public class SettingController implements Initializable {
             AutoSwitchCheckBox;
 
     @FXML
-    private AnchorPane RootPane;
+    private AnchorPane anchorRoot;
+
+    @FXML
+    private VBox content;
 
     @FXML
     private StackPane stackPane;
+
 
     @FXML
     private Label SettingsLabel, ThemeLabel, titleLabel, ReleaseLabel, MinToTrayLabel, PerformanceLabel, LanguageLabel, AdvanceConfigLabel;
@@ -83,8 +88,8 @@ public class SettingController implements Initializable {
     public void switchBack() throws IOException {
         goBack.setDisable(true);
         stackPane.getChildren().add(0, SceneManager.getConfigParent());
-        SlideOutLeft animation = new SlideOutLeft(RootPane);
-        animation.setOnFinished((actionEvent) -> stackPane.getChildren().remove(RootPane));
+        SlideOutLeft animation = new SlideOutLeft(anchorRoot);
+        animation.setOnFinished((actionEvent) -> stackPane.getChildren().remove(anchorRoot));
         animation.play();
 
     }

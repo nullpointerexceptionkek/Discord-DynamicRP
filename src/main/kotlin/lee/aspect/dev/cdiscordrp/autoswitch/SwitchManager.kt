@@ -102,7 +102,7 @@ class SwitchManager private constructor() {
 
 
             val anchorRoot = AnchorPane()
-            anchorRoot.id = "defaultPane"
+            anchorRoot.id = "anchorRoot"
             val switchStackPane = StackPane()
             //switchStackPane.id = "defaultPane"
             switchStackPane.padding = Insets(30.0)

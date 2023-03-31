@@ -96,6 +96,9 @@ public class ConfigController implements Initializable {
     private Button AddNewItemButton;
 
     @FXML
+    private StackPane stackPane;
+
+    @FXML
     private VBox content;
     private ImageView invalidIndex;
     private ImageView invalidAppID;
@@ -162,13 +165,13 @@ public class ConfigController implements Initializable {
         RunLoopManager.saveScripToFile();
         SceneManager.SceneData sceneData = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/LoadingScreen.fxml");
 
-        FadeOut fadeOut = new FadeOut(content);
+        FadeOut fadeOut = new FadeOut(anchorRoot);
         fadeOut.setOnFinished((actionEvent -> {
-            anchorRoot.getChildren().remove(content);
+            stackPane.getChildren().remove(anchorRoot);
             FadeIn fadeIn = new FadeIn(sceneData.getRoot());
             fadeIn.setOnFinished((actionEvent1) -> ((LoadingController) sceneData.getController()).toNewScene(LoadingController.Load.CallBackScreen));
             sceneData.getRoot().setOpacity(0);
-            anchorRoot.getChildren().add(sceneData.getRoot());
+            stackPane.getChildren().add(sceneData.getRoot());
             fadeIn.play();
         }));
         fadeOut.setSpeed(5);
@@ -179,9 +182,9 @@ public class ConfigController implements Initializable {
     public void switchToSetting(){
         settingButton.setDisable(true);
         Parent root = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/Settings.fxml").getRoot();
-        anchorRoot.getChildren().add(root);
+        stackPane.getChildren().add(root);
         SlideInUp animation = new SlideInUp(root);
-        animation.setOnFinished((actionEvent) -> anchorRoot.getChildren().remove(content));
+        animation.setOnFinished((actionEvent) -> stackPane.getChildren().remove(anchorRoot));
         animation.play();
 
 
