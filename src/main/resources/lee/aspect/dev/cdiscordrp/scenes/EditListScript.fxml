@@ -27,41 +27,58 @@
   ~ SOFTWARE.
   -->
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity"
-            minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="440.0" prefWidth="334.0" xmlns="http://javafx.com/javafx/8"
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.GridPane?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="anchorPane" xmlns="http://javafx.com/javafx/8"
             fx:controller="lee.aspect.dev.cdiscordrp.application.controller.EditListController">
-    <Label fx:id="EditConfiLabel" layoutX="114.0" layoutY="2.0" text="Edit configurations "/>
-    <TextField fx:id="firstline" layoutX="116.0" layoutY="37.0" prefHeight="25.0" prefWidth="203.0"/>
-    <TextField fx:id="secondline" layoutX="116.0" layoutY="81.0" prefHeight="25.0" prefWidth="203.0"/>
-    <TextField fx:id="image" layoutX="14.0" layoutY="123.0" prefHeight="25.0" prefWidth="89.0"/>
-    <Button fx:id="SaveButton" layoutX="14.0" layoutY="392.0" mnemonicParsing="false" onAction="#saveChanges"
-            prefHeight="25.0" prefWidth="89.0" text="Save"/>
-    <Button fx:id="CancelButton" layoutX="122.0" layoutY="392.0" mnemonicParsing="false" onAction="#cancelSaves"
-            prefHeight="25.0" prefWidth="89.0" text="Cancel"/>
-    <Label fx:id="DelayLabel" layoutX="14.0" layoutY="43.0" text="Delay (ms)"/>
-    <Label fx:id="FirstLineLabel" layoutX="116.0" layoutY="18.0" text="First Line"/>
-    <Button fx:id="DeleteButton" layoutX="227.0" layoutY="392.0" mnemonicParsing="false" onAction="#deleteThisItem"
-            prefHeight="25.0" prefWidth="89.0" text="Delete"/>
-    <Label fx:id="SecondLineLabel" layoutX="121.0" layoutY="64.0" text="Second line"/>
-    <Label fx:id="LargeImgLabel" layoutX="14.0" layoutY="107.0" text="large Image"/>
-    <TextField fx:id="Wait" layoutX="14.0" layoutY="60.0" prefHeight="25.0" prefWidth="89.0"/>
-    <Label fx:id="SmallImgLabel" layoutX="14.0" layoutY="154.0" text="Small Image"/>
-    <TextField fx:id="smallimage" layoutX="14.0" layoutY="172.0" prefHeight="25.0" prefWidth="89.0"/>
-    <TextField fx:id="smalltext" layoutX="116.0" layoutY="172.0" prefHeight="25.0" prefWidth="203.0"/>
-    <Label fx:id="SmallImgTxtLabel" layoutX="117.0" layoutY="155.0" text="Small image text"/>
-    <Label fx:id="LargeImgTxtLabel" layoutX="117.0" layoutY="107.0" text="Large image text"/>
-    <TextField fx:id="imagetext" layoutX="116.0" layoutY="123.0" prefHeight="25.0" prefWidth="203.0"/>
-    <Label fx:id="Button1Label" contentDisplay="CENTER" layoutX="19.0" layoutY="203.0" prefHeight="17.0"
-           prefWidth="80.0" text="Button 1 text"/>
-    <TextField fx:id="button1Text" layoutX="14.0" layoutY="220.0" prefHeight="25.0" prefWidth="304.0"/>
-    <TextField fx:id="button1Url" layoutX="14.0" layoutY="262.0" prefHeight="25.0" prefWidth="304.0"/>
-    <Label fx:id="Button1LinkLabel" contentDisplay="CENTER" layoutX="22.0" layoutY="245.0" prefHeight="17.0"
-           prefWidth="74.0" text="Button 1 link"/>
-    <Label fx:id="Button2TxtLabel" contentDisplay="CENTER" layoutX="19.0" layoutY="287.0" prefHeight="17.0"
-           prefWidth="80.0" text="Button 2 text"/>
-    <TextField fx:id="button2Text" layoutX="14.0" layoutY="304.0" prefHeight="25.0" prefWidth="304.0"/>
-    <Label fx:id="Button2LinkLabel" contentDisplay="CENTER" layoutX="19.0" layoutY="329.0" prefHeight="17.0"
-           prefWidth="80.0" text="Button 2 link"/>
-    <TextField fx:id="button2Url" layoutX="14.0" layoutY="346.0" prefHeight="25.0" prefWidth="304.0"/>
+<VBox alignment="CENTER" spacing="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10"
+      AnchorPane.topAnchor="10" AnchorPane.bottomAnchor="10">
+    <Label fx:id="EditConfiLabel" text="%EditConfig"/>
+
+    <GridPane hgap="10" vgap="10">
+        <Label fx:id="FirstLineLabel" text="%FirstLine" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <TextField fx:id="firstline" GridPane.columnIndex="1" GridPane.rowIndex="0" prefWidth="203.0"/>
+
+        <Label fx:id="SecondLineLabel" text="%SecondLine" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <TextField fx:id="secondline" GridPane.columnIndex="1" GridPane.rowIndex="1" prefWidth="203.0"/>
+
+        <Label fx:id="DelayLabel" text="%Delay" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+        <TextField fx:id="Wait" GridPane.columnIndex="1" GridPane.rowIndex="2" prefWidth="203.0"/>
+
+        <Label fx:id="LargeImgLabel" text="%LargeImage" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+        <TextField fx:id="image" GridPane.columnIndex="1" GridPane.rowIndex="3" prefWidth="203.0"/>
+
+        <Label fx:id="LargeImgTxtLabel" text="%LargeImageText" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+        <TextField fx:id="imagetext" GridPane.columnIndex="1" GridPane.rowIndex="4" prefWidth="203.0"/>
+
+        <Label fx:id="SmallImgLabel" text="%SmallImage" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+        <TextField fx:id="smallimage" GridPane.columnIndex="1" GridPane.rowIndex="5" prefWidth="203.0"/>
+
+        <Label fx:id="SmallImgTxtLabel" text="%SmallImageText" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+        <TextField fx:id="smalltext" GridPane.columnIndex="1" GridPane.rowIndex="6" prefWidth="203.0"/>
+
+        <Label fx:id="Button1Label" text="%Button1Text" GridPane.columnIndex="0" GridPane.rowIndex="7"/>
+        <TextField fx:id="button1Text" GridPane.columnIndex="1" GridPane.rowIndex="7" prefWidth="203.0"/>
+
+        <Label fx:id="Button1LinkLabel" text="%Button1Link" GridPane.columnIndex="0" GridPane.rowIndex="8"/>
+        <TextField fx:id="button1Url" GridPane.columnIndex="1" GridPane.rowIndex="8" prefWidth="203.0"/>
+
+        <Label fx:id="Button2TxtLabel" text="%Button2Text" GridPane.columnIndex="0" GridPane.rowIndex="9"/>
+        <TextField fx:id="button2Text" GridPane.columnIndex="1" GridPane.rowIndex="9" prefWidth="203.0"/>
+
+        <Label fx:id="Button2LinkLabel" text="%Button2Link" GridPane.columnIndex="0" GridPane.rowIndex="10"/>
+        <TextField fx:id="button2Url" GridPane.columnIndex="1" GridPane.rowIndex="10" prefWidth="203.0"/>
+    </GridPane>
+
+    <HBox alignment="CENTER" spacing="10">
+        <Button fx:id="SaveButton" mnemonicParsing="false" onAction="#saveChanges"
+                prefHeight="25.0" prefWidth="89.0" text="%Save"/>
+        <Button fx:id="CancelButton" mnemonicParsing="false" onAction="#cancelSaves"
+                prefHeight="25.0" prefWidth="89.0" text="%Cancel"/>
+        <Button fx:id="DeleteButton" mnemonicParsing="false" onAction="#deleteThisItem"
+                prefHeight="25.0" prefWidth="89.0" text="%Delete"/>
+    </HBox>
+</VBox>
 </AnchorPane>
