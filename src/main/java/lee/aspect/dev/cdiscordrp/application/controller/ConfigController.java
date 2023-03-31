@@ -28,7 +28,6 @@ package lee.aspect.dev.cdiscordrp.application.controller;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
@@ -45,18 +44,13 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import lee.aspect.dev.cdiscordrp.Launch;
-import lee.aspect.dev.cdiscordrp.exceptions.Debug;
+import lee.aspect.dev.cdiscordrp.animatefx.*;
 import lee.aspect.dev.cdiscordrp.manager.SceneManager;
 import lee.aspect.dev.cdiscordrp.manager.UndoRedoManager;
-import lee.aspect.dev.cdiscordrp.animatefx.FadeIn;
-import lee.aspect.dev.cdiscordrp.animatefx.FadeOut;
-import lee.aspect.dev.cdiscordrp.animatefx.Shake;
-import lee.aspect.dev.cdiscordrp.animatefx.SlideInLeft;
 import lee.aspect.dev.cdiscordrp.application.core.RunLoopManager;
 import lee.aspect.dev.cdiscordrp.application.core.Script;
 import lee.aspect.dev.cdiscordrp.application.core.Settings;
 import lee.aspect.dev.cdiscordrp.application.core.Updates;
-import lee.aspect.dev.cdiscordrp.language.LanguageManager;
 import lee.aspect.dev.cdiscordrp.json.loader.FileManager;
 import lee.aspect.dev.cdiscordrp.util.WarningManager;
 
@@ -97,11 +91,12 @@ public class ConfigController implements Initializable {
     @FXML
     private AnchorPane anchorRoot;
     @FXML
-    private StackPane stackPane;
-    @FXML
     private Label Application_IDLabel, TimeStampMethodLabel, UpdateModeLabel;
     @FXML
     private Button AddNewItemButton;
+
+    @FXML
+    private VBox content;
     private ImageView invalidIndex;
     private ImageView invalidAppID;
 
@@ -167,13 +162,13 @@ public class ConfigController implements Initializable {
         RunLoopManager.saveScripToFile();
         SceneManager.SceneData sceneData = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/LoadingScreen.fxml");
 
-        FadeOut fadeOut = new FadeOut(anchorRoot);
+        FadeOut fadeOut = new FadeOut(content);
         fadeOut.setOnFinished((actionEvent -> {
-            stackPane.getChildren().remove(anchorRoot);
+            anchorRoot.getChildren().remove(content);
             FadeIn fadeIn = new FadeIn(sceneData.getRoot());
             fadeIn.setOnFinished((actionEvent1) -> ((LoadingController) sceneData.getController()).toNewScene(LoadingController.Load.CallBackScreen));
             sceneData.getRoot().setOpacity(0);
-            stackPane.getChildren().add(sceneData.getRoot());
+            anchorRoot.getChildren().add(sceneData.getRoot());
             fadeIn.play();
         }));
         fadeOut.setSpeed(5);
@@ -181,12 +176,12 @@ public class ConfigController implements Initializable {
 
     }
 
-    public void switchToSetting() throws IOException{
+    public void switchToSetting(){
         settingButton.setDisable(true);
         Parent root = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/Settings.fxml").getRoot();
-        stackPane.getChildren().add(root);
-        SlideInLeft animation = new SlideInLeft(root);
-        animation.setOnFinished((actionEvent) -> stackPane.getChildren().remove(anchorRoot));
+        anchorRoot.getChildren().add(root);
+        SlideInUp animation = new SlideInUp(root);
+        animation.setOnFinished((actionEvent) -> anchorRoot.getChildren().remove(content));
         animation.play();
 
 

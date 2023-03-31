@@ -25,17 +25,15 @@
 
 package lee.aspect.dev.cdiscordrp.exceptions;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.Toolkit;
+import lee.aspect.dev.cdiscordrp.Launch;
+import lee.aspect.dev.cdiscordrp.util.system.RestartApplication;
+
+import java.awt.*;
 import java.awt.datatransfer.StringSelection;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.net.URISyntaxException;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -68,7 +66,7 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
         e.printStackTrace(pw);
-        String stackTrace = sw.toString();
+        String stackTrace = getSystemInfo() + "\n" + sw;
 
         JTextArea textArea = new JTextArea(stackTrace);
         textArea.setLineWrap(true);
@@ -84,24 +82,24 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
             JOptionPane.showMessageDialog(null, "Error message copied to clipboard.", "Success", JOptionPane.INFORMATION_MESSAGE);
         });
 
-        UIManager.put("OptionPane.background", Color.WHITE);
-        UIManager.put("Panel.background", Color.WHITE);
-        UIManager.put("Button.background", Color.WHITE);
-        UIManager.put("Button.border", BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(new Color(180, 180, 180)), BorderFactory.createEmptyBorder(5, 10, 5, 10)));
-        UIManager.put("Button.font", new Font(Font.SANS_SERIF, Font.PLAIN, 14));
-        UIManager.put("Label.font", new Font(Font.SANS_SERIF, Font.PLAIN, 14));
-        UIManager.put("OptionPane.messageFont", new Font(Font.SANS_SERIF, Font.PLAIN, 14));
-        UIManager.put("ScrollPane.border", BorderFactory.createEmptyBorder());
-        UIManager.put("TextArea.border", BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        JButton restartButton = new JButton("Restart Application");
+        restartButton.addActionListener((event) -> {
+            try {
+                RestartApplication.FullRestart();
+            } catch (URISyntaxException | IOException | FileNotAJarException ex) {
+                JOptionPane.showMessageDialog(null, "Failed to restart application. Please restart manually.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
 
-        JPanel buttonPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1;
-        gbc.insets = new Insets(10, 0, 0, 0);
-        buttonPanel.add(copyButton, gbc);
+        JButton exitButton = new JButton("Exit Application");
+        exitButton.addActionListener((event) -> {
+            System.exit(1);
+        });
+
+        JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 10, 0));
+        buttonPanel.add(restartButton);
+        buttonPanel.add(exitButton);
+        buttonPanel.add(copyButton);
 
         JLabel messageLabel = new JLabel("<html><body><p style='text-align:center'>An unexpected error has occurred.<br>Please copy the error message below and send it to the developer.</p></body></html>");
         messageLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -121,6 +119,16 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
         JOptionPane.showMessageDialog(null, messagePanel, "Error", JOptionPane.ERROR_MESSAGE);
 
         System.exit(1);
+    }
+
+    public static String getSystemInfo() {
+        return "********** System Information ***********\n" +
+                "Client Version: " + Launch.VERSION + "\n" +
+                "Operating System: " + System.getProperty("os.name") + "\n" +
+                "Operating System Version: " + System.getProperty("os.version") + "\n" +
+                "Java Version: " + System.getProperty("java.version") + "\n" +
+                "Java Vendor: " + System.getProperty("java.vendor") +
+                "\n***************************************\n";
     }
 
 }
