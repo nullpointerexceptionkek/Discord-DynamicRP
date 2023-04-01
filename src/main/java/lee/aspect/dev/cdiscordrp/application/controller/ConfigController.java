@@ -46,6 +46,7 @@ import javafx.stage.Stage;
 import lee.aspect.dev.cdiscordrp.Launch;
 import lee.aspect.dev.cdiscordrp.animatefx.*;
 import lee.aspect.dev.cdiscordrp.manager.SceneManager;
+import lee.aspect.dev.cdiscordrp.manager.SearchManager;
 import lee.aspect.dev.cdiscordrp.manager.UndoRedoManager;
 import lee.aspect.dev.cdiscordrp.application.core.RunLoopManager;
 import lee.aspect.dev.cdiscordrp.application.core.Script;
@@ -128,6 +129,10 @@ public class ConfigController implements Initializable {
                 Script.getINSTANCE().setTimestampmode(Script.TimeStampMode.none);
                 break;
         }
+    }
+
+    public void showSearch(){
+        SearchManager.showDialog();
     }
 
     public void switchToCallBack() throws IOException {

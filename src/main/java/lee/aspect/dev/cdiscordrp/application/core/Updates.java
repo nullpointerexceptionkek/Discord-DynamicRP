@@ -27,6 +27,7 @@ package lee.aspect.dev.cdiscordrp.application.core;
 
 
 import lee.aspect.dev.cdiscordrp.Launch;
+import org.jetbrains.annotations.NotNull;
 
 public class Updates {
 
@@ -155,6 +156,49 @@ public class Updates {
     public String toString() {
         if (Launch.isOnIDE) return '{' + fl + ", " + sl + '}';
         return fl + ", " + sl;
+    }
+
+    public boolean matches(String keyword, String searchText) {
+        switch (keyword.toLowerCase()) {
+            case "first line":
+                return fl != null && fl.toLowerCase().contains(searchText.toLowerCase());
+            case "second line":
+                return sl != null && sl.toLowerCase().contains(searchText.toLowerCase());
+            case "delay":
+                return String.valueOf(wait).toLowerCase().contains(searchText.toLowerCase());
+            case "large img":
+                return image != null && image.toLowerCase().contains(searchText.toLowerCase());
+            case "large img text":
+                return imagetext != null && imagetext.toLowerCase().contains(searchText.toLowerCase());
+            case "small img":
+                return smallimage != null && smallimage.toLowerCase().contains(searchText.toLowerCase());
+            case "small img text":
+                return smalltext != null && smalltext.toLowerCase().contains(searchText.toLowerCase());
+            case "button 1":
+                return button1Text != null && button1Text.toLowerCase().contains(searchText.toLowerCase());
+            case "button 1 url":
+                return button1Url != null && button1Url.toLowerCase().contains(searchText.toLowerCase());
+            case "button 2":
+                return button2Text != null && button2Text.toLowerCase().contains(searchText.toLowerCase());
+            case "button 2 url":
+                return button2Url != null && button2Url.toLowerCase().contains(searchText.toLowerCase());
+            default:
+                return false;
+        }
+    }
+
+    public boolean matches(String searchText) {
+        return (fl != null && fl.toLowerCase().contains(searchText.toLowerCase())) ||
+                (sl != null && sl.toLowerCase().contains(searchText.toLowerCase())) ||
+                String.valueOf(wait).toLowerCase().contains(searchText.toLowerCase()) ||
+                (image != null && image.toLowerCase().contains(searchText.toLowerCase())) ||
+                (imagetext != null && imagetext.toLowerCase().contains(searchText.toLowerCase())) ||
+                (smallimage != null && smallimage.toLowerCase().contains(searchText.toLowerCase())) ||
+                (smalltext != null && smalltext.toLowerCase().contains(searchText.toLowerCase())) ||
+                (button1Text != null && button1Text.toLowerCase().contains(searchText.toLowerCase())) ||
+                (button1Url != null && button1Url.toLowerCase().contains(searchText.toLowerCase())) ||
+                (button2Text != null && button2Text.toLowerCase().contains(searchText.toLowerCase())) ||
+                (button2Url != null && button2Url.toLowerCase().contains(searchText.toLowerCase()));
     }
 
 }

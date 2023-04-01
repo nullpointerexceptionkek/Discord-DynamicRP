@@ -87,8 +87,8 @@
                         prefWidth="27.0" text="%settingButton"/>
                 <Button fx:id="callbackButton" mnemonicParsing="false" onAction="#switchToCallBack"
                         text="%callbackButton"/>
-                <Button mnemonicParsing="false" onAction="#switchToSetting" prefHeight="25.0" prefWidth="27.0"
-                        text="%settingButton"/>
+                <Button mnemonicParsing="false" onAction="#showSearch" prefHeight="25.0" prefWidth="27.0"
+                        text="x"/>
             </HBox>
         </VBox>
     </AnchorPane>
