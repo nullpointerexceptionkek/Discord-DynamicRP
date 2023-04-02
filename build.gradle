@@ -1,0 +1,70 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.7.22'
+    id 'org.openjfx.javafxplugin' version '0.0.10'
+    id 'java'
+    id 'application'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+repositories {
+    mavenCentral()
+}
+
+javafx {
+    version = "19.0.2"
+    modules = ['javafx.controls', 'javafx.fxml']
+}
+
+ext {
+    kotlin_version = '1.7.22'
+    junit_platform_version = '5.9.2'
+    gson_version = '2.10.1'
+    json_version = '20230227'
+    slf4j_version = '2.0.5'
+    junixsocket_version = '2.6.2'
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "com.google.code.gson:gson:$gson_version"
+    implementation "org.json:json:$json_version"
+    implementation "org.slf4j:slf4j-api:$slf4j_version"
+    implementation "org.slf4j:slf4j-simple:$slf4j_version"
+    implementation "com.kohlschutter.junixsocket:junixsocket-common:$junixsocket_version"
+    implementation "com.kohlschutter.junixsocket:junixsocket-native-common:$junixsocket_version"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_platform_version"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit_platform_version"
+    implementation "org.jetbrains:annotations:24.0.1"
+}
+
+mainClassName = 'lee.aspect.dev.cdiscordrp.Launch'
+
+tasks.withType(KotlinCompile).configureEach {
+    kotlinOptions.jvmTarget = '1.8'
+}
+
+application {
+    getMainClass().set('lee.aspect.dev.cdiscordrp.Launch')
+}
+
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes 'Main-Class': 'lee.aspect.dev.cdiscordrp.Launch'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+
+test {
+    useJUnitPlatform()
+}
