@@ -32,6 +32,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import lee.aspect.dev.cdiscordrp.Launch;
 import lee.aspect.dev.cdiscordrp.animatefx.*;
@@ -58,6 +59,11 @@ public class CallBackController implements Initializable {
     private AnchorPane anchorRoot;
     @FXML
     private Button switchToConfig;
+    @FXML
+    private Label titleLabel;
+    @FXML
+    private VBox content;
+
     private BounceOutRight pMoveUp;
 
     private BounceInLeft afterIn;

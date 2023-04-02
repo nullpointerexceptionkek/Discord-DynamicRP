@@ -78,51 +78,49 @@ public class LoadingController {
                     }
                     break;
             }
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        switch (file) {
-                            case CallBackScreen:
-                                Parent root = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/CallBack.fxml").getRoot();
-                                stackPane.getChildren().add(0, root);
-                                RotateIn animation = new RotateIn(root);
-                                animation.setOnFinished(actionEvent -> {
-                                    FadeOut fadeOut = new FadeOut(vRoot);
-                                    fadeOut.setOnFinished((actionEvent1 -> stackPane.getChildren().remove(vRoot)));
-                                    fadeOut.play();
-                                });
-                                animation.play();
-                                break;
-                            case ConfigScreen:
-                                Parent cfgRoot = SceneManager.getConfigParent();
-                                stackPane.getChildren().add(0, cfgRoot);
-                                RotateIn animation1 = new RotateIn(cfgRoot);
-                                animation1.setOnFinished(actionEvent -> {
-                                    FadeOut fadeOut = new FadeOut(vRoot);
-                                    fadeOut.setOnFinished((actionEvent1 -> stackPane.getChildren().remove(vRoot)));
-                                    fadeOut.play();
-                                });
-                                animation1.play();
-                                break;
-                            default:
-                                SceneManager.SceneData sceneData = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/ReadyConfig.fxml");
-                                stackPane.getChildren().add(0, sceneData.getRoot());
-                                RotateIn animation2 = new RotateIn(sceneData.getRoot());
-                                animation2.setOnFinished(actionEvent -> {
-                                    FadeOut fadeOut = new FadeOut(vRoot);
-                                    fadeOut.setOnFinished((actionEvent1 -> {
-                                        stackPane.getChildren().remove(vRoot);
-                                        ((ConfigController) sceneData.getController()).invalidDiscordAppID("Unable to connect to Discord, please check this field.");
-                                    }));
-                                    fadeOut.play();
-                                });
-                                animation2.play();
-                                break;
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
+            Platform.runLater(() -> {
+                try {
+                    switch (file) {
+                        case CallBackScreen:
+                            SceneManager.SceneData data = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/CallBack.fxml");
+                            callBackController = (CallBackController) data.getController();
+                            stackPane.getChildren().add(0, data.getRoot());
+                            RotateIn animation = new RotateIn(data.getRoot());
+                            animation.setOnFinished(actionEvent -> {
+                                FadeOut fadeOut = new FadeOut(vRoot);
+                                fadeOut.setOnFinished((actionEvent1 -> stackPane.getChildren().remove(vRoot)));
+                                fadeOut.play();
+                            });
+                            animation.play();
+                            break;
+                        case ConfigScreen:
+                            Parent cfgRoot = SceneManager.getConfigParent();
+                            stackPane.getChildren().add(0, cfgRoot);
+                            RotateIn animation1 = new RotateIn(cfgRoot);
+                            animation1.setOnFinished(actionEvent -> {
+                                FadeOut fadeOut = new FadeOut(vRoot);
+                                fadeOut.setOnFinished((actionEvent1 -> stackPane.getChildren().remove(vRoot)));
+                                fadeOut.play();
+                            });
+                            animation1.play();
+                            break;
+                        default:
+                            SceneManager.SceneData sceneData = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/ReadyConfig.fxml");
+                            stackPane.getChildren().add(0, sceneData.getRoot());
+                            RotateIn animation2 = new RotateIn(sceneData.getRoot());
+                            animation2.setOnFinished(actionEvent -> {
+                                FadeOut fadeOut = new FadeOut(vRoot);
+                                fadeOut.setOnFinished((actionEvent1 -> {
+                                    stackPane.getChildren().remove(vRoot);
+                                    ((ConfigController) sceneData.getController()).invalidDiscordAppID("Unable to connect to Discord, please check this field.");
+                                }));
+                                fadeOut.play();
+                            });
+                            animation2.play();
+                            break;
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             });
         }
