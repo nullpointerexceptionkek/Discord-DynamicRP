@@ -1,0 +1,842 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="ANALYZE_INJECTED_CODE" value="false" />
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f5c51c1b-694c-4eb8-abc5-2555f3684212" name="Changes" comment="Switch to gradle, good bye maven">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/cdiscordrp/exceptions/ExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/cdiscordrp/exceptions/ExceptionHandler.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin Enum" />
+        <option value="CSS File" />
+        <option value="Class" />
+        <option value="FxmlFile" />
+        <option value="Kotlin Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FormatOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="AutoSwitch" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$MAVEN_REPOSITORY$/org/jetbrains/kotlin/kotlin-stdlib-common/1.7.22/kotlin-stdlib-common-1.7.22-sources.jar!/kotlin/text/Strings.kt" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/README.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="NamedScopeManager">
+    <order>
+      <scope name="Project Scrope" />
+    </order>
+  </component>
+  <component name="OptimizeOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectId" id="2Gq1ajOaC3sLfLi8tMlWzk9El3p" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;code.cleanup.on.save&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;beta&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/lee17/Downloads/a&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;rearrange.code.on.save&quot;: &quot;true&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;profiler.jvm&quot;,
+    &quot;update.copyright.on.save&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\lee17\Documents\my cringe code that will prob not work\IJ workspace\CDiscordRP\src\main\resources\lee\aspect\dev\cdiscordrp\theme" />
+      <recent name="D:\lee17\Documents\my cringe code that will prob not work\IJ workspace\CDiscordRP\src\main\resources\lee\aspect\dev\cdiscordrp\theme\mikuSnow" />
+      <recent name="D:\lee17\Documents\my cringe code that will prob not work\IJ workspace\CDiscordRP\src\main\resources\lee\aspect\dev\scenes" />
+      <recent name="D:\lee17\Documents\my cringe code that will prob not work\IJ workspace\CDiscordRP\src\main\java\lee\aspect\dev\JProcessDetector" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\lee17\Documents\my cringe code that will prob not work\IJ workspace\CDiscordRP\src\main\resources\lee\aspect\dev\cdiscordrp\icon" />
+      <recent name="D:\lee17\Documents\my cringe code that will prob not work\IJ workspace\CDiscordRP\src\main\resources\lee\aspect\dev\cdiscordrp\icon\editIcons" />
+      <recent name="D:\lee17\Documents\my cringe code that will prob not work\IJ workspace\CDiscordRP\src\main\resources\lee\aspect\dev\icon\editIcons" />
+    </key>
+    <key name="MoveMembersDialog.RECENTS_KEY">
+      <recent name="lee.aspect.dev.discordrpc.Script" />
+      <recent name="lee.aspect.dev.discordrpc.Settings" />
+    </key>
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="lee.aspect.dev.cdiscordrp.handler" />
+      <recent name="lee.aspect.dev.cdiscordrp.manager" />
+      <recent name="lee.aspect.dev.language" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn clean assembly" />
+      <command value="mvn build" />
+      <command value="mvn javafx:run" />
+      <command value="mvn clean package" />
+      <command value="mvn dependency:tree" />
+      <command value="mvn clean" />
+      <command value="gradlew run" />
+    </option>
+  </component>
+  <component name="RunManager" selected="Gradle.CDiscordRP [gradlew run]">
+    <configuration name="CDiscordRP [gradlew run]" type="GradleRunConfiguration" factoryName="Gradle" nameIsGenerated="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="run" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>false</ForceTestExec>
+      <method v="2" />
+    </configuration>
+    <configuration name="CDiscordRP [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="run" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>false</ForceTestExec>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Gradle.CDiscordRP [gradlew run]" />
+      <item itemvalue="Gradle.CDiscordRP [run]" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.CDiscordRP [run]" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f5c51c1b-694c-4eb8-abc5-2555f3684212" name="Changes" comment="" />
+      <created>1667101365695</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1667101365695</updated>
+      <workItem from="1667101367480" duration="73000" />
+      <workItem from="1667105080665" duration="6629000" />
+      <workItem from="1667112362361" duration="937000" />
+      <workItem from="1667167836361" duration="2888000" />
+      <workItem from="1667184128020" duration="3291000" />
+      <workItem from="1667265373724" duration="281000" />
+      <workItem from="1667272234400" duration="13000" />
+      <workItem from="1667358438391" duration="38000" />
+      <workItem from="1667366033791" duration="21000" />
+      <workItem from="1667602623516" duration="633000" />
+      <workItem from="1667613673256" duration="4090000" />
+      <workItem from="1667684156153" duration="83000" />
+      <workItem from="1667705597944" duration="36000" />
+      <workItem from="1667708509074" duration="6000" />
+      <workItem from="1667767310899" duration="27000" />
+      <workItem from="1668144700927" duration="4847000" />
+      <workItem from="1668193942522" duration="651000" />
+      <workItem from="1668207547003" duration="377000" />
+      <workItem from="1668488345932" duration="132000" />
+      <workItem from="1668909172382" duration="245000" />
+      <workItem from="1668910819757" duration="6000" />
+      <workItem from="1669089504038" duration="41000" />
+      <workItem from="1669232578228" duration="7135000" />
+      <workItem from="1669247338603" duration="13000" />
+      <workItem from="1669265419389" duration="3851000" />
+      <workItem from="1669313652344" duration="8235000" />
+      <workItem from="1669398106952" duration="30000" />
+      <workItem from="1669399753609" duration="57000" />
+      <workItem from="1669416795636" duration="97000" />
+      <workItem from="1669524439828" duration="610000" />
+      <workItem from="1669526698463" duration="74000" />
+      <workItem from="1669691707150" duration="31000" />
+      <workItem from="1669770215105" duration="68000" />
+      <workItem from="1669788179811" duration="275000" />
+      <workItem from="1669788939159" duration="33000" />
+      <workItem from="1669789126581" duration="37000" />
+      <workItem from="1670219690043" duration="190000" />
+      <workItem from="1670463077971" duration="83000" />
+      <workItem from="1670465654584" duration="4000" />
+      <workItem from="1670465689907" duration="15000" />
+      <workItem from="1670476792651" duration="3616000" />
+      <workItem from="1670480610671" duration="2803000" />
+      <workItem from="1670486846924" duration="1122000" />
+      <workItem from="1670488256166" duration="1335000" />
+      <workItem from="1670564969187" duration="45000" />
+      <workItem from="1670565124317" duration="7494000" />
+      <workItem from="1670691306037" duration="135000" />
+      <workItem from="1670691452849" duration="2461000" />
+      <workItem from="1670695521413" duration="49000" />
+      <workItem from="1670695579565" duration="1683000" />
+      <workItem from="1670697273398" duration="318000" />
+      <workItem from="1670720573944" duration="87000" />
+      <workItem from="1670721323754" duration="2537000" />
+      <workItem from="1670729401095" duration="4093000" />
+      <workItem from="1670736998720" duration="1213000" />
+      <workItem from="1670743668434" duration="42000" />
+      <workItem from="1670749580217" duration="23000" />
+      <workItem from="1670749969270" duration="2186000" />
+      <workItem from="1670787380922" duration="884000" />
+      <workItem from="1670788277891" duration="123000" />
+      <workItem from="1670788412855" duration="659000" />
+      <workItem from="1670789081200" duration="894000" />
+      <workItem from="1670789986061" duration="2138000" />
+      <workItem from="1670793824077" duration="212000" />
+      <workItem from="1670900431806" duration="3732000" />
+      <workItem from="1670907090332" duration="1134000" />
+      <workItem from="1670910203796" duration="3541000" />
+      <workItem from="1670918130374" duration="643000" />
+      <workItem from="1670989877855" duration="1849000" />
+      <workItem from="1670992203472" duration="1571000" />
+      <workItem from="1670994440748" duration="479000" />
+      <workItem from="1671067406641" duration="895000" />
+      <workItem from="1671068410495" duration="38000" />
+      <workItem from="1671165207112" duration="9071000" />
+      <workItem from="1671181322957" duration="897000" />
+      <workItem from="1671313014433" duration="170000" />
+      <workItem from="1671314793075" duration="6835000" />
+      <workItem from="1671343575426" duration="26000" />
+      <workItem from="1671347624311" duration="32000" />
+      <workItem from="1671353033488" duration="70000" />
+      <workItem from="1671387465350" duration="640000" />
+      <workItem from="1671412313878" duration="367000" />
+      <workItem from="1671415256111" duration="619000" />
+      <workItem from="1671499701828" duration="29000" />
+      <workItem from="1671599630812" duration="57000" />
+      <workItem from="1671599700841" duration="24000" />
+      <workItem from="1671599736824" duration="408000" />
+      <workItem from="1671600210530" duration="3000" />
+      <workItem from="1671674629020" duration="270000" />
+      <workItem from="1671767465275" duration="931000" />
+      <workItem from="1671777885609" duration="35000" />
+      <workItem from="1671847701809" duration="102000" />
+      <workItem from="1671942277488" duration="679000" />
+      <workItem from="1671948290427" duration="9000" />
+      <workItem from="1671996848256" duration="1851000" />
+      <workItem from="1672013224670" duration="12072000" />
+      <workItem from="1672042901391" duration="465000" />
+      <workItem from="1672078824400" duration="5026000" />
+      <workItem from="1672104867580" duration="1442000" />
+      <workItem from="1672107935506" duration="612000" />
+      <workItem from="1672169748179" duration="614000" />
+      <workItem from="1672280553272" duration="99000" />
+      <workItem from="1672281148126" duration="144000" />
+      <workItem from="1672282085480" duration="52000" />
+      <workItem from="1672297664236" duration="38000" />
+      <workItem from="1672297713042" duration="1184000" />
+      <workItem from="1672366914711" duration="6000" />
+      <workItem from="1672378608786" duration="757000" />
+      <workItem from="1672384128016" duration="5000" />
+      <workItem from="1672440626495" duration="600000" />
+      <workItem from="1672451272944" duration="812000" />
+      <workItem from="1672468184913" duration="668000" />
+      <workItem from="1672470482282" duration="43000" />
+      <workItem from="1672470537807" duration="223000" />
+      <workItem from="1672470902063" duration="148000" />
+      <workItem from="1672512654139" duration="17000" />
+      <workItem from="1672515577338" duration="1668000" />
+      <workItem from="1672603321146" duration="30000" />
+      <workItem from="1672618821330" duration="1160000" />
+      <workItem from="1672622694492" duration="9000" />
+      <workItem from="1672700647095" duration="430000" />
+      <workItem from="1673032060350" duration="24000" />
+      <workItem from="1673043345105" duration="89000" />
+      <workItem from="1673419746918" duration="968000" />
+      <workItem from="1673491576269" duration="10000" />
+      <workItem from="1673722578186" duration="6880000" />
+      <workItem from="1673751964899" duration="1558000" />
+      <workItem from="1673765829139" duration="397000" />
+      <workItem from="1673825785751" duration="4349000" />
+      <workItem from="1673845286372" duration="2009000" />
+      <workItem from="1673847931846" duration="33000" />
+      <workItem from="1673899659918" duration="1084000" />
+      <workItem from="1673908442819" duration="203000" />
+      <workItem from="1673913634524" duration="17000" />
+      <workItem from="1673914029763" duration="781000" />
+      <workItem from="1674025917731" duration="1144000" />
+      <workItem from="1674103483880" duration="2011000" />
+      <workItem from="1674111237831" duration="3025000" />
+      <workItem from="1674167218623" duration="33000" />
+      <workItem from="1674348988507" duration="1191000" />
+      <workItem from="1674353237605" duration="15000" />
+      <workItem from="1674370699282" duration="174000" />
+      <workItem from="1674371221285" duration="4687000" />
+      <workItem from="1674433952741" duration="2000" />
+      <workItem from="1674451932503" duration="20000" />
+      <workItem from="1674451967429" duration="2823000" />
+      <workItem from="1674622028159" duration="3754000" />
+      <workItem from="1674629001423" duration="550000" />
+      <workItem from="1674712609008" duration="562000" />
+      <workItem from="1674925152253" duration="47000" />
+      <workItem from="1674928636939" duration="702000" />
+      <workItem from="1674936472834" duration="65000" />
+      <workItem from="1674954654797" duration="221000" />
+      <workItem from="1674957709064" duration="17000" />
+      <workItem from="1675137711122" duration="451000" />
+      <workItem from="1675138188243" duration="221000" />
+      <workItem from="1675142869821" duration="22000" />
+      <workItem from="1675400610168" duration="141000" />
+      <workItem from="1675404339862" duration="72000" />
+      <workItem from="1675404977867" duration="229000" />
+      <workItem from="1675405443073" duration="5000" />
+      <workItem from="1675742584184" duration="602000" />
+      <workItem from="1675928624839" duration="136000" />
+      <workItem from="1676164469485" duration="2681000" />
+      <workItem from="1676239385987" duration="562000" />
+      <workItem from="1677062993813" duration="2830000" />
+      <workItem from="1677069217453" duration="2000" />
+      <workItem from="1677217572367" duration="181000" />
+      <workItem from="1677371606824" duration="965000" />
+      <workItem from="1677458932772" duration="2000" />
+      <workItem from="1677459700272" duration="8000" />
+      <workItem from="1677559887681" duration="40000" />
+      <workItem from="1677560079570" duration="89000" />
+      <workItem from="1677996702924" duration="3000" />
+      <workItem from="1678061340770" duration="3000" />
+      <workItem from="1678062716243" duration="5000" />
+      <workItem from="1678665758758" duration="79000" />
+      <workItem from="1678665924840" duration="5000" />
+      <workItem from="1678667474156" duration="109000" />
+      <workItem from="1678667609486" duration="20000" />
+      <workItem from="1678667641826" duration="66000" />
+      <workItem from="1678667719737" duration="64000" />
+      <workItem from="1678667794745" duration="13000" />
+      <workItem from="1678667818523" duration="38000" />
+      <workItem from="1678667888765" duration="15000" />
+      <workItem from="1678667914116" duration="22000" />
+      <workItem from="1678667958802" duration="1000" />
+      <workItem from="1678668074900" duration="21000" />
+      <workItem from="1678668105528" duration="27000" />
+      <workItem from="1678668150457" duration="6000" />
+      <workItem from="1678669397817" duration="16000" />
+      <workItem from="1678734266972" duration="8000" />
+      <workItem from="1678759475781" duration="204000" />
+      <workItem from="1679163643484" duration="955000" />
+      <workItem from="1679164705478" duration="442000" />
+      <workItem from="1679178011686" duration="602000" />
+      <workItem from="1679200465298" duration="48000" />
+      <workItem from="1679614369749" duration="1986000" />
+      <workItem from="1679625275325" duration="712000" />
+      <workItem from="1679711404078" duration="5158000" />
+      <workItem from="1679719708043" duration="8541000" />
+      <workItem from="1679786406747" duration="10682000" />
+      <workItem from="1679802448962" duration="6095000" />
+      <workItem from="1679811755353" duration="172000" />
+      <workItem from="1679815631616" duration="57000" />
+      <workItem from="1679816058259" duration="2390000" />
+      <workItem from="1679862907725" duration="80000" />
+      <workItem from="1679863822007" duration="585000" />
+      <workItem from="1679866956684" duration="53000" />
+      <workItem from="1679896017552" duration="24000" />
+      <workItem from="1680240123632" duration="6408000" />
+      <workItem from="1680247615550" duration="6431000" />
+      <workItem from="1680320041050" duration="1182000" />
+      <workItem from="1680321600131" duration="4720000" />
+      <workItem from="1680329486214" duration="103000" />
+      <workItem from="1680413263935" duration="518000" />
+      <workItem from="1680414386889" duration="90000" />
+      <workItem from="1680414866970" duration="1914000" />
+      <workItem from="1680421038929" duration="40000" />
+      <workItem from="1680421301626" duration="1547000" />
+      <workItem from="1680423739698" duration="2492000" />
+      <workItem from="1680426400242" duration="794000" />
+      <workItem from="1680427498154" duration="102000" />
+      <workItem from="1680427824817" duration="10000" />
+      <workItem from="1680428875058" duration="171000" />
+      <workItem from="1680429298682" duration="12000" />
+      <workItem from="1680430095349" duration="545000" />
+    </task>
+    <task id="LOCAL-00050" summary="add manage config button">
+      <created>1672014724269</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1672014724270</updated>
+    </task>
+    <task id="LOCAL-00051" summary="added dialog">
+      <created>1672016054365</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1672016054365</updated>
+    </task>
+    <task id="LOCAL-00052" summary="add functionality to the dialog">
+      <created>1672017284561</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1672017284561</updated>
+    </task>
+    <task id="LOCAL-00053" summary="make the ConfigManager display icon instead of names">
+      <created>1672018157811</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1672018157811</updated>
+    </task>
+    <task id="LOCAL-00054" summary="added currently loaded to settings, this allows the user to load different config">
+      <created>1672024135953</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1672024135953</updated>
+    </task>
+    <task id="LOCAL-00055" summary="added warning so you cant delete the currently selected config pew bye bye file not found exception">
+      <created>1672024786972</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1672024786972</updated>
+    </task>
+    <task id="LOCAL-00056" summary="make dupe and rename work, it sometimes glitches">
+      <created>1672038963149</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1672038963149</updated>
+    </task>
+    <task id="LOCAL-00057" summary="you can now switch between configs gg">
+      <created>1672041906128</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1672041906128</updated>
+    </task>
+    <task id="LOCAL-00058" summary="fix bugs relating to config manager">
+      <created>1672043212807</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1672043212808</updated>
+    </task>
+    <task id="LOCAL-00059" summary="added logger configuration">
+      <created>1672080110667</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1672080110667</updated>
+    </task>
+    <task id="LOCAL-00060" summary="Updated the assets">
+      <created>1672101491793</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1672101491793</updated>
+    </task>
+    <task id="LOCAL-00061" summary="configmanager is now finished">
+      <created>1672102832019</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1672102832019</updated>
+    </task>
+    <task id="LOCAL-00062" summary="added a checkbox that is used to enable process detector, its not implemented yet">
+      <created>1672107423138</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1672107423138</updated>
+    </task>
+    <task id="LOCAL-00063" summary="added dependenices to make autoswitch work">
+      <created>1672379356496</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1672379356497</updated>
+    </task>
+    <task id="LOCAL-00064" summary="auto switch will now be written and read to the save file">
+      <created>1672619969065</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1672619969066</updated>
+    </task>
+    <task id="LOCAL-00065" summary="changed the ui the switch config scene so it does not look ugly">
+      <created>1673741432055</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1673741432055</updated>
+    </task>
+    <task id="LOCAL-00066" summary="linked the edit config button and fixed css">
+      <created>1673753515059</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1673753515060</updated>
+    </task>
+    <task id="LOCAL-00067" summary="added start operation button">
+      <created>1673834130175</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1673834130177</updated>
+    </task>
+    <task id="LOCAL-00068" summary="added start operation button">
+      <created>1673847161377</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1673847161377</updated>
+    </task>
+    <task id="LOCAL-00069" summary="Auto swithc works noww aaay, there is still some issue left tho">
+      <created>1673900733088</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1673900733088</updated>
+    </task>
+    <task id="LOCAL-00070" summary="fixed a bug with edit list controller">
+      <created>1673908638403</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1673908638403</updated>
+    </task>
+    <task id="LOCAL-00071" summary="added save and load in autoswitch, typeadapter is not implemented yet">
+      <created>1674105485388</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1674105485388</updated>
+    </task>
+    <task id="LOCAL-00072" summary="auto switch will now able to be saved and loaded!!!">
+      <created>1674113457566</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1674113457566</updated>
+    </task>
+    <task id="LOCAL-00073" summary="fixed a hidden issue with the SwitchAdapter">
+      <created>1674114258070</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1674114258070</updated>
+    </task>
+    <task id="LOCAL-00074" summary="fix typo in read me and added pre release label">
+      <created>1674349479883</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1674349479884</updated>
+    </task>
+    <task id="LOCAL-00075" summary="Clean up UpdateManager.java">
+      <created>1674372975036</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1674372975036</updated>
+    </task>
+    <task id="LOCAL-00076" summary="combine some manager into singleton and fix a bug with config manager">
+      <created>1674375871213</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1674375871213</updated>
+    </task>
+    <task id="LOCAL-00077" summary="refactor packages">
+      <created>1674453570890</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1674453570890</updated>
+    </task>
+    <task id="LOCAL-00078" summary="looks like the ipc glitch seems to be IJ replace one of the string that should not be replaced">
+      <created>1674454213891</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1674454213891</updated>
+    </task>
+    <task id="LOCAL-00079" summary="fix some javadoc issue">
+      <created>1674454541955</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1674454541955</updated>
+    </task>
+    <task id="LOCAL-00080" summary="copying config using config manager will now end with (number) instead of copyof_">
+      <created>1674625758368</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1674625758368</updated>
+    </task>
+    <task id="LOCAL-00081" summary="I just notice that IJ auto add mit license header to animateFX, its now changed">
+      <created>1674713064324</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1674713064324</updated>
+    </task>
+    <task id="LOCAL-00082" summary="Added RESOURCELICENSE.md">
+      <created>1676166204473</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1676166204474</updated>
+    </task>
+    <task id="LOCAL-00083" summary="updated readme">
+      <created>1676239941384</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1676239941385</updated>
+    </task>
+    <task id="LOCAL-00084" summary="updated readme and added learn.md">
+      <created>1677065772119</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1677065772120</updated>
+    </task>
+    <task id="LOCAL-00085" summary="just realize I screw up the resource location, its fixed">
+      <created>1677372512871</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1677372512871</updated>
+    </task>
+    <task id="LOCAL-00086" summary="ConfigManager RECODE!!! QOL improvements">
+      <created>1679616350691</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1679616350691</updated>
+    </task>
+    <task id="LOCAL-00087" summary="The autoswitch scene will auto refresh after configmanager is closed">
+      <created>1679625970978</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1679625970978</updated>
+    </task>
+    <task id="LOCAL-00088" summary="fix utf8 control not being used and redesign the configscene">
+      <created>1679716506323</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1679716506323</updated>
+    </task>
+    <task id="LOCAL-00089" summary="improved css and fix some bugs">
+      <created>1679728246306</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1679728246307</updated>
+    </task>
+    <task id="LOCAL-00090" summary="add a lot of theme, you can also now switch theme without restart">
+      <created>1679801640615</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1679801640615</updated>
+    </task>
+    <task id="LOCAL-00091" summary="fix warning manager bugs and improved ExceptionHandler">
+      <created>1679808438293</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1679808438294</updated>
+    </task>
+    <task id="LOCAL-00092" summary="added license in about">
+      <created>1679864400930</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1679864400931</updated>
+    </task>
+    <task id="LOCAL-00093" summary="resizeable ui!!!!">
+      <created>1680246515868</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1680246515869</updated>
+    </task>
+    <task id="LOCAL-00094" summary="idk somekind of improvement, im goona go sleep">
+      <created>1680254038218</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1680254038218</updated>
+    </task>
+    <task id="LOCAL-00095" summary="added advance search stuff">
+      <created>1680326321688</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1680326321688</updated>
+    </task>
+    <task id="LOCAL-00096" summary="icon change">
+      <created>1680413762470</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1680413762470</updated>
+    </task>
+    <task id="LOCAL-00097" summary="icon change">
+      <created>1680427040410</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1680427040410</updated>
+    </task>
+    <task id="LOCAL-00098" summary="Switch to gradle, good bye maven">
+      <created>1680430390426</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1680430390426</updated>
+    </task>
+    <option name="localTasksCounter" value="99" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="fixed a hidden issue with the SwitchAdapter" />
+    <MESSAGE value="fix typo in read me and added pre release label" />
+    <MESSAGE value="Clean up UpdateManager.java" />
+    <MESSAGE value="combine some manager into singleton and fix a bug with config manager" />
+    <MESSAGE value="refactor packages" />
+    <MESSAGE value="looks like the ipc glitch seems to be IJ replace one of the string that should not be replaced" />
+    <MESSAGE value="fix some javadoc issue" />
+    <MESSAGE value="copying config using config manager will now end with (number) instead of copyof_" />
+    <MESSAGE value="I just notice that IJ auto add mit license header to animateFX, its now changed" />
+    <MESSAGE value="Added RESOURCELICENSE.md" />
+    <MESSAGE value="updated readme" />
+    <MESSAGE value="updated readme and added learn.md" />
+    <MESSAGE value="just realize I screw up the resource location, its fixed" />
+    <MESSAGE value="ConfigManager RECODE!!! QOL improvements" />
+    <MESSAGE value="The autoswitch scene will auto refresh after configmanager is closed" />
+    <MESSAGE value="fix utf8 control not being used and redesign the configscene" />
+    <MESSAGE value="improved css and fix some bugs" />
+    <MESSAGE value="add a lot of theme, you can also now switch theme without restart" />
+    <MESSAGE value="fix warning manager bugs and improved ExceptionHandler" />
+    <MESSAGE value="added license in about" />
+    <MESSAGE value="resizeable ui!!!!" />
+    <MESSAGE value="idk somekind of improvement, im goona go sleep" />
+    <MESSAGE value="added advance search stuff" />
+    <MESSAGE value="icon change" />
+    <MESSAGE value="Switch to gradle, good bye maven" />
+    <option name="LAST_COMMIT_MESSAGE" value="Switch to gradle, good bye maven" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

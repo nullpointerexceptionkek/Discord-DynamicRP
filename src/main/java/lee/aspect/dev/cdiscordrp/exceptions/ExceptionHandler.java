@@ -28,37 +28,28 @@ package lee.aspect.dev.cdiscordrp.exceptions;
 import lee.aspect.dev.cdiscordrp.Launch;
 import lee.aspect.dev.cdiscordrp.util.system.RestartApplication;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.URISyntaxException;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
 
+    public static String getSystemInfo() {
+        return "********** System Information ***********\n" +
+                "Client Version: " + Launch.VERSION + "\n" +
+                "Operating System: " + System.getProperty("os.name") + "\n" +
+                "Operating System Version: " + System.getProperty("os.version") + "\n" +
+                "Java Version: " + System.getProperty("java.version") + "\n" +
+                "Java Vendor: " + System.getProperty("java.vendor") +
+                "\n***************************************\n";
+    }
+
     @Override
     public void uncaughtException(Thread t, Throwable e) {
-
-        /*
-            ██╗░░░░░███╗░░░███╗███████╗░█████╗░░█████╗░
-            ██║░░░░░████╗░████║██╔════╝██╔══██╗██╔══██╗
-            ██║░░░░░██╔████╔██║█████╗░░███████║██║░░██║
-            ██║░░░░░██║╚██╔╝██║██╔══╝░░██╔══██║██║░░██║
-            ███████╗██║░╚═╝░██║██║░░░░░██║░░██║╚█████╔╝
-            ╚══════╝╚═╝░░░░░╚═╝╚═╝░░░░░╚═╝░░╚═╝░╚════╝░
-            if this happen = im bad at coding and have no idea what im doing
-         */
 
         //there is no need to every touch this code again unless for gui improvements
         //the code below is for grabbing the uncaught exception and displaying it in a gui
@@ -113,22 +104,13 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
 
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+                 UnsupportedLookAndFeelException ex) {
             ex.printStackTrace();
         }
         JOptionPane.showMessageDialog(null, messagePanel, "Error", JOptionPane.ERROR_MESSAGE);
 
         System.exit(1);
-    }
-
-    public static String getSystemInfo() {
-        return "********** System Information ***********\n" +
-                "Client Version: " + Launch.VERSION + "\n" +
-                "Operating System: " + System.getProperty("os.name") + "\n" +
-                "Operating System Version: " + System.getProperty("os.version") + "\n" +
-                "Java Version: " + System.getProperty("java.version") + "\n" +
-                "Java Vendor: " + System.getProperty("java.vendor") +
-                "\n***************************************\n";
     }
 
 }
