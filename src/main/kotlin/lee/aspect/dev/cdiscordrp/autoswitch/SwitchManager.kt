@@ -26,7 +26,6 @@
 package lee.aspect.dev.cdiscordrp.autoswitch
 
 import javafx.application.Platform
-import javafx.fxml.FXMLLoader
 import javafx.geometry.Insets
 import javafx.geometry.Pos
 import javafx.scene.Parent
@@ -36,9 +35,6 @@ import javafx.scene.layout.AnchorPane
 import javafx.scene.layout.HBox
 import javafx.scene.layout.StackPane
 import javafx.scene.layout.VBox
-import javafx.scene.paint.Color
-import javafx.scene.text.Font
-import javafx.scene.text.Text
 import javafx.scene.text.TextAlignment
 import lee.aspect.dev.cdiscordrp.manager.DirectoryManager.Companion.getRootDir
 import lee.aspect.dev.cdiscordrp.processmonitor.OpenCloseListener
@@ -175,13 +171,13 @@ class SwitchManager private constructor() {
 
             val configManagerButton = Button()
             configManagerButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
-            val jsonIcon = ImageView(
-                Objects.requireNonNull(CustomDiscordRPC::class.java.getResource("/lee/aspect/dev/cdiscordrp/icon/json-file.png"))
+            val cfgIcon = ImageView(
+                Objects.requireNonNull(CustomDiscordRPC::class.java.getResource("/lee/aspect/dev/cdiscordrp/icon/Config.png"))
                     .toExternalForm()
             )
-            jsonIcon.fitHeight = 17.0
-            jsonIcon.fitWidth = 17.0
-            configManagerButton.graphic = jsonIcon
+            cfgIcon.fitHeight = 16.0
+            cfgIcon.fitWidth = 16.0
+            configManagerButton.graphic = cfgIcon
             configManagerButton.setOnAction {
                 ConfigManager.showDialog(false) {
                     refreshUI(anchorRoot)
@@ -204,8 +200,8 @@ class SwitchManager private constructor() {
                     .toExternalForm()
             )
 
-            settingsIcon.fitHeight = 17.0
-            settingsIcon.fitWidth = 17.0
+            settingsIcon.fitHeight = 16.0
+            settingsIcon.fitWidth = 16.0
             settingsButton.graphic = settingsIcon
 
             val controlHBbox = HBox(settingsButton, startButton, configManagerButton)

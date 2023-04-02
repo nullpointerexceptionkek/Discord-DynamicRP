@@ -82,7 +82,7 @@ public class ConfigController implements Initializable {
     @FXML
     private TextField appIDTextField;
     @FXML
-    private Button callbackButton;
+    private Button callbackButton, searchButton;
     @FXML
     private Button settingButton;
     @FXML
@@ -224,11 +224,19 @@ public class ConfigController implements Initializable {
     //it will also set the appid to only accept numbers and if loaded is not null, it will leave it empty
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/lee/aspect/dev/cdiscordrp/icon/settingsImage.png")).toExternalForm());
-        imageView.setFitHeight(25);
-        imageView.setPreserveRatio(true);
-        settingButton.setGraphic(imageView);
+        ImageView settingimg = new ImageView(Objects.requireNonNull(getClass().getResource("/lee/aspect/dev/cdiscordrp/icon/settingsImage.png")).toExternalForm());
+        settingimg.setFitHeight(16);
+        settingimg.setPreserveRatio(true);
+        settingButton.setGraphic(settingimg);
         settingButton.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+
+        ImageView searchimg = new ImageView(Objects.requireNonNull(getClass().getResource("/lee/aspect/dev/cdiscordrp/icon/search.png")).toExternalForm());
+        searchimg.setFitHeight(16);
+        searchimg.setPreserveRatio(true);
+        searchButton.setGraphic(searchimg);
+        searchButton.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+
+
         ContextMenu contextMenu = new ContextMenu();
         MenuItem copyItem = new MenuItem("Copy");
         MenuItem pasteItem = new MenuItem("Paste");
