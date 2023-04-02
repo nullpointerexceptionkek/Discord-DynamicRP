@@ -7,9 +7,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f5c51c1b-694c-4eb8-abc5-2555f3684212" name="Changes" comment="Switch to gradle, good bye maven">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/cdiscordrp/exceptions/ExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lee/aspect/dev/cdiscordrp/exceptions/ExceptionHandler.java" afterDir="false" />
+    <list default="true" id="f5c51c1b-694c-4eb8-abc5-2555f3684212" name="Changes" comment="gralde hsould work fine now">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,10 +141,11 @@
       <command value="mvn dependency:tree" />
       <command value="mvn clean" />
       <command value="gradlew run" />
+      <command value="gradle build" />
     </option>
   </component>
   <component name="RunManager" selected="Gradle.CDiscordRP [gradlew run]">
-    <configuration name="CDiscordRP [gradlew run]" type="GradleRunConfiguration" factoryName="Gradle" nameIsGenerated="true">
+    <configuration name="CDiscordRP [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -156,7 +156,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="run" />
+            <option value="build" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -202,10 +202,12 @@
     </configuration>
     <list>
       <item itemvalue="Gradle.CDiscordRP [gradlew run]" />
+      <item itemvalue="Gradle.CDiscordRP [build]" />
       <item itemvalue="Gradle.CDiscordRP [run]" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.CDiscordRP [build]" />
         <item itemvalue="Gradle.CDiscordRP [run]" />
       </list>
     </recent_temporary>
@@ -444,14 +446,7 @@
       <workItem from="1680427824817" duration="10000" />
       <workItem from="1680428875058" duration="171000" />
       <workItem from="1680429298682" duration="12000" />
-      <workItem from="1680430095349" duration="545000" />
-    </task>
-    <task id="LOCAL-00050" summary="add manage config button">
-      <created>1672014724269</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1672014724270</updated>
+      <workItem from="1680430095349" duration="741000" />
     </task>
     <task id="LOCAL-00051" summary="added dialog">
       <created>1672016054365</created>
@@ -789,7 +784,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680430390426</updated>
     </task>
-    <option name="localTasksCounter" value="99" />
+    <task id="LOCAL-00099" summary="gralde hsould work fine now">
+      <created>1680430679121</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1680430679121</updated>
+    </task>
+    <option name="localTasksCounter" value="100" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -808,7 +810,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="fixed a hidden issue with the SwitchAdapter" />
     <MESSAGE value="fix typo in read me and added pre release label" />
     <MESSAGE value="Clean up UpdateManager.java" />
     <MESSAGE value="combine some manager into singleton and fix a bug with config manager" />
@@ -833,7 +834,8 @@
     <MESSAGE value="added advance search stuff" />
     <MESSAGE value="icon change" />
     <MESSAGE value="Switch to gradle, good bye maven" />
-    <option name="LAST_COMMIT_MESSAGE" value="Switch to gradle, good bye maven" />
+    <MESSAGE value="gralde hsould work fine now" />
+    <option name="LAST_COMMIT_MESSAGE" value="gralde hsould work fine now" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
