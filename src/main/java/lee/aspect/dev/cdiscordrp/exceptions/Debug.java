@@ -40,14 +40,15 @@ public class Debug {
     private Debug() {
         throw new IllegalStateException("Utility class");
     }
+
     public static void checkStylesheets(Parent parent) {
-        if(!DEBUG) return;
+        if (!DEBUG) return;
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
         StackTraceElement callingMethod = stackTrace[2];
         String className = callingMethod.getClassName();
         String methodName = callingMethod.getMethodName();
         System.out.println(className + "." + methodName);
-        try{
+        try {
             System.out.println("Debug.checkStylesheet(" + parent.getId() + "):");
             System.out.println("----------------------------------------");
             System.out.println("Parent has " + parent.getStylesheets().size() + " stylesheets applied.");
@@ -61,7 +62,7 @@ public class Debug {
             }
             System.out.println("----------------------------------------");
         } catch (Exception e) {
-            System.err.println("Exception occurred while running Debug.checkStylesheets: " +  e.getMessage());
+            System.err.println("Exception occurred while running Debug.checkStylesheets: " + e.getMessage());
         }
     }
 }

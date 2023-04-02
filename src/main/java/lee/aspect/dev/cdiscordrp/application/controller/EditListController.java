@@ -34,11 +34,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lee.aspect.dev.cdiscordrp.manager.SceneManager;
 import lee.aspect.dev.cdiscordrp.application.core.CustomDiscordRPC;
 import lee.aspect.dev.cdiscordrp.application.core.Script;
 import lee.aspect.dev.cdiscordrp.application.core.Updates;
-import lee.aspect.dev.cdiscordrp.language.LanguageManager;
+import lee.aspect.dev.cdiscordrp.manager.SceneManager;
 import lee.aspect.dev.cdiscordrp.util.WarningManager;
 
 import java.io.IOException;

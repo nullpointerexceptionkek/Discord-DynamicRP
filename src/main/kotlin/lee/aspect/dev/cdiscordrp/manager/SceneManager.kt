@@ -30,7 +30,6 @@ import javafx.scene.Parent
 import lee.aspect.dev.cdiscordrp.application.core.CustomDiscordRPC
 import lee.aspect.dev.cdiscordrp.application.core.Settings
 import lee.aspect.dev.cdiscordrp.autoswitch.SwitchManager
-import lee.aspect.dev.cdiscordrp.exceptions.Debug
 import lee.aspect.dev.cdiscordrp.language.LanguageManager
 import java.io.IOException
 import java.util.*
@@ -55,7 +54,7 @@ class SceneManager {
         }
 
         @JvmStatic
-        fun loadSceneWithStyleSheet(location:String): SceneData {
+        fun loadSceneWithStyleSheet(location: String): SceneData {
             val loader = FXMLLoader()
             loader.location = CustomDiscordRPC::class.java.getResource(location)
 
@@ -67,5 +66,6 @@ class SceneManager {
             return SceneData(root, loader.getController())
         }
     }
+
     data class SceneData(val root: Parent, val controller: Any)
 }

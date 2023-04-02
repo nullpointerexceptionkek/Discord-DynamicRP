@@ -33,11 +33,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import lee.aspect.dev.cdiscordrp.manager.SceneManager;
-import lee.aspect.dev.cdiscordrp.manager.DirectoryManager;
 import lee.aspect.dev.cdiscordrp.Launch;
-import lee.aspect.dev.cdiscordrp.util.WarningManager;
 import lee.aspect.dev.cdiscordrp.manager.ConfigManager;
+import lee.aspect.dev.cdiscordrp.manager.DirectoryManager;
+import lee.aspect.dev.cdiscordrp.manager.SceneManager;
+import lee.aspect.dev.cdiscordrp.util.WarningManager;
 
 import java.awt.*;
 import java.util.Arrays;

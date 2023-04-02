@@ -26,9 +26,9 @@
 package lee.aspect.dev.cdiscordrp.application.core;
 
 
-import lee.aspect.dev.cdiscordrp.manager.DirectoryManager;
 import lee.aspect.dev.cdiscordrp.json.loader.FileManager;
 import lee.aspect.dev.cdiscordrp.language.Languages;
+import lee.aspect.dev.cdiscordrp.manager.DirectoryManager;
 
 import java.io.File;
 
@@ -44,6 +44,7 @@ public class Settings {
     private boolean ShutDownInterfaceWhenTray = false;
     private boolean AutoSwitch = false;
     private File loadedConfig = null;
+
     private Settings() {
     }
 

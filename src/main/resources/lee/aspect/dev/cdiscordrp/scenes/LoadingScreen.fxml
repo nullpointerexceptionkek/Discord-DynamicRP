@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ProgressIndicator?>
-<?import javafx.scene.effect.Glow?>
-<?import javafx.scene.layout.StackPane?>
-
 <!--
   ~
   ~ MIT License
@@ -29,12 +25,16 @@
   ~ SOFTWARE.
   -->
 
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lee.aspect.dev.cdiscordrp.application.controller.LoadingController">
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="stackPane" xmlns="http://javafx.com/javafx/8"
+           fx:controller="lee.aspect.dev.cdiscordrp.application.controller.LoadingController">
     <VBox fx:id="vRoot" alignment="CENTER">
         <ProgressIndicator fx:id="progress" prefWidth="70.0" prefHeight="70.0">
             <effect>
-                <Glow level="1.0" />
+                <Glow level="1.0"/>
             </effect>
         </ProgressIndicator>
     </VBox>

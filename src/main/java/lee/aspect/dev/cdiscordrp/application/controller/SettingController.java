@@ -27,7 +27,6 @@ package lee.aspect.dev.cdiscordrp.application.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -36,14 +35,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import lee.aspect.dev.cdiscordrp.application.core.CustomDiscordRPC;
-import lee.aspect.dev.cdiscordrp.exceptions.Debug;
-import lee.aspect.dev.cdiscordrp.manager.SceneManager;
-import lee.aspect.dev.cdiscordrp.Launch;
 import lee.aspect.dev.cdiscordrp.animatefx.SlideOutLeft;
+import lee.aspect.dev.cdiscordrp.application.core.CustomDiscordRPC;
 import lee.aspect.dev.cdiscordrp.application.core.Settings;
-import lee.aspect.dev.cdiscordrp.manager.ConfigManager;
 import lee.aspect.dev.cdiscordrp.language.LanguageManager;
+import lee.aspect.dev.cdiscordrp.manager.ConfigManager;
+import lee.aspect.dev.cdiscordrp.manager.SceneManager;
 import lee.aspect.dev.cdiscordrp.util.WarningManager;
 import lee.aspect.dev.cdiscordrp.util.system.StartLaunch;
 

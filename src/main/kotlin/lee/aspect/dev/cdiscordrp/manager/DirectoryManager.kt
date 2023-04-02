@@ -32,8 +32,8 @@ import javafx.scene.control.ButtonBar.ButtonData
 import javafx.scene.layout.VBox
 import javafx.stage.DirectoryChooser
 import lee.aspect.dev.cdiscordrp.Launch
-import lee.aspect.dev.cdiscordrp.util.system.StartLaunch
 import lee.aspect.dev.cdiscordrp.exceptions.UnsupportedOSException
+import lee.aspect.dev.cdiscordrp.util.system.StartLaunch
 import java.io.BufferedWriter
 import java.io.File
 import java.nio.file.Files

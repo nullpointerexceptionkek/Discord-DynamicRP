@@ -30,8 +30,8 @@ import javafx.scene.control.ChoiceBox
 import javafx.scene.control.Dialog
 import javafx.scene.control.Label
 import javafx.scene.layout.VBox
-import lee.aspect.dev.cdiscordrp.util.WarningManager
 import lee.aspect.dev.cdiscordrp.application.core.Settings
+import lee.aspect.dev.cdiscordrp.util.WarningManager
 import java.util.*
 
 class LanguageManager private constructor() {
@@ -42,12 +42,16 @@ class LanguageManager private constructor() {
 
         @JvmStatic
         fun setLang(lang: Languages) {
-            Companion.lang = ResourceBundle.getBundle(lang.resourceLocation, Locale.getDefault(),UTF8Control())
+            Companion.lang = ResourceBundle.getBundle(lang.resourceLocation, Locale.getDefault(), UTF8Control())
         }
 
         @JvmStatic
         fun init() {
-            lang = ResourceBundle.getBundle(Settings.getINSTANCE().lang.resourceLocation, Locale.getDefault(), UTF8Control())
+            lang = ResourceBundle.getBundle(
+                Settings.getINSTANCE().lang.resourceLocation,
+                Locale.getDefault(),
+                UTF8Control()
+            )
         }
 
         @JvmStatic

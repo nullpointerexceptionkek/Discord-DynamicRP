@@ -27,10 +27,10 @@ package lee.aspect.dev.cdiscordrp.json.loader;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import lee.aspect.dev.cdiscordrp.autoswitch.SwitchManager;
 import lee.aspect.dev.cdiscordrp.application.core.Script;
 import lee.aspect.dev.cdiscordrp.application.core.Settings;
 import lee.aspect.dev.cdiscordrp.application.core.Updates;
+import lee.aspect.dev.cdiscordrp.autoswitch.SwitchManager;
 import lee.aspect.dev.cdiscordrp.json.loader.adapter.ScriptAdapter;
 import lee.aspect.dev.cdiscordrp.json.loader.adapter.SettingsAdapter;
 import lee.aspect.dev.cdiscordrp.json.loader.adapter.SwitchAdapter;

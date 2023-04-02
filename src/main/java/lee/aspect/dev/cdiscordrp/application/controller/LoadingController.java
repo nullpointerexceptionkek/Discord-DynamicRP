@@ -27,18 +27,15 @@ package lee.aspect.dev.cdiscordrp.application.controller;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import lee.aspect.dev.cdiscordrp.manager.SceneManager;
 import lee.aspect.dev.cdiscordrp.animatefx.FadeOut;
 import lee.aspect.dev.cdiscordrp.animatefx.RotateIn;
 import lee.aspect.dev.cdiscordrp.application.core.RunLoopManager;
 import lee.aspect.dev.cdiscordrp.exceptions.NoDiscordClientException;
-
-import java.util.Objects;
+import lee.aspect.dev.cdiscordrp.manager.SceneManager;
 
 public class LoadingController {
     public static CallBackController callBackController;
@@ -116,7 +113,7 @@ public class LoadingController {
                                     FadeOut fadeOut = new FadeOut(vRoot);
                                     fadeOut.setOnFinished((actionEvent1 -> {
                                         stackPane.getChildren().remove(vRoot);
-                                        ((ConfigController)sceneData.getController()).invalidDiscordAppID("Unable to connect to Discord, please check this field.");
+                                        ((ConfigController) sceneData.getController()).invalidDiscordAppID("Unable to connect to Discord, please check this field.");
                                     }));
                                     fadeOut.play();
                                 });

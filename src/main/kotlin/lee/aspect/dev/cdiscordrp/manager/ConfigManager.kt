@@ -53,7 +53,7 @@ class ConfigManager {
         }
 
         @JvmStatic
-        fun showDialog(showRadioButton: Boolean,  onCloseCallback: (() -> Unit)? = null) {
+        fun showDialog(showRadioButton: Boolean, onCloseCallback: (() -> Unit)? = null) {
             Script.saveScriptToFile()
             val dialogStage = Stage()
             dialogStage.title = "Config Manager"
@@ -159,14 +159,14 @@ class ConfigManager {
                 duplicateButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
                 duplicateButton.setOnAction {
                     var newFileName = fileName + "_(1)_UpdateScript.json"
-                    val newFileIndex = fileName.length +1
-                    if(!File(file.parent,newFileName).exists()){
-                        file.copyTo(File(file.parent,newFileName), overwrite = false)
-                    } else{
-                        for(i in 1..15){
-                            newFileName = newFileName.substring(0,newFileIndex) + "($i)_UpdateScript.json"
-                            if(!File(file.parent,newFileName).exists()){
-                                file.copyTo(File(file.parent,newFileName), overwrite = false)
+                    val newFileIndex = fileName.length + 1
+                    if (!File(file.parent, newFileName).exists()) {
+                        file.copyTo(File(file.parent, newFileName), overwrite = false)
+                    } else {
+                        for (i in 1..15) {
+                            newFileName = newFileName.substring(0, newFileIndex) + "($i)_UpdateScript.json"
+                            if (!File(file.parent, newFileName).exists()) {
+                                file.copyTo(File(file.parent, newFileName), overwrite = false)
                                 break
                             }
                         }

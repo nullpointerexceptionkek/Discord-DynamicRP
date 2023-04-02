@@ -16,9 +16,9 @@
 
 package lee.aspect.dev.cdiscordrp.discordipc.entities.pipe;
 
+import lee.aspect.dev.cdiscordrp.discordipc.IPCClient;
 import lee.aspect.dev.cdiscordrp.discordipc.entities.Callback;
 import lee.aspect.dev.cdiscordrp.discordipc.entities.Packet;
-import lee.aspect.dev.cdiscordrp.discordipc.IPCClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;

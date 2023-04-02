@@ -26,9 +26,9 @@
 package lee.aspect.dev.cdiscordrp;
 
 import lee.aspect.dev.cdiscordrp.application.core.CustomDiscordRPC;
-import lee.aspect.dev.cdiscordrp.autoswitch.SwitchManager;
 import lee.aspect.dev.cdiscordrp.application.core.Script;
 import lee.aspect.dev.cdiscordrp.application.core.Settings;
+import lee.aspect.dev.cdiscordrp.autoswitch.SwitchManager;
 import lee.aspect.dev.cdiscordrp.exceptions.ExceptionHandler;
 import lee.aspect.dev.cdiscordrp.json.loader.FileManager;
 import lee.aspect.dev.cdiscordrp.language.LanguageManager;
@@ -59,6 +59,7 @@ public class Launch {
     public static File runtime;
     public static FileChannel channel;
     public static FileLock lock;
+
     private Launch() {
     }
 

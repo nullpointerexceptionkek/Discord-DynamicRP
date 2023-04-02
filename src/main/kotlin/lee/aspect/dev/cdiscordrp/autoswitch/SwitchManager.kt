@@ -36,18 +36,18 @@ import javafx.scene.layout.HBox
 import javafx.scene.layout.StackPane
 import javafx.scene.layout.VBox
 import javafx.scene.text.TextAlignment
-import lee.aspect.dev.cdiscordrp.manager.DirectoryManager.Companion.getRootDir
-import lee.aspect.dev.cdiscordrp.processmonitor.OpenCloseListener
-import lee.aspect.dev.cdiscordrp.processmonitor.ProcessMonitor
 import lee.aspect.dev.cdiscordrp.Launch
 import lee.aspect.dev.cdiscordrp.animatefx.SlideInLeft
 import lee.aspect.dev.cdiscordrp.application.core.CustomDiscordRPC
 import lee.aspect.dev.cdiscordrp.application.core.RunLoopManager
-import lee.aspect.dev.cdiscordrp.manager.ConfigManager
 import lee.aspect.dev.cdiscordrp.application.core.Script
 import lee.aspect.dev.cdiscordrp.application.core.Settings
 import lee.aspect.dev.cdiscordrp.json.loader.FileManager
+import lee.aspect.dev.cdiscordrp.manager.ConfigManager
+import lee.aspect.dev.cdiscordrp.manager.DirectoryManager.Companion.getRootDir
 import lee.aspect.dev.cdiscordrp.manager.SceneManager
+import lee.aspect.dev.cdiscordrp.processmonitor.OpenCloseListener
+import lee.aspect.dev.cdiscordrp.processmonitor.ProcessMonitor
 import java.io.File
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -219,10 +219,10 @@ class SwitchManager private constructor() {
                     startButton.text = "Stop Operation"
                     isStarted = true
                     statusLabel.text = "Initializing..."
-                    vboxtext.children.forEach{
+                    vboxtext.children.forEach {
                         it.isDisable = true
                     }
-                    vboxtextbox.children.forEach{
+                    vboxtextbox.children.forEach {
                         it.isDisable = true
                     }
                     settingsButton.isDisable = true
@@ -230,7 +230,7 @@ class SwitchManager private constructor() {
                     for (i in files.indices) {
                         if (loaded.switch[i].checkName.isNotEmpty()) {
                             val monitor = ProcessMonitor()
-                                monitor.startMonitoring(
+                            monitor.startMonitoring(
                                 loaded.switch[i].checkName,
                                 object : OpenCloseListener {
                                     override fun onProcessOpen() {
@@ -254,6 +254,7 @@ class SwitchManager private constructor() {
                                             }
                                         }
                                     }
+
                                     override fun onProcessClose() {
                                         try {
                                             RunLoopManager.closeCallBack()
@@ -282,14 +283,14 @@ class SwitchManager private constructor() {
                     } catch (_: Exception) {
                     }
 
-                    for(i in reference.indices){
+                    for (i in reference.indices) {
                         reference[i].stopMonitoring()
                     }
 
-                    vboxtext.children.forEach{
+                    vboxtext.children.forEach {
                         it.isDisable = false
                     }
-                    vboxtextbox.children.forEach{
+                    vboxtextbox.children.forEach {
                         it.isDisable = false
                     }
                     settingsButton.isDisable = false
@@ -334,6 +335,7 @@ class SwitchManager private constructor() {
             return anchorRoot
 
         }
+
         private fun refreshUI(anchorRoot: AnchorPane) {
             anchorRoot.children.clear()
             val newRoot = initMenu()

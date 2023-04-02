@@ -44,15 +44,18 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import lee.aspect.dev.cdiscordrp.Launch;
-import lee.aspect.dev.cdiscordrp.animatefx.*;
-import lee.aspect.dev.cdiscordrp.manager.SceneManager;
-import lee.aspect.dev.cdiscordrp.manager.SearchManager;
-import lee.aspect.dev.cdiscordrp.manager.UndoRedoManager;
+import lee.aspect.dev.cdiscordrp.animatefx.FadeIn;
+import lee.aspect.dev.cdiscordrp.animatefx.FadeOut;
+import lee.aspect.dev.cdiscordrp.animatefx.Shake;
+import lee.aspect.dev.cdiscordrp.animatefx.SlideInUp;
 import lee.aspect.dev.cdiscordrp.application.core.RunLoopManager;
 import lee.aspect.dev.cdiscordrp.application.core.Script;
 import lee.aspect.dev.cdiscordrp.application.core.Settings;
 import lee.aspect.dev.cdiscordrp.application.core.Updates;
 import lee.aspect.dev.cdiscordrp.json.loader.FileManager;
+import lee.aspect.dev.cdiscordrp.manager.SceneManager;
+import lee.aspect.dev.cdiscordrp.manager.SearchManager;
+import lee.aspect.dev.cdiscordrp.manager.UndoRedoManager;
 import lee.aspect.dev.cdiscordrp.util.WarningManager;
 
 import java.awt.*;
@@ -131,7 +134,7 @@ public class ConfigController implements Initializable {
         }
     }
 
-    public void showSearch(){
+    public void showSearch() {
         SearchManager.showDialog();
     }
 
@@ -150,9 +153,9 @@ public class ConfigController implements Initializable {
             invalidDiscordAppID("Application ID is empty");
             return;
         }
-        if(!(DiscordAppID.length() >= 16 && DiscordAppID.length() <= 32)){
+        if (!(DiscordAppID.length() >= 16 && DiscordAppID.length() <= 32)) {
             //;)
-            if(DiscordAppID.equals("123456789")){
+            if (DiscordAppID.equals("123456789")) {
                 try {
                     Desktop.getDesktop().browse(new URI("https://www.youtube.com/watch?v=dQw4w9WgXcQ"));
                 } catch (URISyntaxException e) {
@@ -184,7 +187,7 @@ public class ConfigController implements Initializable {
 
     }
 
-    public void switchToSetting(){
+    public void switchToSetting() {
         settingButton.setDisable(true);
         Parent root = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/Settings.fxml").getRoot();
         stackPane.getChildren().add(root);

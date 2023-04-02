@@ -97,7 +97,19 @@ class SearchManager {
             val button2URLColumn = TableColumn<Updates, String>("Button 2 URL")
             button2URLColumn.cellValueFactory = PropertyValueFactory("button2Url")
 
-            tableView.columns.addAll(firstLineColumn, secondLineColumn, delayColumn, largeImgColumn, largeImgTextColumn, smallImgColumn, smallImgTextColumn, button1Column, button1URLColumn, button2Column, button2URLColumn)
+            tableView.columns.addAll(
+                firstLineColumn,
+                secondLineColumn,
+                delayColumn,
+                largeImgColumn,
+                largeImgTextColumn,
+                smallImgColumn,
+                smallImgTextColumn,
+                button1Column,
+                button1URLColumn,
+                button2Column,
+                button2URLColumn
+            )
 
             val items: ObservableList<Updates> = FXCollections.observableList(Script.getINSTANCE().totalupdates)
             tableView.items = items
@@ -119,23 +131,26 @@ class SearchManager {
             textInput.textProperty().addListener { _, _, newValue ->
                 val searchText = newValue.trim()
                 if (searchText.isNotEmpty()) {
-                    when(searchChoiceBox.selectionModel.selectedItem){
+                    when (searchChoiceBox.selectionModel.selectedItem) {
                         "All" -> {
                             tableView.selectionModel.clearSelection()
                             tableView.items = items.filtered { item -> item.matches(searchText) }
                         }
+
                         "First Line" -> {
                             tableView.selectionModel.clearSelection()
                             tableView.items = items.filtered { item ->
                                 item.fl.lowercase(Locale.ROOT).contains(searchText.lowercase(Locale.ROOT))
                             }
                         }
+
                         "Second Line" -> {
                             tableView.selectionModel.clearSelection()
                             tableView.items = items.filtered { item ->
                                 item.sl.lowercase(Locale.ROOT).contains(searchText.lowercase(Locale.ROOT))
                             }
                         }
+
                         "Delay" -> {
                             tableView.selectionModel.clearSelection()
                             tableView.items = items.filtered { item ->
@@ -143,48 +158,56 @@ class SearchManager {
                                     .contains(searchText.lowercase(Locale.ROOT))
                             }
                         }
+
                         "Large Img" -> {
                             tableView.selectionModel.clearSelection()
                             tableView.items = items.filtered { item ->
                                 item.image.lowercase(Locale.ROOT).contains(searchText.lowercase(Locale.ROOT))
                             }
                         }
+
                         "Large Img Text" -> {
                             tableView.selectionModel.clearSelection()
                             tableView.items = items.filtered { item ->
                                 item.imagetext.lowercase(Locale.ROOT).contains(searchText.lowercase(Locale.ROOT))
                             }
                         }
+
                         "Small Img" -> {
                             tableView.selectionModel.clearSelection()
                             tableView.items = items.filtered { item ->
                                 item.smallimage.lowercase(Locale.ROOT).contains(searchText.lowercase(Locale.ROOT))
                             }
                         }
+
                         "Small Img Text" -> {
                             tableView.selectionModel.clearSelection()
                             tableView.items = items.filtered { item ->
                                 item.smalltext.lowercase(Locale.ROOT).contains(searchText.lowercase(Locale.ROOT))
                             }
                         }
+
                         "Button 1" -> {
                             tableView.selectionModel.clearSelection()
                             tableView.items = items.filtered { item ->
                                 item.button1Text.lowercase(Locale.ROOT).contains(searchText.lowercase(Locale.ROOT))
                             }
                         }
+
                         "Button 1 URL" -> {
                             tableView.selectionModel.clearSelection()
                             tableView.items = items.filtered { item ->
                                 item.button1Url.lowercase(Locale.ROOT).contains(searchText.lowercase(Locale.ROOT))
                             }
                         }
+
                         "Button 2" -> {
                             tableView.selectionModel.clearSelection()
                             tableView.items = items.filtered { item ->
                                 item.button2Text.lowercase(Locale.ROOT).contains(searchText.lowercase(Locale.ROOT))
                             }
                         }
+
                         "Button 2 URL" -> {
                             tableView.selectionModel.clearSelection()
                             tableView.items = items.filtered { item ->

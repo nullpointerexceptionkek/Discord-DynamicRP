@@ -27,7 +27,6 @@ package lee.aspect.dev.cdiscordrp.application.core;
 
 
 import lee.aspect.dev.cdiscordrp.Launch;
-import org.jetbrains.annotations.NotNull;
 
 public class Updates {
 

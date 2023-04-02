@@ -41,6 +41,7 @@ public class RunLoopManager {
     public static boolean isRunning = false;
     public static int currentDisplay = 0;
     private static Thread runLoop;
+
     private RunLoopManager() {
     } // Prevents instantiation
 

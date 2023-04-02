@@ -47,11 +47,11 @@
 }
 
 .text-field:hover {
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 5, 0, 0, 1);
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 5, 0, 0, 1);
 }
 
 .text-field:focused {
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 8, 0, 0, 1);
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 8, 0, 0, 1);
 }
 
 .button, .check-box:selected .box, .radio-button:selected .radio, .scroll-bar .thumb, .progress-indicator {
@@ -129,6 +129,7 @@
 .scroll-bar:horizontal {
     -fx-pref-height: 12;
 }
+
 .check-box:selected .box {
     -fx-border-color: #333333;
 }
@@ -136,6 +137,7 @@
 .check-box:selected .mark {
     -fx-background-color: #333333;
 }
+
 .radio-button .radio {
     -fx-background-color: #EFEFEF;
     -fx-border-color: #333333;

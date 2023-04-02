@@ -41,6 +41,7 @@ public class Script {
     private long calculatedTimestamp;
     private ArrayList<Updates> totalupdates = new ArrayList<>();
     private TimeStampMode timestampmode = TimeStampMode.appLaunch;
+
     private Script() {
     }
 
@@ -62,7 +63,7 @@ public class Script {
     }
 
     public static void saveScriptToFile() {
-        if(Settings.getINSTANCE().getLoadedConfig() == null) {
+        if (Settings.getINSTANCE().getLoadedConfig() == null) {
             Launch.LOGGER.warn("Cannot save script to file because setting is not loaded");
             return;
         }
@@ -70,7 +71,7 @@ public class Script {
     }
 
     public static void setUp() {
-        INSTANCE.totalupdates.add(new Updates(16000,"","","","","Welcome to CDiscordRP","You can find more information about this program in the README.md file"));
+        INSTANCE.totalupdates.add(new Updates(16000, "", "", "", "", "Welcome to CDiscordRP", "You can find more information about this program in the README.md file"));
         saveScriptToFile();
         loadScriptFromJson();
     }

@@ -6,7 +6,6 @@
 package lee.aspect.dev.cdiscordrp.animatefx;
 
 import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -99,8 +98,6 @@ public abstract class AnimationFX {
             timeline.play();
         }
     }
-
-
 
 
     /**
