@@ -40,7 +40,7 @@ dependencies {
     implementation "com.kohlschutter.junixsocket:junixsocket-native-common:$junixsocket_version"
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_platform_version"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit_platform_version"
-    implementation "org.jetbrains:annotations:24.0.1"
+    //implementation "org.jetbrains:annotations:24.0.1"
     runtimeOnly "org.openjfx:javafx-graphics:$javafx.version:win"
     runtimeOnly "org.openjfx:javafx-graphics:$javafx.version:linux"
     runtimeOnly "org.openjfx:javafx-graphics:$javafx.version:mac"
