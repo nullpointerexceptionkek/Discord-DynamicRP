@@ -341,6 +341,45 @@ class SwitchManager private constructor() {
             val newRoot = initMenu()
             anchorRoot.children.add(newRoot)
         }
+        @JvmStatic
+        fun initAutoSwitchSilent() {
+            val files = ConfigManager.getCurrentConfigFiles()
+            files!!
+
+            for (i in files.indices) {
+                if (loaded.switch[i].checkName.isNotEmpty()) {
+                    val monitor = ProcessMonitor()
+                    monitor.startMonitoring(
+                        loaded.switch[i].checkName,
+                        object : OpenCloseListener {
+                            override fun onProcessOpen() {
+                                try {
+                                    RunLoopManager.closeCallBack()
+                                } catch (_: Exception) {
+                                }
+                                Settings.getINSTANCE().loadedConfig = files[i]
+                                Script.loadScriptFromJson()
+
+                                try {
+                                    RunLoopManager.startUpdate()
+                                } catch (_: Exception) {
+                                }
+                            }
+
+                            override fun onProcessClose() {
+                                try {
+                                    RunLoopManager.closeCallBack()
+                                } catch (_: Exception) {
+                                }
+                            }
+                        },
+                        3,
+                        TimeUnit.SECONDS
+                    )
+                }
+            }
+        }
+
     }
 
 

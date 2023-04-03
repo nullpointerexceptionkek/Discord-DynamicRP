@@ -50,6 +50,15 @@ public class RunLoopManager {
      */
 
     public static void runFromStartLunch() {
+        try{
+            Thread.sleep(5000); // 5 second should be enough for discord to start
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        if(Settings.getINSTANCE().isAutoSwitch()){
+            SwitchManager.initAutoSwitchSilent();
+            return;
+        }
         do {
             try {
                 startUpdate();
@@ -57,8 +66,7 @@ public class RunLoopManager {
             } catch (NoDiscordClientException | RuntimeException ex) {
                 synchronized (startLock) {
                     try {
-                        // Wait for a notification from another thread before continuing
-                        startLock.wait();
+                        startLock.wait(10000); //check every 10 seconds
                     } catch (InterruptedException e) {
                         //this should never happen
                         throw new RuntimeException(ex);
