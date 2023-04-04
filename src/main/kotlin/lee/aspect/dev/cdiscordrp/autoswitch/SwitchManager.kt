@@ -31,10 +31,7 @@ import javafx.geometry.Pos
 import javafx.scene.Parent
 import javafx.scene.control.*
 import javafx.scene.image.ImageView
-import javafx.scene.layout.AnchorPane
-import javafx.scene.layout.HBox
-import javafx.scene.layout.StackPane
-import javafx.scene.layout.VBox
+import javafx.scene.layout.*
 import javafx.scene.text.TextAlignment
 import lee.aspect.dev.cdiscordrp.Launch
 import lee.aspect.dev.cdiscordrp.animatefx.SlideInLeft
@@ -81,9 +78,26 @@ class SwitchManager private constructor() {
                 saveToFile()
                 return
             }
+            if (loaded.switch.size != ConfigManager.getCurrentConfigFiles()?.size) {
+                val oldSwitch = loaded.switch
+                loaded.switch = Array(ConfigManager.getCurrentConfigFiles()?.size ?: 1) { Switch() }
+                for (i in oldSwitch.indices) {
+                    if (i >= loaded.switch.size) {
+                        break
+                    }
+                    loaded.switch[i] = oldSwitch[i]
+                }
+                for (i in oldSwitch.size until loaded.switch.size) {
+                    loaded.switch[i] = Switch()
+                    loaded.switch[i].config = ConfigManager.getCurrentConfigFiles()!![i]
+                }
+                Companion.loaded = loaded
+                saveToFile()
+                return;
+            }
             Companion.loaded = loaded
-
         }
+
 
         @JvmStatic
         fun saveToFile() {
@@ -104,36 +118,27 @@ class SwitchManager private constructor() {
             switchStackPane.padding = Insets(30.0)
             switchStackPane.setPrefSize(334.0, 540.0)
 
-            val scrollPane = ScrollPane()
-
             val files = ConfigManager.getCurrentConfigFiles()
             files!!
 
-            val vboxtext = VBox()
-            vboxtext.spacing = 10.0
-            vboxtext.alignment = Pos.CENTER_LEFT
-
-
-            val vboxtextbox = VBox()
-            vboxtextbox.spacing = 10.0
-            vboxtextbox.alignment = Pos.CENTER_RIGHT
-
+            val gridPane = GridPane()
+            gridPane.alignment = Pos.CENTER
+            gridPane.vgap = 10.0
+            gridPane.hgap = 10.0
 
             for (i in files.indices) {
                 val fileName = files[i].name.substring(0, files[i].name.indexOf("_UpdateScript.json"))
                 val text = Label(fileName)
-                vboxtext.children.add(text)
+                gridPane.add(text, 0, i)
 
                 val textField = TextField()
 
                 if (loaded.switch.size > i && loaded.switch[i].checkName.isNotBlank())
                     textField.text = loaded.switch[i].checkName
 
-                //input[i] = textField.text
                 textField.textProperty().addListener { _, _, newValue ->
                     loaded.switch[i].checkName = newValue
                 }
-
 
                 textField.maxWidth = 140.0
 
@@ -144,24 +149,20 @@ class SwitchManager private constructor() {
                     Script.loadScriptFromJson()
 
                     val root = SceneManager.getDefaultConfigParent()
-                    //println(anchorRoot.children)
 
                     if (anchorRoot.children.contains(switchStackPane)) {
                         anchorRoot.children.remove(switchStackPane)
                     }
-                    if (anchorRoot.children.contains(scrollPane)) {
-                        anchorRoot.children.remove(scrollPane)
-                    }
                     anchorRoot.children.add(root)
-
                 }
 
                 val hbox = HBox(editCfgButton, textField)
                 hbox.spacing = 10.0
                 hbox.alignment = Pos.CENTER_RIGHT
 
-                vboxtextbox.children.addAll(hbox)
+                gridPane.add(hbox, 1, i)
             }
+
 
             val statusLabel = Label("Not Connected")
             statusLabel.textAlignment = TextAlignment.CENTER
@@ -219,10 +220,7 @@ class SwitchManager private constructor() {
                     startButton.text = "Stop Operation"
                     isStarted = true
                     statusLabel.text = "Initializing..."
-                    vboxtext.children.forEach {
-                        it.isDisable = true
-                    }
-                    vboxtextbox.children.forEach {
+                    gridPane.children.forEach {
                         it.isDisable = true
                     }
                     settingsButton.isDisable = true
@@ -287,10 +285,7 @@ class SwitchManager private constructor() {
                         reference[i].stopMonitoring()
                     }
 
-                    vboxtext.children.forEach {
-                        it.isDisable = false
-                    }
-                    vboxtextbox.children.forEach {
+                    gridPane.children.forEach {
                         it.isDisable = false
                     }
                     settingsButton.isDisable = false
@@ -319,24 +314,36 @@ class SwitchManager private constructor() {
             val CDiscordRPHBox = HBox(CDiscordRP)
             CDiscordRPHBox.alignment = Pos.TOP_CENTER
 
-            switchStackPane.children.add(CDiscordRPHBox)
-            switchStackPane.children.addAll(vboxtext, vboxtextbox, controlVbox)
+            val scrollPane = ScrollPane()
+            scrollPane.isFitToWidth = true
+            scrollPane.hbarPolicy = ScrollPane.ScrollBarPolicy.AS_NEEDED
+            scrollPane.vbarPolicy = ScrollPane.ScrollBarPolicy.AS_NEEDED
+            scrollPane.content = gridPane
+
+
+
+            val content = VBox()
+            content.spacing = 10.0
+            content.alignment = Pos.CENTER
+            content.children.addAll(scrollPane)
+
+
+            switchStackPane.children.addAll(CDiscordRPHBox, content, controlVbox)
+            anchorRoot.children.add(switchStackPane)
+            AnchorPane.setTopAnchor(switchStackPane, 0.0)
+            AnchorPane.setLeftAnchor(switchStackPane, 0.0)
+            AnchorPane.setRightAnchor(switchStackPane, 0.0)
+            AnchorPane.setBottomAnchor(switchStackPane, 0.0)
 
 
             anchorRoot.stylesheets.add(Settings.getINSTANCE().theme.path)
 
-            if (files.size > switchStackPane.prefHeight / 12) {
-                scrollPane.content = switchStackPane
-                scrollPane.isFitToWidth = true
-                anchorRoot.children.add(scrollPane)
-            } else {
-                anchorRoot.children.add(switchStackPane)
-            }
             return anchorRoot
 
         }
 
         private fun refreshUI(anchorRoot: AnchorPane) {
+            loadFromFile()
             anchorRoot.children.clear()
             val newRoot = initMenu()
             anchorRoot.children.add(newRoot)
