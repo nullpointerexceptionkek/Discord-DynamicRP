@@ -35,12 +35,12 @@ import java.net.URISyntaxException;
 public class StartLaunch {
 
     private static final File STARTUPDIR_WINDOWS = new File(System.getProperty("user.home") + "\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup");
-    private static final File STARTUPDIR_LINUX = new File("/etc/init.d/");
+    private static final File STARTUPDIR_LINUX = new File(System.getProperty("user.home") + "/.config/autostart/");
     private static final File STARTUPDIR_MAC = new File(System.getProperty("user.home") + "/Library/LaunchAgents/");
 
     private static final String APP_NAME = "CDiscordRP";
     private static final String APP_SCRIPT_WINDOWS = "CDRP.bat";
-    private static final String APP_SCRIPT_LINUX = APP_NAME;
+    private static final String APP_SCRIPT_LINUX = APP_NAME + ".desktop";
     private static final String APP_SCRIPT_MAC = APP_NAME + ".plist";
 
     public static void createStartupScript() throws IOException, UnsupportedOSException, FileNotAJarException, URISyntaxException {
@@ -58,27 +58,12 @@ public class StartLaunch {
         } else if (isOnLinux()) {
             File scriptFile = new File(STARTUPDIR_LINUX, APP_SCRIPT_LINUX);
             PrintWriter writer = new PrintWriter(new FileWriter(scriptFile));
-            writer.println("#!/bin/sh");
-            writer.println("java -jar " + currentJar);
+            writer.println("[Desktop Entry]");
+            writer.println("Type=Application");
+            writer.println("Name=CDiscordRP");
+            writer.println("Exec=/usr/bin/java -jar " + currentJar + " --StartLaunch");
+            writer.println("Terminal=false");
             writer.close();
-            boolean created = scriptFile.setExecutable(true);
-            if (!created) {
-                throw new IOException("Could not set executable permission on " + scriptFile);
-            }
-
-            ProcessBuilder pb = new ProcessBuilder("/usr/sbin/insserv", "-d", "/etc/init.d/" + APP_NAME);
-            pb.redirectErrorStream(true);
-            Process p = pb.start();
-            try {
-                p.waitFor();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-
-            if (p.exitValue() != 0) {
-                throw new IOException("Could not add " + scriptFile + " to startup scripts: " + readStream(p.getInputStream()));
-            }
-
         } else if (isOnMac()) {
             File plistFile = new File(STARTUPDIR_MAC, APP_SCRIPT_MAC);
             PrintWriter writer = new PrintWriter(new FileWriter(plistFile));
@@ -105,16 +90,6 @@ public class StartLaunch {
 
     }
 
-    private static String readStream(InputStream stream) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            sb.append(line);
-            sb.append(System.lineSeparator());
-        }
-        return sb.toString();
-    }
 
     public static boolean isOnWindows() {
         String osName = System.getProperty("os.name").toLowerCase();
@@ -130,9 +105,6 @@ public class StartLaunch {
         return osName.contains("mac");
     }
 
-    public static boolean isBatCreated() {
-        return isOnWindows() && new File(STARTUPDIR_WINDOWS, APP_SCRIPT_WINDOWS).exists();
-    }
 
     public static boolean isStartupScriptCreated() {
         if (isOnWindows()) {
@@ -156,11 +128,6 @@ public class StartLaunch {
             File scriptFile = new File(STARTUPDIR_LINUX, APP_SCRIPT_LINUX);
             if (scriptFile.exists()) {
                 scriptFile.delete();
-            }
-            try {
-                Runtime.getRuntime().exec("update-rc.d -f " + APP_NAME + " remove");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
             }
         } else if (isOnMac()) {
             File plistFile = new File(STARTUPDIR_MAC, APP_SCRIPT_MAC);
