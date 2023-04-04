@@ -25,59 +25,76 @@
 
 package lee.aspect.dev.cdiscordrp.util.system;
 
-import lee.aspect.dev.cdiscordrp.Launch;
 import lee.aspect.dev.cdiscordrp.exceptions.FileNotAJarException;
 import lee.aspect.dev.cdiscordrp.exceptions.UnsupportedOSException;
 
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URISyntaxException;
 
 public class StartLaunch {
 
-    private static final File STARTUPDIR = new File(System.getProperty("user.home") + "\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup");
+    private static final File STARTUPDIR_WINDOWS = new File(System.getProperty("user.home") + "\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup");
+    private static final File STARTUPDIR_LINUX = new File("/etc/init.d/");
+    private static final File STARTUPDIR_MAC = new File(System.getProperty("user.home") + "/Library/LaunchAgents/");
 
-    private static final File CDRP = new File(STARTUPDIR, "CDRP.bat");
+    private static final String APP_NAME = "CDiscordRP";
+    private static final String APP_SCRIPT_WINDOWS = "CDRP.bat";
+    private static final String APP_SCRIPT_LINUX = APP_NAME;
+    private static final String APP_SCRIPT_MAC = APP_NAME + ".plist";
 
-    public static void CreateBat() throws IOException, UnsupportedOSException, FileNotAJarException, URISyntaxException {
+    public static void createStartupScript() throws IOException, UnsupportedOSException, FileNotAJarException, URISyntaxException {
         final File currentJar = new File(RestartApplication.class.getProtectionDomain().getCodeSource().getLocation().toURI());
 
         if (!currentJar.getName().endsWith(".jar")) {
             throw new FileNotAJarException();
         }
 
-        if (!isOnWindows()) throw new UnsupportedOSException("Start Launch currently only support windows");
-
-        Launch.LOGGER.debug(STARTUPDIR.toString());
-
-        if (!CDRP.exists()) {
-            CDRP.createNewFile();
+        if (isOnWindows()) {
+            File batFile = new File(STARTUPDIR_WINDOWS, APP_SCRIPT_WINDOWS);
+            PrintWriter writer = new PrintWriter(new FileWriter(batFile));
+            writer.println("start \"\" javaw -jar " + currentJar + " --StartLaunch");
+            writer.close();
+        } else if (isOnLinux()) {
+            File scriptFile = new File(STARTUPDIR_LINUX, APP_SCRIPT_LINUX);
+            PrintWriter writer = new PrintWriter(new FileWriter(scriptFile));
+            writer.println("#!/bin/sh");
+            writer.println("java -jar " + currentJar);
+            writer.close();
+            scriptFile.setExecutable(true);
+            Runtime.getRuntime().exec("update-rc.d " + APP_NAME + " defaults");
+        } else if (isOnMac()) {
+            File plistFile = new File(STARTUPDIR_MAC, APP_SCRIPT_MAC);
+            PrintWriter writer = new PrintWriter(new FileWriter(plistFile));
+            writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+            writer.println("<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">");
+            writer.println("<plist version=\"1.0\">");
+            writer.println("<dict>");
+            writer.println("    <key>Label</key>");
+            writer.println("    <string>" + APP_NAME + "</string>");
+            writer.println("    <key>ProgramArguments</key>");
+            writer.println("    <array>");
+            writer.println("        <string>java</string>");
+            writer.println("        <string>-jar</string>");
+            writer.println("        <string>" + currentJar + "</string>");
+            writer.println("    </array>");
+            writer.println("    <key>RunAtLoad</key>");
+            writer.println("    <true/>");
+            writer.println("</dict>");
+            writer.println("</plist>");
+            writer.close();
+        } else {
+            throw new UnsupportedOSException("Start Launch currently only supports Windows, Linux, and macOS");
         }
-        FileOutputStream outputStream = new FileOutputStream(CDRP);
-        //"start \"\" javaw -jar " + currentJar + " --StartLaunch"
-        outputStream.write(("start \"\" javaw -jar " + currentJar + " --StartLaunch").getBytes());
-        outputStream.flush();
-        outputStream.close();
 
-
-    }
-
-    public static boolean isJar() {
-        final File currentJar;
-        try {
-            currentJar = new File(RestartApplication.class.getProtectionDomain().getCodeSource().getLocation().toURI());
-        } catch (URISyntaxException e) {
-            return false;
-        }
-        return currentJar.getName().endsWith(".jar");
     }
 
     public static boolean isOnWindows() {
         String osName = System.getProperty("os.name").toLowerCase();
         return osName.contains("win");
     }
-
     public static boolean isOnLinux() {
         String osName = System.getProperty("os.name").toLowerCase();
         return osName.contains("nix") || osName.contains("nux") || osName.contains("aix");
@@ -89,12 +106,44 @@ public class StartLaunch {
     }
 
     public static boolean isBatCreated() {
-        return CDRP.exists();
+        return isOnWindows() && new File(STARTUPDIR_WINDOWS, APP_SCRIPT_WINDOWS).exists();
     }
 
-    public static void deleteBat() {
-        if (isBatCreated()) CDRP.delete();
+    public static boolean isStartupScriptCreated() {
+        if (isOnWindows()) {
+            return new File(STARTUPDIR_WINDOWS, APP_SCRIPT_WINDOWS).exists();
+        } else if (isOnLinux()) {
+            return new File(STARTUPDIR_LINUX, APP_SCRIPT_LINUX).exists();
+        } else if (isOnMac()) {
+            return new File(STARTUPDIR_MAC, APP_SCRIPT_MAC).exists();
+        } else {
+            return false;
+        }
     }
 
-
+    public static void deleteStartupScript() {
+        if (isOnWindows()) {
+            File batFile = new File(STARTUPDIR_WINDOWS, APP_SCRIPT_WINDOWS);
+            if (batFile.exists()) {
+                batFile.delete();
+            }
+        } else if (isOnLinux()) {
+            File scriptFile = new File(STARTUPDIR_LINUX, APP_SCRIPT_LINUX);
+            if (scriptFile.exists()) {
+                scriptFile.delete();
+            }
+            try {
+                Runtime.getRuntime().exec("update-rc.d -f " + APP_NAME + " remove");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (isOnMac()) {
+            File plistFile = new File(STARTUPDIR_MAC, APP_SCRIPT_MAC);
+            if (plistFile.exists()) {
+                plistFile.delete();
+            }
+        }
+    }
 }
+
+

@@ -139,12 +139,11 @@ public class SettingController implements Initializable {
             Settings.getINSTANCE().setStartTrayOnlyInterfaceClose(startTrayOnlyCloseCheckBox.isSelected());
             WarningManager.forceRestart();
         }));
-        startLaunchCheckBox.setDisable(!StartLaunch.isOnWindows());
         startLaunchCheckBox.setSelected(Settings.getINSTANCE().isStartLaunch());
         startLaunchCheckBox.setOnAction((actionEvent -> {
             if (startLaunchCheckBox.isSelected()) {
                 try {
-                    StartLaunch.CreateBat();
+                    StartLaunch.createStartupScript();
                 } catch (Exception e) {
                     Alert alertException = new Alert(Alert.AlertType.ERROR);
                     alertException.setTitle("Exception");
@@ -154,7 +153,7 @@ public class SettingController implements Initializable {
                     startLaunchCheckBox.setSelected(false);
                 }
             } else {
-                StartLaunch.deleteBat();
+                StartLaunch.deleteStartupScript();
             }
             Settings.getINSTANCE().setStartLaunch(startLaunchCheckBox.isSelected());
         }));
