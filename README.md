@@ -8,24 +8,28 @@ This program is written in Java 8 and kotlin 1.7.21 and uses the Discord IPC, Ja
 
 ## Features
 
-- Save mutiple Rich Presence config
+- Save multiple Rich Presence config
 - Auto launch on start up
 - Allowing different method of setting the Rich Presence
-    - Callback: Sents Rich Presence data every x seconds according to your config
+    - Callback: Sends Rich Presence data every x seconds according to your config
     - Auto Switch: this will automatically switch between the Rich Presence you have set, based on the application you
       are running
 - Easy to use JavaFX GUI
 - No need for installation, just run the .jar file
 - Configs are automatically saved
 - System tray support
+- Implementation in all 3 operating systems (Windows, Macos, Linux), tested on Windows 10 and 11, Ubuntu 20.04
+- More themes than you ever imagined
 
 ## Support
 
-> | Operating System | Auto Launch On Start up         | Rich Presence             | Auto Switch |
->|------------------|---------------------------------|---------------------------|-------------|
->| Windows          | Supported/(tested on 10 and 11) | Supported                 | Beta        |
->| Macos            | Not implemented                 | Not tested                | Not tested  |
->| Linux            | Not implemented                 | Might be bugged sometimes | Not tested  |
+> | Operating System | Auto Launch On Start up         | Rich Presence  | Auto Switch |
+>|------------------|---------------------------------|----------------|-------------|
+> | Windows          | Supported/(tested on 10 and 11) | Supported      | Supported   |
+> | Macos            | Not implemented                 | Not tested     | Not tested  |
+> | Linux            | Not implemented                 | Supported      | Supported   |
+
+macOS implementation should be the same as Linux, I haven't given a chance to test it on, but it should work.
 
 ## How to use
 
@@ -36,7 +40,7 @@ This program is written in Java 8 and kotlin 1.7.21 and uses the Discord IPC, Ja
 
 > This data is stored in the environment variable "CDRPCDir"
 
-![img.png](MainScreen)
+![img.png](MainScreen.png)
 
 2. Now after you selected a directory, you will see the main screen.
    the Application ID field is the field where you will enter your application ID.
@@ -82,17 +86,17 @@ Check out the [LEARN.md](LEARN.md) file
 
 ## How to build
 
-This project is made using Maven on Intellij IDEA, so you can just clone the project and open it in Intellij IDEA.
-For running with Maven, you need to put the following in arguments:
+This project is made using Gradle on Intellij IDEA, so you can just clone the project and open it in Intellij IDEA.
+For running with Gradle, simply run
 
 ```
-javafx:run
+gradlew run
 ```
 
-and you can run
+and you can build using
 
 ```
-mvn clean package
+gradle build
 ```
 
 ## License
