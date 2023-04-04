@@ -28,11 +28,9 @@ package lee.aspect.dev.cdiscordrp.util.system;
 import lee.aspect.dev.cdiscordrp.exceptions.FileNotAJarException;
 import lee.aspect.dev.cdiscordrp.exceptions.UnsupportedOSException;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.URISyntaxException;
+
 
 public class StartLaunch {
 
@@ -63,8 +61,24 @@ public class StartLaunch {
             writer.println("#!/bin/sh");
             writer.println("java -jar " + currentJar);
             writer.close();
-            scriptFile.setExecutable(true);
-            Runtime.getRuntime().exec("update-rc.d " + APP_NAME + " defaults");
+            boolean created = scriptFile.setExecutable(true);
+            if (!created) {
+                throw new IOException("Could not set executable permission on " + scriptFile);
+            }
+
+            ProcessBuilder pb = new ProcessBuilder("/usr/sbin/insserv", "-d", "/etc/init.d/" + APP_NAME);
+            pb.redirectErrorStream(true);
+            Process p = pb.start();
+            try {
+                p.waitFor();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            if (p.exitValue() != 0) {
+                throw new IOException("Could not add " + scriptFile + " to startup scripts: " + readStream(p.getInputStream()));
+            }
+
         } else if (isOnMac()) {
             File plistFile = new File(STARTUPDIR_MAC, APP_SCRIPT_MAC);
             PrintWriter writer = new PrintWriter(new FileWriter(plistFile));
@@ -89,6 +103,17 @@ public class StartLaunch {
             throw new UnsupportedOSException("Start Launch currently only supports Windows, Linux, and macOS");
         }
 
+    }
+
+    private static String readStream(InputStream stream) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            sb.append(line);
+            sb.append(System.lineSeparator());
+        }
+        return sb.toString();
     }
 
     public static boolean isOnWindows() {

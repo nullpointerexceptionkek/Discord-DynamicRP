@@ -31,10 +31,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.*;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import lee.aspect.dev.cdiscordrp.animatefx.SlideOutLeft;
 import lee.aspect.dev.cdiscordrp.application.core.CustomDiscordRPC;
 import lee.aspect.dev.cdiscordrp.application.core.Settings;
@@ -146,11 +145,27 @@ public class SettingController implements Initializable {
                     StartLaunch.createStartupScript();
                 } catch (Exception e) {
                     Alert alertException = new Alert(Alert.AlertType.ERROR);
-                    alertException.setTitle("Exception");
-                    alertException.setHeaderText("We have encounter an exception");
-                    alertException.setContentText("Start up Launch cannot be created");
-                    alertException.show();
+                    alertException.setTitle("Error");
+                    alertException.setHeaderText("Unable to create startup script");
+
+                    TextArea textArea = new TextArea(e.getMessage());
+                    textArea.setEditable(false);
+                    textArea.setWrapText(true);
+                    textArea.setMaxWidth(Double.MAX_VALUE);
+                    textArea.setMaxHeight(Double.MAX_VALUE);
+
+                    GridPane.setVgrow(textArea, Priority.ALWAYS);
+                    GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+                    GridPane content = new GridPane();
+                    content.setMaxWidth(Double.MAX_VALUE);
+                    content.add(new Label("The following error occurred:"), 0, 0);
+                    content.add(textArea, 0, 1);
+
+                    alertException.getDialogPane().setExpandableContent(content);
+                    alertException.showAndWait();
                     startLaunchCheckBox.setSelected(false);
+
                 }
             } else {
                 StartLaunch.deleteStartupScript();
