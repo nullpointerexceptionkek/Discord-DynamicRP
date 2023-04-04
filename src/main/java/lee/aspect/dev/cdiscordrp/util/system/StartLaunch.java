@@ -52,44 +52,48 @@ public class StartLaunch {
 
         if (isOnWindows()) {
             File batFile = new File(STARTUPDIR_WINDOWS, APP_SCRIPT_WINDOWS);
-            PrintWriter writer = new PrintWriter(new FileWriter(batFile));
-            writer.println("start \"\" javaw -jar " + currentJar + " --StartLaunch");
-            writer.close();
+            try (PrintWriter writer = new PrintWriter(new FileWriter(batFile))) {
+                writer.println("start \"\" javaw -jar " + currentJar + " --StartLaunch");
+            }
         } else if (isOnLinux()) {
             File scriptFile = new File(STARTUPDIR_LINUX, APP_SCRIPT_LINUX);
-            PrintWriter writer = new PrintWriter(new FileWriter(scriptFile));
-            writer.println("[Desktop Entry]");
-            writer.println("Type=Application");
-            writer.println("Name=CDiscordRP");
-            writer.println("Exec=/usr/bin/java -jar " + currentJar + " --StartLaunch");
-            writer.println("Terminal=false");
-            writer.close();
+            try (PrintWriter writer = new PrintWriter(new FileWriter(scriptFile))) {
+                writer.println("[Desktop Entry]");
+                writer.println("Type=Application");
+                writer.println("Name=CDiscordRP");
+                writer.println("Exec=/usr/bin/java -jar " + currentJar + " --StartLaunch");
+                writer.println("Terminal=false");
+                writer.println("Version=1.0");
+                writer.println("X-GNOME-Autostart-enabled=true");
+            }
+            scriptFile.setExecutable(true);
         } else if (isOnMac()) {
             File plistFile = new File(STARTUPDIR_MAC, APP_SCRIPT_MAC);
-            PrintWriter writer = new PrintWriter(new FileWriter(plistFile));
-            writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-            writer.println("<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">");
-            writer.println("<plist version=\"1.0\">");
-            writer.println("<dict>");
-            writer.println("    <key>Label</key>");
-            writer.println("    <string>" + APP_NAME + "</string>");
-            writer.println("    <key>ProgramArguments</key>");
-            writer.println("    <array>");
-            writer.println("        <string>java</string>");
-            writer.println("        <string>-jar</string>");
-            writer.println("        <string>" + currentJar + "</string>");
-            writer.println("        <string>--StartLaunch</string>");
-            writer.println("    </array>");
-            writer.println("    <key>RunAtLoad</key>");
-            writer.println("    <true/>");
-            writer.println("</dict>");
-            writer.println("</plist>");
-            writer.close();
+            try (PrintWriter writer = new PrintWriter(new FileWriter(plistFile))) {
+                writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+                writer.println("<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">");
+                writer.println("<plist version=\"1.0\">");
+                writer.println("<dict>");
+                writer.println("    <key>Label</key>");
+                writer.println("    <string>" + APP_NAME + "</string>");
+                writer.println("    <key>ProgramArguments</key>");
+                writer.println("    <array>");
+                writer.println("        <string>java</string>");
+                writer.println("        <string>-jar</string>");
+                writer.println("        <string>" + currentJar + "</string>");
+                writer.println("        <string>--StartLaunch</string>");
+                writer.println("    </array>");
+                writer.println("    <key>RunAtLoad</key>");
+                writer.println("    <true/>");
+                writer.println("</dict>");
+                writer.println("</plist>");
+            }
+            plistFile.setExecutable(true);
         } else {
             throw new UnsupportedOSException("Start Launch currently only supports Windows, Linux, and macOS");
         }
-
     }
+
 
 
     public static boolean isOnWindows() {
