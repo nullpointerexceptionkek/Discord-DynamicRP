@@ -44,7 +44,7 @@ public class StartLaunch {
     private static final String APP_SCRIPT_MAC = APP_NAME + ".plist";
 
     public static void createStartupScript() throws IOException, UnsupportedOSException, FileNotAJarException, URISyntaxException {
-        final File currentJar = new File(RestartApplication.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+        final File currentJar = new File(StartLaunch.class.getProtectionDomain().getCodeSource().getLocation().toURI());
 
         if (!currentJar.getName().endsWith(".jar")) {
             throw new FileNotAJarException();
@@ -78,6 +78,7 @@ public class StartLaunch {
             writer.println("        <string>java</string>");
             writer.println("        <string>-jar</string>");
             writer.println("        <string>" + currentJar + "</string>");
+            writer.println("        <string>--StartLaunch</string>");
             writer.println("    </array>");
             writer.println("    <key>RunAtLoad</key>");
             writer.println("    <true/>");
