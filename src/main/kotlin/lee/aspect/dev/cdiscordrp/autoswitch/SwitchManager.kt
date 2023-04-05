@@ -26,6 +26,7 @@
 package lee.aspect.dev.cdiscordrp.autoswitch
 
 import javafx.application.Platform
+import javafx.event.ActionEvent
 import javafx.geometry.Insets
 import javafx.geometry.Pos
 import javafx.scene.Parent
@@ -35,7 +36,6 @@ import javafx.scene.layout.*
 import javafx.scene.text.TextAlignment
 import lee.aspect.dev.cdiscordrp.Launch
 import lee.aspect.dev.cdiscordrp.animatefx.SlideInDown
-import lee.aspect.dev.cdiscordrp.animatefx.SlideInLeft
 import lee.aspect.dev.cdiscordrp.animatefx.SlideInUp
 import lee.aspect.dev.cdiscordrp.application.core.CustomDiscordRPC
 import lee.aspect.dev.cdiscordrp.application.core.RunLoopManager
@@ -45,6 +45,7 @@ import lee.aspect.dev.cdiscordrp.json.loader.FileManager
 import lee.aspect.dev.cdiscordrp.manager.ConfigManager
 import lee.aspect.dev.cdiscordrp.manager.DirectoryManager.Companion.getRootDir
 import lee.aspect.dev.cdiscordrp.manager.SceneManager
+import lee.aspect.dev.cdiscordrp.manager.SceneManager.Companion.loadSceneWithStyleSheet
 import lee.aspect.dev.cdiscordrp.processmonitor.OpenCloseListener
 import lee.aspect.dev.cdiscordrp.processmonitor.ProcessMonitor
 import java.io.File
@@ -115,10 +116,10 @@ class SwitchManager private constructor() {
 
             val anchorRoot = AnchorPane()
             anchorRoot.id = "anchorRoot"
+            anchorRoot.padding = Insets(20.0)
+            anchorRoot.setPrefSize(334.0, 540.0)
+
             val switchStackPane = StackPane()
-            //switchStackPane.id = "defaultPane"
-            switchStackPane.padding = Insets(30.0)
-            switchStackPane.setPrefSize(334.0, 540.0)
 
             val files = ConfigManager.getCurrentConfigFiles()
             files!!
@@ -151,14 +152,14 @@ class SwitchManager private constructor() {
                     Script.loadScriptFromJson()
 
                     val root = SceneManager.getDefaultConfigParent()
-                    anchorRoot.children.add(root)
+                    switchStackPane.children.add(root)
                     val animation = SlideInDown(root)
                     animation.setOnFinished {
-                        if (anchorRoot.children.contains(switchStackPane)) {
-                            anchorRoot.children.remove(switchStackPane)
+                        if (switchStackPane.children.contains(anchorRoot)) {
+                            switchStackPane.children.remove(anchorRoot)
                         }
                     }
-                    switchStackPane.children.forEach{
+                    anchorRoot.children.forEach{
                         it.isDisable = true
                     }
                     animation.play()
@@ -196,14 +197,11 @@ class SwitchManager private constructor() {
 
             val settingsButton = Button()
             settingsButton.setOnAction {
-                val root = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/Settings.fxml").root
-                anchorRoot.children.add(root)
+                val root = loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/Settings.fxml").root
+                switchStackPane.children.add(root)
                 val animation = SlideInUp(root)
                 animation.setOnFinished {
-                    anchorRoot.children.remove(anchorRoot)
-                }
-                switchStackPane.children.forEach{
-                    it.isDisable = true
+                    switchStackPane.children.remove(anchorRoot)
                 }
                 animation.play()
             }
@@ -334,23 +332,27 @@ class SwitchManager private constructor() {
 
 
 
-            val content = VBox()
-            content.spacing = 10.0
-            content.alignment = Pos.CENTER
-            content.children.addAll(scrollPane)
+
+            AnchorPane.setTopAnchor(CDiscordRPHBox, 0.0)
+            AnchorPane.setLeftAnchor(CDiscordRPHBox, 0.0)
+            AnchorPane.setRightAnchor(CDiscordRPHBox, 0.0)
+
+            AnchorPane.setTopAnchor(scrollPane, 60.0)
+            AnchorPane.setBottomAnchor(scrollPane, 80.0)
+            AnchorPane.setLeftAnchor(scrollPane, 0.0)
+            AnchorPane.setRightAnchor(scrollPane, 0.0)
+
+            AnchorPane.setBottomAnchor(controlVbox, 0.0)
+            AnchorPane.setLeftAnchor(controlVbox, 0.0)
+            AnchorPane.setRightAnchor(controlVbox, 0.0)
+
+            anchorRoot.children.addAll(CDiscordRPHBox, scrollPane, controlVbox)
+            switchStackPane.children.add(anchorRoot)
 
 
-            switchStackPane.children.addAll(CDiscordRPHBox, content, controlVbox)
-            anchorRoot.children.add(switchStackPane)
-            AnchorPane.setTopAnchor(switchStackPane, 0.0)
-            AnchorPane.setLeftAnchor(switchStackPane, 0.0)
-            AnchorPane.setRightAnchor(switchStackPane, 0.0)
-            AnchorPane.setBottomAnchor(switchStackPane, 0.0)
+            switchStackPane.stylesheets.add(Settings.getINSTANCE().theme.path)
 
-
-            anchorRoot.stylesheets.add(Settings.getINSTANCE().theme.path)
-
-            return anchorRoot
+            return switchStackPane
 
         }
 
