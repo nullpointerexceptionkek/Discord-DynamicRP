@@ -44,10 +44,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import lee.aspect.dev.cdiscordrp.Launch;
-import lee.aspect.dev.cdiscordrp.animatefx.FadeIn;
-import lee.aspect.dev.cdiscordrp.animatefx.FadeOut;
-import lee.aspect.dev.cdiscordrp.animatefx.Shake;
-import lee.aspect.dev.cdiscordrp.animatefx.SlideInUp;
+import lee.aspect.dev.cdiscordrp.animatefx.*;
 import lee.aspect.dev.cdiscordrp.application.core.RunLoopManager;
 import lee.aspect.dev.cdiscordrp.application.core.Script;
 import lee.aspect.dev.cdiscordrp.application.core.Settings;
@@ -189,6 +186,14 @@ public class ConfigController implements Initializable {
 
     public void switchToSetting() {
         settingButton.setDisable(true);
+        if(Settings.getINSTANCE().isAutoSwitch()){
+            Parent root = SceneManager.getConfigParent();
+            stackPane.getChildren().add(0,root);
+            SlideOutUp animation = new SlideOutUp(anchorRoot);
+            animation.setOnFinished((actionEvent) -> stackPane.getChildren().remove(anchorRoot));
+            animation.play();
+            return;
+        }
         Parent root = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/Settings.fxml").getRoot();
         stackPane.getChildren().add(root);
         SlideInUp animation = new SlideInUp(root);
@@ -227,7 +232,12 @@ public class ConfigController implements Initializable {
     //it will also set the appid to only accept numbers and if loaded is not null, it will leave it empty
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        ImageView settingimg = new ImageView(Objects.requireNonNull(getClass().getResource("/lee/aspect/dev/cdiscordrp/icon/settingsImage.png")).toExternalForm());
+        ImageView settingimg;
+        if(Settings.getINSTANCE().isAutoSwitch()){
+            settingimg = new ImageView(Objects.requireNonNull(getClass().getResource("/lee/aspect/dev/cdiscordrp/icon/back.png")).toExternalForm());
+        } else{
+            settingimg = new ImageView(Objects.requireNonNull(getClass().getResource("/lee/aspect/dev/cdiscordrp/icon/settingsImage.png")).toExternalForm());
+        }
         settingimg.setFitHeight(16);
         settingimg.setPreserveRatio(true);
         settingButton.setGraphic(settingimg);

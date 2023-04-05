@@ -40,7 +40,6 @@ class SceneManager {
          * returns different manager screen according to the settings.
          */
         @JvmStatic
-        @Throws(IOException::class)
         fun getConfigParent(): Parent? {
             if (Settings.getINSTANCE().isAutoSwitch) {
                 return SwitchManager.initMenu()

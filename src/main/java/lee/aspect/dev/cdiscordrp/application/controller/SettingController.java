@@ -34,6 +34,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import lee.aspect.dev.cdiscordrp.animatefx.SlideOutDown;
 import lee.aspect.dev.cdiscordrp.animatefx.SlideOutLeft;
 import lee.aspect.dev.cdiscordrp.application.core.CustomDiscordRPC;
 import lee.aspect.dev.cdiscordrp.application.core.Settings;
@@ -84,7 +85,7 @@ public class SettingController implements Initializable {
     public void switchBack() throws IOException {
         goBack.setDisable(true);
         stackPane.getChildren().add(0, SceneManager.getConfigParent());
-        SlideOutLeft animation = new SlideOutLeft(anchorRoot);
+        SlideOutDown animation = new SlideOutDown(anchorRoot);
         animation.setOnFinished((actionEvent) -> stackPane.getChildren().remove(anchorRoot));
         animation.play();
 

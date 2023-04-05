@@ -34,7 +34,9 @@ import javafx.scene.image.ImageView
 import javafx.scene.layout.*
 import javafx.scene.text.TextAlignment
 import lee.aspect.dev.cdiscordrp.Launch
+import lee.aspect.dev.cdiscordrp.animatefx.SlideInDown
 import lee.aspect.dev.cdiscordrp.animatefx.SlideInLeft
+import lee.aspect.dev.cdiscordrp.animatefx.SlideInUp
 import lee.aspect.dev.cdiscordrp.application.core.CustomDiscordRPC
 import lee.aspect.dev.cdiscordrp.application.core.RunLoopManager
 import lee.aspect.dev.cdiscordrp.application.core.Script
@@ -149,11 +151,18 @@ class SwitchManager private constructor() {
                     Script.loadScriptFromJson()
 
                     val root = SceneManager.getDefaultConfigParent()
-
-                    if (anchorRoot.children.contains(switchStackPane)) {
-                        anchorRoot.children.remove(switchStackPane)
-                    }
                     anchorRoot.children.add(root)
+                    val animation = SlideInDown(root)
+                    animation.setOnFinished {
+                        if (anchorRoot.children.contains(switchStackPane)) {
+                            anchorRoot.children.remove(switchStackPane)
+                        }
+                    }
+                    switchStackPane.children.forEach{
+                        it.isDisable = true
+                    }
+                    animation.play()
+
                 }
 
                 val hbox = HBox(editCfgButton, textField)
@@ -189,9 +198,12 @@ class SwitchManager private constructor() {
             settingsButton.setOnAction {
                 val root = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/Settings.fxml").root
                 anchorRoot.children.add(root)
-                val animation = SlideInLeft(root)
+                val animation = SlideInUp(root)
                 animation.setOnFinished {
                     anchorRoot.children.remove(anchorRoot)
+                }
+                switchStackPane.children.forEach{
+                    it.isDisable = true
                 }
                 animation.play()
             }
