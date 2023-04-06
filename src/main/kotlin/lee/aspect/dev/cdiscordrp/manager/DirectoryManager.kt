@@ -46,7 +46,9 @@ class DirectoryManager {
     companion object {
 
         @JvmField
-        val defaultDir = System.getProperty("user.home") + "\\CustomDiscordRPC"
+        val defaultDirWin = System.getProperty("user.home") + "\\CustomDiscordRPC"
+        @JvmField
+        val defaultDirUnix = System.getProperty("user.home") + "/CustomDiscordRPC"
 
         private var ROOT_DIR: File? = getDirectoryEnvironmentVar()?.let { File(it) }
 
@@ -147,7 +149,7 @@ class DirectoryManager {
 
                 val directoryPathField = TextField()
                 directoryPathField.promptText = "Enter a directory path"
-                directoryPathField.text = defaultDir
+                directoryPathField.text = if(StartLaunch.isOnWindows()) defaultDirWin else defaultDirUnix
 
                 val chooseDirectoryButton = Button("Choose directory")
                 chooseDirectoryButton.setOnAction {

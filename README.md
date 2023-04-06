@@ -26,8 +26,8 @@ This program is written in Java 8 and kotlin 1.7.21 and uses the Discord IPC, Ja
 > | Operating System | Auto Launch On Start up         | Rich Presence  | Auto Switch |
 >|------------------|---------------------------------|----------------|-------------|
 > | Windows          | Supported/(tested on 10 and 11) | Supported      | Supported   |
-> | Macos            | Not implemented                 | Not tested     | Not tested  |
-> | Linux            | Not implemented                 | Supported      | Supported   |
+> | Macos            | implemented/NotTested           | Not tested     | Not tested  |
+> | Linux            | Supported/(tested Ubuntu 22.04) | Supported      | Supported   |
 
 macOS implementation should be the same as Linux, I haven't given a chance to test it on, but it should work.
 
