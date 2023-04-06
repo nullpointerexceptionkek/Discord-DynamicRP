@@ -71,11 +71,11 @@ public class Launch {
      * @author Aspect
      */
     public static void main(String[] args) {
-        isOnIDE = System.console() == null;
+        isOnIDE = !StartLaunch.isJar();
         if (isOnIDE) {
-            LOGGER.info("This program is running on IDE, some features might not work properly.");
+            LOGGER.info("This program is running on or not build into a jar file, The following features will not work.");
+            LOGGER.info("Automated restart application, Create start launch script");
             LOGGER.info("The environment variable might not be updated unless you restart the IDE.");
-            LOGGER.info("Automatic restart is not supported on IDE");
         }
 
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());

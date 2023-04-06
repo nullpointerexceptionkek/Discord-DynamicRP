@@ -39,7 +39,7 @@ public class StartLaunch {
     private static final File STARTUPDIR_MAC = new File(System.getProperty("user.home") + "/Library/LaunchAgents/");
 
     private static final String APP_NAME = "CDiscordRP";
-    private static final String APP_SCRIPT_WINDOWS = "CDRP.bat";
+    private static final String APP_SCRIPT_WINDOWS = APP_NAME + ".bat";
     private static final String APP_SCRIPT_LINUX = APP_NAME + ".desktop";
     private static final String APP_SCRIPT_MAC = APP_NAME + ".plist";
 
@@ -114,13 +114,15 @@ public class StartLaunch {
     public static boolean isStartupScriptCreated() {
         if (isOnWindows()) {
             return new File(STARTUPDIR_WINDOWS, APP_SCRIPT_WINDOWS).exists();
-        } else if (isOnLinux()) {
-            return new File(STARTUPDIR_LINUX, APP_SCRIPT_LINUX).exists();
-        } else if (isOnMac()) {
-            return new File(STARTUPDIR_MAC, APP_SCRIPT_MAC).exists();
-        } else {
-            return false;
         }
+        if (isOnLinux()) {
+            return new File(STARTUPDIR_LINUX, APP_SCRIPT_LINUX).exists();
+        }
+        if (isOnMac()) {
+            return new File(STARTUPDIR_MAC, APP_SCRIPT_MAC).exists();
+        }
+        return false;
+
     }
 
     public static void deleteStartupScript() {
@@ -140,6 +142,15 @@ public class StartLaunch {
                 plistFile.delete();
             }
         }
+    }
+    public static boolean isJar(){
+        final File currentJar;
+        try {
+            currentJar = new File(StartLaunch.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+        } catch (URISyntaxException e) {
+            return false;
+        }
+        return currentJar.getName().endsWith(".jar");
     }
 }
 
