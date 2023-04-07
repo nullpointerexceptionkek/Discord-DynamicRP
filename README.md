@@ -2,9 +2,10 @@
 
 CDiscordRP is a Discord Rich Presence Manager that allows you to display your current game in your Discord profile.
 This program is written in Java 8 and kotlin 1.7.21 and uses the Discord IPC, JavaFX, and AnimatesFX libraries.
-
-
 > I build this during my free time, so I can't guarantee that I will update this project frequently.
+
+### Please note that all previously posted release and pre-release versions are outdated. In the meantime,please pull the latest stable branch as I continue to work on version 1.0.
+
 
 ## Features
 
@@ -29,7 +30,12 @@ This program is written in Java 8 and kotlin 1.7.21 and uses the Discord IPC, Ja
 > | Macos            | implemented/NotTested           | Not tested     | Not tested  |
 > | Linux            | Supported/(tested Ubuntu 22.04) | Supported      | Supported   |
 
-macOS implementation should be the same as Linux, I haven't given a chance to test it on, but it should work.
+macOS implementation should be the similar as Linux, I haven't given a chance to test it on, but it should work.
+
+## Branches
+- Stable: Updated frequently when there the development is stable
+- Development: Updated frequently when there is a new feature or bug fix
+- Previous: Outdated release
 
 ## How to use
 
