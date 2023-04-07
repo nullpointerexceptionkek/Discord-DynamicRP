@@ -33,6 +33,7 @@ import lee.aspect.dev.cdiscordrp.Launch;
 import lee.aspect.dev.cdiscordrp.application.controller.CallBackController;
 import lee.aspect.dev.cdiscordrp.application.controller.ConfigController;
 import lee.aspect.dev.cdiscordrp.exceptions.NoDiscordClientException;
+import lee.aspect.dev.cdiscordrp.manager.SceneManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,8 +47,12 @@ import java.util.Objects;
 public class ApplicationTray {
 
     private static TrayIcon trayIcon;
-
     private static SystemTray tray;
+    private static MenuItem startRPCItem;
+    private static MenuItem closeRPCItem;
+
+    private static MenuItem startSwitchItem;
+    private static MenuItem closeSwitchItem;
 
     public static void initTray() {
         /* Use an appropriate Look and Feel */
@@ -72,23 +77,27 @@ public class ApplicationTray {
             return;
         }
         final PopupMenu popup = new PopupMenu();
-        trayIcon =
-                new TrayIcon(Objects.requireNonNull(createImage("/lee/aspect/dev/cdiscordrp/icon/SystemTrayIcon.png", "tray icon")));
+        trayIcon = new TrayIcon(Objects.requireNonNull(createImage("/lee/aspect/dev/cdiscordrp/icon/SystemTrayIcon.png", "tray icon")));
         trayIcon.setImageAutoSize(true);
         tray = SystemTray.getSystemTray();
 
-        // Create a popup menu components
+        // Add components to popup menu
         MenuItem aboutItem = new MenuItem("About");
-        MenuItem startRPCItem = new MenuItem("Start RPC");
-        MenuItem closeRPCItem = new MenuItem("Close RPC");
+        startRPCItem = new MenuItem("Start RPC");
+        closeRPCItem = new MenuItem("Close RPC");
+        startSwitchItem = new MenuItem("Start Switch");
+        closeSwitchItem = new MenuItem("Close Switch");
         MenuItem showInterface = new MenuItem("Show Interface");
         MenuItem exitItem = new MenuItem("Exit");
 
-        //Add components to popup menu
+        // Add components to popup menu based on the state of the RPC
+        if (RunLoopManager.isRunning()) {
+            popup.add(closeRPCItem);
+        } else {
+            popup.add(startRPCItem);
+        }
+
         popup.add(aboutItem);
-        popup.addSeparator();
-        popup.add(startRPCItem);
-        popup.add(closeRPCItem);
         popup.addSeparator();
         popup.add(showInterface);
         popup.addSeparator();
@@ -124,9 +133,8 @@ public class ApplicationTray {
 
             JOptionPane.showMessageDialog(null, panel, "About", JOptionPane.PLAIN_MESSAGE);
         });
-
         startRPCItem.addActionListener(e -> {
-            if (RunLoopManager.isRunning) {
+            if (RunLoopManager.isRunning()) {
                 JOptionPane.showMessageDialog(null, "Discord RPC is already running", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 try {
@@ -136,12 +144,11 @@ public class ApplicationTray {
                     }
                     Platform.runLater(() -> {
                         try {
-                            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(CustomDiscordRPC.class.getResource("/lee/aspect/dev/cdiscordrp/scenes/ReadyConfig.fxml")));
-                            Parent root = loader.load();
+                            SceneManager.SceneData sceneData = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/ReadyConfig.fxml");
+                            Parent root = sceneData.getRoot();
                             Scene scene = new Scene(root);
-                            scene.getStylesheets().add(Objects.requireNonNull(ApplicationTray.class.getResource(Settings.getINSTANCE().getTheme().getPath())).toExternalForm());
                             CustomDiscordRPC.primaryStage.setScene(scene);
-                            ConfigController controller = loader.getController();
+                            ConfigController controller = (ConfigController) sceneData.getController();
                             controller.switchToCallBack();
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
@@ -152,20 +159,23 @@ public class ApplicationTray {
                 }
             }
         });
+        startSwitchItem.addActionListener(e -> {
+
+        });
+
         closeRPCItem.addActionListener(e -> {
-            if (RunLoopManager.isRunning) {
+            if (RunLoopManager.isRunning()) {
                 if (Settings.getINSTANCE().isShutDownInterfaceWhenTray()) {
                     RunLoopManager.closeCallBack();
                     return;
                 }
                 Platform.runLater(() -> {
                     try {
-                        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(CustomDiscordRPC.class.getResource("/lee/aspect/dev/cdiscordrp/scenes/CallBack.fxml")));
-                        Parent root = loader.load();
+                        SceneManager.SceneData sceneData = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/CallBack.fxml");
+                        Parent root = sceneData.getRoot();
                         Scene scene = new Scene(root);
-                        scene.getStylesheets().add(Objects.requireNonNull(ApplicationTray.class.getResource(Settings.getINSTANCE().getTheme().getPath())).toExternalForm());
                         CustomDiscordRPC.primaryStage.setScene(scene);
-                        CallBackController controller = loader.getController();
+                        CallBackController controller = (CallBackController) sceneData.getController();
                         controller.switchToConfig();
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
@@ -204,7 +214,37 @@ public class ApplicationTray {
         }
         Platform.runLater(() -> CustomDiscordRPC.primaryStage.show());
         CustomDiscordRPC.isOnSystemTray = false;
-        if (Settings.getINSTANCE().isStartTrayOnlyInterfaceClose()) tray.remove(trayIcon);
+        if (Settings.getINSTANCE().isStartTrayOnlyInterfaceClose()) {
+            tray.remove(trayIcon);
+        }
     }
 
+    public static void updatePopupMenu() {
+        PopupMenu popup = trayIcon.getPopupMenu();
+        popup.removeAll();
+        MenuItem aboutItem = new MenuItem("About");
+        MenuItem showInterface = new MenuItem("Show Interface");
+        MenuItem exitItem = new MenuItem("Exit");
+
+        if(Settings.getINSTANCE().isAutoSwitch()){
+            if (RunLoopManager.isRunning()) {
+                popup.add(closeRPCItem);
+            } else {
+                popup.add(startRPCItem);
+            }
+        } else{
+            if (RunLoopManager.isRunning()) {
+                popup.add(closeRPCItem);
+            } else {
+                popup.add(startRPCItem);
+            }
+        }
+
+        popup.add(aboutItem);
+        popup.addSeparator();
+        popup.add(showInterface);
+        popup.addSeparator();
+        popup.add(exitItem);
+        trayIcon.setPopupMenu(popup);
+    }
 }

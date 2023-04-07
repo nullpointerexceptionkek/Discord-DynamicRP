@@ -45,10 +45,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import lee.aspect.dev.cdiscordrp.Launch;
 import lee.aspect.dev.cdiscordrp.animatefx.*;
-import lee.aspect.dev.cdiscordrp.application.core.RunLoopManager;
-import lee.aspect.dev.cdiscordrp.application.core.Script;
-import lee.aspect.dev.cdiscordrp.application.core.Settings;
-import lee.aspect.dev.cdiscordrp.application.core.Updates;
+import lee.aspect.dev.cdiscordrp.application.core.*;
 import lee.aspect.dev.cdiscordrp.json.loader.FileManager;
 import lee.aspect.dev.cdiscordrp.manager.SceneManager;
 import lee.aspect.dev.cdiscordrp.manager.SearchManager;
@@ -181,7 +178,6 @@ public class ConfigController implements Initializable {
         }));
         fadeOut.setSpeed(5);
         fadeOut.play();
-
     }
 
     public void switchToSetting() {

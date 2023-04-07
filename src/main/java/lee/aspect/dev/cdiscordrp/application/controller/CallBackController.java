@@ -36,10 +36,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import lee.aspect.dev.cdiscordrp.Launch;
 import lee.aspect.dev.cdiscordrp.animatefx.*;
-import lee.aspect.dev.cdiscordrp.application.core.RunLoopManager;
-import lee.aspect.dev.cdiscordrp.application.core.Script;
-import lee.aspect.dev.cdiscordrp.application.core.Settings;
-import lee.aspect.dev.cdiscordrp.application.core.Updates;
+import lee.aspect.dev.cdiscordrp.application.core.*;
 import lee.aspect.dev.cdiscordrp.language.LanguageManager;
 import lee.aspect.dev.cdiscordrp.manager.SceneManager;
 

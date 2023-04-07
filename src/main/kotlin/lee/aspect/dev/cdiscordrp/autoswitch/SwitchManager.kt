@@ -36,6 +36,7 @@ import javafx.scene.text.TextAlignment
 import lee.aspect.dev.cdiscordrp.Launch
 import lee.aspect.dev.cdiscordrp.animatefx.SlideInDown
 import lee.aspect.dev.cdiscordrp.animatefx.SlideInUp
+import lee.aspect.dev.cdiscordrp.application.core.ApplicationTray
 import lee.aspect.dev.cdiscordrp.application.core.CustomDiscordRPC
 import lee.aspect.dev.cdiscordrp.application.core.RunLoopManager
 import lee.aspect.dev.cdiscordrp.application.core.Script
@@ -56,6 +57,14 @@ import kotlin.collections.ArrayList
 class SwitchManager private constructor() {
 
     companion object {
+
+
+
+        var switchRunning = false
+            set(value){
+                ApplicationTray.updatePopupMenu()
+                field = value
+            }
         class LoadSwitchFromFile {
             val cfgVer = "1.0"
             lateinit var switch: ArrayList<Switch>
@@ -191,7 +200,7 @@ class SwitchManager private constructor() {
             statusLabel.textAlignment = TextAlignment.CENTER
 
             val startButton = Button("Start Operation")
-            var isStarted = false
+            //var isStarted = false
 
             val configManagerButton = Button()
             configManagerButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
@@ -240,9 +249,9 @@ class SwitchManager private constructor() {
 
             startButton.setOnAction {
                 startButton.isDisable = true
-                if (!isStarted) {
+                if (!switchRunning) {
                     startButton.text = "Stop Operation"
-                    isStarted = true
+                    switchRunning = true
                     statusLabel.text = "Initializing..."
                     gridPane.children.forEach {
                         it.isDisable = true
@@ -316,7 +325,7 @@ class SwitchManager private constructor() {
                     configManagerButton.isDisable = false
                     statusLabel.text = "Not Connected"
                     startButton.text = "Launch Callback"
-                    isStarted = false
+                    switchRunning = false
                 }
 
                 startButton.isDisable = false

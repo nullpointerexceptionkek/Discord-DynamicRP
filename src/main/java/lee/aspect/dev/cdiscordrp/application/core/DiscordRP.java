@@ -98,7 +98,7 @@ public class DiscordRP {
         try {
             setBuilder(updates, client);
         } catch (IllegalStateException | NullPointerException e) {
-            if (autoReconnect && RunLoopManager.isRunning) {
+            if (autoReconnect && RunLoopManager.isRunning()) {
                 setIPCClient(updates);
                 try {
                     client.connect();
@@ -108,7 +108,7 @@ public class DiscordRP {
             } else {
                 currentThread().interrupt();
                 RunLoopManager.setRunLoop(null);
-                RunLoopManager.isRunning = false;
+                RunLoopManager.setRunning(false);
             }
         }
     }
