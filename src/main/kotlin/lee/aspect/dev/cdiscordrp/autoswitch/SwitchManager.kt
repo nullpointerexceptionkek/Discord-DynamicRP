@@ -26,7 +26,6 @@
 package lee.aspect.dev.cdiscordrp.autoswitch
 
 import javafx.application.Platform
-import javafx.event.ActionEvent
 import javafx.geometry.Insets
 import javafx.geometry.Pos
 import javafx.scene.Parent
@@ -51,59 +50,47 @@ import lee.aspect.dev.cdiscordrp.processmonitor.ProcessMonitor
 import java.io.File
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
 
 class SwitchManager private constructor() {
 
     companion object {
         class LoadSwitchFromFile {
-            lateinit var switch: Array<Switch>
+            val cfgVer = "1.0"
+            lateinit var switch: ArrayList<Switch>
         }
 
-        private lateinit var loaded: LoadSwitchFromFile
+        lateinit var loaded: LoadSwitchFromFile
 
         @JvmStatic
         fun loadFromFile() {
-            if (!File(getRootDir(), "Switch.json").exists())
+            if (!File(getRootDir(), "Switch.json").exists()){
                 File(getRootDir(), "Switch.json").createNewFile()
+            }
             var loaded = FileManager.readFromJson(
                 File(getRootDir(), "Switch.json"),
                 LoadSwitchFromFile::class.java
             )
             if (loaded == null) {
                 loaded = LoadSwitchFromFile()
-                loaded.switch = Array(ConfigManager.getCurrentConfigFiles()?.size ?: 1) { Switch() }
-                for (i in loaded.switch.indices) {
-                    loaded.switch[i].config = ConfigManager.getCurrentConfigFiles()!![i]
-                }
-
-                Companion.loaded = loaded
-                saveToFile()
-                return
-            }
-            if (loaded.switch.size != ConfigManager.getCurrentConfigFiles()?.size) {
-                val oldSwitch = loaded.switch
-                loaded.switch = Array(ConfigManager.getCurrentConfigFiles()?.size ?: 1) { Switch() }
-                for (i in oldSwitch.indices) {
-                    if (i >= loaded.switch.size) {
-                        break
-                    }
-                    loaded.switch[i] = oldSwitch[i]
-                }
-                for (i in oldSwitch.size until loaded.switch.size) {
-                    loaded.switch[i] = Switch()
-                    loaded.switch[i].config = ConfigManager.getCurrentConfigFiles()!![i]
-                }
-                Companion.loaded = loaded
-                saveToFile()
-                return;
+                loaded.switch = ArrayList()
             }
             Companion.loaded = loaded
+            saveToFile()
         }
 
 
         @JvmStatic
         fun saveToFile() {
+            // remove deleted config
+            val iterator = loaded.switch.iterator()
+            while (iterator.hasNext()) {
+                val switch = iterator.next()
+                if (!switch.config.exists()) {
+                    iterator.remove()
+                }
+            }
             FileManager.writeJsonTofile(
                 File(getRootDir(), "Switch.json"),
                 loaded
@@ -136,11 +123,37 @@ class SwitchManager private constructor() {
 
                 val textField = TextField()
 
-                if (loaded.switch.size > i && loaded.switch[i].checkName.isNotBlank())
-                    textField.text = loaded.switch[i].checkName
+                var loadedProcess = ""
+                for(j in loaded.switch){
+                    if(j.config == files[i]){
+                        loadedProcess = j.checkName
+                        break
+                    }
+                }
+
+                textField.text = loadedProcess
 
                 textField.textProperty().addListener { _, _, newValue ->
-                    loaded.switch[i].checkName = newValue
+                    if(newValue == "") {
+                        for (j in loaded.switch) {
+                            if (j.config == files[i]) {
+                                loaded.switch.remove(j)
+                                break
+                            }
+                        }
+                    } else{
+                        var isFound = false
+                        for (j in loaded.switch) {
+                            if (j.config == files[i]) {
+                                j.checkName = newValue
+                                isFound = true
+                                break
+                            }
+                        }
+                        if(!isFound){
+                            loaded.switch.add(Switch(newValue,files[i]))
+                        }
+                    }
                 }
 
                 textField.maxWidth = 140.0
@@ -190,8 +203,9 @@ class SwitchManager private constructor() {
             cfgIcon.fitWidth = 16.0
             configManagerButton.graphic = cfgIcon
             configManagerButton.setOnAction {
+                saveToFile()
                 ConfigManager.showDialog(false) {
-                    refreshUI(anchorRoot)
+                    refreshUI(switchStackPane)
                 }
             }
 
@@ -356,11 +370,11 @@ class SwitchManager private constructor() {
 
         }
 
-        private fun refreshUI(anchorRoot: AnchorPane) {
+        private fun refreshUI(stackpane: StackPane) {
             loadFromFile()
-            anchorRoot.children.clear()
+            stackpane.children.clear()
             val newRoot = initMenu()
-            anchorRoot.children.add(newRoot)
+            stackpane.children.add(newRoot)
         }
         @JvmStatic
         fun initAutoSwitchSilent() {

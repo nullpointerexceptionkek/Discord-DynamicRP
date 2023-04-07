@@ -57,6 +57,9 @@ public class SwitchAdapter extends TypeAdapter<SwitchManager.Companion.LoadSwitc
                 if (token == JsonToken.NAME) {
                     name = reader.nextName();
                 }
+                if(Objects.requireNonNull(name).equals("version")){
+                    reader.nextString();
+                }
                 if (Objects.requireNonNull(name).equals("SwitchScript")) {
                     reader.beginArray();
                     while (reader.peek() != JsonToken.END_ARRAY) {
@@ -85,7 +88,7 @@ public class SwitchAdapter extends TypeAdapter<SwitchManager.Companion.LoadSwitc
             }
             reader.endObject();
             SwitchManager.Companion.LoadSwitchFromFile loadSwitchFromFile = new SwitchManager.Companion.LoadSwitchFromFile();
-            loadSwitchFromFile.setSwitch(switches.toArray(new Switch[0]));
+            loadSwitchFromFile.setSwitch(switches);
             return loadSwitchFromFile;
 
         } catch (Exception e) {
@@ -102,11 +105,12 @@ public class SwitchAdapter extends TypeAdapter<SwitchManager.Companion.LoadSwitc
             return;
         }
         writter.beginObject();
+        writter.name("version").value(file.getCfgVer());
         writter.name("SwitchScript").beginArray();
-        for (int i = 0; i < file.getSwitch().length; i++) {
+        for (int i = 0; i < file.getSwitch().size(); i++) {
             writter.beginObject();
-            writter.name("file").value(file.getSwitch()[i].getConfig().getPath());
-            writter.name("process").value(file.getSwitch()[i].getCheckName());
+            writter.name("file").value(file.getSwitch().get(i).getConfig().getPath());
+            writter.name("process").value(file.getSwitch().get(i).getCheckName());
             writter.endObject();
         }
         writter.endArray();

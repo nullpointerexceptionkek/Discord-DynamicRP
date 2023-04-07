@@ -30,7 +30,14 @@ import java.io.File
 class Switch {
 
     lateinit var config: File
-
     var checkName: String = ""
 
+    constructor(name: String, file: File) {
+        this.checkName = name
+        this.config = file
+    }
+
+    constructor() {
+        this.checkName = ""
+    }
 }

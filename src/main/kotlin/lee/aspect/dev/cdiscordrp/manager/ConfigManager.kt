@@ -36,6 +36,7 @@ import javafx.stage.Modality
 import javafx.stage.Stage
 import lee.aspect.dev.cdiscordrp.application.core.Script
 import lee.aspect.dev.cdiscordrp.application.core.Settings
+import lee.aspect.dev.cdiscordrp.autoswitch.SwitchManager
 import java.io.File
 import java.io.FilenameFilter
 import java.util.*
@@ -192,8 +193,17 @@ class ConfigManager {
                         val newName = result.get()
                         val newFile = File(file.parent, newName + "_UpdateScript.json")
                         try {
+                            for (switch in SwitchManager.loaded.switch) {
+                                if (switch.config == file) {
+                                    //println("Switch ${switch.config} now points to $newFile")
+                                    switch.config = newFile
+                                }
+                            }
                             file.renameTo(newFile)
-                            Settings.getINSTANCE().loadedConfig = newFile
+                            SwitchManager.saveToFile()
+                            if(Settings.getINSTANCE().loadedConfig == file) {
+                                Settings.getINSTANCE().loadedConfig = newFile
+                            }
                         } catch (e: Exception) {
                             //just let the default error handler to display the error and quit
                             throw RuntimeException("Failed to rename file!", e)

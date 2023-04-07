@@ -46,9 +46,6 @@ public class FileManager {
     private static Gson gson;
 
     public static void init() {
-        if (!getRootDir().exists()) {
-            //TODO: DO smth here, not sure rn
-        }
 
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Script.class, new ScriptAdapter());
