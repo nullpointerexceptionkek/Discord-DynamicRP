@@ -38,13 +38,14 @@ import java.net.URISyntaxException;
 
 public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
 
-    public static String getSystemInfo() {
+    public static String getSystemInfo(String thread) {
         return "********** System Information ***********\n" +
                 "Client Version: " + Launch.VERSION + "\n" +
                 "Operating System: " + System.getProperty("os.name") + "\n" +
                 "Operating System Version: " + System.getProperty("os.version") + "\n" +
                 "Java Version: " + System.getProperty("java.version") + "\n" +
-                "Java Vendor: " + System.getProperty("java.vendor") +
+                "Java Vendor: " + System.getProperty("java.vendor") + '\n' +
+                "Thread: " + thread +
                 "\n***************************************\n";
     }
 
@@ -57,7 +58,7 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
         e.printStackTrace(pw);
-        String stackTrace = getSystemInfo() + "\n" + sw;
+        String stackTrace = getSystemInfo(t.getName()) + "\n" + sw;
 
         JTextArea textArea = new JTextArea(stackTrace);
         textArea.setLineWrap(true);
@@ -83,16 +84,17 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
         });
 
         JButton exitButton = new JButton("Exit Application");
-        exitButton.addActionListener((event) -> {
-            System.exit(1);
-        });
+        exitButton.addActionListener((event) -> System.exit(1));
 
         JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 10, 0));
         buttonPanel.add(restartButton);
         buttonPanel.add(exitButton);
         buttonPanel.add(copyButton);
 
-        JLabel messageLabel = new JLabel("<html><body><p style='text-align:center'>An unexpected error has occurred.<br>Please copy the error message below and send it to the developer.</p></body></html>");
+        JLabel messageLabel = new JLabel("<html><body style='text-align:center;'>" +
+                "Sorry for the inconvenience.<br>" +
+                "An &quot;" + e.getClass().getSimpleName() + "&quot; has occurred at Thread " + t.getName() + "." +
+                "</body></html>");
         messageLabel.setHorizontalAlignment(SwingConstants.CENTER);
         messageLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
         messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
