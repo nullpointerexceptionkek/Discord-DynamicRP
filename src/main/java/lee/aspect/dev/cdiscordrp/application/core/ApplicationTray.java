@@ -26,12 +26,12 @@
 package lee.aspect.dev.cdiscordrp.application.core;
 
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import lee.aspect.dev.cdiscordrp.Launch;
 import lee.aspect.dev.cdiscordrp.application.controller.CallBackController;
 import lee.aspect.dev.cdiscordrp.application.controller.ConfigController;
+import lee.aspect.dev.cdiscordrp.autoswitch.SwitchManager;
 import lee.aspect.dev.cdiscordrp.exceptions.NoDiscordClientException;
 import lee.aspect.dev.cdiscordrp.manager.SceneManager;
 
@@ -91,10 +91,18 @@ public class ApplicationTray {
         MenuItem exitItem = new MenuItem("Exit");
 
         // Add components to popup menu based on the state of the RPC
-        if (RunLoopManager.isRunning()) {
-            popup.add(closeRPCItem);
-        } else {
-            popup.add(startRPCItem);
+        if(Settings.getINSTANCE().isAutoSwitch()){
+            if (SwitchManager.getRunning()) {
+                popup.add(closeSwitchItem);
+            } else {
+                popup.add(startSwitchItem);
+            }
+        } else{
+            if (RunLoopManager.isRunning()) {
+                popup.add(closeRPCItem);
+            } else {
+                popup.add(startRPCItem);
+            }
         }
 
         popup.add(aboutItem);
@@ -160,7 +168,18 @@ public class ApplicationTray {
             }
         });
         startSwitchItem.addActionListener(e -> {
-
+            if (SwitchManager.getRunning()) {
+                JOptionPane.showMessageDialog(null, "Auto Switch is already running", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                Platform.runLater(SwitchManager::toggleRunning);
+            }
+        });
+        closeSwitchItem.addActionListener(e -> {
+            if (SwitchManager.getRunning()) {
+                Platform.runLater(SwitchManager::toggleRunning);
+            } else {
+                JOptionPane.showMessageDialog(null, "Auto Switch is not running", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         });
 
         closeRPCItem.addActionListener(e -> {
@@ -221,30 +240,25 @@ public class ApplicationTray {
 
     public static void updatePopupMenu() {
         PopupMenu popup = trayIcon.getPopupMenu();
-        popup.removeAll();
-        MenuItem aboutItem = new MenuItem("About");
-        MenuItem showInterface = new MenuItem("Show Interface");
-        MenuItem exitItem = new MenuItem("Exit");
+        popup.remove(startRPCItem);
+        popup.remove(closeRPCItem);
+        popup.remove(startSwitchItem);
+        popup.remove(closeSwitchItem);
 
         if(Settings.getINSTANCE().isAutoSwitch()){
-            if (RunLoopManager.isRunning()) {
-                popup.add(closeRPCItem);
+            if (SwitchManager.getRunning()) {
+                popup.insert(closeSwitchItem,0);
             } else {
-                popup.add(startRPCItem);
+                popup.insert(startSwitchItem,0);
             }
         } else{
             if (RunLoopManager.isRunning()) {
-                popup.add(closeRPCItem);
+                popup.insert(closeRPCItem,0);
             } else {
-                popup.add(startRPCItem);
+                popup.insert(startRPCItem,0);
             }
         }
 
-        popup.add(aboutItem);
-        popup.addSeparator();
-        popup.add(showInterface);
-        popup.addSeparator();
-        popup.add(exitItem);
         trayIcon.setPopupMenu(popup);
     }
 }

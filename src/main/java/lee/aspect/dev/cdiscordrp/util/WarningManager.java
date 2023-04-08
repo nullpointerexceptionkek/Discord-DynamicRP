@@ -146,26 +146,6 @@ public class WarningManager {
         }
     }
 
-    public static void forceRestart() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Apply changes");
-        alert.setHeaderText("Some changes need the application \n to restart inorder to apply");
-        alert.setContentText("restart now?");
-        ButtonType result = alert.showAndWait().get();
-        if (result.equals(ButtonType.OK)) {
-            try {
-                RestartApplication.FullRestart();
-            } catch (URISyntaxException | IOException | FileNotAJarException e) {
-                Alert alertException = new Alert(Alert.AlertType.ERROR);
-                alertException.setTitle("Exception");
-                alertException.setHeaderText("Cannot restart");
-                alertException.setContentText("The application will be force closed");
-                alertException.showAndWait();
-                System.exit(-1);
-            }
-        }
-    }
-
     public enum Mode {
         Left, Right, Up, Down
     }

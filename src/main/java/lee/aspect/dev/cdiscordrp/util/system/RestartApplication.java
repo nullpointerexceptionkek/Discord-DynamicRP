@@ -26,6 +26,9 @@
 package lee.aspect.dev.cdiscordrp.util.system;
 
 import lee.aspect.dev.cdiscordrp.application.core.RunLoopManager;
+import lee.aspect.dev.cdiscordrp.application.core.Script;
+import lee.aspect.dev.cdiscordrp.application.core.Settings;
+import lee.aspect.dev.cdiscordrp.autoswitch.SwitchManager;
 import lee.aspect.dev.cdiscordrp.exceptions.FileNotAJarException;
 
 import java.io.File;
@@ -50,26 +53,30 @@ public class RestartApplication {
      * @throws FileNotAJarException if the current file is not a jar file
      */
     public static void FullRestart() throws URISyntaxException, IOException, FileNotAJarException {
-        // gets the java bin so we can access it
+        try{
+            RunLoopManager.shutDownRP();
+        } catch (NullPointerException | IllegalStateException e) {
+            //shutDownRP() will throw either NullPointException or IllegalStateException if it is already closed
+            //the purpose if this is obviously a way to notify if the RP is already closed.
+            //There is no harm on ignoring this exception
+        }
+        Settings.saveSettingToFile();
+        Script.saveScriptToFile();
+        SwitchManager.saveToFile();
         final String javaBin = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java";
-        // gets the current jar file
         final File currentJar = new File(RestartApplication.class.getProtectionDomain().getCodeSource().getLocation().toURI());
 
-        /* is it a jar file? */
         if (!currentJar.getName().endsWith(".jar")) {
             throw new FileNotAJarException();
         }
 
-        /* Build command: java -jar application.jar */
         final ArrayList<String> command = new ArrayList<>();
         command.add(javaBin);
         command.add("-jar");
         command.add(currentJar.getPath());
 
-        //run the builder and close current process
         final ProcessBuilder builder = new ProcessBuilder(command);
         builder.start();
-        RunLoopManager.onClose();
     }
 
 

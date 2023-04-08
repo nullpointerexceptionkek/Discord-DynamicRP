@@ -58,19 +58,21 @@ class SwitchManager private constructor() {
 
     companion object {
 
-
-
-        var switchRunning = false
+        @JvmStatic
+        var running = false
             set(value){
-                ApplicationTray.updatePopupMenu()
                 field = value
+                ApplicationTray.updatePopupMenu()
             }
+
         class LoadSwitchFromFile {
             val cfgVer = "1.0"
             lateinit var switch: ArrayList<Switch>
         }
 
         lateinit var loaded: LoadSwitchFromFile
+
+        private lateinit var references: References // wait util toolkit is initialized
 
         @JvmStatic
         fun loadFromFile() {
@@ -89,7 +91,6 @@ class SwitchManager private constructor() {
             saveToFile()
         }
 
-
         @JvmStatic
         fun saveToFile() {
             // remove deleted config
@@ -107,9 +108,98 @@ class SwitchManager private constructor() {
         }
 
         @JvmStatic
+        fun toggleRunning() {
+            val files = ConfigManager.getCurrentConfigFiles()
+            files!!
+            references.startButton.isDisable = true
+            if (!running) {
+                references.startButton.text = "Stop Operation"
+                running = true
+                references.statusLabel.text = "Initializing..."
+                references.gridPane.children.forEach {
+                    it.isDisable = true
+                }
+                references.settingsButton.isDisable = true
+                references.configManagerButton.isDisable = true
+                for (i in files.indices) {
+                    if (loaded.switch[i].checkName.isNotEmpty()) {
+                        val monitor = ProcessMonitor()
+                        monitor.startMonitoring(
+                            loaded.switch[i].checkName,
+                            object : OpenCloseListener {
+                                override fun onProcessOpen() {
+                                    try {
+                                        RunLoopManager.closeCallBack()
+                                    } catch (_: Exception) {
+                                    }
+                                    Settings.getINSTANCE().loadedConfig = files[i]
+                                    Script.loadScriptFromJson()
+                                    Platform.runLater {
+                                        references.statusLabel.text = "${loaded.switch[i].checkName} Process Opened"
+                                    }
+                                    try {
+                                        RunLoopManager.startUpdate()
+                                        Platform.runLater {
+                                            references.statusLabel.text = "Connected"
+                                        }
+                                    } catch (e: Exception) {
+                                        Platform.runLater {
+                                            references.statusLabel.text = "Error: ${e.message} at config ${files[i].name}"
+                                        }
+                                    }
+                                }
+
+                                override fun onProcessClose() {
+                                    try {
+                                        RunLoopManager.closeCallBack()
+                                    } catch (_: Exception) {
+                                    }
+                                    Platform.runLater {
+                                        references.statusLabel.text = "${loaded.switch[i].checkName} Process Closed"
+                                    }
+                                    Platform.runLater {
+                                        references.statusLabel.text = "Not Connected - Waiting for Process"
+                                    }
+                                }
+                            },
+                            3,
+                            TimeUnit.SECONDS
+                        )
+                        references.processMonitors.add(monitor)
+                    }
+                }
+
+
+            } else {
+                references.statusLabel.text = "Disconnecting..."
+                try {
+                    RunLoopManager.closeCallBack()
+                } catch (_: Exception) {
+                }
+
+                for (i in references.processMonitors.indices) {
+                    references.processMonitors[i].stopMonitoring()
+                }
+                //clear the arraylist
+                references.processMonitors.clear()
+
+                references.gridPane.children.forEach {
+                    it.isDisable = false
+                }
+                references.settingsButton.isDisable = false
+                references.configManagerButton.isDisable = false
+                references.statusLabel.text = "Not Connected"
+                references.startButton.text = "Launch Callback"
+                running = false
+            }
+
+            references.startButton.isDisable = false
+
+        }
+
+        @JvmStatic
         fun initMenu(): Parent {
-
-
+            references = References()
             val anchorRoot = AnchorPane()
             anchorRoot.id = "anchorRoot"
             anchorRoot.padding = Insets(20.0)
@@ -120,15 +210,15 @@ class SwitchManager private constructor() {
             val files = ConfigManager.getCurrentConfigFiles()
             files!!
 
-            val gridPane = GridPane()
-            gridPane.alignment = Pos.CENTER
-            gridPane.vgap = 10.0
-            gridPane.hgap = 10.0
+            //val gridPane = GridPane()
+            references.gridPane.alignment = Pos.CENTER
+            references.gridPane.vgap = 10.0
+            references.gridPane.hgap = 10.0
 
             for (i in files.indices) {
                 val fileName = files[i].name.substring(0, files[i].name.indexOf("_UpdateScript.json"))
                 val text = Label(fileName)
-                gridPane.add(text, 0, i)
+                references.gridPane.add(text, 0, i)
 
                 val textField = TextField()
 
@@ -192,34 +282,30 @@ class SwitchManager private constructor() {
                 hbox.spacing = 10.0
                 hbox.alignment = Pos.CENTER_RIGHT
 
-                gridPane.add(hbox, 1, i)
+                references.gridPane.add(hbox, 1, i)
             }
 
+            references.statusLabel.textAlignment = TextAlignment.CENTER
 
-            val statusLabel = Label("Not Connected")
-            statusLabel.textAlignment = TextAlignment.CENTER
-
-            val startButton = Button("Start Operation")
             //var isStarted = false
 
-            val configManagerButton = Button()
-            configManagerButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
+
+            references.configManagerButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
             val cfgIcon = ImageView(
                 Objects.requireNonNull(CustomDiscordRPC::class.java.getResource("/lee/aspect/dev/cdiscordrp/icon/Config.png"))
                     .toExternalForm()
             )
             cfgIcon.fitHeight = 16.0
             cfgIcon.fitWidth = 16.0
-            configManagerButton.graphic = cfgIcon
-            configManagerButton.setOnAction {
+            references.configManagerButton.graphic = cfgIcon
+            references.configManagerButton.setOnAction {
                 saveToFile()
                 ConfigManager.showDialog(false) {
                     refreshUI(switchStackPane)
                 }
             }
 
-            val settingsButton = Button()
-            settingsButton.setOnAction {
+            references.settingsButton.setOnAction {
                 val root = loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/Settings.fxml").root
                 switchStackPane.children.add(root)
                 val animation = SlideInUp(root)
@@ -228,7 +314,7 @@ class SwitchManager private constructor() {
                 }
                 animation.play()
             }
-            settingsButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
+            references.settingsButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
             val settingsIcon = ImageView(
                 Objects.requireNonNull(CustomDiscordRPC::class.java.getResource("/lee/aspect/dev/cdiscordrp/icon/settingsImage.png"))
                     .toExternalForm()
@@ -236,103 +322,21 @@ class SwitchManager private constructor() {
 
             settingsIcon.fitHeight = 16.0
             settingsIcon.fitWidth = 16.0
-            settingsButton.graphic = settingsIcon
+            references.settingsButton.graphic = settingsIcon
 
-            val controlHBbox = HBox(settingsButton, startButton, configManagerButton)
+            val controlHBbox = HBox(references.settingsButton, references.startButton, references.configManagerButton)
             controlHBbox.spacing = 10.0
             controlHBbox.alignment = Pos.BOTTOM_CENTER
             controlHBbox.isPickOnBounds = false
 
             //declear an arraylist that holds object(reference) in kotlin
 
-            val reference = ArrayList<ProcessMonitor>()
 
-            startButton.setOnAction {
-                startButton.isDisable = true
-                if (!switchRunning) {
-                    startButton.text = "Stop Operation"
-                    switchRunning = true
-                    statusLabel.text = "Initializing..."
-                    gridPane.children.forEach {
-                        it.isDisable = true
-                    }
-                    settingsButton.isDisable = true
-                    configManagerButton.isDisable = true
-                    for (i in files.indices) {
-                        if (loaded.switch[i].checkName.isNotEmpty()) {
-                            val monitor = ProcessMonitor()
-                            monitor.startMonitoring(
-                                loaded.switch[i].checkName,
-                                object : OpenCloseListener {
-                                    override fun onProcessOpen() {
-                                        try {
-                                            RunLoopManager.closeCallBack()
-                                        } catch (_: Exception) {
-                                        }
-                                        Settings.getINSTANCE().loadedConfig = files[i]
-                                        Script.loadScriptFromJson()
-                                        Platform.runLater {
-                                            statusLabel.text = "${loaded.switch[i].checkName} Process Opened"
-                                        }
-                                        try {
-                                            RunLoopManager.startUpdate()
-                                            Platform.runLater {
-                                                statusLabel.text = "Connected"
-                                            }
-                                        } catch (e: Exception) {
-                                            Platform.runLater {
-                                                statusLabel.text = "Error: ${e.message}"
-                                            }
-                                        }
-                                    }
-
-                                    override fun onProcessClose() {
-                                        try {
-                                            RunLoopManager.closeCallBack()
-                                        } catch (_: Exception) {
-                                        }
-                                        Platform.runLater {
-                                            statusLabel.text = "${loaded.switch[i].checkName} Process Closed"
-                                        }
-                                        Platform.runLater {
-                                            statusLabel.text = "Not Connected - Waiting for Process"
-                                        }
-                                    }
-                                },
-                                3,
-                                TimeUnit.SECONDS
-                            )
-                            reference.add(monitor)
-                        }
-                    }
-
-
-                } else {
-                    statusLabel.text = "Disconnecting..."
-                    try {
-                        RunLoopManager.closeCallBack()
-                    } catch (_: Exception) {
-                    }
-
-                    for (i in reference.indices) {
-                        reference[i].stopMonitoring()
-                    }
-
-                    gridPane.children.forEach {
-                        it.isDisable = false
-                    }
-                    settingsButton.isDisable = false
-                    configManagerButton.isDisable = false
-                    statusLabel.text = "Not Connected"
-                    startButton.text = "Launch Callback"
-                    switchRunning = false
-                }
-
-                startButton.isDisable = false
-
+            references.startButton.setOnAction {
+                toggleRunning()
             }
 
-            val controlVbox = VBox(controlHBbox, statusLabel)
+            val controlVbox = VBox(controlHBbox, references.statusLabel)
 
             controlVbox.spacing = 5.0
 
@@ -351,7 +355,7 @@ class SwitchManager private constructor() {
             scrollPane.isFitToWidth = true
             scrollPane.hbarPolicy = ScrollPane.ScrollBarPolicy.AS_NEEDED
             scrollPane.vbarPolicy = ScrollPane.ScrollBarPolicy.AS_NEEDED
-            scrollPane.content = gridPane
+            scrollPane.content = references.gridPane
 
 
 
@@ -385,6 +389,7 @@ class SwitchManager private constructor() {
             val newRoot = initMenu()
             stackpane.children.add(newRoot)
         }
+
         @JvmStatic
         fun initAutoSwitchSilent() {
             val files = ConfigManager.getCurrentConfigFiles()
@@ -425,6 +430,13 @@ class SwitchManager private constructor() {
         }
 
     }
-
-
 }
+
+data class References(
+    val processMonitors: ArrayList<ProcessMonitor> = ArrayList(),
+    val startButton: Button = Button("Launch Callback"),
+    val statusLabel: Label = Label("Not Connected"),
+    val gridPane: GridPane = GridPane(),
+    val configManagerButton: Button = Button("Config Manager"),
+    val settingsButton: Button = Button("Settings"),
+)

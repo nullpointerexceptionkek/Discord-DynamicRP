@@ -190,8 +190,12 @@ public class RunLoopManager {
      * Shut down DiscordRP, this method must be called to stop displaying the RP
      */
     public static void closeCallBack() {
-        discordRP.shutdown();
+        shutDownRP();
         terminate();
+    }
+
+    public static void shutDownRP(){
+        discordRP.shutdown();
     }
 
     private static void executeUpdate(@NotNull Updates update) {

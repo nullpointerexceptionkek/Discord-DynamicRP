@@ -36,16 +36,20 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import lee.aspect.dev.cdiscordrp.animatefx.SlideOutDown;
 import lee.aspect.dev.cdiscordrp.animatefx.SlideOutLeft;
+import lee.aspect.dev.cdiscordrp.application.core.ApplicationTray;
 import lee.aspect.dev.cdiscordrp.application.core.CustomDiscordRPC;
 import lee.aspect.dev.cdiscordrp.application.core.Settings;
+import lee.aspect.dev.cdiscordrp.exceptions.FileNotAJarException;
 import lee.aspect.dev.cdiscordrp.language.LanguageManager;
 import lee.aspect.dev.cdiscordrp.manager.ConfigManager;
 import lee.aspect.dev.cdiscordrp.manager.SceneManager;
 import lee.aspect.dev.cdiscordrp.util.WarningManager;
+import lee.aspect.dev.cdiscordrp.util.system.RestartApplication;
 import lee.aspect.dev.cdiscordrp.util.system.StartLaunch;
 
 import java.awt.*;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.EnumSet;
 import java.util.Objects;
@@ -136,8 +140,25 @@ public class SettingController implements Initializable {
         startTrayOnlyCloseCheckBox.setSelected(!SystemTray.isSupported());
         startTrayOnlyCloseCheckBox.setSelected(Settings.getINSTANCE().isStartTrayOnlyInterfaceClose());
         startTrayOnlyCloseCheckBox.setOnAction((actionEvent -> {
-            Settings.getINSTANCE().setStartTrayOnlyInterfaceClose(startTrayOnlyCloseCheckBox.isSelected());
-            WarningManager.forceRestart();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Apply changes");
+            alert.setHeaderText("Some changes need the application \n to restart inorder to apply");
+            alert.setContentText("restart now?");
+            ButtonType result = alert.showAndWait().get();
+            if (result.equals(ButtonType.OK)) {
+                Settings.getINSTANCE().setStartTrayOnlyInterfaceClose(startTrayOnlyCloseCheckBox.isSelected());
+                try {
+                    RestartApplication.FullRestart();
+                } catch (URISyntaxException | IOException | FileNotAJarException e) {
+                    Alert alertException = new Alert(Alert.AlertType.ERROR);
+                    alertException.setTitle("Exception");
+                    alertException.setHeaderText("Cannot restart");
+                    alertException.setContentText("The application will be force closed");
+                    alertException.showAndWait();
+                    System.exit(-1);
+                }
+            }
+            startTrayOnlyCloseCheckBox.setSelected(!startTrayOnlyCloseCheckBox.isSelected());
         }));
         startLaunchCheckBox.setSelected(Settings.getINSTANCE().isStartLaunch());
         startLaunchCheckBox.setOnAction((actionEvent -> {
@@ -175,7 +196,12 @@ public class SettingController implements Initializable {
         }));
 
         AutoSwitchCheckBox.setSelected(Settings.getINSTANCE().isAutoSwitch());
-        AutoSwitchCheckBox.setOnAction((actionEvent -> Settings.getINSTANCE().setAutoSwitch(AutoSwitchCheckBox.isSelected())));
+        AutoSwitchCheckBox.setOnAction((actionEvent -> {
+            Settings.getINSTANCE().setAutoSwitch(AutoSwitchCheckBox.isSelected());
+            if(!Settings.getINSTANCE().isStartTrayOnlyInterfaceClose())
+                ApplicationTray.updatePopupMenu();
+        }
+        ));
 
 
         Settings.saveSettingToFile();
