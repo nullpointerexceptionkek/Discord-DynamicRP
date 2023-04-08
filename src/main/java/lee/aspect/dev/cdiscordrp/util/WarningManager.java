@@ -66,12 +66,10 @@ public class WarningManager {
                 x = parent.getLayoutX() - 10 - size / 2;
                 y = parent.getLayoutY() + bounds.getMinY() + bounds.getHeight() / 2 - size / 2;
                 break;
-            case Right:
+            default:
                 x = parent.getLayoutX() + bounds.getWidth() + 10 + size / 2;
                 y = parent.getLayoutY() + bounds.getMinY() + bounds.getHeight() / 2 - size / 2;
                 break;
-            default:
-                return null;
         }
         ImageView warning = new ImageView(Objects.requireNonNull(WarningManager.class.getResource("/lee/aspect/dev/cdiscordrp/icon/Warning.png")).toExternalForm());
         warning.setPickOnBounds(true);
