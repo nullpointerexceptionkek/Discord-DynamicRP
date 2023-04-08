@@ -121,30 +121,30 @@ class SwitchManager private constructor() {
                 }
                 references.settingsButton.isDisable = true
                 references.configManagerButton.isDisable = true
-                for (i in files.indices) {
-                    if (loaded.switch[i].checkName.isNotEmpty()) {
+                for (switch in loaded.switch) {
+                    if (switch.checkName.isNotEmpty()) {
                         val monitor = ProcessMonitor()
                         monitor.startMonitoring(
-                            loaded.switch[i].checkName,
+                            switch.checkName,
                             object : OpenCloseListener {
                                 override fun onProcessOpen() {
                                     try {
                                         RunLoopManager.closeCallBack()
                                     } catch (_: Exception) {
                                     }
-                                    Settings.getINSTANCE().loadedConfig = files[i]
+                                    Settings.getINSTANCE().loadedConfig = switch.config
                                     Script.loadScriptFromJson()
                                     Platform.runLater {
-                                        references.statusLabel.text = "${loaded.switch[i].checkName} Process Opened"
+                                        references.statusLabel.text = "$switch.checkName} Process Opened"
                                     }
                                     try {
                                         RunLoopManager.startUpdate()
                                         Platform.runLater {
-                                            references.statusLabel.text = "Connected"
+                                            references.statusLabel.text = "Connected - ${switch.checkName}"
                                         }
                                     } catch (e: Exception) {
                                         Platform.runLater {
-                                            references.statusLabel.text = "Error: ${e.message} at config ${files[i].name}"
+                                            references.statusLabel.text = "Error: ${e.message} at config ${switch.config.name}"
                                         }
                                     }
                                 }
@@ -155,7 +155,7 @@ class SwitchManager private constructor() {
                                     } catch (_: Exception) {
                                     }
                                     Platform.runLater {
-                                        references.statusLabel.text = "${loaded.switch[i].checkName} Process Closed"
+                                        references.statusLabel.text = "${switch.checkName} Process Closed"
                                     }
                                     Platform.runLater {
                                         references.statusLabel.text = "Not Connected - Waiting for Process"
@@ -168,6 +168,7 @@ class SwitchManager private constructor() {
                         references.processMonitors.add(monitor)
                     }
                 }
+                references.statusLabel.text = "Not Connected - Waiting for Process"
 
 
             } else {
