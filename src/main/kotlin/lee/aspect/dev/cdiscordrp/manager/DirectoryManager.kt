@@ -25,8 +25,6 @@
 
 package lee.aspect.dev.cdiscordrp.manager
 
-import javafx.application.Platform
-import javafx.concurrent.Task
 import javafx.scene.control.*
 import javafx.scene.control.ButtonBar.ButtonData
 import javafx.scene.layout.VBox
@@ -36,6 +34,8 @@ import lee.aspect.dev.cdiscordrp.exceptions.UnsupportedOSException
 import lee.aspect.dev.cdiscordrp.util.system.StartLaunch
 import java.io.BufferedWriter
 import java.io.File
+import java.io.FileWriter
+import java.io.PrintWriter
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.*
@@ -73,73 +73,55 @@ class DirectoryManager {
             dialog.show()
 
 
-            val task = object : Task<Void>() {
-                override fun call(): Void? {
-                    if (StartLaunch.isOnWindows()) {
-                        ProcessBuilder("setx", "CDRPCDir", dir).start().waitFor()
-                    } else if (StartLaunch.isOnMac()) {
-                        val launchAgentDirectory = File(System.getProperty("user.home"), "Library/LaunchAgents")
-                        if (!launchAgentDirectory.exists()) {
-                            launchAgentDirectory.mkdirs()
-                        }
-                        val launchdPlistPath = "/Library/LaunchAgents/CDRPCDir.plist"
-                        val launchdPlist = """
-                            <?xml version="1.0" encoding="UTF-8"?>
-                            <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN"
-                                    "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-                            <plist version="1.0">
-                            <dict>
-                                <key>Label</key>
-                                <string>CDRPCDir</string>
-                                <key>ProgramArguments</key>
-                                <array>
-                                    <string>/usr/bin/launchctl</string>
-                                    <string>setenv</string>
-                                    <string>CDRPCDir</string>
-                                    <string>$dir</string>
-                                </array>
-                                <key>RunAtLoad</key>
-                                <true/>
-                            </dict>
-                        </plist>
-                        """.trimIndent()
-                        BufferedWriter(Files.newBufferedWriter(Paths.get(launchdPlistPath))).use {
-                            it.write(launchdPlist)
-                        }
-                        ProcessBuilder("launchctl", "load", launchdPlistPath).inheritIO().start().waitFor()
-                    } else if (StartLaunch.isOnLinux()) {
-                        BufferedWriter(
-                            Files.newBufferedWriter(
-                                Paths.get(
-                                    System.getProperty("user.home"),
-                                    ".bashrc"
-                                )
-                            )
-                        ).use {
-                            it.write("export CDRPCDir=$dir\n")
-                        }
-                        ProcessBuilder("/bin/bash", "-c", "source ~/.bashrc").inheritIO().start().waitFor()
-                        ProcessBuilder("/bin/bash", "-c", "source ~/.zshrc").inheritIO().start().waitFor()
-                    } else {
-                        throw UnsupportedOSException("invalid os")
-                    }
-                    return null
+            if (StartLaunch.isOnWindows()) {
+                ProcessBuilder("setx", "CDRPCDir", dir).start().waitFor()
+            } else if (StartLaunch.isOnMac()) {
+                val launchAgentDirectory = File(System.getProperty("user.home"), "Library/LaunchAgents")
+                if (!launchAgentDirectory.exists()) {
+                    launchAgentDirectory.mkdirs()
                 }
+                val launchdPlistPath = File(launchAgentDirectory, "CDRPCDir.plist")
+                PrintWriter(FileWriter(launchdPlistPath)).use { writer ->
+                    writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
+                    writer.println("<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\"")
+                    writer.println("        \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">")
+                    writer.println("<plist version=\"1.0\">")
+                    writer.println("<dict>")
+                    writer.println("    <key>Label</key>")
+                    writer.println("    <string>CDRPCDir</string>")
+                    writer.println("    <key>ProgramArguments</key>")
+                    writer.println("    <array>")
+                    writer.println("        <string>/usr/bin/launchctl</string>")
+                    writer.println("        <string>setenv</string>")
+                    writer.println("        <string>CDRPCDir</string>")
+                    writer.println("        <string>$dir</string>")
+                    writer.println("    </array>")
+                    writer.println("    <key>RunAtLoad</key>")
+                    writer.println("    <true/>")
+                    writer.println("    <key>KeepAlive</key>")
+                    writer.println("    <true/>")
+                    writer.println("</dict>")
+                    writer.println("</plist>")
+                }
+
+
+            } else if (StartLaunch.isOnLinux()) {
+                BufferedWriter(
+                    Files.newBufferedWriter(
+                        Paths.get(
+                            System.getProperty("user.home"),
+                            ".bashrc"
+                        )
+                    )
+                ).use {
+                    it.write("export CDRPCDir=$dir\n")
+                }
+                ProcessBuilder("/bin/bash", "-c", "source ~/.bashrc").inheritIO().start().waitFor()
+                ProcessBuilder("/bin/bash", "-c", "source ~/.zshrc").inheritIO().start().waitFor()
+            } else {
+                throw UnsupportedOSException("invalid os")
             }
-
-
-
-            Thread(task).start()
-
-            task.setOnSucceeded {
-                Platform.runLater { dialog.close() }
-            }
-
-            task.setOnFailed {
-                Platform.runLater { dialog.close() }
-                throw RuntimeException("Failed to set environment variable, this can be caused by not having enough privileges or unsupported OS")
-            }
-
+            dialog.close()
 
         }
 
@@ -149,7 +131,7 @@ class DirectoryManager {
                 ProcessBuilder("REG", "DELETE", "HKCU\\Environment", "/F", "/V", "CDRPCDir").inheritIO().start().waitFor()
             } else if (StartLaunch.isOnMac()) {
                 ProcessBuilder("launchctl", "unsetenv", "CDRPCDir").start().waitFor()
-                val launchAgentPlistPath = System.getProperty("user.home") + "/Library/LaunchAgents/com.example.myapp.plist"
+                val launchAgentPlistPath = System.getProperty("user.home") + "/Library/LaunchAgents/CDRPCDir.plist"
                 File(launchAgentPlistPath).delete()
             } else if (StartLaunch.isOnLinux()) {
                 ProcessBuilder("unset", "CDRPCDir").start().waitFor()
