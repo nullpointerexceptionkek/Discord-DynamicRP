@@ -46,7 +46,7 @@ class DirectoryManager {
     companion object {
 
         @JvmField
-        val defaultDir = System.getProperty("user.home") +  File.separator +"CustomDiscordRPC"
+        val defaultDir = System.getProperty("user.home") + File.separator + "CustomDiscordRPC"
 
         private var ROOT_DIR: File? = getDirectoryEnvironmentVar()?.let { File(it) }
 
@@ -78,7 +78,35 @@ class DirectoryManager {
                     if (StartLaunch.isOnWindows()) {
                         ProcessBuilder("setx", "CDRPCDir", dir).start().waitFor()
                     } else if (StartLaunch.isOnMac()) {
-                        ProcessBuilder("launchctl", "setenv", "CDRPCDir", dir).start().waitFor()
+                        val launchAgentDirectory = File(System.getProperty("user.home"), "Library/LaunchAgents")
+                        if (!launchAgentDirectory.exists()) {
+                            launchAgentDirectory.mkdirs()
+                        }
+                        val launchdPlistPath = "/Library/LaunchAgents/CDRPCDir.plist"
+                        val launchdPlist = """
+                            <?xml version="1.0" encoding="UTF-8"?>
+                            <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN"
+                                    "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+                            <plist version="1.0">
+                            <dict>
+                                <key>Label</key>
+                                <string>CDRPCDir</string>
+                                <key>ProgramArguments</key>
+                                <array>
+                                    <string>/usr/bin/launchctl</string>
+                                    <string>setenv</string>
+                                    <string>CDRPCDir</string>
+                                    <string>$dir</string>
+                                </array>
+                                <key>RunAtLoad</key>
+                                <true/>
+                            </dict>
+                        </plist>
+                        """.trimIndent()
+                        BufferedWriter(Files.newBufferedWriter(Paths.get(launchdPlistPath))).use {
+                            it.write(launchdPlist)
+                        }
+                        ProcessBuilder("launchctl", "load", launchdPlistPath).inheritIO().start().waitFor()
                     } else if (StartLaunch.isOnLinux()) {
                         BufferedWriter(
                             Files.newBufferedWriter(
@@ -99,6 +127,8 @@ class DirectoryManager {
                 }
             }
 
+
+
             Thread(task).start()
 
             task.setOnSucceeded {
@@ -116,15 +146,31 @@ class DirectoryManager {
         @JvmStatic
         fun deleteDirectoryEnvironmentVar() {
             if (StartLaunch.isOnWindows()) {
-                ProcessBuilder("setx", "/m", "CDRPCDir").start().waitFor()
+                ProcessBuilder("REG", "DELETE", "HKCU\\Environment", "/F", "/V", "CDRPCDir").inheritIO().start().waitFor()
             } else if (StartLaunch.isOnMac()) {
                 ProcessBuilder("launchctl", "unsetenv", "CDRPCDir").start().waitFor()
+                val launchAgentPlistPath = System.getProperty("user.home") + "/Library/LaunchAgents/com.example.myapp.plist"
+                File(launchAgentPlistPath).delete()
             } else if (StartLaunch.isOnLinux()) {
                 ProcessBuilder("unset", "CDRPCDir").start().waitFor()
+                val bashrcPath = Paths.get(System.getProperty("user.home"), ".bashrc")
+                val zshrcPath = Paths.get(System.getProperty("user.home"), ".zshrc")
+                Files.deleteIfExists(bashrcPath)
+                Files.deleteIfExists(zshrcPath)
             } else {
                 throw UnsupportedOSException("invalid os")
             }
         }
+
+        @JvmStatic
+        fun unsetEnvBash(){
+            ProcessBuilder("unset", "CDRPCDir").start().waitFor()
+            val bashrcPath = Paths.get(System.getProperty("user.home"), ".bashrc")
+            val zshrcPath = Paths.get(System.getProperty("user.home"), ".zshrc")
+            Files.deleteIfExists(bashrcPath)
+            Files.deleteIfExists(zshrcPath)
+        }
+
 
         @JvmStatic
         fun isSetUp(): Boolean {

@@ -117,6 +117,13 @@ public class Launch {
                 if (arg.contains("--StartLaunch")) {
                     CustomDiscordRPC.LaunchSilently();
                     return;
+                }else if(arg.contains("--unsetenv")) {
+                    System.out.println("Unset environment variable");
+                    DirectoryManager.deleteDirectoryEnvironmentVar();
+                    return;
+                } else if (arg.contains("--forceunsetbash")) {
+                    System.out.println("Unset environment variable - bashrc and zshrc");
+                    DirectoryManager.unsetEnvBash();
                 }
             }
             CustomDiscordRPC.Launch(args);
