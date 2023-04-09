@@ -2,7 +2,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.7.22'
-    id 'org.openjfx.javafxplugin' version '0.0.10'
     id 'java'
     id 'application'
 }
@@ -16,10 +15,7 @@ repositories {
     mavenCentral()
 }
 
-javafx {
-    version = "19.0.2"
-    modules = ['javafx.controls', 'javafx.fxml']
-}
+
 
 ext {
     kotlin_version = '1.7.22'
@@ -40,10 +36,6 @@ dependencies {
     implementation "com.kohlschutter.junixsocket:junixsocket-native-common:$junixsocket_version"
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_platform_version"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit_platform_version"
-    //implementation "org.jetbrains:annotations:24.0.1"
-    runtimeOnly "org.openjfx:javafx-graphics:$javafx.version:win"
-    runtimeOnly "org.openjfx:javafx-graphics:$javafx.version:linux"
-    runtimeOnly "org.openjfx:javafx-graphics:$javafx.version:mac"
 }
 
 mainClassName = 'lee.aspect.dev.cdiscordrp.Launch'
