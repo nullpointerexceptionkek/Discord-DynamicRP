@@ -43,7 +43,7 @@ import lee.aspect.dev.cdiscordrp.application.core.Script
 import lee.aspect.dev.cdiscordrp.application.core.Settings
 import lee.aspect.dev.cdiscordrp.json.loader.FileManager
 import lee.aspect.dev.cdiscordrp.manager.ConfigManager
-import lee.aspect.dev.cdiscordrp.manager.DirectoryManager.Companion.getRootDir
+import lee.aspect.dev.cdiscordrp.manager.DirectoryManager
 import lee.aspect.dev.cdiscordrp.manager.SceneManager
 import lee.aspect.dev.cdiscordrp.manager.SceneManager.Companion.loadSceneWithStyleSheet
 import lee.aspect.dev.cdiscordrp.processmonitor.OpenCloseListener
@@ -76,11 +76,11 @@ class SwitchManager private constructor() {
 
         @JvmStatic
         fun loadFromFile() {
-            if (!File(getRootDir(), "Switch.json").exists()){
-                File(getRootDir(), "Switch.json").createNewFile()
+            if (!File(DirectoryManager.ROOT_DIR, "Switch.json").exists()){
+                File(DirectoryManager.ROOT_DIR, "Switch.json").createNewFile()
             }
             var loaded = FileManager.readFromJson(
-                File(getRootDir(), "Switch.json"),
+                File(DirectoryManager.ROOT_DIR, "Switch.json"),
                 LoadSwitchFromFile::class.java
             )
             if (loaded == null) {
@@ -102,7 +102,7 @@ class SwitchManager private constructor() {
                 }
             }
             FileManager.writeJsonTofile(
-                File(getRootDir(), "Switch.json"),
+                File(DirectoryManager.ROOT_DIR, "Switch.json"),
                 loaded
             )
         }
