@@ -30,7 +30,10 @@ import javafx.scene.control.ButtonBar.ButtonData
 import javafx.scene.layout.VBox
 import javafx.stage.DirectoryChooser
 import lee.aspect.dev.cdiscordrp.Launch
+import lee.aspect.dev.cdiscordrp.application.core.Settings
+import lee.aspect.dev.cdiscordrp.application.core.Settings.Theme
 import lee.aspect.dev.cdiscordrp.exceptions.UnsupportedOSException
+import lee.aspect.dev.cdiscordrp.util.system.RestartApplication
 import lee.aspect.dev.cdiscordrp.util.system.StartLaunch
 import java.io.BufferedWriter
 import java.io.File
@@ -52,11 +55,6 @@ class DirectoryManager {
         lateinit var ROOT_DIR: File
         private set
 
-        @JvmStatic
-        fun getDirectoryEnvironmentVar(): String? {
-            Launch.LOGGER.debug("CDRPCDir: ${System.getenv("CDRPCDir")}")
-            return System.getenv("CDRPCDir")
-        }
 
         @JvmStatic
         fun writeDirectoryEnvironmentVar(dir: String) {
@@ -156,28 +154,20 @@ class DirectoryManager {
 
 
         @JvmStatic
-        fun runWithDirectory(): Boolean {
-            //check if everything is set up
-            if (System.getenv("CDRPCDir") != null)
-                if (File(System.getenv("CDRPCDir")).exists())
-                    return true
-                else Launch.LOGGER.warn("Dir not exists: ${System.getenv("CDRPCDir")}")
-            else {
-                Launch.LOGGER.warn("Env not exists checking default dir: $defaultDir")
-                if (File(defaultDir).exists()) {
-                    Launch.LOGGER.warn("Default dir exists")
-                    //ROOT_DIR = defaultDir
-                    return true
-                }
-
+        fun initDirectory():Boolean{
+            val directory = System.getenv("CDRPCDir") ?: defaultDir
+            return if (File(directory).exists()) {
+                ROOT_DIR = File(directory)
+                Launch.LOGGER.info("Directory exists: $directory")
+                true
+            } else {
+                Launch.LOGGER.warn("Directory does not exist: $directory")
+                false
             }
-            return false
         }
-
         @JvmStatic
         fun askForDirectory() {
             Launch.LOGGER.info("Opening directory setup wizard")
-            //make a javaFX dialog
             try {
                 val directoryChooser = DirectoryChooser()
                 directoryChooser.title = "Choose a directory"
@@ -194,49 +184,79 @@ class DirectoryManager {
                     }
                 }
 
+                val resetToDefaultButton = Button("Reset to default directory")
+                resetToDefaultButton.setOnAction {
+                    directoryPathField.text = defaultDir
+                }
+
                 val messageLabel = Label("Please choose a directory or enter a directory path:")
 
+                val warningMessage = Label("Warning: Changing the directory is not recommended.")
+                warningMessage.styleClass.add("warning-label")
+                warningMessage.isVisible = false
 
-                val dialogLayout = VBox(messageLabel, directoryPathField, chooseDirectoryButton)
+                directoryPathField.textProperty().addListener { _, _, newValue ->
+                    warningMessage.isVisible = newValue != defaultDir
+                }
+
+                val dialogLayout = VBox(messageLabel, directoryPathField, chooseDirectoryButton, resetToDefaultButton, warningMessage)
                 dialogLayout.spacing = 10.0
 
                 val dialog: Dialog<ButtonType> = Dialog()
                 dialog.title = "Select or input a directory"
                 dialog.dialogPane.content = dialogLayout
+                dialog.dialogPane.stylesheets.add(Settings.getINSTANCE().theme.path)
 
                 val submitButtonType = ButtonType("Submit", ButtonData.OK_DONE)
                 dialog.dialogPane.buttonTypes.add(submitButtonType)
 
+                val cancelButtonType = ButtonType("Cancel", ButtonData.CANCEL_CLOSE)
+                dialog.dialogPane.buttonTypes.add(cancelButtonType)
+
                 val result: Optional<ButtonType> = dialog.showAndWait()
 
-                if (directoryPathField.text.isNotEmpty() && directoryPathField.text.isNotBlank() &&
-                    result.filter { buttonType: ButtonType -> buttonType == submitButtonType }.isPresent
-                ) {
-                    val directoryPath = directoryPathField.text
-                    if (!File(directoryPath).exists()) {
-                        //open a dialog to tell the user that the directory doesn't exist and ask if they want to create it
-                        val createDirectoryDialog = Alert(Alert.AlertType.CONFIRMATION)
-                        createDirectoryDialog.title = "Create directory?"
-                        createDirectoryDialog.headerText = "The directory you entered doesn't exist."
-                        createDirectoryDialog.contentText = "Would you like to create the directory?"
-                        val createDirectoryResult = createDirectoryDialog.showAndWait()
-                        if (createDirectoryResult.isPresent && createDirectoryResult.get() == ButtonType.OK) {
-                            //create the directory
-                            File(directoryPath).mkdirs()
-                            writeDirectoryEnvironmentVar(directoryPath)
-                        } else {
-                            askForDirectory()
-                        }
-
-                    } else {
-                        writeDirectoryEnvironmentVar(directoryPath)
+                if (result.isPresent) {
+                    when (result.get()) {
+                        submitButtonType -> handleSubmission(directoryPathField)
+                        cancelButtonType -> exitProcess(0) // Exit program when 'x' button clicked
                     }
-
-                } else exitProcess(0)
+                } else {
+                    exitProcess(0) // Exit program when 'x' button clicked
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
+
+        private fun handleSubmission(directoryPathField: TextField) {
+            val directoryPath = directoryPathField.text
+            if (directoryPath.isNotBlank()) {
+                val directory = File(directoryPath)
+                if (!directory.exists()) {
+                    createDirectory(directory)
+                }
+                if(directory != File(defaultDir)) {
+                    writeDirectoryEnvironmentVar(directoryPath)
+                    return
+                }
+                RestartApplication.FullRestart()
+            }
+        }
+
+        private fun createDirectory(directory: File) {
+            val createDirectoryDialog = Alert(Alert.AlertType.CONFIRMATION)
+            createDirectoryDialog.title = "Create directory?"
+            createDirectoryDialog.headerText = "The directory you entered doesn't exist."
+            createDirectoryDialog.contentText = "Would you like to create the directory?"
+            val createDirectoryResult = createDirectoryDialog.showAndWait()
+            if (createDirectoryResult.isPresent && createDirectoryResult.get() == ButtonType.OK) {
+                directory.mkdirs()
+            } else {
+                askForDirectory()
+            }
+        }
+
+
     }
 
 }

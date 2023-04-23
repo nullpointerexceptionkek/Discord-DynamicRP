@@ -125,7 +125,6 @@ public class CustomDiscordRPC extends Application {
      */
     @Override
     public void start(Stage pStage) {
-        System.out.println(DirectoryManager.getROOT_DIR());
         if (setup) {
             //this sets up the environment variables(to access the file save directory)
             DirectoryManager.askForDirectory();

@@ -49,7 +49,7 @@ class ConfigManager {
         fun getCurrentConfigFiles(): Array<out File>? {
             val filter = FilenameFilter { _, name -> name.contains("_UpdateScript.json") }
 
-            return DirectoryManager.ROOT_DIR?.listFiles(filter)
+            return DirectoryManager.ROOT_DIR.listFiles(filter)
 
         }
 
