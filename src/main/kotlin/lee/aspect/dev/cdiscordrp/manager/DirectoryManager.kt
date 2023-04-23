@@ -48,12 +48,13 @@ class DirectoryManager {
         @JvmField
         val defaultDir = System.getProperty("user.home") + File.separator + "CustomDiscordRPC"
 
-        private var ROOT_DIR: File? = getDirectoryEnvironmentVar()?.let { File(it) }
+        @JvmStatic
+        lateinit var ROOT_DIR: File
+        private set
 
         @JvmStatic
         fun getDirectoryEnvironmentVar(): String? {
             Launch.LOGGER.debug("CDRPCDir: ${System.getenv("CDRPCDir")}")
-            //this should not be null
             return System.getenv("CDRPCDir")
         }
 
@@ -155,13 +156,21 @@ class DirectoryManager {
 
 
         @JvmStatic
-        fun isSetUp(): Boolean {
+        fun runWithDirectory(): Boolean {
             //check if everything is set up
             if (System.getenv("CDRPCDir") != null)
                 if (File(System.getenv("CDRPCDir")).exists())
                     return true
                 else Launch.LOGGER.warn("Dir not exists: ${System.getenv("CDRPCDir")}")
-            else Launch.LOGGER.warn("Env not exists")
+            else {
+                Launch.LOGGER.warn("Env not exists checking default dir: $defaultDir")
+                if (File(defaultDir).exists()) {
+                    Launch.LOGGER.warn("Default dir exists")
+                    //ROOT_DIR = defaultDir
+                    return true
+                }
+
+            }
             return false
         }
 
@@ -228,12 +237,6 @@ class DirectoryManager {
                 e.printStackTrace()
             }
         }
-
-        @JvmStatic
-        fun getRootDir(): File? {
-            return ROOT_DIR
-        }
-
     }
 
 }

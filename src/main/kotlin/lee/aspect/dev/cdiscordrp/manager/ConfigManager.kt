@@ -49,7 +49,7 @@ class ConfigManager {
         fun getCurrentConfigFiles(): Array<out File>? {
             val filter = FilenameFilter { _, name -> name.contains("_UpdateScript.json") }
 
-            return DirectoryManager.getRootDir()?.listFiles(filter)
+            return DirectoryManager.ROOT_DIR?.listFiles(filter)
 
         }
 
@@ -86,7 +86,7 @@ class ConfigManager {
                 val result = newConfigDialog.showAndWait()
                 if (result.isPresent && result.get().isNotEmpty())
                     try {
-                        val newFile = File(DirectoryManager.getRootDir(), result.get() + "_UpdateScript.json")
+                        val newFile = File(DirectoryManager.ROOT_DIR, result.get() + "_UpdateScript.json")
                         newFile.createNewFile()
                         Settings.getINSTANCE().loadedConfig = newFile
                     } catch (e: Exception) {
@@ -129,7 +129,7 @@ class ConfigManager {
                         radioButton.isSelected = true
                     }
                     radioButton.setOnAction {
-                        val selectedFile = File(DirectoryManager.getRootDir(), radioButton.text + "_UpdateScript.json")
+                        val selectedFile = File(DirectoryManager.ROOT_DIR, radioButton.text + "_UpdateScript.json")
                         Settings.getINSTANCE().loadedConfig = selectedFile
                         Script.loadScriptFromJson()
                     }

@@ -79,14 +79,14 @@ public class Launch {
         }
 
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
-        if (!DirectoryManager.isSetUp()) {
+        if (!DirectoryManager.runWithDirectory()) {
             CustomDiscordRPC.LaunchSetUpDialog(args);
 
             return;
         }
         init();
         try {
-            runtime = new File(DirectoryManager.getRootDir(), "runtime");
+            runtime = new File(DirectoryManager.getROOT_DIR(), "runtime");
 
             //if (!DirectoryManager.getRootDir().exists()) DirectoryManager.getRootDir().mkdir();
 
