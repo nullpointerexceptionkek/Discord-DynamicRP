@@ -204,24 +204,34 @@ public class ConfigController implements Initializable {
             anchorRoot.getChildren().remove(invalidIndex);
             displayUpdates.setBackground(null);
         }
-        int index = Script.getINSTANCE().getTotalupdates().size() - 1;
-        if (displayUpdates.getItems().size() > 0)
-            Script.getINSTANCE().addUpdates(new Updates((Script.getINSTANCE().getTotalupdates().get(index).getWait()),
-                    String.valueOf(index),
-                    Script.getINSTANCE().getTotalupdates().get(index).getImagetext(),
-                    Script.getINSTANCE().getTotalupdates().get(index).getSmallimage()
-                    , Script.getINSTANCE().getTotalupdates().get(index).getSmalltext(),
-                    "First line " + index, "Second line " + index,
-                    Script.getINSTANCE().getTotalupdates().get(index).getButton1Text(),
-                    Script.getINSTANCE().getTotalupdates().get(index).getButton1Url(),
-                    Script.getINSTANCE().getTotalupdates().get(index).getButton2Text(),
-                    Script.getINSTANCE().getTotalupdates().get(index).getButton2Url()));
 
-        else
-            Script.getINSTANCE().addUpdates(new Updates(16000, String.valueOf(index), "" + index, "", "", "First line ", "Second line " + index));
+        int index = Script.getINSTANCE().getTotalupdates().size() - 1;
+        Updates newItem;
+
+        if (displayUpdates.getItems().size() > 0) {
+            Updates lastUpdate = Script.getINSTANCE().getTotalupdates().get(index);
+            newItem = new Updates(
+                    lastUpdate.getWait(),
+                    String.valueOf(index),
+                    lastUpdate.getImagetext(),
+                    lastUpdate.getSmallimage(),
+                    lastUpdate.getSmalltext(),
+                    "First line " + index,
+                    "Second line " + index,
+                    lastUpdate.getButton1Text(),
+                    lastUpdate.getButton1Url(),
+                    lastUpdate.getButton2Text(),
+                    lastUpdate.getButton2Url()
+            );
+        } else {
+            newItem = new Updates(16000, String.valueOf(index), "" + index, "", "", "First line ", "Second line " + index);
+        }
+
+        Script.getINSTANCE().addUpdates(newItem);
         refreshList();
         undoRedoManager.modifyList(Script.getINSTANCE().getTotalupdates());
     }
+
 
 
     //this file will init and set the Listview to the total updates that was read from Json
@@ -299,13 +309,14 @@ public class ConfigController implements Initializable {
         deleteItem.setOnAction((actionEvent) -> {
             if (displayUpdates.getSelectionModel().getSelectedIndex() != -1) {
                 ObservableList<Integer> selectedIndices = displayUpdates.getSelectionModel().getSelectedIndices();
-                for (int i = 0; i < selectedIndices.size(); i++) {
-                    Script.getINSTANCE().getTotalupdates().remove(selectedIndices.get(i) - i);
+                for (int i = selectedIndices.size() - 1; i >= 0; i--) {
+                    Script.getINSTANCE().getTotalupdates().remove(selectedIndices.get(i).intValue());
                 }
             }
             refreshList();
             undoRedoManager.modifyList(Script.getINSTANCE().getTotalupdates());
         });
+
         insertRowBelow.setOnAction((actionEvent) -> {
             if (displayUpdates.getSelectionModel().getSelectedIndex() != -1) {
                 int index = displayUpdates.getSelectionModel().getSelectedIndex();

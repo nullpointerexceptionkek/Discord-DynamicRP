@@ -29,15 +29,14 @@ import lee.aspect.dev.cdiscordrp.application.core.Script
 import lee.aspect.dev.cdiscordrp.application.core.Updates
 import java.util.*
 
-class UndoRedoManager(initialList: List<Updates>) {
-    private val undoStack = Stack<List<Updates>>()
-    private val redoStack = Stack<List<Updates>>()
-    private var currentList: List<Updates> = initialList
-    private var previousList: List<Updates> = initialList
-
+class UndoRedoManager(initialList: MutableList<Updates>) {
+    private val maxStackSize: Int = 15
+    private val undoStack = Stack<MutableList<Updates>>()
+    private val redoStack = Stack<MutableList<Updates>>()
+    private var currentList: MutableList<Updates> = initialList.toMutableList()
 
     init {
-        undoStack.push(initialList)
+        undoStack.push(currentList)
     }
 
     fun undo() {
@@ -45,6 +44,9 @@ class UndoRedoManager(initialList: List<Updates>) {
             return
         }
         redoStack.push(currentList)
+        if (redoStack.size > maxStackSize) {
+            redoStack.removeElementAt(0)
+        }
         currentList = undoStack.pop()
         applyChangesToScript()
     }
@@ -54,20 +56,26 @@ class UndoRedoManager(initialList: List<Updates>) {
             return
         }
         undoStack.push(currentList)
+        if (undoStack.size > maxStackSize) {
+            undoStack.removeElementAt(0)
+        }
         currentList = redoStack.pop()
         applyChangesToScript()
     }
 
-    fun modifyList(list: List<Updates>) {
-        undoStack.push(previousList.toList()) // Make a copy of the previous list
-        previousList = list.toList()
+    fun modifyList(list: MutableList<Updates>) {
+        undoStack.push(currentList)
+        if (undoStack.size > maxStackSize) {
+            undoStack.removeElementAt(0)
+        }
+        currentList = list.toMutableList()
         redoStack.clear()
     }
 
     private fun applyChangesToScript() {
-        Script.getINSTANCE().totalupdates.clear()
-        currentList.toList().toTypedArray().forEach {
-            Script.getINSTANCE().totalupdates.add(it)
-        }
+        val scriptInstance = Script.getINSTANCE()
+        scriptInstance.totalupdates.clear()
+        scriptInstance.totalupdates.addAll(currentList)
     }
 }
+
