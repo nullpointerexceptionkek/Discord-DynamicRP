@@ -33,7 +33,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import lee.aspect.dev.cdiscordrp.exceptions.FileNotAJarException;
-import lee.aspect.dev.cdiscordrp.util.system.RestartApplication;
+import lee.aspect.dev.cdiscordrp.system.SystemHandler;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -133,7 +133,7 @@ public class WarningManager {
         ButtonType result = alert.showAndWait().get();
         if (result.equals(yesButton)) {
             try {
-                RestartApplication.FullRestart();
+                SystemHandler.fullRestart();
             } catch (URISyntaxException | IOException | FileNotAJarException e) {
                 Alert alertException = new Alert(Alert.AlertType.ERROR);
                 alertException.setTitle("Exception");

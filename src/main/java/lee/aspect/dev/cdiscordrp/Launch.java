@@ -33,7 +33,7 @@ import lee.aspect.dev.cdiscordrp.exceptions.ExceptionHandler;
 import lee.aspect.dev.cdiscordrp.json.loader.FileManager;
 import lee.aspect.dev.cdiscordrp.language.LanguageManager;
 import lee.aspect.dev.cdiscordrp.manager.DirectoryManager;
-import lee.aspect.dev.cdiscordrp.util.system.StartLaunch;
+import lee.aspect.dev.cdiscordrp.system.SystemHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,7 +71,7 @@ public class Launch {
      * @author Aspect
      */
     public static void main(String[] args) {
-        isOnIDE = !StartLaunch.isJar();
+        isOnIDE = !SystemHandler.StartLaunch.isJar();
         if (isOnIDE) {
             LOGGER.info("This program is running on or not build into a jar file, The following features will not work.");
             LOGGER.info("Automated restart application, Create start launch script");
@@ -83,8 +83,8 @@ public class Launch {
             CustomDiscordRPC.LaunchSetUpDialog(args);
             return;
         }
-        DirectoryManager.initDirectory();
-        init();
+        //DirectoryManager.initDirectory();
+        initManagers();
         try {
             runtime = new File(DirectoryManager.getROOT_DIR(), "runtime");
 
@@ -147,7 +147,7 @@ public class Launch {
         return false;
     }
 
-    private static void init() {
+    public static void initManagers() {
         FileManager.init();
         Settings.loadKeyFromJson();
         Script.loadScriptFromJson();

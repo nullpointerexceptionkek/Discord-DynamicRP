@@ -44,7 +44,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 /**
- * This class manages the default interface option and System Tray.
+ * This class manages the default interface option and system Tray.
  *
  * <p>The `CustomDiscordRPC` class extends the `Application` class from JavaFX and provides three
  * static methods to launch the application:
@@ -59,7 +59,7 @@ import java.util.Objects;
  *   <li>{@link #LaunchSetUpDialog(String[])}: Same as {@link #Launch(String[])}, but always sets
  *       the `setup` flag to `true`.
  *   <li>{@link #LaunchSilently()}: Launches the application without showing the main interface.
- *       This method initializes the System Tray and calls the {@link RunLoopManager#runFromStartLunch()}
+ *       This method initializes the system Tray and calls the {@link RunLoopManager#runFromStartLunch()}
  *       method to run the application in the background.
  * </ul>
  *
@@ -128,15 +128,7 @@ public class CustomDiscordRPC extends Application {
         if (setup) {
             //this sets up the environment variables(to access the file save directory)
             DirectoryManager.askForDirectory();
-            //create a dialog says you need to restart the program
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Restart");
-            alert.setHeaderText("Restart the program");
-            alert.setContentText("Please Manually restart the program to apply the changes");
-            alert.showAndWait();
-            //close the program
-            Platform.exit();
-            System.exit(0);
+
         }
         try {
             primaryStage = pStage;
@@ -190,8 +182,8 @@ public class CustomDiscordRPC extends Application {
             case Ask:
                 Alert alert = WarningManager.createAlertWithOptOut(
                         Alert.AlertType.CONFIRMATION,
-                        "Minimize to System Tray", null,
-                        "Do you want to minimize to System Tray?",
+                        "Minimize to system Tray", null,
+                        "Do you want to minimize to system Tray?",
                         "Do not show again", param -> Settings.getINSTANCE().setMinimizeMode(param ? Settings.MinimizeMode.WaitAndSee : Settings.MinimizeMode.Ask), ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
                 java.util.Optional<ButtonType> result = alert.showAndWait();
                 if (result.filter(buttonType -> buttonType == ButtonType.YES).isPresent()) {

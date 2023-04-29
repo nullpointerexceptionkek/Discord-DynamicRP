@@ -26,7 +26,7 @@
 package lee.aspect.dev.cdiscordrp.exceptions;
 
 import lee.aspect.dev.cdiscordrp.Launch;
-import lee.aspect.dev.cdiscordrp.util.system.RestartApplication;
+import lee.aspect.dev.cdiscordrp.system.SystemHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,10 +39,10 @@ import java.net.URISyntaxException;
 public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
 
     public static String getSystemInfo(String thread) {
-        return "********** System Information ***********\n" +
+        return "********** system Information ***********\n" +
                 "Client Version: " + Launch.VERSION + "\n" +
-                "Operating System: " + System.getProperty("os.name") + "\n" +
-                "Operating System Version: " + System.getProperty("os.version") + "\n" +
+                "Operating system: " + System.getProperty("os.name") + "\n" +
+                "Operating system Version: " + System.getProperty("os.version") + "\n" +
                 "Java Version: " + System.getProperty("java.version") + "\n" +
                 "Java Vendor: " + System.getProperty("java.vendor") + '\n' +
                 "Thread: " + thread +
@@ -77,7 +77,7 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
         JButton restartButton = new JButton("Restart Application");
         restartButton.addActionListener((event) -> {
             try {
-                RestartApplication.FullRestart();
+                SystemHandler.fullRestart();
             } catch (URISyntaxException | IOException | FileNotAJarException ex) {
                 JOptionPane.showMessageDialog(null, "Failed to restart application. Please restart manually.", "Error", JOptionPane.ERROR_MESSAGE);
             }

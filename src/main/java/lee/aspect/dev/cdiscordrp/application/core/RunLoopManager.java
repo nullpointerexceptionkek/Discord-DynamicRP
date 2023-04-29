@@ -46,7 +46,7 @@ public class RunLoopManager {
     } // Prevents instantiation
 
     /**
-     * Create an instance of Script and init setting and file manager
+     * Create an instance of Script and initManagers setting and file manager
      */
 
     public static void runFromStartLunch() {

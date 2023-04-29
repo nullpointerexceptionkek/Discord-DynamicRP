@@ -234,7 +234,7 @@ public class ConfigController implements Initializable {
 
 
 
-    //this file will init and set the Listview to the total updates that was read from Json
+    //this file will initManagers and set the Listview to the total updates that was read from Json
     //it will also set the appid to only accept numbers and if loaded is not null, it will leave it empty
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {

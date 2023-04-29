@@ -35,7 +35,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import lee.aspect.dev.cdiscordrp.animatefx.SlideOutDown;
-import lee.aspect.dev.cdiscordrp.animatefx.SlideOutLeft;
 import lee.aspect.dev.cdiscordrp.application.core.ApplicationTray;
 import lee.aspect.dev.cdiscordrp.application.core.CustomDiscordRPC;
 import lee.aspect.dev.cdiscordrp.application.core.Settings;
@@ -43,9 +42,7 @@ import lee.aspect.dev.cdiscordrp.exceptions.FileNotAJarException;
 import lee.aspect.dev.cdiscordrp.language.LanguageManager;
 import lee.aspect.dev.cdiscordrp.manager.ConfigManager;
 import lee.aspect.dev.cdiscordrp.manager.SceneManager;
-import lee.aspect.dev.cdiscordrp.util.WarningManager;
-import lee.aspect.dev.cdiscordrp.util.system.RestartApplication;
-import lee.aspect.dev.cdiscordrp.util.system.StartLaunch;
+import lee.aspect.dev.cdiscordrp.system.SystemHandler;
 
 import java.awt.*;
 import java.io.IOException;
@@ -148,7 +145,7 @@ public class SettingController implements Initializable {
             if (result.equals(ButtonType.OK)) {
                 Settings.getINSTANCE().setStartTrayOnlyInterfaceClose(startTrayOnlyCloseCheckBox.isSelected());
                 try {
-                    RestartApplication.FullRestart();
+                    SystemHandler.fullRestart();
                 } catch (URISyntaxException | IOException | FileNotAJarException e) {
                     Alert alertException = new Alert(Alert.AlertType.ERROR);
                     alertException.setTitle("Exception");
@@ -164,7 +161,7 @@ public class SettingController implements Initializable {
         startLaunchCheckBox.setOnAction((actionEvent -> {
             if (startLaunchCheckBox.isSelected()) {
                 try {
-                    StartLaunch.createStartupScript();
+                    SystemHandler.StartLaunch.createStartupScript();
                 } catch (Exception e) {
                     Alert alertException = new Alert(Alert.AlertType.ERROR);
                     alertException.setTitle("Error");
@@ -190,7 +187,7 @@ public class SettingController implements Initializable {
 
                 }
             } else {
-                StartLaunch.deleteStartupScript();
+                SystemHandler.StartLaunch.deleteStartupScript();
             }
             Settings.getINSTANCE().setStartLaunch(startLaunchCheckBox.isSelected());
         }));

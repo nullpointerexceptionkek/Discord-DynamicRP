@@ -25,20 +25,17 @@
 
 package lee.aspect.dev.cdiscordrp.manager
 
+import javafx.application.Platform
 import javafx.scene.control.*
 import javafx.scene.control.ButtonBar.ButtonData
 import javafx.scene.layout.VBox
 import javafx.stage.DirectoryChooser
+import javafx.stage.Stage
 import lee.aspect.dev.cdiscordrp.Launch
 import lee.aspect.dev.cdiscordrp.application.core.Settings
-import lee.aspect.dev.cdiscordrp.application.core.Settings.Theme
 import lee.aspect.dev.cdiscordrp.exceptions.UnsupportedOSException
-import lee.aspect.dev.cdiscordrp.util.system.RestartApplication
-import lee.aspect.dev.cdiscordrp.util.system.StartLaunch
-import java.io.BufferedWriter
+import lee.aspect.dev.cdiscordrp.system.SystemHandler
 import java.io.File
-import java.io.FileWriter
-import java.io.PrintWriter
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.*
@@ -69,70 +66,27 @@ class DirectoryManager {
             dialog.title = "Setting up manager directory"
             dialog.contentText = "This process is setting the environment variable CDRPCDir to $dir"
 
-            dialog.show()
-
-
-            if (StartLaunch.isOnWindows()) {
-                ProcessBuilder("setx", "CDRPCDir", dir).start().waitFor()
-            } else if (StartLaunch.isOnMac()) {
-                val launchAgentDirectory = File(System.getProperty("user.home"), "Library/LaunchAgents")
-                if (!launchAgentDirectory.exists()) {
-                    launchAgentDirectory.mkdirs()
+            SystemHandler.setEnvironmentVariable(dir,{
+                SystemHandler.fullRestartWithWarnings("Please restart the application to apply the changes",true)
+                Platform.runLater{
+                    (dialog.dialogPane.scene.window as Stage).close() //Dialog.close() do not work for some reason
                 }
-                val launchdPlistPath = File(launchAgentDirectory, "CDRPCDir.plist")
-                PrintWriter(FileWriter(launchdPlistPath)).use { writer ->
-                    writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
-                    writer.println("<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\"")
-                    writer.println("        \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">")
-                    writer.println("<plist version=\"1.0\">")
-                    writer.println("<dict>")
-                    writer.println("    <key>Label</key>")
-                    writer.println("    <string>CDRPCDir</string>")
-                    writer.println("    <key>ProgramArguments</key>")
-                    writer.println("    <array>")
-                    writer.println("        <string>/usr/bin/launchctl</string>")
-                    writer.println("        <string>setenv</string>")
-                    writer.println("        <string>CDRPCDir</string>")
-                    writer.println("        <string>$dir</string>")
-                    writer.println("    </array>")
-                    writer.println("    <key>RunAtLoad</key>")
-                    writer.println("    <true/>")
-                    writer.println("    <key>KeepAlive</key>")
-                    writer.println("    <true/>")
-                    writer.println("</dict>")
-                    writer.println("</plist>")
-                }
+            },{
+                throw it
+            })
 
-
-            } else if (StartLaunch.isOnLinux()) {
-                BufferedWriter(
-                    Files.newBufferedWriter(
-                        Paths.get(
-                            System.getProperty("user.home"),
-                            ".bashrc"
-                        )
-                    )
-                ).use {
-                    it.write("export CDRPCDir=$dir\n")
-                }
-                ProcessBuilder("/bin/bash", "-c", "source ~/.bashrc").inheritIO().start().waitFor()
-                ProcessBuilder("/bin/bash", "-c", "source ~/.zshrc").inheritIO().start().waitFor()
-            } else {
-                throw UnsupportedOSException("invalid os")
-            }
-            dialog.close()
-
+            dialog.showAndWait()
         }
 
         @JvmStatic
         fun deleteDirectoryEnvironmentVar() {
-            if (StartLaunch.isOnWindows()) {
+            if (SystemHandler.isOnWindows) {
                 ProcessBuilder("REG", "DELETE", "HKCU\\Environment", "/F", "/V", "CDRPCDir").inheritIO().start().waitFor()
-            } else if (StartLaunch.isOnMac()) {
+            } else if (SystemHandler.isOnMac) {
                 ProcessBuilder("launchctl", "unsetenv", "CDRPCDir").start().waitFor()
                 val launchAgentPlistPath = System.getProperty("user.home") + "/Library/LaunchAgents/CDRPCDir.plist"
                 File(launchAgentPlistPath).delete()
-            } else if (StartLaunch.isOnLinux()) {
+            } else if (SystemHandler.isOnLinux) {
                 ProcessBuilder("unset", "CDRPCDir").start().waitFor()
                 val bashrcPath = Paths.get(System.getProperty("user.home"), ".bashrc")
                 val zshrcPath = Paths.get(System.getProperty("user.home"), ".zshrc")
@@ -218,10 +172,10 @@ class DirectoryManager {
                 if (result.isPresent) {
                     when (result.get()) {
                         submitButtonType -> handleSubmission(directoryPathField)
-                        cancelButtonType -> exitProcess(0) // Exit program when 'x' button clicked
+                        cancelButtonType -> exitProcess(0)
                     }
                 } else {
-                    exitProcess(0) // Exit program when 'x' button clicked
+                    exitProcess(0)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -237,9 +191,11 @@ class DirectoryManager {
                 }
                 if(directory != File(defaultDir)) {
                     writeDirectoryEnvironmentVar(directoryPath)
+                    SystemHandler.fullRestartWithWarnings("environment variable is set")
                     return
                 }
-                RestartApplication.FullRestart()
+                initDirectory()
+                Launch.initManagers()
             }
         }
 
