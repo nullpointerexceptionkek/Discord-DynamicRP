@@ -34,7 +34,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lee.aspect.dev.cdiscordrp.application.core.CustomDiscordRPC;
+import lee.aspect.dev.cdiscordrp.application.core.CDiscordRP;
 import lee.aspect.dev.cdiscordrp.application.core.Script;
 import lee.aspect.dev.cdiscordrp.application.core.Updates;
 import lee.aspect.dev.cdiscordrp.manager.SceneManager;
@@ -141,7 +141,7 @@ public class EditListController extends ConfigController implements Initializabl
     private void gobacktoConfig() throws IOException {
         stage = (Stage) anchorPane.getScene().getWindow();
         stage.close();
-        CustomDiscordRPC.primaryStage.setScene(new Scene(SceneManager.getDefaultConfigParent()));
+        CDiscordRP.primaryStage.setScene(new Scene(SceneManager.getDefaultConfigParent()));
         numberInList = -1;
     }
 

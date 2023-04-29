@@ -38,7 +38,7 @@
             <padding>
                 <Insets bottom="20" left="20" right="20" top="20"/>
             </padding>
-            <Label fx:id="titleLabel" text="Custom Discord RP" textFill="WHITE"/>
+            <Label fx:id="titleLabel" textFill="WHITE"/>
             <TextField fx:id="appIDTextField" prefHeight="26.0" prefWidth="202.0" promptText="%DiscordAppIDInput"
                        VBox.vgrow="NEVER"/>
             <Label fx:id="Application_IDLabel" text="%Application_ID" VBox.vgrow="NEVER"/>

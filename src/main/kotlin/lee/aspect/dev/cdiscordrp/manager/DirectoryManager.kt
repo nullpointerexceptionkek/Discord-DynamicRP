@@ -46,7 +46,7 @@ class DirectoryManager {
     companion object {
 
         @JvmField
-        val defaultDir = System.getProperty("user.home") + File.separator + "CustomDiscordRPC"
+        val defaultDir = System.getProperty("user.home") + File.separator + "CDiscordRP"
 
         @JvmStatic
         lateinit var ROOT_DIR: File

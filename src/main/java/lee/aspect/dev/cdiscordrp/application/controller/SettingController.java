@@ -36,7 +36,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import lee.aspect.dev.cdiscordrp.animatefx.SlideOutDown;
 import lee.aspect.dev.cdiscordrp.application.core.ApplicationTray;
-import lee.aspect.dev.cdiscordrp.application.core.CustomDiscordRPC;
+import lee.aspect.dev.cdiscordrp.application.core.CDiscordRP;
 import lee.aspect.dev.cdiscordrp.application.core.Settings;
 import lee.aspect.dev.cdiscordrp.exceptions.FileNotAJarException;
 import lee.aspect.dev.cdiscordrp.language.LanguageManager;
@@ -115,7 +115,7 @@ public class SettingController implements Initializable {
         themeChoiceBox.setOnAction((event) -> EnumSet.allOf(Settings.Theme.class).forEach((theme) -> {
             if (themeChoiceBox.getValue().equals(theme.getDisplayName())) {
                 Settings.getINSTANCE().setTheme(theme);
-                CustomDiscordRPC.primaryStage.setScene(new Scene(SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/Settings.fxml").getRoot()));
+                CDiscordRP.primaryStage.setScene(new Scene(SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/Settings.fxml").getRoot()));
             }
         }));
         //add min to min choice box

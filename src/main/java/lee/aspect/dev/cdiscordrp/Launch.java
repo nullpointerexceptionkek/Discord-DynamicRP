@@ -25,7 +25,7 @@
 
 package lee.aspect.dev.cdiscordrp;
 
-import lee.aspect.dev.cdiscordrp.application.core.CustomDiscordRPC;
+import lee.aspect.dev.cdiscordrp.application.core.CDiscordRP;
 import lee.aspect.dev.cdiscordrp.application.core.Script;
 import lee.aspect.dev.cdiscordrp.application.core.Settings;
 import lee.aspect.dev.cdiscordrp.autoswitch.SwitchManager;
@@ -50,7 +50,7 @@ import java.nio.channels.FileLock;
  * @author lee
  */
 public class Launch {
-    public final static String VERSION = "Pre 0.5.0";
+    public final static String VERSION = "1.0.0";
     public final static String AUTHOR = "lee";
     public final static String NAME = "CDiscordRP";
 
@@ -64,7 +64,7 @@ public class Launch {
     }
 
     /**
-     * Redirect main Class to {@link CustomDiscordRPC Launch}
+     * Redirect main Class to {@link CDiscordRP Launch}
      * This program is used to customize Discord rich preference via interface by JavaFX
      * It connects to Discord via IPC by the library {@link lee.aspect.dev.cdiscordrp.discordipc}
      *
@@ -80,7 +80,7 @@ public class Launch {
 
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
         if (!DirectoryManager.initDirectory()) {
-            CustomDiscordRPC.LaunchSetUpDialog(args);
+            CDiscordRP.LaunchSetUpDialog(args);
             return;
         }
         //DirectoryManager.initDirectory();
@@ -104,7 +104,7 @@ public class Launch {
                 int result = JOptionPane.showOptionDialog(new JFrame(), message, "Application Running", JOptionPane.YES_NO_OPTION,
                         JOptionPane.WARNING_MESSAGE, null, options, null);
                 if (result == JOptionPane.YES_OPTION) {
-                    CustomDiscordRPC.Launch(args);
+                    CDiscordRP.Launch(args);
                 } else {
                     System.exit(0);
                 }
@@ -115,7 +115,7 @@ public class Launch {
             Runtime.getRuntime().addShutdownHook(shutdown);
             for (String arg : args) {
                 if (arg.contains("--StartLaunch")) {
-                    CustomDiscordRPC.LaunchSilently();
+                    CDiscordRP.LaunchSilently();
                     return;
                 }else if(arg.contains("--unsetenv")) {
                     System.out.println("Unset environment variable");
@@ -126,7 +126,7 @@ public class Launch {
                     DirectoryManager.unsetEnvBash();
                 }
             }
-            CustomDiscordRPC.Launch(args);
+            CDiscordRP.Launch(args);
         } catch (IOException e) {
             throw new RuntimeException("Could not start application", e);
         }

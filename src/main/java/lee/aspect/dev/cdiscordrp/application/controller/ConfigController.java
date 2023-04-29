@@ -238,6 +238,7 @@ public class ConfigController implements Initializable {
     //it will also set the appid to only accept numbers and if loaded is not null, it will leave it empty
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+        titleLabel.setText(Launch.NAME);
         ImageView settingimg;
         if(Settings.getINSTANCE().isAutoSwitch()){
             settingimg = new ImageView(Objects.requireNonNull(getClass().getResource("/lee/aspect/dev/cdiscordrp/icon/back.png")).toExternalForm());

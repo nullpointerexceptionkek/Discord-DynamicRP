@@ -29,6 +29,7 @@ import javafx.concurrent.Task
 import javafx.event.EventHandler
 import javafx.scene.control.Alert
 import javafx.scene.control.ButtonType
+import lee.aspect.dev.cdiscordrp.Launch
 import lee.aspect.dev.cdiscordrp.application.core.RunLoopManager
 import lee.aspect.dev.cdiscordrp.application.core.Script
 import lee.aspect.dev.cdiscordrp.application.core.Settings
@@ -68,13 +69,13 @@ object SystemHandler {
             @Throws(Exception::class)
             override fun call(): Void? {
                 if (isOnWindows) {
-                    ProcessBuilder("setx", "CDRPCDir", dir).start().waitFor()
+                    ProcessBuilder("setx", Launch.NAME, dir).start().waitFor()
                 } else if (isOnMac) {
                     val launchAgentDirectory = File(System.getProperty("user.home"), "Library/LaunchAgents")
                     if (!launchAgentDirectory.exists()) {
                         launchAgentDirectory.mkdirs()
                     }
-                    val launchdPlistPath = File(launchAgentDirectory, "CDRPCDir.plist")
+                    val launchdPlistPath = File(launchAgentDirectory, "${Launch.NAME}.plist")
                     PrintWriter(FileWriter(launchdPlistPath)).use { writer ->
                         writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
                         writer.println("<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\"")
@@ -82,12 +83,12 @@ object SystemHandler {
                         writer.println("<plist version=\"1.0\">")
                         writer.println("<dict>")
                         writer.println("    <key>Label</key>")
-                        writer.println("    <string>CDRPCDir</string>")
+                        writer.println("    <string>${Launch.NAME}</string>")
                         writer.println("    <key>ProgramArguments</key>")
                         writer.println("    <array>")
                         writer.println("        <string>/usr/bin/launchctl</string>")
                         writer.println("        <string>setenv</string>")
-                        writer.println("        <string>CDRPCDir</string>")
+                        writer.println("        <string>${Launch.NAME}</string>")
                         writer.println("        <string>$dir</string>")
                         writer.println("    </array>")
                         writer.println("    <key>RunAtLoad</key>")
@@ -108,7 +109,7 @@ object SystemHandler {
                             )
                         )
                     ).use {
-                        it.write("export CDRPCDir=$dir\n")
+                        it.write("export ${Launch.NAME}=$dir\n")
                     }
                     ProcessBuilder("/bin/bash", "-c", "source ~/.bashrc").inheritIO().start().waitFor()
                     ProcessBuilder("/bin/bash", "-c", "source ~/.zshrc").inheritIO().start().waitFor()

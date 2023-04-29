@@ -33,11 +33,10 @@ import javafx.scene.control.*
 import javafx.scene.image.ImageView
 import javafx.scene.layout.*
 import javafx.scene.text.TextAlignment
-import lee.aspect.dev.cdiscordrp.Launch
 import lee.aspect.dev.cdiscordrp.animatefx.SlideInDown
 import lee.aspect.dev.cdiscordrp.animatefx.SlideInUp
 import lee.aspect.dev.cdiscordrp.application.core.ApplicationTray
-import lee.aspect.dev.cdiscordrp.application.core.CustomDiscordRPC
+import lee.aspect.dev.cdiscordrp.application.core.CDiscordRP
 import lee.aspect.dev.cdiscordrp.application.core.RunLoopManager
 import lee.aspect.dev.cdiscordrp.application.core.Script
 import lee.aspect.dev.cdiscordrp.application.core.Settings
@@ -293,7 +292,7 @@ class SwitchManager private constructor() {
 
             references.configManagerButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
             val cfgIcon = ImageView(
-                Objects.requireNonNull(CustomDiscordRPC::class.java.getResource("/lee/aspect/dev/cdiscordrp/icon/Config.png"))
+                Objects.requireNonNull(CDiscordRP::class.java.getResource("/lee/aspect/dev/cdiscordrp/icon/Config.png"))
                     .toExternalForm()
             )
             cfgIcon.fitHeight = 16.0
@@ -317,7 +316,7 @@ class SwitchManager private constructor() {
             }
             references.settingsButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
             val settingsIcon = ImageView(
-                Objects.requireNonNull(CustomDiscordRPC::class.java.getResource("/lee/aspect/dev/cdiscordrp/icon/settingsImage.png"))
+                Objects.requireNonNull(CDiscordRP::class.java.getResource("/lee/aspect/dev/cdiscordrp/icon/settingsImage.png"))
                     .toExternalForm()
             )
 
@@ -346,7 +345,7 @@ class SwitchManager private constructor() {
             controlVbox.isPickOnBounds = false
 
 
-            val CDiscordRP = Label("CDiscordRP" + Launch.VERSION)
+            val CDiscordRP = Label("CDiscordRP")
             CDiscordRP.id = "titleLabel"
             CDiscordRP.textAlignment = TextAlignment.CENTER
             val CDiscordRPHBox = HBox(CDiscordRP)
