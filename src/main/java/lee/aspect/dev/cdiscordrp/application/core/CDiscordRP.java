@@ -149,12 +149,17 @@ public class CDiscordRP extends Application {
 
 
     }
-
-    @Deprecated
-    @Override
-    public void stop() {
-        //RunLoopManager.onClose();
+    public static void popUpWindow(){
+        Platform.runLater(() -> {
+            CDiscordRP.primaryStage.show();
+            CDiscordRP.primaryStage.setAlwaysOnTop(true);
+            CDiscordRP.primaryStage.toFront();
+            CDiscordRP.primaryStage.requestFocus();
+            CDiscordRP.primaryStage.setIconified(false);
+            CDiscordRP.primaryStage.setAlwaysOnTop(false);
+        });
     }
+
 
     /**
      * Handles application exit.
