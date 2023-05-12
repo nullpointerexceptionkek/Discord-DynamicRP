@@ -45,6 +45,9 @@ public class Settings {
     private boolean AutoSwitch = false;
     private File loadedConfig = null;
 
+    private double windowWidth = 334.0;
+    private double windowHeight = 540.0;
+
     private Settings() {
     }
 
@@ -61,6 +64,8 @@ public class Settings {
     }
 
     public static void saveSettingToFile() {
+        Settings.getINSTANCE().setWindowHeight(CDiscordRP.primaryStage.getHeight());
+        Settings.getINSTANCE().setWindowWidth(CDiscordRP.primaryStage.getWidth());
         FileManager.writeJsonTofile(new File(DirectoryManager.getROOT_DIR(), "Settings.json"), INSTANCE);
     }
 
@@ -69,6 +74,22 @@ public class Settings {
         getINSTANCE().setLoadedConfig(defaultFile);
         saveSettingToFile();
         loadKeyFromJson();
+    }
+
+    public double getWindowHeight() {
+        return windowHeight;
+    }
+
+    public double getWindowWidth() {
+        return windowWidth;
+    }
+
+    public void setWindowHeight(double windowHeight) {
+        this.windowHeight = windowHeight;
+    }
+
+    public void setWindowWidth(double windowWidth) {
+        this.windowWidth = windowWidth;
     }
 
     public boolean isStartTrayOnlyInterfaceClose() {

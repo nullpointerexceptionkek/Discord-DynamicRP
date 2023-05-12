@@ -121,10 +121,11 @@ public class Launch {
                 initManagers();
                 ServerSocket serverSocket = new ServerSocket(0);
                 BufferedWriter bw = new BufferedWriter(new FileWriter(runtime));
-                System.out.println("CDiscordRP is running on port " + serverSocket.getLocalPort());
+                Launch.LOGGER.info("CDiscordRP is running on port " + serverSocket.getLocalPort());
                 bw.write(Integer.toString(serverSocket.getLocalPort()));
                 bw.close();
                 Runtime.getRuntime().addShutdownHook(new Thread(() -> runtime.delete()));
+
                 new Thread(() -> {
                     while (true) {
                         try {

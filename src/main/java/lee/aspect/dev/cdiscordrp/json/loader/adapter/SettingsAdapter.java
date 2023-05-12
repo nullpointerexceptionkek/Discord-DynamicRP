@@ -60,6 +60,12 @@ public class SettingsAdapter extends TypeAdapter<Settings> {
                     case "CDiscordRP":
                         reader.nextString();
                         break;
+                    case "window":
+                        reader.beginArray();
+                        settings.setWindowHeight(reader.nextDouble());
+                        settings.setWindowWidth(reader.nextDouble());
+                        reader.endArray();
+                        break;
                     case "loadedCfg":
                         settings.setLoadedConfig(new File(reader.nextString()));
                         break;
@@ -108,17 +114,19 @@ public class SettingsAdapter extends TypeAdapter<Settings> {
             writter.nullValue();
             return;
         }
+        Settings cachedSettings = Settings.getINSTANCE();
         writter.beginObject();
         writter.name("CDiscordRP").value(Launch.VERSION);
-        writter.name("loadedCfg").value(Settings.getINSTANCE().getLoadedConfig().getPath());
-        writter.name("AutoSwitch").value(Settings.getINSTANCE().isAutoSwitch());
-        writter.name("theme").value(Settings.getINSTANCE().getTheme().name());
-        writter.name("MinimizeMode").value(Settings.getINSTANCE().getMinimizeMode().name());
-        writter.name("ShutDownInterfaceWhenTray").value(Settings.getINSTANCE().isShutDownInterfaceWhenTray());
-        writter.name("StartTrayOnlyInterfaceClose").value(Settings.getINSTANCE().isStartTrayOnlyInterfaceClose());
-        writter.name("NoAnimation").value(Settings.getINSTANCE().isNoAnimation());
-        writter.name("StartLaunch").value(Settings.getINSTANCE().isStartLaunch());
-        writter.name("Lang").value(Settings.getINSTANCE().getLang().name());
+        writter.name("window").beginArray().value(cachedSettings.getWindowWidth()).value(cachedSettings.getWindowHeight()).endArray();
+        writter.name("loadedCfg").value(cachedSettings.getLoadedConfig().getPath());
+        writter.name("AutoSwitch").value(cachedSettings.isAutoSwitch());
+        writter.name("theme").value(cachedSettings.getTheme().name());
+        writter.name("MinimizeMode").value(cachedSettings.getMinimizeMode().name());
+        writter.name("ShutDownInterfaceWhenTray").value(cachedSettings.isShutDownInterfaceWhenTray());
+        writter.name("StartTrayOnlyInterfaceClose").value(cachedSettings.isStartTrayOnlyInterfaceClose());
+        writter.name("NoAnimation").value(cachedSettings.isNoAnimation());
+        writter.name("StartLaunch").value(cachedSettings.isStartLaunch());
+        writter.name("Lang").value(cachedSettings.getLang().name());
         writter.endObject();
 
     }
