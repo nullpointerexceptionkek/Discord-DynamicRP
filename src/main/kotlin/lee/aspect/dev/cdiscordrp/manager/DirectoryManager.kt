@@ -26,15 +26,15 @@
 package lee.aspect.dev.cdiscordrp.manager
 
 import javafx.application.Platform
-import javafx.concurrent.Task
 import javafx.scene.control.*
 import javafx.scene.control.ButtonBar.ButtonData
 import javafx.scene.layout.VBox
 import javafx.stage.DirectoryChooser
+import javafx.stage.Stage
 import lee.aspect.dev.cdiscordrp.Launch
+import lee.aspect.dev.cdiscordrp.application.core.Settings
 import lee.aspect.dev.cdiscordrp.exceptions.UnsupportedOSException
-import lee.aspect.dev.cdiscordrp.util.system.StartLaunch
-import java.io.BufferedWriter
+import lee.aspect.dev.cdiscordrp.system.SystemHandler
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -46,16 +46,12 @@ class DirectoryManager {
     companion object {
 
         @JvmField
-        val defaultDir = System.getProperty("user.home") +  File.separator +"CustomDiscordRPC"
-
-        private var ROOT_DIR: File? = getDirectoryEnvironmentVar()?.let { File(it) }
+        val defaultDir = System.getProperty("user.home") + File.separator + "CDiscordRP"
 
         @JvmStatic
-        fun getDirectoryEnvironmentVar(): String? {
-            Launch.LOGGER.debug("CDRPCDir: ${System.getenv("CDRPCDir")}")
-            //this should not be null
-            return System.getenv("CDRPCDir")
-        }
+        lateinit var ROOT_DIR: File
+        private set
+
 
         @JvmStatic
         fun writeDirectoryEnvironmentVar(dir: String) {
@@ -70,77 +66,62 @@ class DirectoryManager {
             dialog.title = "Setting up manager directory"
             dialog.contentText = "This process is setting the environment variable CDRPCDir to $dir"
 
-            dialog.show()
-
-
-            val task = object : Task<Void>() {
-                override fun call(): Void? {
-                    if (StartLaunch.isOnWindows()) {
-                        ProcessBuilder("setx", "CDRPCDir", dir).start().waitFor()
-                    } else if (StartLaunch.isOnMac()) {
-                        ProcessBuilder("launchctl", "setenv", "CDRPCDir", dir).start().waitFor()
-                    } else if (StartLaunch.isOnLinux()) {
-                        BufferedWriter(
-                            Files.newBufferedWriter(
-                                Paths.get(
-                                    System.getProperty("user.home"),
-                                    ".bashrc"
-                                )
-                            )
-                        ).use {
-                            it.write("export CDRPCDir=$dir\n")
-                        }
-                        ProcessBuilder("/bin/bash", "-c", "source ~/.bashrc").inheritIO().start().waitFor()
-                        ProcessBuilder("/bin/bash", "-c", "source ~/.zshrc").inheritIO().start().waitFor()
-                    } else {
-                        throw UnsupportedOSException("invalid os")
-                    }
-                    return null
+            SystemHandler.setEnvironmentVariable(dir,{
+                SystemHandler.fullRestartWithWarnings("Please restart the application to apply the changes",true)
+                Platform.runLater{
+                    (dialog.dialogPane.scene.window as Stage).close() //Dialog.close() do not work for some reason
                 }
-            }
+            },{
+                throw it
+            })
 
-            Thread(task).start()
-
-            task.setOnSucceeded {
-                Platform.runLater { dialog.close() }
-            }
-
-            task.setOnFailed {
-                Platform.runLater { dialog.close() }
-                throw RuntimeException("Failed to set environment variable, this can be caused by not having enough privileges or unsupported OS")
-            }
-
-
+            dialog.showAndWait()
         }
 
         @JvmStatic
         fun deleteDirectoryEnvironmentVar() {
-            if (StartLaunch.isOnWindows()) {
-                ProcessBuilder("setx", "/m", "CDRPCDir").start().waitFor()
-            } else if (StartLaunch.isOnMac()) {
+            if (SystemHandler.isOnWindows) {
+                ProcessBuilder("REG", "DELETE", "HKCU\\Environment", "/F", "/V", "CDRPCDir").inheritIO().start().waitFor()
+            } else if (SystemHandler.isOnMac) {
                 ProcessBuilder("launchctl", "unsetenv", "CDRPCDir").start().waitFor()
-            } else if (StartLaunch.isOnLinux()) {
+                val launchAgentPlistPath = System.getProperty("user.home") + "/Library/LaunchAgents/CDRPCDir.plist"
+                File(launchAgentPlistPath).delete()
+            } else if (SystemHandler.isOnLinux) {
                 ProcessBuilder("unset", "CDRPCDir").start().waitFor()
+                val bashrcPath = Paths.get(System.getProperty("user.home"), ".bashrc")
+                val zshrcPath = Paths.get(System.getProperty("user.home"), ".zshrc")
+                Files.deleteIfExists(bashrcPath)
+                Files.deleteIfExists(zshrcPath)
             } else {
                 throw UnsupportedOSException("invalid os")
             }
         }
 
         @JvmStatic
-        fun isSetUp(): Boolean {
-            //check if everything is set up
-            if (System.getenv("CDRPCDir") != null)
-                if (File(System.getenv("CDRPCDir")).exists())
-                    return true
-                else Launch.LOGGER.warn("Dir not exists: ${System.getenv("CDRPCDir")}")
-            else Launch.LOGGER.warn("Env not exists")
-            return false
+        fun unsetEnvBash(){
+            ProcessBuilder("unset", "CDRPCDir").start().waitFor()
+            val bashrcPath = Paths.get(System.getProperty("user.home"), ".bashrc")
+            val zshrcPath = Paths.get(System.getProperty("user.home"), ".zshrc")
+            Files.deleteIfExists(bashrcPath)
+            Files.deleteIfExists(zshrcPath)
         }
 
+
+        @JvmStatic
+        fun initDirectory():Boolean{
+            val directory = System.getenv("CDRPCDir") ?: defaultDir
+            return if (File(directory).exists()) {
+                ROOT_DIR = File(directory)
+                Launch.LOGGER.info("Directory exists: $directory")
+                true
+            } else {
+                Launch.LOGGER.warn("Directory does not exist: $directory")
+                false
+            }
+        }
         @JvmStatic
         fun askForDirectory() {
             Launch.LOGGER.info("Opening directory setup wizard")
-            //make a javaFX dialog
             try {
                 val directoryChooser = DirectoryChooser()
                 directoryChooser.title = "Choose a directory"
@@ -157,54 +138,80 @@ class DirectoryManager {
                     }
                 }
 
+                val resetToDefaultButton = Button("Reset to default directory")
+                resetToDefaultButton.setOnAction {
+                    directoryPathField.text = defaultDir
+                }
+
                 val messageLabel = Label("Please choose a directory or enter a directory path:")
 
+                val warningMessage = Label("Warning: Changing the directory is not recommended.")
+                warningMessage.styleClass.add("warning-label")
+                warningMessage.isVisible = false
 
-                val dialogLayout = VBox(messageLabel, directoryPathField, chooseDirectoryButton)
+                directoryPathField.textProperty().addListener { _, _, newValue ->
+                    warningMessage.isVisible = newValue != defaultDir
+                }
+
+                val dialogLayout = VBox(messageLabel, directoryPathField, chooseDirectoryButton, resetToDefaultButton, warningMessage)
                 dialogLayout.spacing = 10.0
 
                 val dialog: Dialog<ButtonType> = Dialog()
                 dialog.title = "Select or input a directory"
                 dialog.dialogPane.content = dialogLayout
+                dialog.dialogPane.stylesheets.add(Settings.getINSTANCE().theme.path)
 
                 val submitButtonType = ButtonType("Submit", ButtonData.OK_DONE)
                 dialog.dialogPane.buttonTypes.add(submitButtonType)
 
+                val cancelButtonType = ButtonType("Cancel", ButtonData.CANCEL_CLOSE)
+                dialog.dialogPane.buttonTypes.add(cancelButtonType)
+
                 val result: Optional<ButtonType> = dialog.showAndWait()
 
-                if (directoryPathField.text.isNotEmpty() && directoryPathField.text.isNotBlank() &&
-                    result.filter { buttonType: ButtonType -> buttonType == submitButtonType }.isPresent
-                ) {
-                    val directoryPath = directoryPathField.text
-                    if (!File(directoryPath).exists()) {
-                        //open a dialog to tell the user that the directory doesn't exist and ask if they want to create it
-                        val createDirectoryDialog = Alert(Alert.AlertType.CONFIRMATION)
-                        createDirectoryDialog.title = "Create directory?"
-                        createDirectoryDialog.headerText = "The directory you entered doesn't exist."
-                        createDirectoryDialog.contentText = "Would you like to create the directory?"
-                        val createDirectoryResult = createDirectoryDialog.showAndWait()
-                        if (createDirectoryResult.isPresent && createDirectoryResult.get() == ButtonType.OK) {
-                            //create the directory
-                            File(directoryPath).mkdirs()
-                            writeDirectoryEnvironmentVar(directoryPath)
-                        } else {
-                            askForDirectory()
-                        }
-
-                    } else {
-                        writeDirectoryEnvironmentVar(directoryPath)
+                if (result.isPresent) {
+                    when (result.get()) {
+                        submitButtonType -> handleSubmission(directoryPathField)
+                        cancelButtonType -> exitProcess(0)
                     }
-
-                } else exitProcess(0)
+                } else {
+                    exitProcess(0)
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
 
-        @JvmStatic
-        fun getRootDir(): File? {
-            return ROOT_DIR
+        private fun handleSubmission(directoryPathField: TextField) {
+            val directoryPath = directoryPathField.text
+            if (directoryPath.isNotBlank()) {
+                val directory = File(directoryPath)
+                if (!directory.exists()) {
+                    createDirectory(directory)
+                }
+                if(directory != File(defaultDir)) {
+                    writeDirectoryEnvironmentVar(directoryPath)
+                    SystemHandler.fullRestartWithWarnings("environment variable is set")
+                    return
+                }
+                initDirectory()
+                Launch.initManagers()
+            }
         }
+
+        private fun createDirectory(directory: File) {
+            val createDirectoryDialog = Alert(Alert.AlertType.CONFIRMATION)
+            createDirectoryDialog.title = "Create directory?"
+            createDirectoryDialog.headerText = "The directory you entered doesn't exist."
+            createDirectoryDialog.contentText = "Would you like to create the directory?"
+            val createDirectoryResult = createDirectoryDialog.showAndWait()
+            if (createDirectoryResult.isPresent && createDirectoryResult.get() == ButtonType.OK) {
+                directory.mkdirs()
+            } else {
+                askForDirectory()
+            }
+        }
+
 
     }
 

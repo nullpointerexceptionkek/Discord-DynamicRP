@@ -29,7 +29,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="stackPane" xmlns="http://javafx.com/javafx/18"
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.171"
            fx:controller="lee.aspect.dev.cdiscordrp.application.controller.ConfigController">
     <AnchorPane fx:id="anchorRoot" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                 minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="334.0">
@@ -38,7 +38,7 @@
             <padding>
                 <Insets bottom="20" left="20" right="20" top="20"/>
             </padding>
-            <Label fx:id="titleLabel" text="Custom Discord RP" textFill="WHITE"/>
+            <Label fx:id="titleLabel" textFill="WHITE"/>
             <TextField fx:id="appIDTextField" prefHeight="26.0" prefWidth="202.0" promptText="%DiscordAppIDInput"
                        VBox.vgrow="NEVER"/>
             <Label fx:id="Application_IDLabel" text="%Application_ID" VBox.vgrow="NEVER"/>

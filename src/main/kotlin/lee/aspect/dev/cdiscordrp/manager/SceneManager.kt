@@ -27,12 +27,10 @@ package lee.aspect.dev.cdiscordrp.manager
 
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
-import lee.aspect.dev.cdiscordrp.application.core.CustomDiscordRPC
+import lee.aspect.dev.cdiscordrp.application.core.CDiscordRP
 import lee.aspect.dev.cdiscordrp.application.core.Settings
 import lee.aspect.dev.cdiscordrp.autoswitch.SwitchManager
 import lee.aspect.dev.cdiscordrp.language.LanguageManager
-import java.io.IOException
-import java.util.*
 
 class SceneManager {
     companion object {
@@ -40,7 +38,7 @@ class SceneManager {
          * returns different manager screen according to the settings.
          */
         @JvmStatic
-        fun getConfigParent(): Parent? {
+        fun getConfigParent(): Parent {
             if (Settings.getINSTANCE().isAutoSwitch) {
                 return SwitchManager.initMenu()
             }
@@ -55,7 +53,7 @@ class SceneManager {
         @JvmStatic
         fun loadSceneWithStyleSheet(location: String): SceneData {
             val loader = FXMLLoader()
-            loader.location = CustomDiscordRPC::class.java.getResource(location)
+            loader.location = CDiscordRP::class.java.getResource(location)
 
             loader.resources = LanguageManager.lang
 

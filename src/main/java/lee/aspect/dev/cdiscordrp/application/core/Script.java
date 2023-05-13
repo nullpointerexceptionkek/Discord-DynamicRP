@@ -71,7 +71,10 @@ public class Script {
     }
 
     public static void setUp() {
-        INSTANCE.totalupdates.add(new Updates(16000, "", "", "", "", "Welcome to CDiscordRP", "You can find more information about this program in the README.md file"));
+        INSTANCE.totalupdates.add(new Updates(16000, "", "", "", "", "Welcome to CDiscordRP", ""));
+        INSTANCE.totalupdates.add(new Updates(16000, "", "", "", "", "Double click a item to edit it", ""));
+        INSTANCE.totalupdates.add(new Updates(16000, "", "", "", "", "You can select multiple item by using shift or control", ""));
+        INSTANCE.totalupdates.add(new Updates(16000, "", "", "", "", "You can also right click this item to see options", ""));
         saveScriptToFile();
         loadScriptFromJson();
     }

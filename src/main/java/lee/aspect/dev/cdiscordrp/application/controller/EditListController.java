@@ -34,13 +34,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import lee.aspect.dev.cdiscordrp.application.core.CustomDiscordRPC;
+import lee.aspect.dev.cdiscordrp.application.core.CDiscordRP;
 import lee.aspect.dev.cdiscordrp.application.core.Script;
 import lee.aspect.dev.cdiscordrp.application.core.Updates;
 import lee.aspect.dev.cdiscordrp.manager.SceneManager;
 import lee.aspect.dev.cdiscordrp.util.WarningManager;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -86,19 +85,19 @@ public class EditListController extends ConfigController implements Initializabl
 
     private int numberInList = -1;
 
-    public void cancelSaves() throws IOException {
+    public void cancelSaves() {
         stage = (Stage) anchorPane.getScene().getWindow();
         gobacktoConfig();
     }
 
-    public void saveChanges() throws IOException {
+    public void saveChanges() {
         Script.getINSTANCE().setUpdates(numberInList, new Updates(Long.parseLong(Wait.getText()), image.getText(), imagetext.getText(), smallimage.getText(),
                 smalltext.getText(), firstline.getText(), secondline.getText(), button1Text.getText(),
                 button1Url.getText(), button2Text.getText(), button2Url.getText()));
         gobacktoConfig();
     }
 
-    public void deleteThisItem() throws IOException {
+    public void deleteThisItem() {
         Script.getINSTANCE().getTotalupdates().remove(numberInList);
         gobacktoConfig();
     }
@@ -113,7 +112,6 @@ public class EditListController extends ConfigController implements Initializabl
                 if (!anchorPane.getChildren().contains(delayTooSmall)) {
                     delayTooSmall =
                             WarningManager.setWarning(DelayLabel, 12, "It is recommended to set the delay above 16 second", WarningManager.Mode.Right);
-                    delayTooSmall.setLayoutY(48); //i have no idea what im doing
                     anchorPane.getChildren().add(delayTooSmall);
                 }
             } else anchorPane.getChildren().remove(delayTooSmall);
@@ -138,10 +136,10 @@ public class EditListController extends ConfigController implements Initializabl
 
     }
 
-    private void gobacktoConfig() throws IOException {
+    private void gobacktoConfig() {
         stage = (Stage) anchorPane.getScene().getWindow();
         stage.close();
-        CustomDiscordRPC.primaryStage.setScene(new Scene(SceneManager.getDefaultConfigParent()));
+        CDiscordRP.primaryStage.setScene(new Scene(SceneManager.getDefaultConfigParent()));
         numberInList = -1;
     }
 

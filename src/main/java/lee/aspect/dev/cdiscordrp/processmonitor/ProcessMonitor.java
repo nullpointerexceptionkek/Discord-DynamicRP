@@ -26,7 +26,7 @@
 package lee.aspect.dev.cdiscordrp.processmonitor;
 
 
-import lee.aspect.dev.cdiscordrp.util.system.StartLaunch;
+import lee.aspect.dev.cdiscordrp.system.SystemHandler;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -72,7 +72,7 @@ public class ProcessMonitor {
      * @throws UnsupportedOperationException if the current operating system is not supported
      */
     public static boolean isProcessOpen(String processName) {
-        if (StartLaunch.isOnWindows()) {
+        if (SystemHandler.isOnWindows()) {
             try {
                 Process process = Runtime.getRuntime().exec("tasklist");
                 BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
@@ -89,7 +89,7 @@ public class ProcessMonitor {
                 e.printStackTrace();
                 return false;
             }
-        } else if (StartLaunch.isOnMac() || StartLaunch.isOnLinux()) {
+        } else if (SystemHandler.isOnMac() || SystemHandler.isOnLinux()) {
             try {
                 //Process process = Runtime.getRuntime().exec("ps -e");
                 Process process = Runtime.getRuntime().exec("pgrep " + processName);

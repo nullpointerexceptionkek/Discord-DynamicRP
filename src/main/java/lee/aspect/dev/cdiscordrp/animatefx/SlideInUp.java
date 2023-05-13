@@ -57,7 +57,7 @@ public class SlideInUp extends AnimationFX {
 
     @Override
     protected void initTimeline() {
-        //System.out.println(getNode().getBoundsInParent().getHeight());
+        //system.out.println(getNode().getBoundsInParent().getHeight());
         setTimeline(new Timeline(
                 new KeyFrame(Duration.millis(0),
                         new KeyValue(getNode().translateYProperty(), getNode().getScene().getWindow().getHeight(), AnimateFXInterpolator.EASE)
