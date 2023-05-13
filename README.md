@@ -1,110 +1,93 @@
-# **CDiscordRP**
+# CDiscordRP
 
 CDiscordRP is a Discord Rich Presence Manager that allows you to display your current game in your Discord profile.
-This program is written in Java 8 and kotlin 1.7.21 and uses the Discord IPC, JavaFX, and AnimatesFX libraries.
-> I build this during my free time, so I can't guarantee that I will update this project frequently.
 
-### Please note that all previously posted release and pre-release versions are outdated. In the meantime,please pull the latest stable branch as I continue to work on version 1.0.
+### Attention: All previously posted release and pre-release versions are outdated. In the meantime, please pull the latest stable branch as I continue to work on version 1.0.
 
+## You are currently in the development branch. The application might be unstable.
 
 ## Features
 
-- Save multiple Rich Presence config
-- Auto launch on start up
-- Allowing different method of setting the Rich Presence
-    - Callback: Sends Rich Presence data every x seconds according to your config
-    - Auto Switch: this will automatically switch between the Rich Presence you have set, based on the application you
-      are running
-- Easy to use JavaFX GUI
-- No need for installation, just run the .jar file
-- Configs are automatically saved
+- Save multiple Rich Presence configs
+- Auto-launch on startup
+- Various methods for setting Rich Presence:
+    - Callback: Sends Rich Presence data every x seconds, according to your config
+    - Auto Switch: Automatically switches between your configured Rich Presence settings based on the application you're running
+- User-friendly JavaFX GUI
+- No installation required: simply run the .jar file
+- Automatic config saving
 - System tray support
-- Implementation in all 3 operating systems (Windows, Macos, Linux), tested on Windows 10 and 11, Ubuntu 20.04
-- More themes than you ever imagined
+- Compatible with Windows, macOS, and Linux (tested on Windows 10 and 11, Ubuntu 20.04)
+- A wide variety of themes
 
 ## Support
 
-> | Operating System | Auto Launch On Start up         | Rich Presence  | Auto Switch |
->|------------------|---------------------------------|----------------|-------------|
-> | Windows          | Supported/(tested on 10 and 11) | Supported      | Supported   |
-> | Macos            | implemented/NotTested           | Not tested     | Not tested  |
-> | Linux            | Supported/(tested Ubuntu 22.04) | Supported      | Supported   |
+| Operating System | Auto Launch On Start up            | Rich Presence | Auto Switch     |
+|------------------|------------------------------------|---------------|-----------------|
+| Windows          | Supported (tested on 10 and 11)    | Supported     | Supported       |
+| macOS            | Currently Fixing                   | Supported     | Might be bugged |
+| Linux            | Supported (tested on Ubuntu 22.04) | Supported     | Supported       |
 
-macOS implementation should be the similar as Linux, I haven't given a chance to test it on, but it should work.
+macOS's implementation should be similar to Linux, but it has not been tested yet.
 
 ## Branches
-- Stable: Updated frequently when there the development is stable
-- Development: Updated frequently when there is a new feature or bug fix
+
+- Stable: Updated frequently when the development is stable
+- Development: Updated frequently with new features or bug fixes
 - Previous: Outdated release
 
 ## How to use
 
-![img.png](DirecotryManager.png)
+![Directory Manager](DirecotryManager.png)
 
-1. on your first start, you will be asked to select a directory where the program will store its data.
-   This directory will be used to store the config Json file
+1. On your first start, you will be asked to select a directory for storing the program's data. This directory will be used to store the config JSON file.
 
-> This data is stored in the environment variable "CDRPCDir"
+> Unless you are using the default directory(recommended), the config directory will be stored in the environment variable "CDiscordRP."
 
-![img.png](MainScreen.png)
+![Main Screen](MainScreen.png)
 
-2. Now after you selected a directory, you will see the main screen.
-   the Application ID field is the field where you will enter your application ID.
+2. After selecting a directory, you will see the main screen. Enter your application ID in the Application ID field.
 
-> Discord Developer Portal: https://discord.com/developers/applications, you can create a new application and copy the
-> application ID from there.
+> Discord Developer Portal: https://discord.com/developers/applications. Create a new application and copy the application ID from there.
 
-- Double-clicking an item on the list will open the edit screen, in this field you can edit the detail
-  about the text you want to display.
-  <br>
-  You can start the callback by pressing the "Launch Callback" button.
+- Double-click an item on the list to open the edit screen, where you can edit the text to display in your Rich Presence. Start the callback by pressing the "Launch Callback" button.
 
-![img.png](EditScreen.png)
+![Edit Screen](EditScreen.png)
 
-- Delay: the delay between each callback in milliseconds, this is ignored if you only have one item in the list.
-  Large image/Small Image: this can either be a image key on discord, or a direct link to an image.
-  First Line/Second Line: the text that will be displayed on the first line and second line in the rich presence.
+- Delay: Time between callbacks in milliseconds (ignored if you only have one item in the list)
+- Large Image/Small Image: Either an image key on Discord or a direct link to an image
+- First Line/Second Line: Text displayed on the first and second lines of the Rich Presence
 
-**Any field that is null or empty will be ignored**
+**Any empty or null field will be ignored**
 
-> **ANY TEXT YOU ENTER HERE WILL BE DISPLAYED ON DISCORD, SO BE CAREFUL WHAT YOU ENTER, YOU MIGHT GET BANNED FOR
-INAPPROPRIATE STUFF**
-**I AM NOT RESPONSIBLE FOR ANYTHING YOU DO WITH THIS PROGRAM**
-
-There is a lot more to explore!!! Have fun!
+Explore and enjoy!
 
 ## Uninstalling
 
-- This program is not installed on your computer, for uninstallation, you can just simply detele the .jar file
+- Simply delete the .jar file to uninstall the program
 
-> Note that this will not delete your config folder, if you want a compelete uninstallation, you need to delete the
-> config folder manually.
+> Note: This will not delete your config folder. For complete uninstallation, manually delete the config folder.
 
-- Config folder location can be found in the environment variable "CDRPCDir"
-
-> You can delete the enviroment variable on Windows by running the following command in cmd:
-> ``` set CDRPCDir ""```
+- The config folder location is stored in the environment variable "CDiscordRP"
+> On Windows, delete the environment variable by running the following command in CMD:
+> `set CDiscordRP=""`
 
 ## Learn
 
-What to learn how it works?
-Check out the [LEARN.md](LEARN.md) file
+Interested in learning how it works? Check out the [LEARN.md](LEARN.md) file.
 
 ## How to build
 
-This project is made using Gradle on Intellij IDEA, so you can just clone the project and open it in Intellij IDEA.
-For running with Gradle, simply run
+This project is developed using Gradle on IntelliJ IDEA.
+To build the project, simply clone it and open it in IntelliJ IDEA.
+You can run the project with Gradle using:
 
-```
-gradlew run
-```
+```gradlew run```
 
-and you can build using
+To build the project, use:
 
-```
-gradle build
-```
+```gradle build```
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.

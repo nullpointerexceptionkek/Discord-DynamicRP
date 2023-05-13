@@ -39,8 +39,6 @@ import lee.aspect.dev.cdiscordrp.json.loader.adapter.UpdatesAdapter;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
-import static lee.aspect.dev.cdiscordrp.manager.DirectoryManager.getRootDir;
-
 
 public class FileManager {
     private static Gson gson;

@@ -155,7 +155,7 @@ public class ApplicationTray {
                             SceneManager.SceneData sceneData = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/ReadyConfig.fxml");
                             Parent root = sceneData.getRoot();
                             Scene scene = new Scene(root);
-                            CustomDiscordRPC.primaryStage.setScene(scene);
+                            CDiscordRP.primaryStage.setScene(scene);
                             ConfigController controller = (ConfigController) sceneData.getController();
                             controller.switchToCallBack();
                         } catch (IOException ex) {
@@ -193,7 +193,7 @@ public class ApplicationTray {
                         SceneManager.SceneData sceneData = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/CallBack.fxml");
                         Parent root = sceneData.getRoot();
                         Scene scene = new Scene(root);
-                        CustomDiscordRPC.primaryStage.setScene(scene);
+                        CDiscordRP.primaryStage.setScene(scene);
                         CallBackController controller = (CallBackController) sceneData.getController();
                         controller.switchToConfig();
                     } catch (IOException ex) {
@@ -231,8 +231,8 @@ public class ApplicationTray {
                     "Application cannot start interface when ShutDownInterface is on, please exit and relaunch the program to see interface", TrayIcon.MessageType.ERROR);
             return;
         }
-        Platform.runLater(() -> CustomDiscordRPC.primaryStage.show());
-        CustomDiscordRPC.isOnSystemTray = false;
+        Platform.runLater(() -> CDiscordRP.primaryStage.show());
+        CDiscordRP.isOnSystemTray = false;
         if (Settings.getINSTANCE().isStartTrayOnlyInterfaceClose()) {
             tray.remove(trayIcon);
         }

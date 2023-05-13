@@ -33,17 +33,16 @@ import javafx.scene.control.*
 import javafx.scene.image.ImageView
 import javafx.scene.layout.*
 import javafx.scene.text.TextAlignment
-import lee.aspect.dev.cdiscordrp.Launch
 import lee.aspect.dev.cdiscordrp.animatefx.SlideInDown
 import lee.aspect.dev.cdiscordrp.animatefx.SlideInUp
 import lee.aspect.dev.cdiscordrp.application.core.ApplicationTray
-import lee.aspect.dev.cdiscordrp.application.core.CustomDiscordRPC
+import lee.aspect.dev.cdiscordrp.application.core.CDiscordRP
 import lee.aspect.dev.cdiscordrp.application.core.RunLoopManager
 import lee.aspect.dev.cdiscordrp.application.core.Script
 import lee.aspect.dev.cdiscordrp.application.core.Settings
 import lee.aspect.dev.cdiscordrp.json.loader.FileManager
 import lee.aspect.dev.cdiscordrp.manager.ConfigManager
-import lee.aspect.dev.cdiscordrp.manager.DirectoryManager.Companion.getRootDir
+import lee.aspect.dev.cdiscordrp.manager.DirectoryManager
 import lee.aspect.dev.cdiscordrp.manager.SceneManager
 import lee.aspect.dev.cdiscordrp.manager.SceneManager.Companion.loadSceneWithStyleSheet
 import lee.aspect.dev.cdiscordrp.processmonitor.OpenCloseListener
@@ -76,11 +75,11 @@ class SwitchManager private constructor() {
 
         @JvmStatic
         fun loadFromFile() {
-            if (!File(getRootDir(), "Switch.json").exists()){
-                File(getRootDir(), "Switch.json").createNewFile()
+            if (!File(DirectoryManager.ROOT_DIR, "Switch.json").exists()){
+                File(DirectoryManager.ROOT_DIR, "Switch.json").createNewFile()
             }
             var loaded = FileManager.readFromJson(
-                File(getRootDir(), "Switch.json"),
+                File(DirectoryManager.ROOT_DIR, "Switch.json"),
                 LoadSwitchFromFile::class.java
             )
             if (loaded == null) {
@@ -102,7 +101,7 @@ class SwitchManager private constructor() {
                 }
             }
             FileManager.writeJsonTofile(
-                File(getRootDir(), "Switch.json"),
+                File(DirectoryManager.ROOT_DIR, "Switch.json"),
                 loaded
             )
         }
@@ -293,7 +292,7 @@ class SwitchManager private constructor() {
 
             references.configManagerButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
             val cfgIcon = ImageView(
-                Objects.requireNonNull(CustomDiscordRPC::class.java.getResource("/lee/aspect/dev/cdiscordrp/icon/Config.png"))
+                Objects.requireNonNull(CDiscordRP::class.java.getResource("/lee/aspect/dev/cdiscordrp/icon/Config.png"))
                     .toExternalForm()
             )
             cfgIcon.fitHeight = 16.0
@@ -317,7 +316,7 @@ class SwitchManager private constructor() {
             }
             references.settingsButton.contentDisplay = ContentDisplay.GRAPHIC_ONLY
             val settingsIcon = ImageView(
-                Objects.requireNonNull(CustomDiscordRPC::class.java.getResource("/lee/aspect/dev/cdiscordrp/icon/settingsImage.png"))
+                Objects.requireNonNull(CDiscordRP::class.java.getResource("/lee/aspect/dev/cdiscordrp/icon/settingsImage.png"))
                     .toExternalForm()
             )
 
@@ -346,7 +345,7 @@ class SwitchManager private constructor() {
             controlVbox.isPickOnBounds = false
 
 
-            val CDiscordRP = Label("CDiscordRP" + Launch.VERSION)
+            val CDiscordRP = Label("CDiscordRP")
             CDiscordRP.id = "titleLabel"
             CDiscordRP.textAlignment = TextAlignment.CENTER
             val CDiscordRPHBox = HBox(CDiscordRP)

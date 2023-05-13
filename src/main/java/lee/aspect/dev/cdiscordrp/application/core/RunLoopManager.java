@@ -46,7 +46,7 @@ public class RunLoopManager {
     } // Prevents instantiation
 
     /**
-     * Create an instance of Script and init setting and file manager
+     * Create an instance of Script and initManagers setting and file manager
      */
 
     public static void runFromStartLunch() {
@@ -107,7 +107,7 @@ public class RunLoopManager {
                                 for (int i = 0; i < Script.getINSTANCE().getSize(); i++) {
                                     executeUpdate(Script.getINSTANCE().getUpdates(i));
                                     if (!running) return;
-                                    if (!CustomDiscordRPC.isOnSystemTray) {
+                                    if (!CDiscordRP.isOnSystemTray) {
                                         int finalI = i >= Script.getINSTANCE().getSize() - 1 ? 0 : i + 1;
                                         Platform.runLater(() -> LoadingController.callBackController.updateCurrentDisplay(Script.getINSTANCE().getUpdates(finalI)));
                                     }
@@ -123,7 +123,7 @@ public class RunLoopManager {
                                 executeUpdate(Script.getINSTANCE().getUpdates(i));
                                 currentDisplay = i;
                                 if (!running) return;
-                                if (!CustomDiscordRPC.isOnSystemTray)
+                                if (!CDiscordRP.isOnSystemTray)
                                     Platform.runLater(() -> LoadingController.callBackController.updateCurrentDisplay(Script.getINSTANCE().getUpdates(i)));
                             }
                             break;
@@ -136,7 +136,7 @@ public class RunLoopManager {
                                     executeUpdate(Script.getINSTANCE().getUpdates(i));
                                     currentDisplay = i;
                                     if (!running) return;
-                                    if (!CustomDiscordRPC.isOnSystemTray) {
+                                    if (!CDiscordRP.isOnSystemTray) {
                                         int finalI = i == 0 ? 1 : i - 1;
                                         Platform.runLater(() -> LoadingController.callBackController.updateCurrentDisplay(Script.getINSTANCE().getUpdates(finalI)));
                                     }
@@ -166,7 +166,7 @@ public class RunLoopManager {
         executeUpdate(Script.getINSTANCE().getUpdates(i));
         currentDisplay = i;
         if (!running) return true;
-        if (!CustomDiscordRPC.isOnSystemTray) {
+        if (!CDiscordRP.isOnSystemTray) {
             int finalI = i >= Script.getINSTANCE().getSize() - 1 ? i - 1 : i + 1;
             Platform.runLater(() -> LoadingController.callBackController.updateCurrentDisplay(Script.getINSTANCE().getUpdates(finalI)));
         }
@@ -178,7 +178,7 @@ public class RunLoopManager {
             executeUpdate(Script.getINSTANCE().getUpdates(i));
             currentDisplay = i;
             if (!running) return true;
-            if (!CustomDiscordRPC.isOnSystemTray) {
+            if (!CDiscordRP.isOnSystemTray) {
                 int finalI = i >= Script.getINSTANCE().getSize() - 1 ? 0 : i + 1;
                 Platform.runLater(() -> LoadingController.callBackController.updateCurrentDisplay(Script.getINSTANCE().getUpdates(finalI)));
             }

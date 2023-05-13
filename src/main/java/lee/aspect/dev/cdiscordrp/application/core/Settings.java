@@ -45,6 +45,9 @@ public class Settings {
     private boolean AutoSwitch = false;
     private File loadedConfig = null;
 
+    private double windowWidth = 334.0;
+    private double windowHeight = 540.0;
+
     private Settings() {
     }
 
@@ -54,21 +57,39 @@ public class Settings {
 
     public static void loadKeyFromJson() {
         try {
-            FileManager.readFromJson(new File(DirectoryManager.getRootDir(), "Settings.json"), Settings.class);
+            FileManager.readFromJson(new File(DirectoryManager.getROOT_DIR(), "Settings.json"), Settings.class);
         } catch (RuntimeException e) {
             setup();
         }
     }
 
     public static void saveSettingToFile() {
-        FileManager.writeJsonTofile(new File(DirectoryManager.getRootDir(), "Settings.json"), INSTANCE);
+        Settings.getINSTANCE().setWindowHeight(CDiscordRP.primaryStage.getHeight());
+        Settings.getINSTANCE().setWindowWidth(CDiscordRP.primaryStage.getWidth());
+        FileManager.writeJsonTofile(new File(DirectoryManager.getROOT_DIR(), "Settings.json"), INSTANCE);
     }
 
     public static void setup() {
-        File defaultFile = new File(DirectoryManager.getRootDir(), "default_UpdateScript.json");
+        File defaultFile = new File(DirectoryManager.getROOT_DIR(), "default_UpdateScript.json");
         getINSTANCE().setLoadedConfig(defaultFile);
         saveSettingToFile();
         loadKeyFromJson();
+    }
+
+    public double getWindowHeight() {
+        return windowHeight;
+    }
+
+    public double getWindowWidth() {
+        return windowWidth;
+    }
+
+    public void setWindowHeight(double windowHeight) {
+        this.windowHeight = windowHeight;
+    }
+
+    public void setWindowWidth(double windowWidth) {
+        this.windowWidth = windowWidth;
     }
 
     public boolean isStartTrayOnlyInterfaceClose() {
