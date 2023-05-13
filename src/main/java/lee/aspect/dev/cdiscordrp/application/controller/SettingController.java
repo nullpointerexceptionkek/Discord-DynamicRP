@@ -83,7 +83,7 @@ public class SettingController implements Initializable {
     @FXML
     private Label SettingsLabel, ThemeLabel, titleLabel, ReleaseLabel, MinToTrayLabel, PerformanceLabel, LanguageLabel, AdvanceConfigLabel;
 
-    public void switchBack() throws IOException {
+    public void switchBack() {
         goBack.setDisable(true);
         stackPane.getChildren().add(0, SceneManager.getConfigParent());
         SlideOutDown animation = new SlideOutDown(anchorRoot);
