@@ -4,7 +4,7 @@ CDiscordRP is a Discord Rich Presence Manager that allows you to display your cu
 
 ### Attention: All previously posted release and pre-release versions are outdated. In the meantime, please pull the latest stable branch as I continue to work on version 1.0.
 
-## You are currently in the development branch. The application might be unstable.
+## You are currently in the Stable branch.
 
 ## Features
 
