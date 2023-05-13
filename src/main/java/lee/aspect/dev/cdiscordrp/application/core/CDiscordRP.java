@@ -137,8 +137,10 @@ public class CDiscordRP extends Application {
             primaryStage.setScene(new Scene(SceneManager.getConfigParent()));
             primaryStage.setMinHeight(540.0);
             primaryStage.setMinWidth(334.0);
-            primaryStage.setHeight(Settings.getINSTANCE().getWindowHeight());
-            primaryStage.setWidth(Settings.getINSTANCE().getWindowWidth());
+            if(Settings.getINSTANCE().getWindowHeight() != -1)
+                primaryStage.setHeight(Settings.getINSTANCE().getWindowHeight());
+            if(Settings.getINSTANCE().getWindowWidth() != -1)
+                primaryStage.setWidth(Settings.getINSTANCE().getWindowWidth());
             //primaryStage.setResizable(false);
             primaryStage.setOnCloseRequest((event) -> {
                 event.consume();

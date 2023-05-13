@@ -64,8 +64,7 @@ public class Script {
 
     public static void saveScriptToFile() {
         if (Settings.getINSTANCE().getLoadedConfig() == null) {
-            Launch.LOGGER.warn("Cannot save script to file because setting is not loaded");
-            return;
+            throw new IllegalStateException("Cannot save script to file because setting is not loaded");
         }
         FileManager.writeJsonTofile(Settings.getINSTANCE().getLoadedConfig(), Script.getINSTANCE());
     }
@@ -75,7 +74,13 @@ public class Script {
         INSTANCE.totalupdates.add(new Updates(16000, "", "", "", "", "Double click a item to edit it", ""));
         INSTANCE.totalupdates.add(new Updates(16000, "", "", "", "", "You can select multiple item by using shift or control", ""));
         INSTANCE.totalupdates.add(new Updates(16000, "", "", "", "", "You can also right click this item to see options", ""));
-        saveScriptToFile();
+        try {
+            saveScriptToFile();
+        }catch (IllegalStateException e) {
+            Launch.LOGGER.error("Cannot save script to file because setting is not loaded");
+            Settings.setup();
+            saveScriptToFile();
+        }
         loadScriptFromJson();
     }
 

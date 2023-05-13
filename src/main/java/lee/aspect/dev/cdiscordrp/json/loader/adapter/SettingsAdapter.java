@@ -44,6 +44,7 @@ public class SettingsAdapter extends TypeAdapter<Settings> {
     public Settings read(JsonReader reader) throws IOException {
         if (reader.peek() == JsonToken.NULL) {
             reader.nextNull();
+            Settings.setup();
             return null;
         }
 
@@ -117,7 +118,7 @@ public class SettingsAdapter extends TypeAdapter<Settings> {
         Settings cachedSettings = Settings.getINSTANCE();
         writter.beginObject();
         writter.name("CDiscordRP").value(Launch.VERSION);
-        writter.name("window").beginArray().value(cachedSettings.getWindowWidth()).value(cachedSettings.getWindowHeight()).endArray();
+        writter.name("window").beginArray().value(cachedSettings.getWindowHeight()).value(cachedSettings.getWindowWidth()).endArray();
         writter.name("loadedCfg").value(cachedSettings.getLoadedConfig().getPath());
         writter.name("AutoSwitch").value(cachedSettings.isAutoSwitch());
         writter.name("theme").value(cachedSettings.getTheme().name());

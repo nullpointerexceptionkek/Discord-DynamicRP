@@ -81,7 +81,11 @@ public class EditListController extends ConfigController implements Initializabl
     private Label EditConfiLabel, FirstLineLabel, SecondLineLabel, DelayLabel, LargeImgLabel, SmallImgLabel,
             SmallImgTxtLabel, LargeImgTxtLabel, Button1Label, Button1LinkLabel, Button2TxtLabel, Button2LinkLabel;
 
-    private ImageView delayTooSmall;
+    private ImageView delayTooSmallExceptionView;
+
+    private ImageView fieldCannotBeEmptyExceptionView;
+    private ImageView invalidInputExceptionView;
+
 
     private int numberInList = -1;
 
@@ -91,9 +95,22 @@ public class EditListController extends ConfigController implements Initializabl
     }
 
     public void saveChanges() {
-        Script.getINSTANCE().setUpdates(numberInList, new Updates(Long.parseLong(Wait.getText()), image.getText(), imagetext.getText(), smallimage.getText(),
-                smalltext.getText(), firstline.getText(), secondline.getText(), button1Text.getText(),
-                button1Url.getText(), button2Text.getText(), button2Url.getText()));
+        try{
+            Script.getINSTANCE().setUpdates(numberInList, new Updates(Long.parseLong(Wait.getText()), image.getText(), imagetext.getText(), smallimage.getText(),
+                    smalltext.getText(), firstline.getText(), secondline.getText(), button1Text.getText(),
+                    button1Url.getText(), button2Text.getText(), button2Url.getText()));
+        }catch (NumberFormatException e){
+            if (!anchorPane.getChildren().contains(invalidInputExceptionView)) {
+                anchorPane.getChildren().add(invalidInputExceptionView);
+            }
+            return;
+        }
+        if(secondline.getText().trim().isEmpty()){
+            if (!anchorPane.getChildren().contains(fieldCannotBeEmptyExceptionView)) {
+                anchorPane.getChildren().add(fieldCannotBeEmptyExceptionView);
+            }
+            return;
+        }
         gobacktoConfig();
     }
 
@@ -104,35 +121,37 @@ public class EditListController extends ConfigController implements Initializabl
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+        delayTooSmallExceptionView = WarningManager.setWarning(DelayLabel, 12, "It is recommended to set the delay above 16 second", WarningManager.Mode.Right);
+        fieldCannotBeEmptyExceptionView = WarningManager.setWarning(SecondLineLabel, 12, "Field cannot be empty", WarningManager.Mode.Right);
+        invalidInputExceptionView = WarningManager.setWarning(DelayLabel, 12, "Invalid input", WarningManager.Mode.Right);
+
         Wait.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*"))
                 Wait.setText(newValue.replaceAll("\\D", ""));
             if (Wait.getText().isEmpty()) return;
             if (Long.parseLong(Wait.getText()) < 16000) {
-                if (!anchorPane.getChildren().contains(delayTooSmall)) {
-                    delayTooSmall =
-                            WarningManager.setWarning(DelayLabel, 12, "It is recommended to set the delay above 16 second", WarningManager.Mode.Right);
-                    anchorPane.getChildren().add(delayTooSmall);
+                if (!anchorPane.getChildren().contains(delayTooSmallExceptionView)) {
+                    anchorPane.getChildren().add(delayTooSmallExceptionView);
                 }
-            } else anchorPane.getChildren().remove(delayTooSmall);
-
-
+            } else anchorPane.getChildren().remove(delayTooSmallExceptionView);
         });
     }
 
-    public void setnumberInList(int numberInList) {
+    public void numberInList(int numberInList) {
         this.numberInList = numberInList;
-        Wait.setText(String.valueOf(Script.getINSTANCE().getTotalupdates().get(numberInList).getWait()));
-        image.setText(Script.getINSTANCE().getTotalupdates().get(numberInList).getImage());
-        imagetext.setText(Script.getINSTANCE().getTotalupdates().get(numberInList).getImagetext());
-        smallimage.setText(Script.getINSTANCE().getTotalupdates().get(numberInList).getSmallimage());
-        smalltext.setText(Script.getINSTANCE().getTotalupdates().get(numberInList).getSmalltext());
-        firstline.setText(Script.getINSTANCE().getTotalupdates().get(numberInList).getFl());
-        secondline.setText(Script.getINSTANCE().getTotalupdates().get(numberInList).getSl());
-        button1Text.setText(Script.getINSTANCE().getTotalupdates().get(numberInList).getButton1Text());
-        button1Url.setText(Script.getINSTANCE().getTotalupdates().get(numberInList).getButton1Url());
-        button2Text.setText(Script.getINSTANCE().getTotalupdates().get(numberInList).getButton2Text());
-        button2Url.setText(Script.getINSTANCE().getTotalupdates().get(numberInList).getButton2Url());
+        final Script scriptInstance = Script.getINSTANCE();
+        Wait.setText(String.valueOf(scriptInstance.getTotalupdates().get(numberInList).getWait()));
+        image.setText(scriptInstance.getTotalupdates().get(numberInList).getImage());
+        imagetext.setText(scriptInstance.getTotalupdates().get(numberInList).getImagetext());
+        smallimage.setText(scriptInstance.getTotalupdates().get(numberInList).getSmallimage());
+        smalltext.setText(scriptInstance.getTotalupdates().get(numberInList).getSmalltext());
+        firstline.setText(scriptInstance.getTotalupdates().get(numberInList).getFl());
+        secondline.setText(scriptInstance.getTotalupdates().get(numberInList).getSl());
+        button1Text.setText(scriptInstance.getTotalupdates().get(numberInList).getButton1Text());
+        button1Url.setText(scriptInstance.getTotalupdates().get(numberInList).getButton1Url());
+        button2Text.setText(scriptInstance.getTotalupdates().get(numberInList).getButton2Text());
+        button2Url.setText(scriptInstance.getTotalupdates().get(numberInList).getButton2Url());
+
 
     }
 
