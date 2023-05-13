@@ -30,7 +30,9 @@ import javafx.collections.ObservableList
 import javafx.scene.control.*
 import javafx.scene.control.cell.PropertyValueFactory
 import javafx.scene.layout.VBox
+import lee.aspect.dev.cdiscordrp.application.controller.EditListController
 import lee.aspect.dev.cdiscordrp.application.core.Script
+import lee.aspect.dev.cdiscordrp.application.core.Settings
 import lee.aspect.dev.cdiscordrp.application.core.Updates
 import java.util.*
 
@@ -111,7 +113,17 @@ class SearchManager {
                 button2URLColumn
             )
 
-            val items: ObservableList<Updates> = FXCollections.observableList(Script.getINSTANCE().totalupdates)
+            val originalItems: List<Updates> = Script.getINSTANCE().totalupdates
+            val items: ObservableList<Updates> = FXCollections.observableList(originalItems.toMutableList())
+            tableView.setRowFactory {
+                val row = TableRow<Updates>()
+                row.setOnMouseClicked { event ->
+                    if (event.clickCount == 2 && !row.isEmpty) {
+                        EditListController.showListConfig(originalItems.indexOf(row.item),dialog.x,dialog.y)
+                    }
+                }
+                row
+            }
             tableView.items = items
 
             val content = VBox()
@@ -220,7 +232,7 @@ class SearchManager {
                     tableView.items = items
                 }
             }
-
+            dialog.dialogPane.stylesheets.add(Settings.getINSTANCE().theme.path)
             dialog.show()
         }
 

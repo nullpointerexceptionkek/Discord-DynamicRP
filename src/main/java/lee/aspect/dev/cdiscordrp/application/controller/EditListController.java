@@ -32,6 +32,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -44,6 +45,7 @@ import lee.aspect.dev.cdiscordrp.manager.SceneManager;
 import lee.aspect.dev.cdiscordrp.util.WarningManager;
 
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class EditListController extends ConfigController implements Initializable {
@@ -165,6 +167,20 @@ public class EditListController extends ConfigController implements Initializabl
         stage.close();
         CDiscordRP.primaryStage.setScene(new Scene(SceneManager.getDefaultConfigParent()));
         numberInList = -1;
+    }
+
+    public static void showListConfig(int numberInList, double x, double y) {
+        SceneManager.SceneData sceneData = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/EditListScript.fxml");
+        EditListController ec = (EditListController) sceneData.getController();
+        ec.numberInList(numberInList);
+        Stage stage = new Stage();
+        stage.getIcons().add(new Image(Objects.requireNonNull(EditListController.class.getResourceAsStream("/lee/aspect/dev/cdiscordrp/icon/settingsImage.png"))));
+        stage.setTitle("Config Editor - index: " + (numberInList + 1));
+        stage.setScene(new Scene(sceneData.getRoot()));
+        stage.setX(x);
+        stage.setY(y);
+        stage.setResizable(false);
+        stage.show();
     }
 
 

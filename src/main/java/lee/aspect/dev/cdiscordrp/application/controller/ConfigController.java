@@ -409,7 +409,7 @@ public class ConfigController implements Initializable {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
                 if (event.getClickCount() == 2) {
                     if (!((displayUpdates.getSelectionModel().getSelectedIndex()) == -1)) {
-                        showListConfig(displayUpdates.getSelectionModel().getSelectedIndex(), displayUpdates.getScene().getWindow().getX(), displayUpdates.getScene().getWindow().getY());
+                        EditListController.showListConfig(displayUpdates.getSelectionModel().getSelectedIndex(), displayUpdates.getScene().getWindow().getX(), displayUpdates.getScene().getWindow().getY());
                     }
                 }
             }
@@ -417,19 +417,6 @@ public class ConfigController implements Initializable {
     }
 
     //this will open up a new window and edit the arraylist
-    private void showListConfig(int numberInList, double x, double y) {
-        SceneManager.SceneData sceneData = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/EditListScript.fxml");
-        EditListController ec = (EditListController) sceneData.getController();
-        ec.numberInList(numberInList);
-        Stage stage = new Stage();
-        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/lee/aspect/dev/cdiscordrp/icon/settingsImage.png"))));
-        stage.setTitle("Config Editor - index: " + (numberInList + 1));
-        stage.setScene(new Scene(sceneData.getRoot()));
-        stage.setX(x);
-        stage.setY(y);
-        stage.setResizable(false);
-        stage.show();
-    }
 
     private void refreshList() {
         displayUpdates.getItems().clear();
