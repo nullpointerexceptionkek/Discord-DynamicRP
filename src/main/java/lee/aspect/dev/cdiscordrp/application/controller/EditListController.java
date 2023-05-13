@@ -25,6 +25,7 @@
 
 package lee.aspect.dev.cdiscordrp.application.controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -33,7 +34,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import lee.aspect.dev.cdiscordrp.animatefx.Shake;
 import lee.aspect.dev.cdiscordrp.application.core.CDiscordRP;
 import lee.aspect.dev.cdiscordrp.application.core.Script;
 import lee.aspect.dev.cdiscordrp.application.core.Updates;
@@ -45,7 +48,7 @@ import java.util.ResourceBundle;
 
 public class EditListController extends ConfigController implements Initializable {
 
-    Stage stage;
+    private Stage stage;
     @FXML
     private TextField Wait;
     @FXML
@@ -75,7 +78,10 @@ public class EditListController extends ConfigController implements Initializabl
     @FXML
     private Button DeleteButton;
     @FXML
-    private AnchorPane anchorPane;
+    private AnchorPane anchorRoot;
+
+    @FXML
+    private VBox content;
 
     @FXML
     private Label EditConfiLabel, FirstLineLabel, SecondLineLabel, DelayLabel, LargeImgLabel, SmallImgLabel,
@@ -83,14 +89,12 @@ public class EditListController extends ConfigController implements Initializabl
 
     private ImageView delayTooSmallExceptionView;
 
-    private ImageView fieldCannotBeEmptyExceptionView;
     private ImageView invalidInputExceptionView;
 
 
     private int numberInList = -1;
 
     public void cancelSaves() {
-        stage = (Stage) anchorPane.getScene().getWindow();
         gobacktoConfig();
     }
 
@@ -100,17 +104,14 @@ public class EditListController extends ConfigController implements Initializabl
                     smalltext.getText(), firstline.getText(), secondline.getText(), button1Text.getText(),
                     button1Url.getText(), button2Text.getText(), button2Url.getText()));
         }catch (NumberFormatException e){
-            if (!anchorPane.getChildren().contains(invalidInputExceptionView)) {
-                anchorPane.getChildren().add(invalidInputExceptionView);
+            if (!anchorRoot.getChildren().contains(invalidInputExceptionView)) {
+                invalidInputExceptionView = WarningManager.setWarning(DelayLabel, 12, "Invalid input", WarningManager.Mode.Right);
+                anchorRoot.getChildren().add(invalidInputExceptionView);
             }
+            new Shake(anchorRoot).play();
             return;
         }
-        if(secondline.getText().trim().isEmpty()){
-            if (!anchorPane.getChildren().contains(fieldCannotBeEmptyExceptionView)) {
-                anchorPane.getChildren().add(fieldCannotBeEmptyExceptionView);
-            }
-            return;
-        }
+        anchorRoot.getChildren().remove(invalidInputExceptionView);
         gobacktoConfig();
     }
 
@@ -121,19 +122,24 @@ public class EditListController extends ConfigController implements Initializabl
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        delayTooSmallExceptionView = WarningManager.setWarning(DelayLabel, 12, "It is recommended to set the delay above 16 second", WarningManager.Mode.Right);
-        fieldCannotBeEmptyExceptionView = WarningManager.setWarning(SecondLineLabel, 12, "Field cannot be empty", WarningManager.Mode.Right);
-        invalidInputExceptionView = WarningManager.setWarning(DelayLabel, 12, "Invalid input", WarningManager.Mode.Right);
-
         Wait.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*"))
                 Wait.setText(newValue.replaceAll("\\D", ""));
             if (Wait.getText().isEmpty()) return;
             if (Long.parseLong(Wait.getText()) < 16000) {
-                if (!anchorPane.getChildren().contains(delayTooSmallExceptionView)) {
-                    anchorPane.getChildren().add(delayTooSmallExceptionView);
+                if (!anchorRoot.getChildren().contains(delayTooSmallExceptionView)) {
+                    delayTooSmallExceptionView =
+                            WarningManager.setWarning(DelayLabel, 12, "It is recommended to set the delay above 16 second", WarningManager.Mode.Right);
+                    anchorRoot.getChildren().add(delayTooSmallExceptionView);
                 }
-            } else anchorPane.getChildren().remove(delayTooSmallExceptionView);
+            } else anchorRoot.getChildren().remove(delayTooSmallExceptionView);
+        });
+        Platform.runLater(() ->{
+            stage = (Stage) anchorRoot.getScene().getWindow();
+            stage.setOnCloseRequest(e ->{
+                e.consume();
+                cancelSaves();
+            });
         });
     }
 
@@ -156,7 +162,6 @@ public class EditListController extends ConfigController implements Initializabl
     }
 
     private void gobacktoConfig() {
-        stage = (Stage) anchorPane.getScene().getWindow();
         stage.close();
         CDiscordRP.primaryStage.setScene(new Scene(SceneManager.getDefaultConfigParent()));
         numberInList = -1;

@@ -77,10 +77,13 @@ public class RichPresence {
      * @return A JSONObject payload for updating a user's Rich Presence.
      */
     public JSONObject toJson() {
-        JSONObject jsonObject = new JSONObject()
-                .put("state", state)
-                .put("details", details)
-                .put("timestamps", new JSONObject()
+        JSONObject jsonObject = new JSONObject();
+        if(state != null && !state.isEmpty())
+            jsonObject.put("state", state);
+        if(details != null && !details.isEmpty())
+            jsonObject.put("details", details);
+
+        jsonObject.put("timestamps", new JSONObject()
                         .put("start", startTimestamp < 100 ? null : startTimestamp)
                         .put("end", endTimestamp < 100 ? null : endTimestamp));
         JSONObject assets = new JSONObject();
