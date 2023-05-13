@@ -420,7 +420,7 @@ public class ConfigController implements Initializable {
     private void showListConfig(int numberInList, double x, double y) {
         SceneManager.SceneData sceneData = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/EditListScript.fxml");
         EditListController ec = (EditListController) sceneData.getController();
-        ec.setnumberInList(numberInList);
+        ec.numberInList(numberInList);
         Stage stage = new Stage();
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/lee/aspect/dev/cdiscordrp/icon/settingsImage.png"))));
         stage.setTitle("Config Editor - index: " + (numberInList + 1));

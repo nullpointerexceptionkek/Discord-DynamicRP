@@ -25,6 +25,7 @@
 
 package lee.aspect.dev.cdiscordrp.application.controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -33,7 +34,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import lee.aspect.dev.cdiscordrp.animatefx.Shake;
 import lee.aspect.dev.cdiscordrp.application.core.CDiscordRP;
 import lee.aspect.dev.cdiscordrp.application.core.Script;
 import lee.aspect.dev.cdiscordrp.application.core.Updates;
@@ -45,7 +48,7 @@ import java.util.ResourceBundle;
 
 public class EditListController extends ConfigController implements Initializable {
 
-    Stage stage;
+    private Stage stage;
     @FXML
     private TextField Wait;
     @FXML
@@ -75,25 +78,40 @@ public class EditListController extends ConfigController implements Initializabl
     @FXML
     private Button DeleteButton;
     @FXML
-    private AnchorPane anchorPane;
+    private AnchorPane anchorRoot;
+
+    @FXML
+    private VBox content;
 
     @FXML
     private Label EditConfiLabel, FirstLineLabel, SecondLineLabel, DelayLabel, LargeImgLabel, SmallImgLabel,
             SmallImgTxtLabel, LargeImgTxtLabel, Button1Label, Button1LinkLabel, Button2TxtLabel, Button2LinkLabel;
 
-    private ImageView delayTooSmall;
+    private ImageView delayTooSmallExceptionView;
+
+    private ImageView invalidInputExceptionView;
+
 
     private int numberInList = -1;
 
     public void cancelSaves() {
-        stage = (Stage) anchorPane.getScene().getWindow();
         gobacktoConfig();
     }
 
     public void saveChanges() {
-        Script.getINSTANCE().setUpdates(numberInList, new Updates(Long.parseLong(Wait.getText()), image.getText(), imagetext.getText(), smallimage.getText(),
-                smalltext.getText(), firstline.getText(), secondline.getText(), button1Text.getText(),
-                button1Url.getText(), button2Text.getText(), button2Url.getText()));
+        try{
+            Script.getINSTANCE().setUpdates(numberInList, new Updates(Long.parseLong(Wait.getText()), image.getText(), imagetext.getText(), smallimage.getText(),
+                    smalltext.getText(), firstline.getText(), secondline.getText(), button1Text.getText(),
+                    button1Url.getText(), button2Text.getText(), button2Url.getText()));
+        }catch (NumberFormatException e){
+            if (!anchorRoot.getChildren().contains(invalidInputExceptionView)) {
+                invalidInputExceptionView = WarningManager.setWarning(DelayLabel, 12, "Invalid input", WarningManager.Mode.Right);
+                anchorRoot.getChildren().add(invalidInputExceptionView);
+            }
+            new Shake(anchorRoot).play();
+            return;
+        }
+        anchorRoot.getChildren().remove(invalidInputExceptionView);
         gobacktoConfig();
     }
 
@@ -109,35 +127,41 @@ public class EditListController extends ConfigController implements Initializabl
                 Wait.setText(newValue.replaceAll("\\D", ""));
             if (Wait.getText().isEmpty()) return;
             if (Long.parseLong(Wait.getText()) < 16000) {
-                if (!anchorPane.getChildren().contains(delayTooSmall)) {
-                    delayTooSmall =
+                if (!anchorRoot.getChildren().contains(delayTooSmallExceptionView)) {
+                    delayTooSmallExceptionView =
                             WarningManager.setWarning(DelayLabel, 12, "It is recommended to set the delay above 16 second", WarningManager.Mode.Right);
-                    anchorPane.getChildren().add(delayTooSmall);
+                    anchorRoot.getChildren().add(delayTooSmallExceptionView);
                 }
-            } else anchorPane.getChildren().remove(delayTooSmall);
-
-
+            } else anchorRoot.getChildren().remove(delayTooSmallExceptionView);
+        });
+        Platform.runLater(() ->{
+            stage = (Stage) anchorRoot.getScene().getWindow();
+            stage.setOnCloseRequest(e ->{
+                e.consume();
+                cancelSaves();
+            });
         });
     }
 
-    public void setnumberInList(int numberInList) {
+    public void numberInList(int numberInList) {
         this.numberInList = numberInList;
-        Wait.setText(String.valueOf(Script.getINSTANCE().getTotalupdates().get(numberInList).getWait()));
-        image.setText(Script.getINSTANCE().getTotalupdates().get(numberInList).getImage());
-        imagetext.setText(Script.getINSTANCE().getTotalupdates().get(numberInList).getImagetext());
-        smallimage.setText(Script.getINSTANCE().getTotalupdates().get(numberInList).getSmallimage());
-        smalltext.setText(Script.getINSTANCE().getTotalupdates().get(numberInList).getSmalltext());
-        firstline.setText(Script.getINSTANCE().getTotalupdates().get(numberInList).getFl());
-        secondline.setText(Script.getINSTANCE().getTotalupdates().get(numberInList).getSl());
-        button1Text.setText(Script.getINSTANCE().getTotalupdates().get(numberInList).getButton1Text());
-        button1Url.setText(Script.getINSTANCE().getTotalupdates().get(numberInList).getButton1Url());
-        button2Text.setText(Script.getINSTANCE().getTotalupdates().get(numberInList).getButton2Text());
-        button2Url.setText(Script.getINSTANCE().getTotalupdates().get(numberInList).getButton2Url());
+        final Script scriptInstance = Script.getINSTANCE();
+        Wait.setText(String.valueOf(scriptInstance.getTotalupdates().get(numberInList).getWait()));
+        image.setText(scriptInstance.getTotalupdates().get(numberInList).getImage());
+        imagetext.setText(scriptInstance.getTotalupdates().get(numberInList).getImagetext());
+        smallimage.setText(scriptInstance.getTotalupdates().get(numberInList).getSmallimage());
+        smalltext.setText(scriptInstance.getTotalupdates().get(numberInList).getSmalltext());
+        firstline.setText(scriptInstance.getTotalupdates().get(numberInList).getFl());
+        secondline.setText(scriptInstance.getTotalupdates().get(numberInList).getSl());
+        button1Text.setText(scriptInstance.getTotalupdates().get(numberInList).getButton1Text());
+        button1Url.setText(scriptInstance.getTotalupdates().get(numberInList).getButton1Url());
+        button2Text.setText(scriptInstance.getTotalupdates().get(numberInList).getButton2Text());
+        button2Url.setText(scriptInstance.getTotalupdates().get(numberInList).getButton2Url());
+
 
     }
 
     private void gobacktoConfig() {
-        stage = (Stage) anchorPane.getScene().getWindow();
         stage.close();
         CDiscordRP.primaryStage.setScene(new Scene(SceneManager.getDefaultConfigParent()));
         numberInList = -1;

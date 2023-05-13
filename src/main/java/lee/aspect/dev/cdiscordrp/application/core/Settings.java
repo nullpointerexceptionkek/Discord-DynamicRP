@@ -45,8 +45,8 @@ public class Settings {
     private boolean AutoSwitch = false;
     private File loadedConfig = null;
 
-    private double windowWidth = 334.0;
-    private double windowHeight = 540.0;
+    private double windowWidth = -1;
+    private double windowHeight = -1;
 
     private Settings() {
     }
@@ -64,8 +64,11 @@ public class Settings {
     }
 
     public static void saveSettingToFile() {
-        Settings.getINSTANCE().setWindowHeight(CDiscordRP.primaryStage.getHeight());
-        Settings.getINSTANCE().setWindowWidth(CDiscordRP.primaryStage.getWidth());
+        if(CDiscordRP.primaryStage != null) {
+            Settings.getINSTANCE().setWindowHeight(CDiscordRP.primaryStage.getHeight());
+            Settings.getINSTANCE().setWindowWidth(CDiscordRP.primaryStage.getWidth());
+        }
+
         FileManager.writeJsonTofile(new File(DirectoryManager.getROOT_DIR(), "Settings.json"), INSTANCE);
     }
 
@@ -190,7 +193,6 @@ public class Settings {
 
         materialDark("/lee/aspect/dev/cdiscordrp/theme/MaterialDark.css", "Material Dark");
 
-        //skyblue("/lee/aspect/dev/cdiscordrp/theme/SkyBlue/SkyBlue.css", "Sky Blue");
 
 
         private final String themePath;
