@@ -27,6 +27,7 @@ package lee.aspect.dev.cdiscordrp.util;
 
 
 import javafx.geometry.Bounds;
+import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -52,23 +53,24 @@ public class WarningManager {
      */
     public static ImageView setWarning(Parent parent, int size, String message, Mode mode) {
         double x, y;
-        Bounds bounds = parent.getLayoutBounds();
+        Bounds bounds = parent.getBoundsInLocal();
+        Point2D parentSceneCoords = parent.localToScene(bounds.getMinX(), bounds.getMinY());
         switch (mode) {
             case Up:
-                x = parent.getLayoutX() + bounds.getMinX() + (bounds.getWidth() / 2);
-                y = parent.getLayoutY() - 10 - size / 2;
+                x = parentSceneCoords.getX() + (bounds.getWidth() / 2);
+                y = parentSceneCoords.getY() - 10 - size / 2;
                 break;
             case Down:
-                x = parent.getLayoutX() + bounds.getMinX() + (bounds.getWidth() / 2);
-                y = parent.getLayoutY() + bounds.getHeight() + 10 + size / 2;
+                x = parentSceneCoords.getX() + (bounds.getWidth() / 2);
+                y = parentSceneCoords.getY() + bounds.getHeight() + 10 + size / 2;
                 break;
             case Left:
-                x = parent.getLayoutX() - 10 - size / 2;
-                y = parent.getLayoutY() + bounds.getMinY() + bounds.getHeight() / 2 - size / 2;
+                x = parentSceneCoords.getX() - 10 - size / 2;
+                y = parentSceneCoords.getY() + bounds.getHeight() / 2 - size / 2;
                 break;
             default:
-                x = parent.getLayoutX() + bounds.getWidth() + 10 + size / 2;
-                y = parent.getLayoutY() + bounds.getMinY() + bounds.getHeight() / 2 - size / 2;
+                x = parentSceneCoords.getX() + bounds.getWidth() + 10 + size / 2;
+                y = parentSceneCoords.getY() + bounds.getHeight() / 2 - size / 2;
                 break;
         }
         ImageView warning = new ImageView(Objects.requireNonNull(WarningManager.class.getResource("/lee/aspect/dev/cdiscordrp/icon/Warning.png")).toExternalForm());
