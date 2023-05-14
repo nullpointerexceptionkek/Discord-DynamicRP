@@ -47,11 +47,7 @@ class LanguageManager private constructor() {
 
         @JvmStatic
         fun init() {
-            lang = ResourceBundle.getBundle(
-                Settings.getINSTANCE().lang.resourceLocation,
-                Locale.getDefault(),
-                UTF8Control()
-            )
+            setLang(Settings.getINSTANCE().lang)
         }
 
         @JvmStatic

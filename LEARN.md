@@ -24,7 +24,7 @@ I will explain this according to the feature listed in the README.md file.
 
 How does this program finds the config folder?
 
-- It finds the config folder by looking at the environment variable "CDRPCDir".
+- It finds the config folder by looking at the environment variable "CDiscordRP".
 - If the environment variable is not set, it will ask you to select a directory where the program will store its data.
 - This directory will be used to store the config Json file
   You can see the detail of the implementation in

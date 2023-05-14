@@ -168,8 +168,8 @@ public class Launch {
     public static void initManagers() {
         FileManager.init();
         Settings.loadKeyFromJson();
-        Script.loadScriptFromJson();
         LanguageManager.init();
+        Script.loadScriptFromJson();
         SwitchManager.loadFromFile();
     }
 
