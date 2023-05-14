@@ -64,7 +64,7 @@ class DirectoryManager {
             dialog.graphic = progressIndicator
 
             dialog.title = "Setting up manager directory"
-            dialog.contentText = "This process is setting the environment variable CDRPCDir to $dir"
+            dialog.contentText = "This process is setting the environment variable CDiscordRP to $dir"
 
             SystemHandler.setEnvironmentVariable(dir,{
                 SystemHandler.fullRestartWithWarnings("Please restart the application to apply the changes",true)
@@ -81,13 +81,13 @@ class DirectoryManager {
         @JvmStatic
         fun deleteDirectoryEnvironmentVar() {
             if (SystemHandler.isOnWindows) {
-                ProcessBuilder("REG", "DELETE", "HKCU\\Environment", "/F", "/V", "CDRPCDir").inheritIO().start().waitFor()
+                ProcessBuilder("REG", "DELETE", "HKCU\\Environment", "/F", "/V", "CDiscordRP").inheritIO().start().waitFor()
             } else if (SystemHandler.isOnMac) {
-                ProcessBuilder("launchctl", "unsetenv", "CDRPCDir").start().waitFor()
-                val launchAgentPlistPath = System.getProperty("user.home") + "/Library/LaunchAgents/CDRPCDir.plist"
+                ProcessBuilder("launchctl", "unsetenv", "CDiscordRP").start().waitFor()
+                val launchAgentPlistPath = System.getProperty("user.home") + "/Library/LaunchAgents/CDiscordRP.plist"
                 File(launchAgentPlistPath).delete()
             } else if (SystemHandler.isOnLinux) {
-                ProcessBuilder("unset", "CDRPCDir").start().waitFor()
+                ProcessBuilder("unset", "CDiscordRP").start().waitFor()
                 val bashrcPath = Paths.get(System.getProperty("user.home"), ".bashrc")
                 val zshrcPath = Paths.get(System.getProperty("user.home"), ".zshrc")
                 Files.deleteIfExists(bashrcPath)
@@ -99,7 +99,7 @@ class DirectoryManager {
 
         @JvmStatic
         fun unsetEnvBash(){
-            ProcessBuilder("unset", "CDRPCDir").start().waitFor()
+            ProcessBuilder("unset", "CDiscordRP").start().waitFor()
             val bashrcPath = Paths.get(System.getProperty("user.home"), ".bashrc")
             val zshrcPath = Paths.get(System.getProperty("user.home"), ".zshrc")
             Files.deleteIfExists(bashrcPath)
@@ -109,14 +109,22 @@ class DirectoryManager {
 
         @JvmStatic
         fun initDirectory():Boolean{
-            val directory = System.getenv("CDRPCDir") ?: defaultDir
-            return if (File(directory).exists()) {
-                ROOT_DIR = File(directory)
-                Launch.LOGGER.info("Directory exists: $directory")
-                true
+            if (System.getenv("CDiscordRP")!= null && File(System.getenv("CDiscordRP")).exists()) {
+                ROOT_DIR = File(System.getenv("CDiscordRP"))
+                Launch.LOGGER.info("Directory exists: ${System.getenv("CDiscordRP")}")
+                return true
             } else {
-                Launch.LOGGER.warn("Directory does not exist: $directory")
-                false
+                if(System.getenv("CDiscordRP") != null){
+                    createDirectory(File(System.getenv("CDiscordRP")), "The directory set in the environment variable CDiscordRP does not exist.",false)
+                    return true
+                }
+                if(File(defaultDir).exists()){
+                    ROOT_DIR = File(defaultDir)
+                    Launch.LOGGER.info("default directory exists: $defaultDir")
+                    return true
+                }
+                Launch.LOGGER.warn("Directory does not exist")
+                return false
             }
         }
         @JvmStatic
@@ -199,16 +207,19 @@ class DirectoryManager {
             }
         }
 
-        private fun createDirectory(directory: File) {
+        private fun createDirectory(directory: File, message: String = "The directory you entered doesn't exist.", isRetry: Boolean = true) {
             val createDirectoryDialog = Alert(Alert.AlertType.CONFIRMATION)
             createDirectoryDialog.title = "Create directory?"
-            createDirectoryDialog.headerText = "The directory you entered doesn't exist."
+            createDirectoryDialog.headerText = message
             createDirectoryDialog.contentText = "Would you like to create the directory?"
             val createDirectoryResult = createDirectoryDialog.showAndWait()
             if (createDirectoryResult.isPresent && createDirectoryResult.get() == ButtonType.OK) {
                 directory.mkdirs()
             } else {
-                askForDirectory()
+                if(isRetry)
+                    askForDirectory()
+                else
+                    exitProcess(0)
             }
         }
 
