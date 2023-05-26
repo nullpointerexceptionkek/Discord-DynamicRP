@@ -28,3 +28,6 @@ Detail License: /dependenciesLicense/kotlin/LICENSE
 This program includes JavaFX licensed under the GPL license.
 
 This program includes slf4j, licensed under the MIT license.
+
+for the most recent dependency report at
+/src/main/resource/licenses/index.html

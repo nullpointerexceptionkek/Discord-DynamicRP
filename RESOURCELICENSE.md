@@ -1,5 +1,3 @@
-Theme Sky Blue BackgroundMain.jpg by Felix Mittermeier: https://www.pexels.com/photo/sky-with-stars-illustration-957061/
-
 json-file.png By First Styles https://iconscout.com/icon/json-file
 
 back.png By Unicons Font https://iconscout.com/icon/back-2693946

@@ -38,6 +38,8 @@ import lee.aspect.dev.cdiscordrp.manager.SceneManager;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Objects;
 
@@ -82,12 +84,13 @@ public class ApplicationTray {
         tray = SystemTray.getSystemTray();
 
         // Add components to popup menu
-        MenuItem aboutItem = new MenuItem("About");
+
         startRPCItem = new MenuItem("Start RPC");
         closeRPCItem = new MenuItem("Close RPC");
         startSwitchItem = new MenuItem("Start Switch");
         closeSwitchItem = new MenuItem("Close Switch");
         MenuItem showInterface = new MenuItem("Show Interface");
+        MenuItem aboutItem = new MenuItem("About");
         MenuItem exitItem = new MenuItem("Exit");
 
         // Add components to popup menu based on the state of the RPC
@@ -105,9 +108,9 @@ public class ApplicationTray {
             }
         }
 
-        popup.add(aboutItem);
-        popup.addSeparator();
         popup.add(showInterface);
+        popup.addSeparator();
+        popup.add(aboutItem);
         popup.addSeparator();
         popup.add(exitItem);
 
@@ -123,7 +126,6 @@ public class ApplicationTray {
             String version = Launch.VERSION;
             String author = Launch.AUTHOR;
             String name = Launch.NAME;
-            String license = "MIT License";
 
             JPanel panel = new JPanel(new BorderLayout());
             panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -132,12 +134,29 @@ public class ApplicationTray {
             titleLabel.setFont(new Font("Dialog", Font.BOLD, 16));
 
             JTextArea textArea = new JTextArea();
-            textArea.setText("Author: " + author + "\nLicense: " + license);
+            textArea.setText("Author: " + author + "\nLicense: " + Launch.LICENSE);
             textArea.setEditable(false);
             textArea.setBackground(panel.getBackground());
 
+
+            JButton dependencySourceButton = new JButton("View Dependency License");
+            dependencySourceButton.addActionListener(event -> {
+                URL htmlUrl = ApplicationTray.class.getResource("/lee/aspect/dev/cdiscordrp/licenses/index.html");
+
+                if (htmlUrl == null) {
+                    throw new IllegalStateException("Unable to find HTML file. Please check your installation");
+                }
+
+                try {
+                    Desktop.getDesktop().browse(new URI(htmlUrl.toString()));
+                } catch (IOException | URISyntaxException ex) {
+                    throw new RuntimeException(ex);
+                }
+            });
+
             panel.add(titleLabel, BorderLayout.NORTH);
             panel.add(textArea, BorderLayout.CENTER);
+            panel.add(dependencySourceButton, BorderLayout.SOUTH);  // Add the 'Open HTML' button
 
             JOptionPane.showMessageDialog(null, panel, "About", JOptionPane.PLAIN_MESSAGE);
         });

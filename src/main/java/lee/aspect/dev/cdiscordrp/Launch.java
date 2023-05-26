@@ -58,6 +58,8 @@ public class Launch {
     public final static String AUTHOR = "lee";
     public final static String NAME = "CDiscordRP";
 
+    public final static String LICENSE = "MIT License";
+
     public static final Logger LOGGER = LoggerFactory.getLogger(Launch.class);
     public static boolean isOnIDE = false;
 

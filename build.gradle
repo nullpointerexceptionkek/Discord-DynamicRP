@@ -5,6 +5,12 @@ plugins {
     id 'org.openjfx.javafxplugin' version '0.0.10'
     id 'java'
     id 'application'
+    id 'com.github.jk1.dependency-license-report' version '2.1'
+}
+
+licenseReport {
+    def licenseDir = file("${sourceSets.main.resources.srcDirs.first()}/lee/aspect/dev/cdiscordrp/licenses")
+    outputDir = licenseDir
 }
 
 java {
@@ -50,6 +56,12 @@ mainClassName = 'lee.aspect.dev.cdiscordrp.Launch'
 
 tasks.withType(KotlinCompile).configureEach {
     kotlinOptions.jvmTarget = '1.8'
+}
+tasks.named('processResources') {
+    dependsOn 'generateLicenseReport'
+}
+tasks.named('build').configure {
+    dependsOn 'generateLicenseReport'
 }
 
 application {
