@@ -37,10 +37,15 @@ import lee.aspect.dev.cdiscordrp.manager.SceneManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 
 /**
@@ -141,16 +146,15 @@ public class ApplicationTray {
 
             JButton dependencySourceButton = new JButton("View Dependency License");
             dependencySourceButton.addActionListener(event -> {
-                URL htmlUrl = ApplicationTray.class.getResource("/lee/aspect/dev/cdiscordrp/licenses/index.html");
-
-                if (htmlUrl == null) {
-                    throw new IllegalStateException("Unable to find HTML file. Please check your installation");
-                }
-
+                File htmlFile = new File(Launch.runtimeDir, "licenses.html");
                 try {
-                    Desktop.getDesktop().browse(new URI(htmlUrl.toString()));
-                } catch (IOException | URISyntaxException ex) {
-                    throw new RuntimeException(ex);
+                    //have to do this because you cant read files from jars + javafx webview takes too much space
+                    InputStream inputStream = Objects.requireNonNull(ApplicationTray.class.getResourceAsStream("/lee/aspect/dev/cdiscordrp/licenses/index.html"));
+                    Files.copy(inputStream, htmlFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    Desktop.getDesktop().browse(htmlFile.toURI());
+
+                }catch (IOException ex) {
+                   throw new RuntimeException("Unable to open HTML file", ex);
                 }
             });
 

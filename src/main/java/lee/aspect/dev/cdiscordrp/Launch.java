@@ -63,6 +63,10 @@ public class Launch {
     public static final Logger LOGGER = LoggerFactory.getLogger(Launch.class);
     public static boolean isOnIDE = false;
 
+    public static File runtimeDir;
+
+    public static File runtime;
+
 
 
     private Launch() {
@@ -82,7 +86,9 @@ public class Launch {
             return;
         }
         try {
-            File runtime = new File(DirectoryManager.getROOT_DIR(), "runtime");
+            runtimeDir = new File(DirectoryManager.getROOT_DIR(), "runtime");
+            if(!runtimeDir.exists()) runtimeDir.mkdir();
+            runtime = new File(runtimeDir, "port.rnt");
 
 
             if (runtime.exists()) {
@@ -126,7 +132,7 @@ public class Launch {
                 Launch.LOGGER.info("CDiscordRP is running on port " + serverSocket.getLocalPort());
                 bw.write(Integer.toString(serverSocket.getLocalPort()));
                 bw.close();
-                Runtime.getRuntime().addShutdownHook(new Thread(() -> runtime.delete()));
+                Runtime.getRuntime().addShutdownHook(new Thread(() -> FileManager.deleteFolder(runtimeDir)));
 
                 new Thread(() -> {
                     while (true) {
