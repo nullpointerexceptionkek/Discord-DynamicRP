@@ -22,33 +22,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-.root, #stackPane, #anchorRoot, .list-view, .table-view {
+.root, #stackPane, #anchorRoot, .list-view, .table-view, .scroll-pane {
     -fx-background-color: #2C2F33;
 }
 
-.label, .check-box, .radio-button, .list-cell:even, .list-cell:odd, .table-row-cell {
+.label, .check-box, .radio-button, .list-cell:even, .list-cell:odd, .table-row-cell, .text-field, .button, .choice-box, .context-menu .menu-item {
     -fx-font-family: "Roboto";
     -fx-text-fill: #ffffff;
 }
 
-.label {
+.label, .warning-label {
     -fx-font-size: 14;
     -fx-alignment: center;
 }
 
-.warning-label{
-    -fx-font-size: 14;
+.warning-label {
     -fx-text-fill: #FF5722;
-    -fx-alignment: center;
+}
+
+.text-field, .button {
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+    -fx-transition: all 0.2s ease-in-out;
+}
+#titleLabel {
+    -fx-font-size: 20;
+    -fx-text-fill: #ffffff;
 }
 
 .text-field {
     -fx-background-color: #40444b;
     -fx-text-fill: #ffffff;
     -fx-prompt-text-fill: #687275;
-    -fx-background-radius: 5px;
-    -fx-padding: 5px;
-    -fx-transition: all 0.2s ease-in-out;
 }
 
 .text-field:hover {
@@ -61,13 +66,7 @@
 
 .button, .check-box:selected .box, .radio-button:selected .radio, .scroll-bar .thumb, .progress-indicator {
     -fx-background-color: #7289da;
-}
-
-.button {
     -fx-text-fill: #ffffff;
-    -fx-background-radius: 5px;
-    -fx-padding: 5px;
-    -fx-transition: all 0.2s ease-in-out;
 }
 
 .button:hover, .list-cell:filled:selected:focused, .list-cell:filled:selected, .radio-button:hover .radio {
@@ -97,22 +96,12 @@
     -fx-text-fill: #a3a4a8;
 }
 
-#titleLabel {
-    -fx-font-size: 20;
-}
-
-/* scroll pane */
-.scroll-pane {
-    -fx-background-color: #2C2F33;
-}
-
 .scroll-pane .viewport {
     -fx-background-color: transparent;
 }
 
 .scroll-bar {
     -fx-background-color: #40444b;
-    -fx-pref-width: 10px;
 }
 
 .scroll-bar .increment-button,
@@ -128,12 +117,13 @@
 }
 
 .scroll-bar:vertical {
-    -fx-pref-width: 12;
+    -fx-pref-width: 12px;
 }
 
 .scroll-bar:horizontal {
-    -fx-pref-height: 12;
+    -fx-pref-height: 12px;
 }
+
 .check-box .box {
     -fx-background-color: #40444b;
     -fx-border-color: #7289da;
@@ -185,7 +175,8 @@
     -fx-background-color: #40444b;
 }
 
-.table-view .column-header, .table-view .column-header .text {
+.table-view .column-header,
+.table-view .column-header .text {
     -fx-text-fill: #ffffff;
     -fx-font-family: "Roboto";
 }
@@ -193,22 +184,18 @@
 .table-view:focused .table-row-cell:filled:focused:selected {
     -fx-background-color: #4752c4;
 }
+
 .table-view .column-header {
     -fx-background-color: #40444b;
     -fx-border-color: #7289da;
     -fx-border-width: 0 0 1px 0;
-
-}
-
-.table-view .column-header .text {
-    -fx-text-fill: #ffffff;
-    -fx-font-family: "Roboto";
 }
 
 .table-view .column-header .separator {
     -fx-background-color: #7289da;
     -fx-padding: 0.5em 0;
 }
+
 .table-view .column-header .arrow {
     -fx-background-color: #ffffff;
 }
