@@ -179,9 +179,9 @@ public class Settings {
     public enum Theme {
 
         light("/lee/aspect/dev/cdiscordrp/theme/DefaultLight.css", "Default Light"),
+
         dark("/lee/aspect/dev/cdiscordrp/theme/DefaultDark.css", "Default Dark"),
 
-        lime("/lee/aspect/dev/cdiscordrp/theme/KeyLime.css", "Key Lime"),
 
         purple("/lee/aspect/dev/cdiscordrp/theme/MidnightPurple.css", "Midnight Purple"),
 

@@ -56,10 +56,10 @@
 
 .button, .check-box:selected .box, .radio-button:selected .radio, .scroll-bar .thumb, .progress-indicator {
     -fx-background-color: #FF6B6B;
+    -fx-text-fill: #FFFFFF;
 }
 
 .button {
-    -fx-text-fill: #ffffff;
     -fx-background-radius: 10px;
     -fx-padding: 10px;
     -fx-transition: all 0.2s ease-in-out;
@@ -94,6 +94,7 @@
 
 #titleLabel {
     -fx-font-size: 28;
+    -fx-text-fill: #4C4C4C;
 }
 
 /* scroll pane */
@@ -163,3 +164,48 @@
     -fx-progress-color: #FF6B6B;
     -fx-background-color: transparent;
 }
+
+/* table view */
+.table-view {
+    -fx-background-color: #FDCD8A;
+}
+
+.table-view .table-cell {
+    -fx-padding: 0.5em;
+    -fx-text-fill: #4C4C4C;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #FFE6C5;
+}
+
+.table-view .column-header,
+.table-view .column-header .text {
+    -fx-text-fill: #4C4C4C;
+    -fx-font-family: "Montserrat";
+}
+
+.table-view:focused .table-row-cell:filled:focused:selected {
+    -fx-background-color: #FF6B6B;
+    -fx-text-fill: #FFFFFF;
+}
+
+.table-view .column-header {
+    -fx-background-color: #FFE6C5;
+    -fx-border-color: #FF6B6B;
+    -fx-border-width: 0 0 1px 0;
+}
+
+.table-view .column-header .separator {
+    -fx-background-color: #FF6B6B;
+    -fx-padding: 0.5em 0;
+}
+
+.table-view .column-header .arrow {
+    -fx-background-color: #FF6B6B;
+}
+
+.table-view .table-row-cell {
+    -fx-background-color: #FFFFFF;
+}
+
