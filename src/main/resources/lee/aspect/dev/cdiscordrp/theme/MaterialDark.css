@@ -58,6 +58,9 @@
     -fx-background-color: #2196F3;
     -fx-text-fill: #FFFFFF;
 }
+.warning-label {
+    -fx-text-fill: #FF5722;
+}
 
 .button {
     -fx-background-radius: 3px;

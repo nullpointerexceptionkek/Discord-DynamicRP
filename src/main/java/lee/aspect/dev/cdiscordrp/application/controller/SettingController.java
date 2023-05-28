@@ -81,7 +81,7 @@ public class SettingController implements Initializable {
 
 
     @FXML
-    private Label SettingsLabel, ThemeLabel, titleLabel, ReleaseLabel, MinToTrayLabel, PerformanceLabel, LanguageLabel, AdvanceConfigLabel;
+    private Label SettingsLabel, ThemeLabel, titleLabel, MinToTrayLabel, PerformanceLabel, LanguageLabel, AdvanceConfigLabel;
 
     public void switchBack() {
         goBack.setDisable(true);

@@ -164,6 +164,9 @@
     -fx-progress-color: #FF6B6B;
     -fx-background-color: transparent;
 }
+.warning-label {
+    -fx-text-fill: #FF5722;
+}
 
 /* table view */
 .table-view {

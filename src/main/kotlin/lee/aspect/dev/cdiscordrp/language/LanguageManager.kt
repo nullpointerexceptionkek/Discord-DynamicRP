@@ -25,13 +25,15 @@
 
 package lee.aspect.dev.cdiscordrp.language
 
+import javafx.scene.Scene
 import javafx.scene.control.ButtonType
 import javafx.scene.control.ChoiceBox
 import javafx.scene.control.Dialog
 import javafx.scene.control.Label
 import javafx.scene.layout.VBox
+import lee.aspect.dev.cdiscordrp.application.core.CDiscordRP
 import lee.aspect.dev.cdiscordrp.application.core.Settings
-import lee.aspect.dev.cdiscordrp.util.WarningManager
+import lee.aspect.dev.cdiscordrp.manager.SceneManager.Companion.loadSceneWithStyleSheet
 import java.util.*
 
 class LanguageManager private constructor() {
@@ -53,32 +55,32 @@ class LanguageManager private constructor() {
         @JvmStatic
         fun showDialog() {
 
-            // Create a new Dialog object
             val dialog = Dialog<ButtonType>()
             dialog.title = "Change Language"
 
-            // Create a ChoiceBox to display the available languages
             val choiceBox = ChoiceBox<Languages>()
             choiceBox.items.addAll(Languages.values())
+            val warningMessage = Label("Warning: translation may not be accurate")
+            warningMessage.styleClass.add("warning-label")
+            warningMessage.isVisible = false
+            choiceBox.selectionModel.selectedItemProperty().addListener { _, _, newValue ->
+                if(newValue != null)
+                    warningMessage.isVisible = newValue != Languages.EN_US
+            }
 
-
-            // Set the dialog content to the ChoiceBox
             val textLabel = Label("Please select a language, your current language is ${Settings.getINSTANCE().lang}")
-            dialog.dialogPane.content = VBox(textLabel, choiceBox)
+            dialog.dialogPane.content = VBox(textLabel, warningMessage, choiceBox)
 
-            // Add a button to confirm the selected language
             dialog.dialogPane.buttonTypes.addAll(ButtonType.CANCEL, ButtonType.OK)
 
             dialog.dialogPane.stylesheets.add(Settings.getINSTANCE().theme.path)
 
-            // Show the dialog and wait for the user to confirm their selection
             val result = dialog.showAndWait()
 
-            // If the user confirmed their selection, change the current language
             if (result.isPresent && result.get() == ButtonType.OK) {
-                setLang(choiceBox.value)
+                setLang(if(choiceBox.value == null) Settings.getINSTANCE().lang else choiceBox.value)
                 Settings.getINSTANCE().lang = choiceBox.value
-                WarningManager.restartToApplyChanges()
+                CDiscordRP.primaryStage.scene = Scene(loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/Settings.fxml").root)
             }
 
         }

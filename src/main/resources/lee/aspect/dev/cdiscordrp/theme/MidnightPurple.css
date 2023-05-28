@@ -183,6 +183,9 @@
     -fx-background-color: #6442C8;
     -fx-text-fill: #ffffff;
 }
+.warning-label {
+    -fx-text-fill: #FF5722;
+}
 
 .table-view .column-header {
     -fx-background-color: #40444b;

@@ -53,10 +53,6 @@
                         <ChoiceBox fx:id="themeChoiceBox" prefWidth="173.0"/>
                     </HBox>
 
-                    <HBox alignment="CENTER" spacing="10">
-                        <Label fx:id="ReleaseLabel" text="%Release"/>
-                    </HBox>
-
                     <VBox alignment="CENTER" spacing="10">
                         <Label fx:id="PerformanceLabel" text="%Performance">
                             <font>
