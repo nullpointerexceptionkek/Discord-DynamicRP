@@ -43,12 +43,17 @@ import lee.aspect.dev.cdiscordrp.application.core.Script;
 import lee.aspect.dev.cdiscordrp.application.core.Updates;
 import lee.aspect.dev.cdiscordrp.manager.SceneManager;
 import lee.aspect.dev.cdiscordrp.util.WarningManager;
+import org.jetbrains.annotations.Nullable;
 
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class EditListController extends ConfigController implements Initializable {
+
+    public interface EditListCallback{
+        void onEditComplete();
+    }
 
     private Stage stage;
     @FXML
@@ -92,6 +97,9 @@ public class EditListController extends ConfigController implements Initializabl
     private ImageView delayTooSmallExceptionView;
 
     private ImageView invalidInputExceptionView;
+
+    private EditListCallback editListCallback;
+
 
 
     private int numberInList = -1;
@@ -167,12 +175,17 @@ public class EditListController extends ConfigController implements Initializabl
         stage.close();
         CDiscordRP.primaryStage.setScene(new Scene(SceneManager.getDefaultConfigParent()));
         numberInList = -1;
+
+        if (this.editListCallback != null) {
+            this.editListCallback.onEditComplete();
+        }
     }
 
-    public static void showListConfig(int numberInList, double x, double y) {
+    public static void showListConfig(int numberInList, double x, double y, @Nullable EditListCallback editListCallback ) {
         SceneManager.SceneData sceneData = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/cdiscordrp/scenes/EditListScript.fxml");
         EditListController ec = (EditListController) sceneData.getController();
         ec.numberInList(numberInList);
+        ec.setEditListCallback(editListCallback);
         Stage stage = new Stage();
         stage.getIcons().add(new Image(Objects.requireNonNull(EditListController.class.getResourceAsStream("/lee/aspect/dev/cdiscordrp/icon/settingsImage.png"))));
         stage.setTitle("Config Editor - index: " + (numberInList + 1));
@@ -181,6 +194,9 @@ public class EditListController extends ConfigController implements Initializabl
         stage.setY(y);
         stage.setResizable(false);
         stage.show();
+    }
+    public void setEditListCallback(EditListCallback callback) {
+        this.editListCallback = callback;
     }
 
 

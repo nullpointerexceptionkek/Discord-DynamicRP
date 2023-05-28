@@ -27,7 +27,6 @@ package lee.aspect.dev.cdiscordrp.manager
 
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
-import javafx.geometry.Insets
 import javafx.scene.control.*
 import javafx.scene.control.cell.PropertyValueFactory
 import javafx.scene.image.Image
@@ -36,13 +35,14 @@ import javafx.scene.layout.Priority
 import javafx.scene.layout.VBox
 import javafx.stage.Stage
 import lee.aspect.dev.cdiscordrp.application.controller.EditListController
+import lee.aspect.dev.cdiscordrp.application.controller.EditListController.EditListCallback
 import lee.aspect.dev.cdiscordrp.application.core.Script
 import lee.aspect.dev.cdiscordrp.application.core.Settings
 import lee.aspect.dev.cdiscordrp.application.core.Updates
 import java.util.*
 
 class SearchManager {
-    companion object {
+    companion object: EditListCallback {
         private val searchModes = listOf(
             "All",
             "First Line",
@@ -57,13 +57,14 @@ class SearchManager {
             "Button 2",
             "Button 2 URL"
         )
+        private lateinit var tableView: TableView<Updates>
 
         @JvmStatic
         fun showDialog() {
             val dialog = createDialog()
             val textInput = createTextInput()
             val searchChoiceBox = createSearchChoiceBox()
-            val tableView = createTableView()
+            tableView = createTableView()
 
             val inputBox = HBox(10.0, textInput, searchChoiceBox).apply {
                 HBox.setHgrow(textInput, Priority.ALWAYS)
@@ -131,7 +132,7 @@ class SearchManager {
             row.setOnMouseClicked { event ->
                 if (event.clickCount == 2 && !row.isEmpty) {
                     val originalItems = getInitialItems()
-                    EditListController.showListConfig(originalItems.indexOf(row.item), dialog.x, dialog.y)
+                    EditListController.showListConfig(originalItems.indexOf(row.item), dialog.x, dialog.y, this)
                 }
             }
             return row
@@ -181,6 +182,14 @@ class SearchManager {
                 "Button 2 URL" -> { item -> item.button2Url.lowercase(Locale.ROOT).contains(searchText.lowercase(Locale.ROOT)) }
                 else -> { _ -> false }
             }
+        }
+
+        override fun onEditComplete() {
+            tableView.items = getUpdatedItems()
+        }
+        private fun getUpdatedItems(): ObservableList<Updates> {
+            val updatedItems: List<Updates> = Script.getINSTANCE().totalupdates // Assuming totalupdates get updated after an edit
+            return FXCollections.observableList(updatedItems.toMutableList())
         }
     }
 

@@ -409,7 +409,7 @@ public class ConfigController implements Initializable {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
                 if (event.getClickCount() == 2) {
                     if (!((displayUpdates.getSelectionModel().getSelectedIndex()) == -1)) {
-                        EditListController.showListConfig(displayUpdates.getSelectionModel().getSelectedIndex(), displayUpdates.getScene().getWindow().getX(), displayUpdates.getScene().getWindow().getY());
+                        EditListController.showListConfig(displayUpdates.getSelectionModel().getSelectedIndex(), displayUpdates.getScene().getWindow().getX(), displayUpdates.getScene().getWindow().getY(), null);
                     }
                 }
             }
