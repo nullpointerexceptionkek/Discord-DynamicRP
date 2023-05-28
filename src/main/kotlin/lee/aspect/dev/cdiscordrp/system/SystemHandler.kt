@@ -229,7 +229,7 @@ object SystemHandler {
                 PrintWriter(FileWriter(scriptFile)).use { writer ->
                     writer.println("[Desktop Entry]")
                     writer.println("Type=Application")
-                    writer.println("Name=CDiscordRP")
+                    writer.println("Name=$APP_NAME")
                     writer.println("Exec=/usr/bin/java -jar $currentJar --StartLaunch")
                     writer.println("Terminal=false")
                     writer.println("Version=1.0")
