@@ -25,7 +25,6 @@
 
 package lee.aspect.dev.cdiscordrp;
 
-import javafx.application.Platform;
 import lee.aspect.dev.cdiscordrp.application.core.CDiscordRP;
 import lee.aspect.dev.cdiscordrp.application.core.Script;
 import lee.aspect.dev.cdiscordrp.application.core.Settings;
@@ -38,15 +37,9 @@ import lee.aspect.dev.cdiscordrp.system.SystemHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.*;
 import java.io.*;
-import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.channels.FileChannel;
-import java.nio.channels.FileLock;
-import java.util.Random;
-import java.util.RandomAccess;
 
 /**
  * This class checks whether if the application is already launched and add shutdown hook;
@@ -68,7 +61,6 @@ public class Launch {
     public static File runtime;
 
 
-
     private Launch() {
     }
 
@@ -87,12 +79,12 @@ public class Launch {
         }
         try {
             runtimeDir = new File(DirectoryManager.getROOT_DIR(), "runtime");
-            if(!runtimeDir.exists()) runtimeDir.mkdir();
+            if (!runtimeDir.exists()) runtimeDir.mkdir();
             runtime = new File(runtimeDir, "port.rnt");
 
 
             if (runtime.exists()) {
-                try{
+                try {
                     int port;
                     BufferedReader br = new BufferedReader(new FileReader(runtime));
                     port = Integer.parseInt(br.readLine());
@@ -104,55 +96,43 @@ public class Launch {
                     socket.close();
                     System.exit(0);
                 } catch (IOException e) {
-                    e.printStackTrace();
-                    Object[] options = {"Yes, I want to start the application", "Quit Application"};
-                    String message = "\"Custom Discord RP\"\n"
-                            + "It looks like you are trying to create\n"
-                            + "multiple instance of the program\n"
-                            + "Do you want to start the application anyway?";
-                    int result = JOptionPane.showOptionDialog(new JFrame(), message, "Application Running", JOptionPane.YES_NO_OPTION,
-                            JOptionPane.WARNING_MESSAGE, null, options, null);
-                    if (result == JOptionPane.YES_OPTION) {
-                        CDiscordRP.Launch(args);
-                    } else {
-                        System.exit(0);
-                    }
+                    //port failed. start a new instance is fine
                 }
-            } else {
-                isOnIDE = !SystemHandler.StartLaunch.isJar();
-                if (isOnIDE) {
-                    LOGGER.info("This program is running on or not build into a jar file, The following features will not work.");
-                    LOGGER.info("Automated restart application, Create start launch script");
-                    LOGGER.info("The environment variable might not be updated unless you restart the IDE.");
-                }
-
-                initManagers();
-                ServerSocket serverSocket = new ServerSocket(0);
-                BufferedWriter bw = new BufferedWriter(new FileWriter(runtime));
-                Launch.LOGGER.info("CDiscordRP is running on port " + serverSocket.getLocalPort());
-                bw.write(Integer.toString(serverSocket.getLocalPort()));
-                bw.close();
-                Runtime.getRuntime().addShutdownHook(new Thread(() -> FileManager.deleteFolder(runtimeDir)));
-
-                new Thread(() -> {
-                    while (true) {
-                        try {
-                            Socket socket = serverSocket.accept();
-                            InputStream inputStream = socket.getInputStream();
-                            byte[] buffer = new byte[1024];
-                            int bytesRead = inputStream.read(buffer);
-                            String message = new String(buffer, 0, bytesRead);
-                            if (message.equals("CDiscordRP.ShowCurrentInstance")) {
-                                CDiscordRP.popUpWindow();
-                            }
-                            inputStream.close();
-                            socket.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }).start();
             }
+
+            isOnIDE = !SystemHandler.StartLaunch.isJar();
+            if (isOnIDE) {
+                LOGGER.info("This program is running on or not build into a jar file, The following features will not work.");
+                LOGGER.info("Automated restart application, Create start launch script");
+                LOGGER.info("The environment variable might not be updated unless you restart the IDE.");
+            }
+
+            initManagers();
+            ServerSocket serverSocket = new ServerSocket(0);
+            BufferedWriter bw = new BufferedWriter(new FileWriter(runtime));
+            Launch.LOGGER.info("CDiscordRP is running on port " + serverSocket.getLocalPort());
+            bw.write(Integer.toString(serverSocket.getLocalPort()));
+            bw.close();
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> FileManager.deleteFolder(runtimeDir)));
+
+            new Thread(() -> {
+                while (true) {
+                    try {
+                        Socket socket = serverSocket.accept();
+                        InputStream inputStream = socket.getInputStream();
+                        byte[] buffer = new byte[1024];
+                        int bytesRead = inputStream.read(buffer);
+                        String message = new String(buffer, 0, bytesRead);
+                        if (message.equals("CDiscordRP.ShowCurrentInstance")) {
+                            CDiscordRP.popUpWindow();
+                        }
+                        inputStream.close();
+                        socket.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
         } catch (IOException e) {
             e.printStackTrace();
         }
