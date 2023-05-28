@@ -237,12 +237,26 @@ object SystemHandler {
                 }
                 scriptFile.setExecutable(true)
             } else if (isOnMac) {
-                val scriptFile = File(STARTUPDIR_MAC, APP_SCRIPT_MAC)
-                PrintWriter(FileWriter(scriptFile)).use { writer ->
-                    writer.println("#!/bin/sh")
-                    writer.println("launchctl submit -l $APP_NAME -- /usr/bin/java -jar $currentJar --StartLaunch")
+                if(!STARTUPDIR_MAC.exists()) STARTUPDIR_MAC.mkdirs()
+                val plistFile = File(STARTUPDIR_MAC, APP_SCRIPT_MAC)
+                PrintWriter(FileWriter(plistFile)).use { writer ->
+                    writer.println("<plist version=\"1.0\">")
+                    writer.println("<dict>")
+                    writer.println("    <key>Label</key>")
+                    writer.println("    <string>$APP_NAME</string>")
+                    writer.println("    <key>ProgramArguments</key>")
+                    writer.println("    <array>")
+                    writer.println("        <string>java</string>")
+                    writer.println("        <string>-jar</string>")
+                    writer.println("        <string>$currentJar</string>")
+                    writer.println("        <string>--StartLaunch</string>")
+                    writer.println("    </array>")
+                    writer.println("    <key>RunAtLoad</key>")
+                    writer.println("    <true/>")
+                    writer.println("</dict>")
+                    writer.println("</plist>")
                 }
-                scriptFile.setExecutable(true)
+                plistFile.setExecutable(true)
             } else {
                 throw UnsupportedOSException("Start Launch currently only supports Windows, Linux, and macOS")
             }
