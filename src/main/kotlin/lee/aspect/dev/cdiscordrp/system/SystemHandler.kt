@@ -86,20 +86,16 @@ object SystemHandler {
                         writer.println("    <string>${Launch.NAME}</string>")
                         writer.println("    <key>ProgramArguments</key>")
                         writer.println("    <array>")
-                        writer.println("        <string>/usr/bin/launchctl</string>")
-                        writer.println("        <string>setenv</string>")
-                        writer.println("        <string>${Launch.NAME}</string>")
-                        writer.println("        <string>$dir</string>")
+                        writer.println("        <string>sh</string>")
+                        writer.println("        <string>-c</string>")
+                        writer.println("        <string>launchctl setenv ${Launch.NAME} $dir</string>")
                         writer.println("    </array>")
                         writer.println("    <key>RunAtLoad</key>")
-                        writer.println("    <true/>")
-                        writer.println("    <key>KeepAlive</key>")
                         writer.println("    <true/>")
                         writer.println("</dict>")
                         writer.println("</plist>")
                     }
-
-
+                    ProcessBuilder("launchctl", "load", launchdPlistPath.absolutePath).start().waitFor()
                 } else if (isOnLinux) {
                     BufferedWriter(
                         Files.newBufferedWriter(
@@ -212,7 +208,7 @@ object SystemHandler {
         private const val APP_NAME = "CDiscordRP"
         private const val APP_SCRIPT_WINDOWS = "$APP_NAME.bat"
         private const val APP_SCRIPT_LINUX = "$APP_NAME.desktop"
-        private const val APP_SCRIPT_MAC = "$APP_NAME.plist"
+        private const val APP_SCRIPT_MAC = "$APP_NAME.sh"
         @JvmStatic
         @Throws(
             IOException::class,
@@ -241,27 +237,12 @@ object SystemHandler {
                 }
                 scriptFile.setExecutable(true)
             } else if (isOnMac) {
-                val plistFile = File(STARTUPDIR_MAC, APP_SCRIPT_MAC)
-                PrintWriter(FileWriter(plistFile)).use { writer ->
-                    writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
-                    writer.println("<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">")
-                    writer.println("<plist version=\"1.0\">")
-                    writer.println("<dict>")
-                    writer.println("    <key>Label</key>")
-                    writer.println("    <string>$APP_NAME</string>")
-                    writer.println("    <key>ProgramArguments</key>")
-                    writer.println("    <array>")
-                    writer.println("        <string>java</string>")
-                    writer.println("        <string>-jar</string>")
-                    writer.println("        <string>$currentJar</string>")
-                    writer.println("        <string>--StartLaunch</string>")
-                    writer.println("    </array>")
-                    writer.println("    <key>RunAtLoad</key>")
-                    writer.println("    <true/>")
-                    writer.println("</dict>")
-                    writer.println("</plist>")
+                val scriptFile = File(STARTUPDIR_MAC, APP_SCRIPT_MAC)
+                PrintWriter(FileWriter(scriptFile)).use { writer ->
+                    writer.println("#!/bin/sh")
+                    writer.println("launchctl submit -l $APP_NAME -- /usr/bin/java -jar $currentJar --StartLaunch")
                 }
-                plistFile.setExecutable(true)
+                scriptFile.setExecutable(true)
             } else {
                 throw UnsupportedOSException("Start Launch currently only supports Windows, Linux, and macOS")
             }
