@@ -26,6 +26,8 @@
 package lee.aspect.dev.cdiscordrp.application.core;
 
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import lee.aspect.dev.cdiscordrp.Launch;
 import lee.aspect.dev.cdiscordrp.json.loader.FileManager;
 
@@ -39,7 +41,7 @@ public class Script {
     private UpdateType updateType = UpdateType.Loop;
     private String customTimestamp;
     private long calculatedTimestamp;
-    private ArrayList<Updates> totalupdates = new ArrayList<>();
+    private ObservableList<Updates> totalupdates = FXCollections.observableArrayList();
     private TimeStampMode timestampmode = TimeStampMode.appLaunch;
 
     private Script() {
@@ -92,11 +94,11 @@ public class Script {
         this.timestampmode = timestampmode;
     }
 
-    public ArrayList<Updates> getTotalupdates() {
+    public ObservableList<Updates> getTotalupdates() {
         return totalupdates;
     }
 
-    public void setTotalupdates(ArrayList<Updates> u) {
+    public void setTotalupdates(ObservableList<Updates> u) {
         totalupdates = u;
     }
 

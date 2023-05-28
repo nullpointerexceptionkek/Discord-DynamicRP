@@ -26,7 +26,6 @@
 package lee.aspect.dev.cdiscordrp.manager
 
 import javafx.collections.FXCollections
-import javafx.collections.ObservableList
 import javafx.scene.control.*
 import javafx.scene.control.cell.PropertyValueFactory
 import javafx.scene.image.Image
@@ -35,14 +34,13 @@ import javafx.scene.layout.Priority
 import javafx.scene.layout.VBox
 import javafx.stage.Stage
 import lee.aspect.dev.cdiscordrp.application.controller.EditListController
-import lee.aspect.dev.cdiscordrp.application.controller.EditListController.EditListCallback
 import lee.aspect.dev.cdiscordrp.application.core.Script
 import lee.aspect.dev.cdiscordrp.application.core.Settings
 import lee.aspect.dev.cdiscordrp.application.core.Updates
 import java.util.*
 
 class SearchManager {
-    companion object: EditListCallback {
+    companion object{
         private val searchModes = listOf(
             "All",
             "First Line",
@@ -102,7 +100,7 @@ class SearchManager {
             val tableView = TableView<Updates>()
             tableView.columns.addAll(createColumns())
             tableView.setRowFactory { createRowFactory() }
-            tableView.items = getInitialItems()
+            tableView.items = Script.getINSTANCE().totalupdates
             return tableView
         }
 
@@ -131,16 +129,11 @@ class SearchManager {
             val dialog = createDialog()
             row.setOnMouseClicked { event ->
                 if (event.clickCount == 2 && !row.isEmpty) {
-                    val originalItems = getInitialItems()
-                    EditListController.showListConfig(originalItems.indexOf(row.item), dialog.x, dialog.y, this)
+                    val originalItems = Script.getINSTANCE().totalupdates
+                    EditListController.showListConfig(originalItems.indexOf(row.item), dialog.x, dialog.y)
                 }
             }
             return row
-        }
-
-        private fun getInitialItems(): ObservableList<Updates> {
-            val originalItems: List<Updates> = Script.getINSTANCE().totalupdates
-            return FXCollections.observableList(originalItems.toMutableList())
         }
 
         private fun setupDialogResultConverter(dialog: Dialog<String>) {
@@ -158,10 +151,10 @@ class SearchManager {
                 if (searchText.isNotEmpty()) {
                     tableView.selectionModel.clearSelection()
                     val filterFunction = getFilterFunction(searchChoiceBox, searchText)
-                    tableView.items = getInitialItems().filtered(filterFunction)
+                    tableView.items = Script.getINSTANCE().totalupdates.filtered(filterFunction)
                 } else {
                     tableView.selectionModel.clearSelection()
-                    tableView.items = getInitialItems()
+                    tableView.items = Script.getINSTANCE().totalupdates
                 }
             }
         }
@@ -182,14 +175,6 @@ class SearchManager {
                 "Button 2 URL" -> { item -> item.button2Url.lowercase(Locale.ROOT).contains(searchText.lowercase(Locale.ROOT)) }
                 else -> { _ -> false }
             }
-        }
-
-        override fun onEditComplete() {
-            tableView.items = getUpdatedItems()
-        }
-        private fun getUpdatedItems(): ObservableList<Updates> {
-            val updatedItems: List<Updates> = Script.getINSTANCE().totalupdates // Assuming totalupdates get updated after an edit
-            return FXCollections.observableList(updatedItems.toMutableList())
         }
     }
 

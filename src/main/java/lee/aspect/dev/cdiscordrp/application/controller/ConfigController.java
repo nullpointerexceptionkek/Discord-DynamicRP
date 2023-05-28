@@ -31,18 +31,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import lee.aspect.dev.cdiscordrp.Launch;
 import lee.aspect.dev.cdiscordrp.animatefx.*;
 import lee.aspect.dev.cdiscordrp.application.core.*;
@@ -228,7 +225,6 @@ public class ConfigController implements Initializable {
         }
 
         Script.getINSTANCE().addUpdates(newItem);
-        refreshList();
         undoRedoManager.modifyList(Script.getINSTANCE().getTotalupdates());
     }
 
@@ -271,12 +267,10 @@ public class ConfigController implements Initializable {
 
         undoItem.setOnAction((actionEvent) -> {
             undoRedoManager.undo();
-            refreshList();
         });
         redoItem.setOnAction((actionEvent) -> {
 
             undoRedoManager.redo();
-            refreshList();
         });
 
         copyItem.setOnAction((actionEvent) -> {
@@ -300,7 +294,6 @@ public class ConfigController implements Initializable {
                             .getSystemClipboard().getData(DataFlavor.stringFlavor);
                     FileManager.readFromJson(data, Updates[].class);
                     Script.getINSTANCE().getTotalupdates().addAll(selectedIndex, Arrays.asList(FileManager.readFromJson(data, Updates[].class)));
-                    refreshList();
                     undoRedoManager.modifyList(Script.getINSTANCE().getTotalupdates());
                 } catch (UnsupportedFlavorException | IOException e) {
                     e.printStackTrace();
@@ -314,7 +307,6 @@ public class ConfigController implements Initializable {
                     Script.getINSTANCE().getTotalupdates().remove(selectedIndices.get(i).intValue());
                 }
             }
-            refreshList();
             undoRedoManager.modifyList(Script.getINSTANCE().getTotalupdates());
         });
 
@@ -323,7 +315,6 @@ public class ConfigController implements Initializable {
                 int index = displayUpdates.getSelectionModel().getSelectedIndex();
                 Script.getINSTANCE().addUpdates(index + 1, new Updates(16000, String.valueOf(index), "" + index, "", "", "First line ", "Second line " + index));
             }
-            refreshList();
             undoRedoManager.modifyList(Script.getINSTANCE().getTotalupdates());
         });
         insertRowAbove.setOnAction((actionEvent) -> {
@@ -331,7 +322,6 @@ public class ConfigController implements Initializable {
                 int index = displayUpdates.getSelectionModel().getSelectedIndex();
                 Script.getINSTANCE().addUpdates(index, new Updates(16000, String.valueOf(index), "" + index, "", "", "First line ", "Second line " + index));
             }
-            refreshList();
             undoRedoManager.modifyList(Script.getINSTANCE().getTotalupdates());
         });
 
@@ -403,26 +393,18 @@ public class ConfigController implements Initializable {
 
         displayUpdates.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         Launch.LOGGER.debug(Script.getINSTANCE().getTotalupdates().toString());
-        refreshList();
+        displayUpdates.setItems(Script.getINSTANCE().getTotalupdates());
         //check if the list is double-clicked
         displayUpdates.setOnMouseClicked(event -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
                 if (event.getClickCount() == 2) {
                     if (!((displayUpdates.getSelectionModel().getSelectedIndex()) == -1)) {
-                        EditListController.showListConfig(displayUpdates.getSelectionModel().getSelectedIndex(), displayUpdates.getScene().getWindow().getX(), displayUpdates.getScene().getWindow().getY(), null);
+                        EditListController.showListConfig(displayUpdates.getSelectionModel().getSelectedIndex(), displayUpdates.getScene().getWindow().getX(), displayUpdates.getScene().getWindow().getY());
                     }
                 }
             }
         });
     }
-
-    //this will open up a new window and edit the arraylist
-
-    private void refreshList() {
-        displayUpdates.getItems().clear();
-        displayUpdates.getItems().addAll(Script.getINSTANCE().getTotalupdates());
-    }
-
 
     public void invalidDiscordAppID(String msg) {
         appIDTextField.setBackground(new Background(new BackgroundFill(Color.rgb(204, 51, 0, 0.9), new CornerRadii(5), Insets.EMPTY)));

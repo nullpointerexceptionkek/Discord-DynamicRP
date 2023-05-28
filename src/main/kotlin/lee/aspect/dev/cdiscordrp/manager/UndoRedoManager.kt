@@ -77,5 +77,11 @@ class UndoRedoManager(initialList: MutableList<Updates>) {
         scriptInstance.totalupdates.clear()
         scriptInstance.totalupdates.addAll(currentList)
     }
+
+    fun refresh() {
+        undoStack.clear()
+        redoStack.clear()
+        undoStack.push(currentList)
+    }
 }
 
