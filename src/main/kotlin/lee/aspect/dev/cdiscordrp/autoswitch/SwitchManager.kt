@@ -108,8 +108,6 @@ class SwitchManager private constructor() {
 
         @JvmStatic
         fun toggleRunning() {
-            val files = ConfigManager.getCurrentConfigFiles()
-            files!!
             references.startButton.isDisable = true
             if (!running) {
                 references.startButton.text = "Stop Operation"
@@ -208,7 +206,6 @@ class SwitchManager private constructor() {
             val switchStackPane = StackPane()
 
             val files = ConfigManager.getCurrentConfigFiles()
-            files!!
 
             //val gridPane = GridPane()
             references.gridPane.alignment = Pos.CENTER
@@ -345,11 +342,11 @@ class SwitchManager private constructor() {
             controlVbox.isPickOnBounds = false
 
 
-            val CDiscordRP = Label("CDiscordRP")
-            CDiscordRP.id = "titleLabel"
-            CDiscordRP.textAlignment = TextAlignment.CENTER
-            val CDiscordRPHBox = HBox(CDiscordRP)
-            CDiscordRPHBox.alignment = Pos.TOP_CENTER
+            val cDiscordRP = Label("CDiscordRP")
+            cDiscordRP.id = "titleLabel"
+            cDiscordRP.textAlignment = TextAlignment.CENTER
+            val cDiscordRPHBox = HBox(cDiscordRP)
+            cDiscordRPHBox.alignment = Pos.TOP_CENTER
 
             val scrollPane = ScrollPane()
             scrollPane.isFitToWidth = true
@@ -360,9 +357,9 @@ class SwitchManager private constructor() {
 
 
 
-            AnchorPane.setTopAnchor(CDiscordRPHBox, 0.0)
-            AnchorPane.setLeftAnchor(CDiscordRPHBox, 0.0)
-            AnchorPane.setRightAnchor(CDiscordRPHBox, 0.0)
+            AnchorPane.setTopAnchor(cDiscordRPHBox, 0.0)
+            AnchorPane.setLeftAnchor(cDiscordRPHBox, 0.0)
+            AnchorPane.setRightAnchor(cDiscordRPHBox, 0.0)
 
             AnchorPane.setTopAnchor(scrollPane, 60.0)
             AnchorPane.setBottomAnchor(scrollPane, 80.0)
@@ -373,7 +370,7 @@ class SwitchManager private constructor() {
             AnchorPane.setLeftAnchor(controlVbox, 0.0)
             AnchorPane.setRightAnchor(controlVbox, 0.0)
 
-            anchorRoot.children.addAll(CDiscordRPHBox, scrollPane, controlVbox)
+            anchorRoot.children.addAll(cDiscordRPHBox, scrollPane, controlVbox)
             switchStackPane.children.add(anchorRoot)
 
 
@@ -393,7 +390,6 @@ class SwitchManager private constructor() {
         @JvmStatic
         fun initAutoSwitchSilent() {
             val files = ConfigManager.getCurrentConfigFiles()
-            files!!
 
             for (i in files.indices) {
                 if (loaded.switch[i].checkName.isNotEmpty()) {

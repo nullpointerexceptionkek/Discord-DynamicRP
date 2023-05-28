@@ -73,10 +73,13 @@ public class Settings {
     }
 
     public static void setup() {
-        File defaultFile = new File(DirectoryManager.getROOT_DIR(), "default_UpdateScript.json");
+        File defaultFile = getDefaultFileDir();
         getINSTANCE().setLoadedConfig(defaultFile);
         saveSettingToFile();
         loadKeyFromJson();
+    }
+    public static File getDefaultFileDir(){
+        return new File(DirectoryManager.getROOT_DIR(), "default_UpdateScript.json");
     }
 
     public double getWindowHeight() {
