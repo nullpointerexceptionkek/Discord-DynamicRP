@@ -97,7 +97,6 @@ public class CallBackController implements Initializable {
             setDefault(display2, 0);
             setDefault(display3, 45);
 
-
             if (Script.getINSTANCE().getTotalupdates().size() == 1) {
                 display2.setText(Script.getINSTANCE().getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getFl()
                         + '\n' + Script.getINSTANCE().getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getSl());
@@ -153,9 +152,10 @@ public class CallBackController implements Initializable {
     private void setDefault(Label display, int transY) {
         display.setPrefWidth(150);
         display.setPrefHeight(45);
-        display.setLayoutX(anchorRoot.getScene().getWidth() / 2 - display1.getPrefWidth() / 2);
-        display.setLayoutY(anchorRoot.getScene().getHeight() / 2 - display1.getPrefHeight() / 2);
-        display.setTranslateY(transY);
+
+        display.translateXProperty().bind(anchorRoot.widthProperty().subtract(display.widthProperty()).divide(2));
+        display.translateYProperty().bind(anchorRoot.heightProperty().subtract(display.heightProperty()).divide(2).add(transY));
+
         display.setTextAlignment(TextAlignment.CENTER);
     }
 
