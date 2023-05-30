@@ -109,7 +109,7 @@ public class RunLoopManager {
                                     if (!running) return;
                                     if (!CDiscordRP.isOnSystemTray) {
                                         int finalI = i >= Script.getINSTANCE().getSize() - 1 ? 0 : i + 1;
-                                        Platform.runLater(() -> LoadingController.callBackController.updateCurrentDisplay(Script.getINSTANCE().getUpdates(finalI)));
+                                        updateDisplay(finalI);
                                     }
                                 }
 
@@ -124,7 +124,7 @@ public class RunLoopManager {
                                 currentDisplay = i;
                                 if (!running) return;
                                 if (!CDiscordRP.isOnSystemTray)
-                                    Platform.runLater(() -> LoadingController.callBackController.updateCurrentDisplay(Script.getINSTANCE().getUpdates(i)));
+                                    updateDisplay(i);
                             }
                             break;
                         case Reverse:
@@ -138,7 +138,7 @@ public class RunLoopManager {
                                     if (!running) return;
                                     if (!CDiscordRP.isOnSystemTray) {
                                         int finalI = i == 0 ? 1 : i - 1;
-                                        Platform.runLater(() -> LoadingController.callBackController.updateCurrentDisplay(Script.getINSTANCE().getUpdates(finalI)));
+                                        updateDisplay(finalI);
                                     }
                                 }
                                 for (int i = 0; i < Script.getINSTANCE().getSize(); i++) {
@@ -149,6 +149,11 @@ public class RunLoopManager {
                             break;
 
                     }
+                }
+
+                private void updateDisplay(int finalI) {
+                    if(CDiscordRP.isOnSystemTray || Settings.getINSTANCE().isShutDownInterfaceWhenTray() || Launch.isLaunchedUsingStartLaunch) return;
+                    Platform.runLater(() -> LoadingController.callBackController.updateCurrentDisplay(Script.getINSTANCE().getUpdates(finalI)));
                 }
             };
             runLoop.start();

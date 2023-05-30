@@ -56,6 +56,8 @@ public class Launch {
     public static final Logger LOGGER = LoggerFactory.getLogger(Launch.class);
     public static boolean isOnIDE = false;
 
+    public static boolean isLaunchedUsingStartLaunch = false;
+
     public static File runtimeDir;
 
     public static File runtime;
@@ -139,6 +141,7 @@ public class Launch {
 
         for (String arg : args) {
             if (arg.contains("--StartLaunch")) {
+                isLaunchedUsingStartLaunch = true;
                 CDiscordRP.LaunchSilently();
                 return;
             } else if (arg.contains("--unsetenv")) {
