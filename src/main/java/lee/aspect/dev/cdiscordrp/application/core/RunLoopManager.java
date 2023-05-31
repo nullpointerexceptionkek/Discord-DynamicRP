@@ -151,10 +151,6 @@ public class RunLoopManager {
                     }
                 }
 
-                private void updateDisplay(int finalI) {
-                    if(CDiscordRP.isOnSystemTray || Settings.getINSTANCE().isShutDownInterfaceWhenTray() || Launch.isLaunchedUsingStartLaunch) return;
-                    Platform.runLater(() -> LoadingController.callBackController.updateCurrentDisplay(Script.getINSTANCE().getUpdates(finalI)));
-                }
             };
             runLoop.start();
         }
@@ -173,7 +169,7 @@ public class RunLoopManager {
         if (!running) return true;
         if (!CDiscordRP.isOnSystemTray) {
             int finalI = i >= Script.getINSTANCE().getSize() - 1 ? i - 1 : i + 1;
-            Platform.runLater(() -> LoadingController.callBackController.updateCurrentDisplay(Script.getINSTANCE().getUpdates(finalI)));
+            updateDisplay(finalI);
         }
         return false;
     }
@@ -185,7 +181,7 @@ public class RunLoopManager {
             if (!running) return true;
             if (!CDiscordRP.isOnSystemTray) {
                 int finalI = i >= Script.getINSTANCE().getSize() - 1 ? 0 : i + 1;
-                Platform.runLater(() -> LoadingController.callBackController.updateCurrentDisplay(Script.getINSTANCE().getUpdates(finalI)));
+                updateDisplay(finalI);
             }
         }
         return false;
@@ -255,6 +251,10 @@ public class RunLoopManager {
         } catch (Exception e){
             Launch.LOGGER.error("Error while updating the popup menu" + e);
         }
+    }
+    private static void updateDisplay(int finalI) {
+        if(CDiscordRP.isOnSystemTray || Settings.getINSTANCE().isShutDownInterfaceWhenTray() || Launch.isLaunchedUsingStartLaunch) return;
+        Platform.runLater(() -> LoadingController.callBackController.updateCurrentDisplay(Script.getINSTANCE().getUpdates(finalI)));
     }
 
     public static boolean isRunning() {

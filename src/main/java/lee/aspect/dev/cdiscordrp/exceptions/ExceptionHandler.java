@@ -74,20 +74,10 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
             JOptionPane.showMessageDialog(null, "Error message copied to clipboard.", "Success", JOptionPane.INFORMATION_MESSAGE);
         });
 
-        JButton restartButton = new JButton("Restart Application");
-        restartButton.addActionListener((event) -> {
-            try {
-                SystemHandler.fullRestart();
-            } catch (URISyntaxException | IOException | FileNotAJarException ex) {
-                JOptionPane.showMessageDialog(null, "Failed to restart application. Please restart manually.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        });
-
         JButton exitButton = new JButton("Exit Application");
         exitButton.addActionListener((event) -> System.exit(1));
 
         JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 10, 0));
-        buttonPanel.add(restartButton);
         buttonPanel.add(exitButton);
         buttonPanel.add(copyButton);
 
