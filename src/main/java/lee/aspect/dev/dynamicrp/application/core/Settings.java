@@ -36,7 +36,7 @@ public class Settings {
 
     private static final Settings INSTANCE = new Settings();
     private Languages lang = Languages.EN_US;
-    private Theme theme = Theme.dark;
+    private Theme theme = Theme.materialDark;
     private MinimizeMode minimizeMode = MinimizeMode.Ask;
     private boolean NoAnimation = false;
     private boolean StartTrayOnlyInterfaceClose = false;
