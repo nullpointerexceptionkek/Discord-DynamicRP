@@ -9,7 +9,7 @@ plugins {
 }
 
 licenseReport {
-    def licenseDir = file("${sourceSets.main.resources.srcDirs.first()}/lee/aspect/dev/cdiscordrp/licenses")
+    def licenseDir = file("${sourceSets.main.resources.srcDirs.first()}/lee/aspect/dev/dynamicrp/licenses")
     outputDir = licenseDir
 }
 
@@ -52,7 +52,7 @@ dependencies {
     runtimeOnly "org.openjfx:javafx-graphics:$javafx.version:mac"
 }
 
-mainClassName = 'lee.aspect.dev.cdiscordrp.Launch'
+mainClassName = 'lee.aspect.dev.dynamicrp.Launch'
 
 tasks.withType(KotlinCompile).configureEach {
     kotlinOptions.jvmTarget = '1.8'
@@ -65,14 +65,14 @@ tasks.named('build').configure {
 }
 
 application {
-    getMainClass().set('lee.aspect.dev.cdiscordrp.Launch')
+    getMainClass().set('lee.aspect.dev.dynamicrp.Launch')
 }
 
 
 jar {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest {
-        attributes 'Main-Class': 'lee.aspect.dev.cdiscordrp.Launch'
+        attributes 'Main-Class': 'lee.aspect.dev.dynamicrp.Launch'
     }
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }

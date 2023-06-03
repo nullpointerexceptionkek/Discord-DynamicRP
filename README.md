@@ -1,6 +1,6 @@
-# CDiscordRP
+# DynamicRP
 
-CDiscordRP is a Discord Rich Presence Manager that allows you to display your current game in your Discord profile.
+DynamicRP is a Discord Rich Presence Manager that allows you to display your current game in your Discord profile.
 
 ### Attention: All previously posted release and pre-release versions are outdated. In the meantime, please pull the latest stable branch as I continue to work on version 1.0.
 
@@ -42,7 +42,7 @@ macOS's implementation should be similar to Linux, but it has not been tested ye
 
 1. On your first start, you will be asked to select a directory for storing the program's data. This directory will be used to store the config JSON file.
 
-> Unless you are using the default directory(recommended), the config directory will be stored in the environment variable "CDiscordRP."
+> Unless you are using the default directory(recommended), the config directory will be stored in the environment variable "DynamicRP."
 
 ![Main Screen](MainScreen.png)
 
@@ -68,9 +68,9 @@ Explore and enjoy!
 
 > Note: This will not delete your config folder. For complete uninstallation, manually delete the config folder.
 
-- The config folder location is stored in the environment variable "CDiscordRP"
+- The config folder location is stored in the environment variable "DynamicRP"
 > On Windows, delete the environment variable by running the following command in CMD:
-> `set CDiscordRP=""`
+> `set DynamicRP=""`
 
 ## Learn
 

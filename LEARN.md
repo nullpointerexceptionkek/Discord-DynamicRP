@@ -1,4 +1,4 @@
-## CDiscordRP
+## DynamicRP
 
 > There is java documentation inside the source code, you can read it to understand the code better.
 
@@ -24,11 +24,11 @@ I will explain this according to the feature listed in the README.md file.
 
 How does this program finds the config folder?
 
-- It finds the config folder by looking at the environment variable "CDiscordRP".
+- It finds the config folder by looking at the environment variable "DynamicRP".
 - If the environment variable is not set, it will ask you to select a directory where the program will store its data.
 - This directory will be used to store the config Json file
   You can see the detail of the implementation in
-  the [DirectoryManager.kt](src/main/kotlin/lee/aspect/dev/cdiscordrp/manager/DirectoryManager.kt)
+  the [DirectoryManager.kt](src/main/kotlin/lee/aspect/dev/dynamicrp/manager/DirectoryManager.kt)
 
 The function writeDirectoryEnvironmentVar() is the implementation to write the environment variable in different OS.
 
@@ -45,8 +45,8 @@ detail of the rich presence, Ex: application ID.
 The Switch.json stores an array that includes the config file and application to check for.
 
 You can see the detail of implementation in\
-[ConfigManager.kt](src/main/kotlin/lee/aspect/dev/cdiscordrp/manager/ConfigManager.kt) - manage configs\
-[Adapter and Loader](src/main/java/lee/aspect/dev/cdiscordrp/json/loader) - saves the config
+[ConfigManager.kt](src/main/kotlin/lee/aspect/dev/dynamicrp/manager/ConfigManager.kt) - manage configs\
+[Adapter and Loader](src/main/java/lee/aspect/dev/dynamicrp/json/loader) - saves the config
 
 ### Auto launch on start up
 
@@ -56,7 +56,7 @@ How does this program auto launch on start up?
 
 I create a video on the implementation of this feature: [here](https://www.youtube.com/watch?v=juQjEHAI_Uw&t=468s)\
 You can see the detail of the implementation
-in [StartLaunch.java](src/main/java/lee/aspect/dev/cdiscordrp/util/system/StartLaunch.java)
+in [StartLaunch.java](src/main/java/lee/aspect/dev/dynamicrp/util/system/StartLaunch.java)
 
 ### GUI
 
@@ -70,5 +70,5 @@ It uses both FXML and plain code to create the GUI.
 
 There isn't really much to say about this, uses Java awt to create a tray.
 implementation is
-in [ApplicationTray.java](src/main/java/lee/aspect/dev/cdiscordrp/application/core/ApplicationTray.java)
+in [ApplicationTray.java](src/main/java/lee/aspect/dev/dynamicrp/application/core/ApplicationTray.java)
 

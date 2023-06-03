@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~
+  ~ MIT License
+  ~
+  ~ Copyright (c) 2023 lee
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~ of this software and associated documentation files (the "Software"), to deal
+  ~ in the Software without restriction, including without limitation the rights
+  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~ copies of the Software, and to permit persons to whom the Software is
+  ~ furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all
+  ~ copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  ~ SOFTWARE.
+  -->
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.171"
+           fx:controller="lee.aspect.dev.dynamicrp.application.controller.SettingController">
+    <AnchorPane fx:id="anchorRoot" prefHeight="540.0" prefWidth="334.0">
+
+        <VBox fx:id="content" alignment="CENTER" spacing="10" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
+              AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+            <Label fx:id="titleLabel" prefHeight="32.0" prefWidth="173.0">
+                <font>
+                    <Font size="20.0"/>
+                </font>
+            </Label>
+
+            <ScrollPane fitToWidth="true">
+                <VBox alignment="CENTER" spacing="10">
+                    <Label fx:id="SettingsLabel" text="%Settings">
+                        <font>
+                            <Font size="20.0"/>
+                        </font>
+                    </Label>
+
+                    <HBox alignment="CENTER" spacing="10">
+                        <Label fx:id="ThemeLabel" text="%Theme"/>
+                        <ChoiceBox fx:id="themeChoiceBox" prefWidth="173.0"/>
+                    </HBox>
+
+                    <VBox alignment="CENTER" spacing="10">
+                        <Label fx:id="PerformanceLabel" text="%Performance">
+                            <font>
+                                <Font size="20.0"/>
+                            </font>
+                        </Label>
+                        <CheckBox fx:id="noAnimationCheckBox" text="%NoAnimation"/>
+                    </VBox>
+
+                    <VBox alignment="CENTER" spacing="10">
+                        <Label fx:id="MinToTrayLabel" text="%MinToTray">
+                            <font>
+                                <Font size="20.0"/>
+                            </font>
+                        </Label>
+                        <ChoiceBox fx:id="minimizeModeChoiceBox" prefWidth="173.0"/>
+                        <CheckBox fx:id="shutDownInterfaceCheckBox" text="%ShutDownInterface"/>
+                        <CheckBox fx:id="startTrayOnlyCloseCheckBox" text="%StartTrayOnlyClose"/>
+                        <CheckBox fx:id="startLaunchCheckBox" text="%StartLaunch"/>
+                    </VBox>
+
+                    <HBox alignment="CENTER" spacing="10">
+                        <Label fx:id="LanguageLabel" text="%Language"/>
+                        <Button fx:id="ChangeLanguageButton" onAction="#changeLanguage" text="%ChangeLanguage"/>
+                    </HBox>
+
+                    <HBox alignment="CENTER" spacing="10">
+                        <Label fx:id="AdvanceConfigLabel" text="%AdvanceConfig">
+                            <font>
+                                <Font size="20.0"/>
+                            </font>
+                        </Label>
+                        <Button fx:id="ManageScriptButton" onAction="#openConfigManager" text="%ManageConfig"/>
+                    </HBox>
+
+                    <CheckBox fx:id="AutoSwitchCheckBox" text="%EnableAutoConfigSwitch"/>
+                </VBox>
+            </ScrollPane>
+
+            <Button fx:id="goBack" alignment="BOTTOM_CENTER" onAction="#switchBack" text="%Back"/>
+
+        </VBox>
+
+    </AnchorPane>
+</StackPane>
