@@ -2,9 +2,9 @@
 
 DynamicRP is a Discord Rich Presence Manager that allows you to display your current game in your Discord profile.
 
-### Attention: All previously posted release and pre-release versions are outdated. In the meantime, please pull the latest stable branch as I continue to work on version 1.0.
+### All previously posted release and pre-release versions are outdated. In the meantime, please pull the latest stable branch as I continue to work on version 1.0.
 
-## You are currently in the Development branch. The Application might not be stable
+
 
 ## Features
 
