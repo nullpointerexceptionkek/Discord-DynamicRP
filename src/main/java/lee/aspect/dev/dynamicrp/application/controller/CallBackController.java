@@ -31,6 +31,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
@@ -65,6 +66,8 @@ public class CallBackController implements Initializable {
 
     private BounceInLeft afterIn;
 
+    private Pane warperPane = new Pane();
+
     public void switchToConfig() throws IOException {
         switchToConfig.setDisable(true);
         SceneManager.SceneData sceneData = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/dynamicrp/scenes/LoadingScreen.fxml");
@@ -97,6 +100,12 @@ public class CallBackController implements Initializable {
             setDefault(display2, 0);
             setDefault(display3, 45);
 
+            warperPane.getChildren().addAll(display1, display2, display3);
+            warperPane.setPrefSize(display1.getPrefWidth(), display1.getPrefHeight());
+            warperPane.translateXProperty().bind(anchorRoot.widthProperty().subtract(warperPane.widthProperty()).divide(2));
+            warperPane.translateYProperty().bind(anchorRoot.heightProperty().subtract(warperPane.heightProperty()).divide(2));
+
+            anchorRoot.getChildren().add(warperPane);
             if (Script.getINSTANCE().getTotalupdates().size() == 1) {
                 display2.setText(Script.getINSTANCE().getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getFl()
                         + '\n' + Script.getINSTANCE().getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getSl());
@@ -122,7 +131,6 @@ public class CallBackController implements Initializable {
                 anchorRoot.getChildren().add(display2);
                 return;
             }
-            anchorRoot.getChildren().addAll(display1, display2, display3);
             pMoveUp = new BounceOutRight(display1);
             afterIn = new BounceInLeft(display3, 0.8);
 
@@ -153,8 +161,7 @@ public class CallBackController implements Initializable {
         display.setPrefWidth(150);
         display.setPrefHeight(45);
 
-        display.translateXProperty().bind(anchorRoot.widthProperty().subtract(display.widthProperty()).divide(2));
-        display.translateYProperty().bind(anchorRoot.heightProperty().subtract(display.heightProperty()).divide(2).add(transY));
+        display.setTranslateY(transY);
 
         display.setTextAlignment(TextAlignment.CENTER);
     }
