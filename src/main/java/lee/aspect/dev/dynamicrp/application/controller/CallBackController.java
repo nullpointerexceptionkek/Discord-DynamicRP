@@ -100,6 +100,16 @@ public class CallBackController implements Initializable {
             setDefault(display2, 0);
             setDefault(display3, 45);
 
+
+
+            display1.prefWidthProperty().bind(anchorRoot.widthProperty().subtract(40));
+            display2.prefWidthProperty().bind(anchorRoot.widthProperty().subtract(40));
+            display3.prefWidthProperty().bind(anchorRoot.widthProperty().subtract(40));
+
+            display1.prefWidthProperty().addListener((observableValue, oldValue, newValue) -> {
+                warperPane.setPrefSize(display1.getPrefWidth(), display1.getPrefHeight());
+            });
+
             warperPane.getChildren().addAll(display1, display2, display3);
             warperPane.setPrefSize(display1.getPrefWidth(), display1.getPrefHeight());
             warperPane.translateXProperty().bind(anchorRoot.widthProperty().subtract(warperPane.widthProperty()).divide(2));
