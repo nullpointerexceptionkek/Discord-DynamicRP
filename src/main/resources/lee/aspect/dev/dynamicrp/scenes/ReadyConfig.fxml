@@ -46,7 +46,7 @@
             <Button fx:id="AddNewItemButton" mnemonicParsing="false" onAction="#addNewItem" prefHeight="25.0"
                     prefWidth="105.0" text="%addNewItemButton" VBox.vgrow="NEVER"/>
             <Label fx:id="TimeStampMethodLabel" text="%TimeStampMethod" textFill="WHITE"/>
-            <ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="NEVER">
+            <ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="NEVER" prefHeight="100">
                 <FlowPane alignment="CENTER" hgap="5" vgap="10">
                     <RadioButton fx:id="appLaunch" mnemonicParsing="false" onAction="#getTimeStampMode"
                                  prefHeight="17.0" prefWidth="99.0" text="%appLaunch">
@@ -60,14 +60,24 @@
                                  prefHeight="17.0" text="%cdFomEndDay" toggleGroup="$timeStampMode"/>
                     <RadioButton fx:id="none" mnemonicParsing="false" onAction="#getTimeStampMode" text="%none"
                                  toggleGroup="$timeStampMode"/>
-                    <RadioButton fx:id="custom" mnemonicParsing="false" onAction="#getTimeStampMode" prefHeight="17.0"
-                                 text="%custom" toggleGroup="$timeStampMode"/>
-                    <TextField fx:id="CustomTimeInput" prefHeight="25.0" prefWidth="104.0"
-                               promptText="%CustomTimeInput"/>
                     <RadioButton fx:id="sinceUpdate" mnemonicParsing="false" onAction="#getTimeStampMode"
                                  prefHeight="17.0" text="%sinceUpdate" toggleGroup="$timeStampMode"/>
-                    <Label fx:id="UpdateModeLabel" text="%UpdateMode"/>
-                    <ChoiceBox fx:id="updateMode" prefWidth="150.0"/>
+                    <HBox spacing="5" alignment="CENTER">
+                        <padding>
+                            <Insets bottom="3" left="3" right="3" top="3"/>
+                        </padding>
+                        <RadioButton fx:id="custom" mnemonicParsing="false" onAction="#getTimeStampMode" prefHeight="17.0"
+                                     text="%custom" toggleGroup="$timeStampMode"/>
+                        <TextField fx:id="CustomTimeInput" prefHeight="25.0" prefWidth="104.0"
+                                   promptText="%CustomTimeInput"/>
+                    </HBox>
+                    <HBox spacing="5" alignment="CENTER">
+                        <padding>
+                            <Insets bottom="3" left="3" right="3" top="3"/>
+                        </padding>
+                        <Label fx:id="UpdateModeLabel" text="%UpdateMode"/>
+                        <ChoiceBox fx:id="updateMode" prefWidth="150.0"/>
+                    </HBox>
                 </FlowPane>
             </ScrollPane>
             <HBox alignment="CENTER" spacing="10" VBox.vgrow="NEVER">
