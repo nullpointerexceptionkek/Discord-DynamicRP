@@ -31,6 +31,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -38,7 +39,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import lee.aspect.dev.dynamicrp.animatefx.Shake;
+import lee.aspect.dev.dynamicrp.application.core.DynamicRP;
 import lee.aspect.dev.dynamicrp.application.core.Script;
+import lee.aspect.dev.dynamicrp.application.core.Settings;
 import lee.aspect.dev.dynamicrp.application.core.Updates;
 import lee.aspect.dev.dynamicrp.manager.SceneManager;
 import lee.aspect.dev.dynamicrp.util.WarningManager;
@@ -79,9 +82,11 @@ public class EditListController implements Initializable {
     private Button DeleteButton;
     @FXML
     private AnchorPane anchorRoot;
+    @FXML
+    private ScrollPane scrollPane;
 
     @FXML
-    private VBox content;
+    private VBox content, innerContent;
 
     @FXML
     private Label EditConfiLabel, FirstLineLabel, SecondLineLabel, DelayLabel, LargeImgLabel, SmallImgLabel,
@@ -100,18 +105,18 @@ public class EditListController implements Initializable {
 
     public void saveChanges() {
         try{
-            Script.getINSTANCE().setUpdates(numberInList, new Updates(Long.parseLong(Wait.getText()), image.getText(), imagetext.getText(), smallimage.getText(),
+            Script.getINSTANCE().setUpdates(numberInList, new Updates((long)(Double.parseDouble(Wait.getText())*1000), image.getText(), imagetext.getText(), smallimage.getText(),
                     smalltext.getText(), firstline.getText(), secondline.getText(), button1Text.getText(),
                     button1Url.getText(), button2Text.getText(), button2Url.getText()));
         }catch (NumberFormatException e){
-            if (!anchorRoot.getChildren().contains(invalidInputExceptionView)) {
+            if (!innerContent.getChildren().contains(invalidInputExceptionView)) {
                 invalidInputExceptionView = WarningManager.setWarning(DelayLabel, 12, "Invalid input", WarningManager.Mode.Right);
-                anchorRoot.getChildren().add(invalidInputExceptionView);
+                innerContent.getChildren().add(0,invalidInputExceptionView);
             }
             new Shake(anchorRoot).play();
             return;
         }
-        anchorRoot.getChildren().remove(invalidInputExceptionView);
+        innerContent.getChildren().remove(invalidInputExceptionView);
         onFinish();
     }
 
@@ -123,16 +128,25 @@ public class EditListController implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         Wait.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*"))
-                Wait.setText(newValue.replaceAll("\\D", ""));
+            if (!newValue.matches("\\d*(\\.\\d*)?"))
+                Wait.setText(newValue.replaceAll("[^\\d.]", ""));
             if (Wait.getText().isEmpty()) return;
-            if (Long.parseLong(Wait.getText()) < 16000) {
-                if (!anchorRoot.getChildren().contains(delayTooSmallExceptionView)) {
-                    delayTooSmallExceptionView =
-                            WarningManager.setWarning(DelayLabel, 12, "It is recommended to set the delay above 16 second", WarningManager.Mode.Right);
-                    anchorRoot.getChildren().add(delayTooSmallExceptionView);
+
+            try{
+                if (Double.parseDouble(Wait.getText().endsWith(".")? Wait.getText() + '0' : Wait.getText()) < 15) {
+                    if (!innerContent.getChildren().contains(delayTooSmallExceptionView)) {
+                        delayTooSmallExceptionView =
+                                WarningManager.setWarning(DelayLabel, 12, "It is recommended to set the delay above 15 second", WarningManager.Mode.Right);
+                        innerContent.getChildren().add(0,delayTooSmallExceptionView);
+                    }
+                } else innerContent.getChildren().remove(delayTooSmallExceptionView);
+                innerContent.getChildren().remove(invalidInputExceptionView);
+            }catch (NumberFormatException e){
+                if (!innerContent.getChildren().contains(invalidInputExceptionView)) {
+                    invalidInputExceptionView = WarningManager.setWarning(DelayLabel, 12, "Invalid input", WarningManager.Mode.Right);
+                    innerContent.getChildren().add(0,invalidInputExceptionView);
                 }
-            } else anchorRoot.getChildren().remove(delayTooSmallExceptionView);
+            }
         });
         Platform.runLater(() ->{
             stage = (Stage) anchorRoot.getScene().getWindow();
@@ -146,7 +160,12 @@ public class EditListController implements Initializable {
     public void numberInList(int numberInList) {
         this.numberInList = numberInList;
         final Script scriptInstance = Script.getINSTANCE();
-        Wait.setText(String.valueOf(scriptInstance.getTotalupdates().get(numberInList).getWait()));
+        double waitValue = (double)scriptInstance.getTotalupdates().get(numberInList).getWait() / 1000;
+        if (waitValue == (int) waitValue) {
+            Wait.setText(String.valueOf((int) waitValue));
+        } else {
+            Wait.setText(String.valueOf(waitValue));
+        }
         image.setText(scriptInstance.getTotalupdates().get(numberInList).getImage());
         imagetext.setText(scriptInstance.getTotalupdates().get(numberInList).getImagetext());
         smallimage.setText(scriptInstance.getTotalupdates().get(numberInList).getSmallimage());
@@ -174,9 +193,13 @@ public class EditListController implements Initializable {
         stage.getIcons().add(new Image(Objects.requireNonNull(EditListController.class.getResourceAsStream("/lee/aspect/dev/dynamicrp/icon/settingsImage.png"))));
         stage.setTitle("Config Editor - index: " + (numberInList + 1));
         stage.setScene(new Scene(sceneData.getRoot()));
+        stage.setWidth(DynamicRP.primaryStage.getWidth());
+        stage.setHeight(DynamicRP.primaryStage.getHeight());
+        stage.setMinWidth(334.0);
+        stage.setMinHeight(500);
         stage.setX(x);
         stage.setY(y);
-        stage.setResizable(false);
+        stage.setResizable(true);
         stage.show();
     }
 
