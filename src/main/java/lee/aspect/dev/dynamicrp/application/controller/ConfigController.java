@@ -179,6 +179,7 @@ public class ConfigController implements Initializable {
 
     public void switchToSetting() {
         settingButton.setDisable(true);
+        Script.saveScriptToFile();
         if(Settings.getINSTANCE().isAutoSwitch()){
             Parent root = SceneManager.getConfigParent();
             stackPane.getChildren().add(0,root);

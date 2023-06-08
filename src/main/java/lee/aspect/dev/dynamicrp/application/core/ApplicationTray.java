@@ -259,6 +259,7 @@ public class ApplicationTray {
     }
 
     public static void updatePopupMenu() {
+        if(trayIcon == null) return;
         PopupMenu popup = trayIcon.getPopupMenu();
         popup.remove(startRPCItem);
         popup.remove(closeRPCItem);

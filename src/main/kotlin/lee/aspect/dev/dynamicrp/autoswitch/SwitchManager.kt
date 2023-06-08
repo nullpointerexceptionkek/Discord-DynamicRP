@@ -72,7 +72,7 @@ class SwitchManager private constructor() {
 
         lateinit var loaded: LoadSwitchFromFile
 
-        private lateinit var references: References // wait util toolkit is initialized
+        private lateinit var references: References
 
         @JvmStatic
         fun loadFromFile() {
