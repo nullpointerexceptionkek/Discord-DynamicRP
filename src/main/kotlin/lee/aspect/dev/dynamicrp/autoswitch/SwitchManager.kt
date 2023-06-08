@@ -36,11 +36,7 @@ import javafx.scene.text.TextAlignment
 import lee.aspect.dev.dynamicrp.Launch
 import lee.aspect.dev.dynamicrp.animatefx.SlideInDown
 import lee.aspect.dev.dynamicrp.animatefx.SlideInUp
-import lee.aspect.dev.dynamicrp.application.core.ApplicationTray
-import lee.aspect.dev.dynamicrp.application.core.DynamicRP
-import lee.aspect.dev.dynamicrp.application.core.RunLoopManager
-import lee.aspect.dev.dynamicrp.application.core.Script
-import lee.aspect.dev.dynamicrp.application.core.Settings
+import lee.aspect.dev.dynamicrp.application.core.*
 import lee.aspect.dev.dynamicrp.json.loader.FileManager
 import lee.aspect.dev.dynamicrp.manager.ConfigManager
 import lee.aspect.dev.dynamicrp.manager.DirectoryManager
@@ -50,14 +46,16 @@ import lee.aspect.dev.dynamicrp.processmonitor.OpenCloseListener
 import lee.aspect.dev.dynamicrp.processmonitor.ProcessMonitor
 import java.io.File
 import java.util.*
+import java.util.concurrent.Executors
+import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
-import kotlin.collections.ArrayList
 
 
 class SwitchManager private constructor() {
 
     companion object {
 
+        private lateinit var scheduler:ScheduledExecutorService
         @JvmStatic
         var running = false
             set(value){
@@ -119,51 +117,46 @@ class SwitchManager private constructor() {
                 }
                 references.settingsButton.isDisable = true
                 references.configManagerButton.isDisable = true
+                scheduler = Executors.newSingleThreadScheduledExecutor()
                 for (switch in loaded.switch) {
                     if (switch.checkName.isNotEmpty()) {
-                        val monitor = ProcessMonitor()
-                        monitor.startMonitoring(
-                            switch.checkName,
-                            object : OpenCloseListener {
-                                override fun onProcessOpen() {
-                                    try {
-                                        RunLoopManager.closeCallBack()
-                                    } catch (_: Exception) {
-                                    }
-                                    Settings.getINSTANCE().loadedConfig = switch.config
-                                    Script.loadScriptFromJson()
+                        val monitor = ProcessMonitor(scheduler, switch.checkName, object : OpenCloseListener {
+                            override fun onProcessOpen() {
+                                try {
+                                    RunLoopManager.closeCallBack()
+                                } catch (_: Exception) {
+                                }
+                                Settings.getINSTANCE().loadedConfig = switch.config
+                                Script.loadScriptFromJson()
+                                Platform.runLater {
+                                    references.statusLabel.text = "${switch.checkName} Process Opened"
+                                }
+                                try {
+                                    RunLoopManager.startUpdate()
                                     Platform.runLater {
-                                        references.statusLabel.text = "$switch.checkName} Process Opened"
+                                        references.statusLabel.text = "Connected - ${switch.checkName}"
                                     }
-                                    try {
-                                        RunLoopManager.startUpdate()
-                                        Platform.runLater {
-                                            references.statusLabel.text = "Connected - ${switch.checkName}"
-                                        }
-                                    } catch (e: Exception) {
-                                        Platform.runLater {
-                                            references.statusLabel.text = "Error: ${e.message} at config ${switch.config.name}"
-                                        }
+                                } catch (e: Exception) {
+                                    Platform.runLater {
+                                        references.statusLabel.text = "Error: ${e.message} at config ${switch.config.name}"
                                     }
                                 }
+                            }
 
-                                override fun onProcessClose() {
-                                    try {
-                                        RunLoopManager.closeCallBack()
-                                    } catch (_: Exception) {
-                                    }
-                                    Platform.runLater {
-                                        references.statusLabel.text = "${switch.checkName} Process Closed"
-                                    }
-                                    Platform.runLater {
-                                        references.statusLabel.text = "Not Connected - Waiting for Process"
-                                    }
+                            override fun onProcessClose() {
+                                try {
+                                    RunLoopManager.closeCallBack()
+                                } catch (_: Exception) {
                                 }
-                            },
-                            3,
-                            TimeUnit.SECONDS
-                        )
-                        references.processMonitors.add(monitor)
+                                Platform.runLater {
+                                    references.statusLabel.text = "${switch.checkName} Process Closed"
+                                }
+                                Platform.runLater {
+                                    references.statusLabel.text = "Not Connected - Waiting for Process"
+                                }
+                            }
+                        }, 3, TimeUnit.SECONDS)
+                        monitor.startMonitoring()
                     }
                 }
                 references.statusLabel.text = "Not Connected - Waiting for Process"
@@ -176,11 +169,7 @@ class SwitchManager private constructor() {
                 } catch (_: Exception) {
                 }
 
-                for (i in references.processMonitors.indices) {
-                    references.processMonitors[i].stopMonitoring()
-                }
-                //clear the arraylist
-                references.processMonitors.clear()
+                scheduler.shutdownNow()
 
                 references.gridPane.children.forEach {
                     it.isDisable = false
@@ -392,45 +381,44 @@ class SwitchManager private constructor() {
         fun initAutoSwitchSilent() {
             val files = ConfigManager.getCurrentConfigFiles()
 
+            scheduler = Executors.newScheduledThreadPool(1)
+
+
             for (i in files.indices) {
-                if (loaded.switch[i].checkName.isNotEmpty()) {
-                    val monitor = ProcessMonitor()
-                    monitor.startMonitoring(
-                        loaded.switch[i].checkName,
-                        object : OpenCloseListener {
-                            override fun onProcessOpen() {
-                                try {
-                                    RunLoopManager.closeCallBack()
-                                } catch (_: Exception) {
-                                }
-                                Settings.getINSTANCE().loadedConfig = files[i]
-                                Script.loadScriptFromJson()
-
-                                try {
-                                    RunLoopManager.startUpdate()
-                                } catch (_: Exception) {
-                                }
+                val switch = loaded.switch[i]
+                if (switch.checkName.isNotEmpty()) {
+                    val monitor = ProcessMonitor(scheduler, switch.checkName, object : OpenCloseListener {
+                        override fun onProcessOpen() {
+                            try {
+                                RunLoopManager.closeCallBack()
+                            } catch (_: Exception) {
                             }
+                            Settings.getINSTANCE().loadedConfig = files[i]
+                            Script.loadScriptFromJson()
 
-                            override fun onProcessClose() {
-                                try {
-                                    RunLoopManager.closeCallBack()
-                                } catch (_: Exception) {
-                                }
+                            try {
+                                RunLoopManager.startUpdate()
+                            } catch (_: Exception) {
                             }
-                        },
-                        3,
-                        TimeUnit.SECONDS
-                    )
+                        }
+
+                        override fun onProcessClose() {
+                            try {
+                                RunLoopManager.closeCallBack()
+                            } catch (_: Exception) {
+                            }
+                        }
+                    }, 3, TimeUnit.SECONDS)
+                    monitor.startMonitoring()
                 }
             }
+
         }
 
     }
 }
 
 data class References(
-    val processMonitors: ArrayList<ProcessMonitor> = ArrayList(),
     val startButton: Button = Button("Launch Callback"),
     val statusLabel: Label = Label("Not Connected"),
     val gridPane: GridPane = GridPane(),

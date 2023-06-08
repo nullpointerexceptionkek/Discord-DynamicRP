@@ -30,47 +30,59 @@ import lee.aspect.dev.dynamicrp.system.SystemHandler;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 /**
  * monitors a process with a given name and reports its open/close status to a listener.
  */
 public class ProcessMonitor {
-    private final Object lock = new Object();
+    private final ScheduledExecutorService scheduler;
+    private final String processName;
+    private final OpenCloseListener listener;
+    private final long waitDuration;
+    private final TimeUnit waitDurationUnit;
     private boolean isProcessOpen;
     private boolean processCloseCalled = true;
-    private Thread thread;
+    private ScheduledFuture<?> scheduledFuture;
 
-    /**
-     * Constructs a new `ProcessMonitor` with the specified value for the `processCloseCalled` field.
-     * if `processCloseCalled` is true, the `onProcessClose` method of the listener will not be called if
-     * the program was closed before the `startMonitoring` method was called.
-     * if `processCloseCalled` is false, the `onProcessClose` method of the listener will be called if
-     * the program was closed before the `startMonitoring` method was called.
-     *
-     * @param processCloseCalled a boolean indicating whether the `onProcessClose` callback should be called
-     *                           if the process is already closed when the `startMonitoring` method is called.
-     */
-    public ProcessMonitor(boolean processCloseCalled) {
-        this.processCloseCalled = processCloseCalled;
+    public ProcessMonitor(ScheduledExecutorService scheduler, String processName, OpenCloseListener listener, long waitDuration, TimeUnit waitDurationUnit) {
+        this.scheduler = scheduler;
+        this.processName = processName;
+        this.listener = listener;
+        this.waitDuration = waitDuration;
+        this.waitDurationUnit = waitDurationUnit;
+        this.isProcessOpen = isProcessOpen(processName);
+        if (isProcessOpen) {
+            listener.onProcessOpen();
+        }
     }
 
-    /**
-     * Constructs a new `ProcessMonitor` with the `processCloseCalled` field set to true.
-     * the `onProcessClose` method of the listener will not be called if
-     * the program was closed before the `startMonitoring` method was called.
-     */
-    public ProcessMonitor() {
+    public void startMonitoring() {
+        Runnable monitorTask = () -> {
+            boolean newIsProcessOpen = isProcessOpen(processName);
+            if (newIsProcessOpen != isProcessOpen) {
+                isProcessOpen = newIsProcessOpen;
+                if (isProcessOpen) {
+                    processCloseCalled = false;
+                    listener.onProcessOpen();
+                }
+            } else if (!newIsProcessOpen) {
+                if (!processCloseCalled) {
+                    listener.onProcessClose();
+                    processCloseCalled = true;
+                }
+            }
+        };
+        this.scheduledFuture = scheduler.scheduleAtFixedRate(monitorTask, 0, waitDuration, waitDurationUnit);
     }
 
-    /**
-     * Determines whether a process with the given name is open.
-     * The method will use isContains() to check if the process name match on Windows
-     *
-     * @param processName the name of the process to check
-     * @return true if the process is open, false otherwise
-     * @throws UnsupportedOperationException if the current operating system is not supported
-     */
+    public void stopMonitoring() {
+        if(scheduledFuture != null) {
+            scheduledFuture.cancel(true);
+        }
+    }
     public static boolean isProcessOpen(String processName) {
         if (SystemHandler.isOnWindows()) {
             try {
@@ -91,10 +103,9 @@ public class ProcessMonitor {
             }
         } else if (SystemHandler.isOnMac() || SystemHandler.isOnLinux()) {
             try {
-                //Process process = Runtime.getRuntime().exec("ps -e");
                 Process process = Runtime.getRuntime().exec("pgrep " + processName);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-                if (reader.readLine() != null) {
+                if(reader.readLine() != null) {
                     reader.close();
                     return true;
                 }
@@ -106,59 +117,6 @@ public class ProcessMonitor {
             }
         }
         throw new UnsupportedOperationException("This method is not supported on this operating system.");
-    }
-
-    /**
-     * Starts monitoring the process with the given name.
-     *
-     * @param processName      the name of the process to monitor
-     * @param listener         the listener to be notified of open/close events
-     * @param waitDuration     the duration to wait between checks for the process status
-     * @param waitDurationUnit the unit of time for the waitDuration parameter
-     */
-    public void startMonitoring(String processName, OpenCloseListener listener, long waitDuration, TimeUnit waitDurationUnit) {
-        if (listener == null) {
-            throw new IllegalArgumentException("listener cannot be null");
-        }
-        this.isProcessOpen = isProcessOpen(processName);
-        if (isProcessOpen) {
-            listener.onProcessOpen();
-        }
-
-        thread = new Thread(() -> {
-            while (true) {
-                synchronized (lock) {
-                    boolean newIsProcessOpen = isProcessOpen(processName);
-                    if (newIsProcessOpen != isProcessOpen) {
-                        isProcessOpen = newIsProcessOpen;
-                        if (isProcessOpen) {
-                            processCloseCalled = false;
-                            listener.onProcessOpen();
-                        }
-                    } else if (!newIsProcessOpen) {
-                        if (!processCloseCalled) {
-                            listener.onProcessClose();
-                            processCloseCalled = true;
-                        }
-                    }
-                    try {
-                        lock.wait(waitDurationUnit.toMillis(waitDuration));
-                    } catch (InterruptedException e) {
-                        break;
-                    }
-                }
-            }
-        });
-        thread.start();
-    }
-
-    /**
-     * Stops monitoring the process.
-     */
-    public void stopMonitoring() {
-        if (thread != null) {
-            thread.interrupt();
-        }
     }
 }
 
