@@ -39,6 +39,7 @@ import lee.aspect.dev.dynamicrp.manager.DirectoryManager;
 import lee.aspect.dev.dynamicrp.manager.SceneManager;
 import lee.aspect.dev.dynamicrp.util.WarningManager;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
 import java.util.Objects;
@@ -154,14 +155,21 @@ public class DynamicRP extends Application {
 
     }
     public static void popUpWindow(){
-        Platform.runLater(() -> {
-            DynamicRP.primaryStage.show();
-            DynamicRP.primaryStage.setAlwaysOnTop(true);
-            DynamicRP.primaryStage.toFront();
-            DynamicRP.primaryStage.requestFocus();
-            DynamicRP.primaryStage.setIconified(false);
-            DynamicRP.primaryStage.setAlwaysOnTop(false);
-        });
+        try{
+            Platform.runLater(() -> {
+                DynamicRP.primaryStage.show();
+                DynamicRP.primaryStage.setAlwaysOnTop(true);
+                DynamicRP.primaryStage.toFront();
+                DynamicRP.primaryStage.requestFocus();
+                DynamicRP.primaryStage.setIconified(false);
+                DynamicRP.primaryStage.setAlwaysOnTop(false);
+            });
+        } catch (IllegalStateException e) {
+            JOptionPane.showMessageDialog(null,
+                    "To optimize your system resources, JavaFX has not been initialized. As a result, the interface cannot be displayed util the application is restarted.",
+                    "JavaFX Initialization Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }
 
 

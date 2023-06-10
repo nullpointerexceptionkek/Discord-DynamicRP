@@ -379,6 +379,7 @@ class SwitchManager private constructor() {
 
         @JvmStatic
         fun initAutoSwitchSilent() {
+            running = true
             val files = ConfigManager.getCurrentConfigFiles()
 
             scheduler = Executors.newScheduledThreadPool(1)
@@ -413,6 +414,11 @@ class SwitchManager private constructor() {
                 }
             }
 
+        }
+
+        @JvmStatic
+        fun closeAutoSwitchSilent() {
+            scheduler.shutdown()
         }
 
     }

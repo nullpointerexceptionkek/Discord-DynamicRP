@@ -166,7 +166,7 @@ public class ApplicationTray {
                 JOptionPane.showMessageDialog(null, "Discord RPC is already running", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 try {
-                    if (Settings.getINSTANCE().isShutDownInterfaceWhenTray()) {
+                    if (Settings.getINSTANCE().isShutDownInterfaceWhenTray() || Launch.isLaunchedUsingStartLaunch) {
                         RunLoopManager.startUpdate();
                         return;
                     }
@@ -191,11 +191,19 @@ public class ApplicationTray {
             if (SwitchManager.getRunning()) {
                 JOptionPane.showMessageDialog(null, "Auto Switch is already running", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
+                if(Settings.getINSTANCE().isShutDownInterfaceWhenTray() || Launch.isLaunchedUsingStartLaunch){
+                    SwitchManager.initAutoSwitchSilent();
+                    return;
+                }
                 Platform.runLater(SwitchManager::toggleRunning);
             }
         });
         closeSwitchItem.addActionListener(e -> {
             if (SwitchManager.getRunning()) {
+                if(Settings.getINSTANCE().isShutDownInterfaceWhenTray() || Launch.isLaunchedUsingStartLaunch){
+                    SwitchManager.closeAutoSwitchSilent();
+                    return;
+                }
                 Platform.runLater(SwitchManager::toggleRunning);
             } else {
                 JOptionPane.showMessageDialog(null, "Auto Switch is not running", "Error", JOptionPane.ERROR_MESSAGE);
@@ -254,6 +262,7 @@ public class ApplicationTray {
         if(Launch.isLaunchedUsingStartLaunch){
             trayIcon.displayMessage(Launch.NAME,
                     "to save your system resources, the UI is not initialized when the application is launched with system boot, please exit and restart the application if you want to config", TrayIcon.MessageType.INFO);
+            return;
         }
         Platform.runLater(() -> DynamicRP.primaryStage.show());
         DynamicRP.isOnSystemTray = false;
