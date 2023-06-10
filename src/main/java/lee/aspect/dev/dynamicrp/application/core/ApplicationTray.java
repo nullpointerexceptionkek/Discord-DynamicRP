@@ -248,8 +248,12 @@ public class ApplicationTray {
     private static void LaunchInterface() {
         if (Settings.getINSTANCE().isShutDownInterfaceWhenTray()) {
             trayIcon.displayMessage(Launch.NAME,
-                    "Application cannot start interface when ShutDownInterface is on, please exit and relaunch the program to see interface", TrayIcon.MessageType.ERROR);
+                    "Application cannot start interface when Shut Down Interface is on, please exit and relaunch the program to see interface", TrayIcon.MessageType.ERROR);
             return;
+        }
+        if(Launch.isLaunchedUsingStartLaunch){
+            trayIcon.displayMessage(Launch.NAME,
+                    "to save your system resources, the UI is not initialized when the application is launched with system boot, please exit and restart the application if you want to config", TrayIcon.MessageType.INFO);
         }
         Platform.runLater(() -> DynamicRP.primaryStage.show());
         DynamicRP.isOnSystemTray = false;

@@ -26,6 +26,8 @@
 package lee.aspect.dev.dynamicrp.exceptions;
 
 import lee.aspect.dev.dynamicrp.Launch;
+import lee.aspect.dev.dynamicrp.application.core.Script;
+import lee.aspect.dev.dynamicrp.json.loader.FileManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -51,6 +53,11 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
 
         //there is no need to every touch this code again unless for gui improvements
         //the code below is for grabbing the uncaught exception and displaying it in a gui
+        try{
+            FileManager.saveAllFiles();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
         e.printStackTrace();
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);

@@ -232,6 +232,7 @@ public class RunLoopManager {
         System.exit(0);
     }
 
+    @Deprecated
     public static void saveScripToFile() {
         Script.saveScriptToFile();
     }

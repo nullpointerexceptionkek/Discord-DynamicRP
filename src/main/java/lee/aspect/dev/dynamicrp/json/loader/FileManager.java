@@ -124,5 +124,11 @@ public class FileManager {
         folder.delete();
     }
 
+    public static void saveAllFiles(){
+        Script.saveScriptToFile();
+        Settings.saveSettingToFile();
+        SwitchManager.saveToFile();
+    }
+
 
 }

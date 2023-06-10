@@ -125,6 +125,13 @@ public class ConfigController implements Initializable {
         }
     }
 
+    public void saveCurrentScript(){
+        Script.getINSTANCE().setCustomTimestamp(CustomTimeInput.getText());
+        Script.getINSTANCE().setUpdateType(updateMode.getValue());
+        Script.getINSTANCE().setDiscordAPIKey(appIDTextField.getText());
+        Script.saveScriptToFile();
+    }
+
     public void showSearch() {
         SearchManager.showDialog();
     }
@@ -161,7 +168,7 @@ public class ConfigController implements Initializable {
         callbackButton.setDisable(true);
         Script.getINSTANCE().setDiscordAPIKey(DiscordAppID);
         Settings.saveSettingToFile();
-        RunLoopManager.saveScripToFile();
+        Script.saveScriptToFile();
         SceneManager.SceneData sceneData = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/dynamicrp/scenes/LoadingScreen.fxml");
 
         FadeOut fadeOut = new FadeOut(anchorRoot);
@@ -179,7 +186,7 @@ public class ConfigController implements Initializable {
 
     public void switchToSetting() {
         settingButton.setDisable(true);
-        Script.saveScriptToFile();
+        saveCurrentScript();
         if(Settings.getINSTANCE().isAutoSwitch()){
             Parent root = SceneManager.getConfigParent();
             stackPane.getChildren().add(0,root);
