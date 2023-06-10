@@ -380,13 +380,9 @@ class SwitchManager private constructor() {
         @JvmStatic
         fun initAutoSwitchSilent() {
             running = true
-            val files = ConfigManager.getCurrentConfigFiles()
 
             scheduler = Executors.newScheduledThreadPool(1)
-
-
-            for (i in files.indices) {
-                val switch = loaded.switch[i]
+            for (switch in loaded.switch) {
                 if (switch.checkName.isNotEmpty()) {
                     val monitor = ProcessMonitor(scheduler, switch.checkName, object : OpenCloseListener {
                         override fun onProcessOpen() {
@@ -394,7 +390,7 @@ class SwitchManager private constructor() {
                                 RunLoopManager.closeCallBack()
                             } catch (_: Exception) {
                             }
-                            Settings.getINSTANCE().loadedConfig = files[i]
+                            Settings.getINSTANCE().loadedConfig = switch.config
                             Script.loadScriptFromJson()
 
                             try {
@@ -419,6 +415,10 @@ class SwitchManager private constructor() {
         @JvmStatic
         fun closeAutoSwitchSilent() {
             running = false
+            try {
+                RunLoopManager.closeCallBack()
+            } catch (_: Exception) {
+            }
             scheduler.shutdown()
         }
 
