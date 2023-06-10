@@ -57,16 +57,18 @@ mainClassName = 'lee.aspect.dev.dynamicrp.Launch'
 tasks.withType(KotlinCompile).configureEach {
     kotlinOptions.jvmTarget = '1.8'
 }
+/*
 tasks.named('processResources') {
     dependsOn 'generateLicenseReport'
 }
 tasks.named('build').configure {
     dependsOn 'generateLicenseReport'
 }
-
+ */
 application {
     getMainClass().set('lee.aspect.dev.dynamicrp.Launch')
 }
+
 
 
 jar {
