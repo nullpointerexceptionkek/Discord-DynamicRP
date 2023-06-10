@@ -418,6 +418,7 @@ class SwitchManager private constructor() {
 
         @JvmStatic
         fun closeAutoSwitchSilent() {
+            running = false
             scheduler.shutdown()
         }
 
