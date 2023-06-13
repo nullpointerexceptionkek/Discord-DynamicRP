@@ -4,7 +4,10 @@ DynamicRP is a Discord Rich Presence Manager that allows you to display your cur
 
 ## Features
 Here is a quick Demo:
-https://www.youtube.com/watch?v=omDVECqUStY
+
+[![Demo](http://img.youtube.com/vi/omDVECqUStY/0.jpg)](http://www.youtube.com/watch?v=omDVECqUStY)
+
+http://www.youtube.com/watch?v=omDVECqUStY
 
 Other Rich Presence Manager programs only allow you to set one Rich Presence at a time.
 DynamicRP allows you to set multiple Rich Presence settings
