@@ -96,6 +96,7 @@ public class Launch {
                     outputStream.write(message.getBytes());
                     outputStream.close();
                     socket.close();
+                    br.close();
                     System.exit(0);
                 } catch (IOException e) {
                     //port failed. start a new instance is fine
