@@ -2,7 +2,7 @@
 
 DynamicRP is a Discord Rich Presence Manager that allows you to display your current game in your Discord profile.
 
-## Features
+## Why DynamicRP?
 Here is a quick Demo:
 
 [![Demo](http://img.youtube.com/vi/omDVECqUStY/0.jpg)](http://www.youtube.com/watch?v=omDVECqUStY)
@@ -26,6 +26,9 @@ it will automatically switch which Rich Presence is displayed based on which app
 - System tray support
 - Compatible with Windows, macOS, and Linux (tested on Windows 10 and 11, Ubuntu 20.04)
 - A wide variety of themes
+
+## Documentation
+You can find a more detailed documentation [here](https://dynamicrp.gitbook.io/dynamicrp/)
 
 ## JVM Version
 Any Java version that is above or equal to Java 8 should work. Tested on Java 8, 11, and 17. Recommended Java 17 only if you have issue with other Version.
@@ -112,3 +115,10 @@ Usually a restart of the program will fix the issue.
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
+## Credits
+This project wouldn't be possible without them.
+you can find the full list of credits [here](src/main/resources/lee/aspect/dev/dynamicrp/licenses/index.html)
+
+## Change log
+You can find the full change log [here](CHANGELOG.md)

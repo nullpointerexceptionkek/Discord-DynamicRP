@@ -47,7 +47,7 @@ import java.net.Socket;
  * @author lee
  */
 public class Launch {
-    public final static String VERSION = "1.0.0";
+    public final static String VERSION = "1.0.1";
     public final static String AUTHOR = "lee";
     public final static String NAME = "DynamicRP";
 

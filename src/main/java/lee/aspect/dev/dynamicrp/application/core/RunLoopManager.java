@@ -29,6 +29,7 @@ import javafx.application.Platform;
 import lee.aspect.dev.dynamicrp.Launch;
 import lee.aspect.dev.dynamicrp.application.controller.LoadingController;
 import lee.aspect.dev.dynamicrp.autoswitch.SwitchManager;
+import lee.aspect.dev.dynamicrp.exceptions.Debug;
 import lee.aspect.dev.dynamicrp.exceptions.NoDiscordClientException;
 import org.jetbrains.annotations.NotNull;
 
@@ -41,6 +42,9 @@ public class RunLoopManager {
     private static boolean running = false;
     public static int currentDisplay = 0;
     private static Thread runLoop;
+
+    private static int lastRandomDisplay = -1;
+
 
     private RunLoopManager() {
     } // Prevents instantiation
@@ -97,62 +101,72 @@ public class RunLoopManager {
             runLoop = new Thread("RunLoop") {
                 @Override
                 public void run() {
-                    if (Script.getINSTANCE().getSize() == 1) {
-                        return;
-                    }
                     switch (Script.getINSTANCE().getUpdateType()) {
                         case Loop:
-                            if (forwardLoop()) return;
-                            while (running) {
-                                for (int i = 0; i < Script.getINSTANCE().getSize(); i++) {
-                                    executeUpdate(Script.getINSTANCE().getUpdates(i));
-                                    if (!running) return;
-                                    if (!DynamicRP.isOnSystemTray) {
-                                        int finalI = i >= Script.getINSTANCE().getSize() - 1 ? 0 : i + 1;
-                                        updateDisplay(finalI);
-                                    }
-                                }
-
-                            }
+                            performLoop();
                             break;
                         case Stop:
-                            if (forwardLoop()) return;
+                            performStop();
+                            break;
                         case Random:
-                            while (running) {
-                                int i = (int) (Math.random() * Script.getINSTANCE().getSize());
-                                executeUpdate(Script.getINSTANCE().getUpdates(i));
-                                currentDisplay = i;
-                                if (!running) return;
-                                if (!DynamicRP.isOnSystemTray)
-                                    updateDisplay(i);
-                            }
+                            performRandom();
                             break;
                         case Reverse:
-                            for (int i = 1; i < Script.getINSTANCE().getSize(); i++) {
-                                if (executeIndex(i)) return;
-                            }
-                            while (running) {
-                                for (int i = Script.getINSTANCE().getSize() - 2; i >= 0; i--) {
-                                    executeUpdate(Script.getINSTANCE().getUpdates(i));
-                                    currentDisplay = i;
-                                    if (!running) return;
-                                    if (!DynamicRP.isOnSystemTray) {
-                                        int finalI = i == 0 ? 1 : i - 1;
-                                        updateDisplay(finalI);
-                                    }
-                                }
-                                for (int i = 0; i < Script.getINSTANCE().getSize(); i++) {
-                                    if (executeIndex(i)) return;
-                                }
-
-                            }
+                            performReverse();
                             break;
-
                     }
                 }
-
             };
             runLoop.start();
+        }
+    }
+
+    private static void performLoop() {
+        while (running) {
+            currentDisplay = (currentDisplay + 1) % Script.getINSTANCE().getSize();
+            updateDisplay((currentDisplay + 1) % Script.getINSTANCE().getSize());
+            executeUpdate(Script.getINSTANCE().getUpdates(currentDisplay));
+        }
+    }
+
+    private static void performStop() {
+        currentDisplay = Script.getINSTANCE().getSize() - 1;
+        updateDisplay(currentDisplay);
+        executeUpdate(Script.getINSTANCE().getUpdates(currentDisplay));
+    }
+
+    private static void performRandom() {
+        if(lastRandomDisplay == -1) lastRandomDisplay = (int) (Math.random() * Script.getINSTANCE().getSize());
+        while (running) {
+            do {
+                currentDisplay = (int) (Math.random() * Script.getINSTANCE().getSize());
+            } while (currentDisplay == lastRandomDisplay);
+
+            updateDisplay(currentDisplay);
+            executeUpdate(Script.getINSTANCE().getUpdates(lastRandomDisplay));
+
+            lastRandomDisplay = currentDisplay;
+        }
+    }
+
+    private static void performReverse() {
+        boolean goingUp = true;
+        int size = Script.getINSTANCE().getSize();
+
+        while (running) {
+            if (currentDisplay >= size) {
+                goingUp = false;
+                currentDisplay = size - 1;
+            } else if (currentDisplay < 0) {
+                goingUp = true;
+                currentDisplay = 0;
+            }
+
+            int nextDisplay = goingUp ? currentDisplay + 1 : currentDisplay - 1;
+            updateDisplay(Math.abs(nextDisplay % size));
+            executeUpdate(Script.getINSTANCE().getUpdates(currentDisplay));
+
+            currentDisplay += goingUp ? 1 : -1;
         }
     }
 
@@ -162,33 +176,8 @@ public class RunLoopManager {
             runLoop.interrupt();
         }
     }
-
-    private static boolean executeIndex(int i) {
-        executeUpdate(Script.getINSTANCE().getUpdates(i));
-        currentDisplay = i;
-        if (!running) return true;
-        if (!DynamicRP.isOnSystemTray) {
-            int finalI = i >= Script.getINSTANCE().getSize() - 1 ? i - 1 : i + 1;
-            updateDisplay(finalI);
-        }
-        return false;
-    }
-
-    private static boolean forwardLoop() {
-        for (int i = 1; i < Script.getINSTANCE().getSize(); i++) {
-            executeUpdate(Script.getINSTANCE().getUpdates(i));
-            currentDisplay = i;
-            if (!running) return true;
-            if (!DynamicRP.isOnSystemTray) {
-                int finalI = i >= Script.getINSTANCE().getSize() - 1 ? 0 : i + 1;
-                updateDisplay(finalI);
-            }
-        }
-        return false;
-    }
-
     /**
-     * Shut down DiscordRP, this method must be called to stop displaying the RP
+     * Shutdown DiscordRP, this method must be called to stop displaying the RP
      */
     public static void closeCallBack() {
         shutDownRP();
@@ -232,10 +221,6 @@ public class RunLoopManager {
         System.exit(0);
     }
 
-    @Deprecated
-    public static void saveScripToFile() {
-        Script.saveScriptToFile();
-    }
 
     public static int getCurrentDisplay() {
         return currentDisplay;
@@ -254,8 +239,10 @@ public class RunLoopManager {
         }
     }
     private static void updateDisplay(int finalI) {
-        if(DynamicRP.isOnSystemTray || Settings.getINSTANCE().isShutDownInterfaceWhenTray() || Launch.isLaunchedUsingStartLaunch) return;
+        if(DynamicRP.isOnSystemTray || Settings.getINSTANCE().isShutDownInterfaceWhenTray() || Launch.isLaunchedUsingStartLaunch ||Settings.getINSTANCE().isAutoSwitch() || !isRunning()) return;
+        Launch.LOGGER.debug("Updating display to: " + finalI);
         Platform.runLater(() -> LoadingController.callBackController.updateCurrentDisplay(Script.getINSTANCE().getUpdates(finalI)));
+        Debug.printArray(Script.getINSTANCE().getTotalupdates().toArray());
     }
 
     public static boolean isRunning() {

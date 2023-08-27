@@ -35,7 +35,7 @@ import javafx.scene.Scene;
 @SuppressWarnings("unused") // This class is only used for debugging purposes
 public class Debug {
 
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     private Debug() {
         throw new IllegalStateException("Utility class");
@@ -64,5 +64,17 @@ public class Debug {
         } catch (Exception e) {
             System.err.println("Exception occurred while running Debug.checkStylesheets: " + e.getMessage());
         }
+    }
+    public static void printArray(Object[] arr){
+        if (!DEBUG) return;
+        System.out.println("Debug.printArray():");
+        System.out.println("Array length: " + arr.length);
+        System.out.println("----------------------------------------");
+        System.out.print("[");
+        for (Object o : arr) {
+            System.out.print(o + ", ");
+        }
+        System.out.println("]");
+        System.out.println("----------------------------------------");
     }
 }

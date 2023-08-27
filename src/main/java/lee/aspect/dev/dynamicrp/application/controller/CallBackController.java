@@ -66,8 +66,9 @@ public class CallBackController implements Initializable {
 
     private BounceInLeft afterIn;
 
-    private Pane warperPane = new Pane();
+    private final Pane warperPane = new Pane();
 
+    //this shit gets to the point its competetly unreadable, idfk
     public void switchToConfig() throws IOException {
         switchToConfig.setDisable(true);
         SceneManager.SceneData sceneData = SceneManager.loadSceneWithStyleSheet("/lee/aspect/dev/dynamicrp/scenes/LoadingScreen.fxml");
@@ -120,9 +121,11 @@ public class CallBackController implements Initializable {
                 display2.setText(Script.getINSTANCE().getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getFl()
                         + '\n' + Script.getINSTANCE().getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getSl());
             } else {
-                if (Script.getINSTANCE().getUpdateType().equals(Script.UpdateType.Random) || Settings.getINSTANCE().isNoAnimation()) {
+                if (Settings.getINSTANCE().isNoAnimation()) {
                     display2.setText(Script.getINSTANCE().getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getFl()
                             + '\n' + Script.getINSTANCE().getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getSl());
+                    //anchorRoot.getChildren().add(display2);
+                    return;
                 } else {
                     if (RunLoopManager.getCurrentDisplay() > 0)
                         display1.setText(Script.getINSTANCE().getTotalupdates().get(RunLoopManager.getCurrentDisplay() - 1).getFl()
@@ -136,11 +139,6 @@ public class CallBackController implements Initializable {
                 }
             }
 
-
-            if (Script.getINSTANCE().getUpdateType().equals(Script.UpdateType.Random) || Settings.getINSTANCE().isNoAnimation()) {
-                anchorRoot.getChildren().add(display2);
-                return;
-            }
             pMoveUp = new BounceOutRight(display1);
             afterIn = new BounceInLeft(display3, 0.8);
 
@@ -148,17 +146,24 @@ public class CallBackController implements Initializable {
     }
 
     public void updateCurrentDisplay(Updates next) {
-        if (Script.getINSTANCE().getUpdateType().equals(Script.UpdateType.Random) || Settings.getINSTANCE().isNoAnimation()) {
+        if (Settings.getINSTANCE().isNoAnimation()) {
             display2.setText(Script.getINSTANCE().getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getFl()
                     + '\n' + Script.getINSTANCE().getTotalupdates().get(RunLoopManager.getCurrentDisplay()).getSl());
             return;
         }
         String nextLine = next.getFl() + '\n' + next.getSl();
-        if ((display1.getLayoutY() + display1.getTranslateY()) <= 230) {
+        //Launch.LOGGER.info("Updating display to: " + nextLine);
+//        System.out.println("display1 " + (display1.getLayoutY() + display1.getTranslateY()));
+//        System.out.println("display2 " + (display2.getLayoutY() + display2.getTranslateY()));
+//        System.out.println("display3 " + (display3.getLayoutY() + display3.getTranslateY()));
+        if ((display1.getLayoutY() + display1.getTranslateY()) <= -40) {
+            System.out.println("1");
             updateDisplayLabel(display1, display2, display3, nextLine);
-        } else if ((display2.getLayoutY() + display2.getTranslateY()) <= 230) {
+        } else if ((display2.getLayoutY() + display2.getTranslateY()) <= -40) {
+            System.out.println("2");
             updateDisplayLabel(display2, display3, display1, nextLine);
-        } else if ((display3.getLayoutY() + display3.getTranslateY()) <= 230) {
+        } else if ((display3.getLayoutY() + display3.getTranslateY()) <= -40) {
+            System.out.println("3");
             updateDisplayLabel(display3, display1, display2, nextLine);
         } else {
             Launch.LOGGER.error("Animation have encounter an error, this should not be occur");
@@ -189,6 +194,7 @@ public class CallBackController implements Initializable {
         CurrentUp = new SlideAndFade(Display2, -45, 0.3);
         CurrentUp.play();
         AfterUp = new SlideAndFade(Display3, 0, 1);
+        System.out.println("AfterUp");
         AfterUp.play();
     }
 
